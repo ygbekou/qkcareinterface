@@ -32,3 +32,5 @@ export * from './dropdown.supplier';
 export * from './dropdown.medicine';
 export * from './dropdown.hospitalLocation';
 export * from './dropdown.section';
+export * from './dropdown.slider';
+

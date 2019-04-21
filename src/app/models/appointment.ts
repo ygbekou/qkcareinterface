@@ -1,8 +1,7 @@
-import { HospitalLocation } from './';
-import { Department } from './';
-import { Employee } from './';
-import { Patient } from './';
-import { Weekday } from './';
+import { HospitalLocation } from './hospitalLocation';
+import { Department } from './department';
+import { Employee } from './employee';
+import { Patient } from './patient';
 
 export class Appointment {
   id: number;
@@ -15,8 +14,7 @@ export class Appointment {
   beginTime: string;
   endTime: string;
   problem: string;
-  status: number;
-  
+  status: number;  
   doctorName: string;
   departmentName: string;
 }

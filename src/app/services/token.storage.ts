@@ -12,6 +12,7 @@ export class TokenStorage {
   public static FIRST_NAME = 'first_name';
   public static MIDDLE_NAME = 'middle_name';
   public static LAST_NAME = 'last_name';
+  public static FIRST_TIME_LOGIN = 'first_time_login';
 
   constructor() { }
 
@@ -43,6 +44,9 @@ export class TokenStorage {
 
     window.sessionStorage.removeItem(TokenStorage.LAST_NAME);
     window.sessionStorage.setItem(TokenStorage.LAST_NAME,  authData.lastName);
+
+    window.sessionStorage.removeItem(TokenStorage.FIRST_TIME_LOGIN);
+    window.sessionStorage.setItem(TokenStorage.FIRST_TIME_LOGIN,  authData.firstTimeLogin);
   }
 
   public getToken(): string {
@@ -75,6 +79,10 @@ export class TokenStorage {
 
   public getLastName(): string {
     return window.sessionStorage.getItem(TokenStorage.LAST_NAME);
+  }
+
+  public getFirstTimeLogin(): string {
+    return window.sessionStorage.getItem(TokenStorage.FIRST_TIME_LOGIN);
   }
 
   public getName(): string {

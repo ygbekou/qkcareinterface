@@ -13,9 +13,14 @@ import {EmptyDemoComponent} from './demo/view/emptydemo.component';
 import {ChartsDemoComponent} from './demo/view/chartsdemo.component';
 import {FileDemoComponent} from './demo/view/filedemo.component';
 import {DocumentationComponent} from './demo/view/documentation.component';
-import {Login} from './components/login';
+import {Login} from './components/website/login';
 import {Landing} from './components/website/landing';
 import { LoggedInGuard } from './services/loggedIn.guard';
+import { Industries } from './components/website/industries';
+import { AboutUs } from './components/website/aboutUs';
+import { Contact } from './components/website/contact';
+import { SingleSection } from './components/website/singleSection';
+import { Services} from './components/website/services'; 
 
 export const routes: Routes = [
   {path: '', component: Landing, pathMatch: 'full'},
@@ -33,6 +38,11 @@ export const routes: Routes = [
   {path: 'file', component: FileDemoComponent},
   {path: 'documentation', component: DocumentationComponent},
   {path: 'login', component: Login},
+  {path: 'section', component: SingleSection},
+  {path: 'services', component: Services},
+  {path: 'industries', component: Industries},
+  {path: 'about', component: AboutUs},
+  {path: 'contact', component: Contact},
   {path: 'admin', loadChildren: './modules/admin.module#AdminModule', canActivate: [LoggedInGuard], }
 ];
 

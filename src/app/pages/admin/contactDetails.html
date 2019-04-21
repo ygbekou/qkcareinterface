@@ -1,0 +1,47 @@
+<form name="form" (ngSubmit)="f.form.valid" #f="ngForm" validate>
+    <p-messages [(value)]="messages"></p-messages>
+	<div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="contactUsMessage">
+		<div class="ui-grid-row">
+			<div class="ui-grid-col-5 ui-sm-12">
+				<div class="form-group">
+					<label for="name">{{ 'COMMON.NAME' | translate }}<font color="red">*</font></label> 
+					<input type="text" pInputText class="form-control" id="name"
+						[(ngModel)]="contactUsMessage.name" name="name" #name="ngModel" required>
+						<p-message *ngIf="f.submitted && name.invalid" severity="error" text="Field is required"></p-message>
+				</div>
+            </div>
+            <div class="ui-grid-col-2 ui-sm-12"></div>
+			<div class="ui-grid-col-5 ui-sm-12">
+				<div class="form-group">
+					<label for="email">{{ 'COMMON.EMAIL' | translate }}<font color="red">*</font></label> 
+					<input type="text" pInputText class="form-control" id="email"
+						[(ngModel)]="contactUsMessage.email" name="email" #email="ngModel" required>
+						<p-message *ngIf="f.submitted && name.invalid" severity="error" text="Field is required"></p-message>
+				</div>
+            </div>
+        </div>
+        <div class="ui-grid-row">
+			<div class="ui-grid-col-5 ui-sm-12">
+				<div class="form-group">
+					<label for="phone">{{ 'COMMON.PHONE' | translate }}<font color="red">*</font></label> 
+					<input type="text" pInputText class="form-control" id="phone" [(ngModel)]="contactUsMessage.phone" 
+						name="phone" #phone="ngModel" required>
+				</div>
+            </div>
+            <div class="ui-grid-col-2 ui-sm-12"></div>
+			<div class="ui-grid-col-5 ui-sm-12">
+				<div class="form-group">		
+					<label for="message">{{ 'COMMON.MESSAGE' | translate }}</label>
+					<textarea pInputTextarea id="message" [rows]="5"
+							[(ngModel)]="contactUsMessage.message" name="message" #message="ngModel"> </textarea>
+				</div>
+			</div>
+		</div>
+	</div>
+	<br />
+	<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+        <button type="button" pButton icon="fa fa-refresh" (click)="clear()"label="{{ 'COMMON.ADD' | translate }}"></button>&nbsp;&nbsp;
+	</div>
+</form>
+
+ 

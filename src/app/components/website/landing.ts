@@ -1,108 +1,117 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-import { Cookie } from 'ng2-cookies/ng2-cookies';
-import { DataTableModule, DialogModule, InputTextareaModule, CheckboxModule } from 'primeng/primeng';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { GenericService, GlobalEventsManager } from '../../services';
-import { SectionItem, Section } from '../../models/website';
-import { Employee, Hospital } from '../../models';
-import { DepartmentDropdown, DoctorDropdown } from './../dropdowns';
+import { SectionItem, Section, SliderText } from '../../models/website';
+import { Company } from '../../models/company';
+import { Employee } from '../../models/employee';
+import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-landing',
   templateUrl: '../../pages/website/landing.html',
-  providers: [GenericService, DepartmentDropdown, DoctorDropdown]
+  providers: [GenericService]
 })
+// tslint:disable-next-line:component-class-suffix
 export class Landing implements OnInit, OnDestroy {
-  
+
     aboutUsSection: Section = new Section();
     serviceSection: Section = new Section();
-    aboutUsItems: SectionItem[] = [];
-    serviceItems: SectionItem[] = [];
-    hospital: Hospital = new Hospital();
+    industrySection: Section = new Section();
+    sliderTexts: SliderText[] = [];
+    sectionMap: Map<string, SectionItem[]> = new Map();
+    managers: Employee [] = [];
+    company: Company = new Company();
+
+    changeCarrousel = true;
 
     constructor
     (
       private genericService: GenericService,
-      private globalEventsManager: GlobalEventsManager,
-      public  doctorDropdown: DoctorDropdown,
-      public  departmentDropdown: DepartmentDropdown,
-      private route: ActivatedRoute,
-      private router: Router
+      public globalEventsManager: GlobalEventsManager,
+      public translate: TranslateService
     ) {
-      this.globalEventsManager.showMenu = false;
-      
 
-      let parameters: string [] = []; 
-      parameters.push('e.section.name = |name|about_us|String')
-                
-      this.genericService.getAllByCriteria('com.qkcare.model.website.SectionItem', parameters)
-          .subscribe((data: SectionItem[]) => 
-      { 
-        this.aboutUsItems = data 
-      },
-      error => console.log(error),
-      () => console.log('Get all SectionItem complete'));
-      
+      this.loadData();
 
-      parameters = [];
-      parameters.push('e.section.name = |name|service|String');
-      this.genericService.getAllByCriteria('com.qkcare.model.website.SectionItem', parameters)
-          .subscribe((data: SectionItem[]) => 
-      { 
-        this.serviceItems = data 
-      },
-      error => console.log(error),
-      () => console.log('Get all SectionItem complete'));
-    
-      parameters = [];
-      this.genericService.getAllByCriteria('Hospital', parameters)
-          .subscribe((data: Hospital[]) => 
-       { 
-         if (data.length > 0) {
-           this.hospital = data[0]
-         } else {
-           this.hospital = new Hospital();
-         }
-       },
-       error => console.log(error),
-       () => console.log('Get Hospital complete'));
-      
-      
-      parameters = [];
-      parameters.push('e.name = |name|about_us|String');
-      this.genericService.getAllByCriteria('com.qkcare.model.website.Section', parameters)
-          .subscribe((data: Section[]) => 
-       { 
-         if (data.length > 0) {
-           this.aboutUsSection = data[0]
-         } else {
-           this.aboutUsSection = new Section();
-         }
-       },
-       error => console.log(error),
-       () => console.log('Get AboutUS Section complete'));
-      
-      
-      parameters = [];
-      parameters.push('e.name = |name|service|String');
-      this.genericService.getAllByCriteria('com.qkcare.model.website.Section', parameters)
-          .subscribe((data: Section[]) => 
-       { 
-         if (data.length > 0) {
-           this.serviceSection = data[0]
-         } else {
-           this.serviceSection = new Section();
-         }
-       },
-       error => console.log(error),
-       () => console.log('Get SERVICE Section complete'));
-      
+      this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
+        this.loadData();
+    });
+
+
   }
 
   ngOnInit(): void {
   }
-  
+
+  loadData(): void {
+      this.sectionMap = new Map();
+      this.sliderTexts[1] = new SliderText();
+      this.sliderTexts[2] = new SliderText();
+      this.sliderTexts[3] = new SliderText();
+      this.sliderTexts[4] = new SliderText();
+
+      let parameters: string [] = [];
+      parameters.push('e.language = |language|' + this.translate.currentLang + '|String');
+      this.genericService.getAllByCriteria('com.qkcare.model.website.SliderText', parameters)
+          .subscribe((data: SliderText[]) => {
+              let i = 1;
+              for (const item of data) {
+                 this.sliderTexts[i] = item;
+                 i = i + 1;
+              }
+      },
+      error => console.log(error),
+      () => console.log('Get all SliderText complete'));
+
+      parameters = [];
+      parameters.push('e.status = |status|0|Integer');
+      parameters.push('e.section.language = |language|' + this.translate.currentLang + '|String');
+      this.genericService.getAllByCriteria('com.qkcare.model.website.SectionItem', parameters)
+          .subscribe((data: SectionItem[]) => {
+              for (const item of data) {
+                if (!this.sectionMap.has(item.section.title)) {
+                    this.sectionMap.set(item.section.title, []);
+                }
+                this.sectionMap.get(item.section.title).push(item);
+              }
+
+      },
+      error => console.log(error),
+      () => console.log('Get all SectionItem complete'));
+
+      parameters = [];
+    parameters.push('e.status = |status|0|Integer');
+    parameters.push('e.language = |language|' + this.translate.currentLang + '|String');
+    this.genericService.getAllByCriteria('Company', parameters)
+        .subscribe((data: Company[]) => {
+        if (data.length > 0) {
+            this.company = data[0];
+        } else {
+            this.company = new Company();
+        }
+    },
+    error => console.log(error),
+    () => console.log('Get Company complete'));
+
+      parameters = [];
+      parameters.push('e.managing = |managing|0|Integer');
+      parameters.push('e.status = |status|0|Integer');
+      this.genericService.getAllByCriteria('Employee', parameters)
+          .subscribe((data: Employee[]) => {
+         if (data.length > 0) {
+           this.managers = data;
+         }
+       },
+       error => console.log(error),
+       () => console.log('Get Managers complete'));
+  }
+
   ngOnDestroy() {
+        this.aboutUsSection = null;
+        this.serviceSection = null;
+        this.industrySection = null;
+        this.sliderTexts = null;
+        this.sectionMap = null;
+        this.managers = null;
   }
 
  }

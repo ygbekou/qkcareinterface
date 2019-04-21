@@ -5,11 +5,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { AppRoutes } from './app.routes';
-import { HttpModule} from '@angular/http';
-import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
-import {TranslateHttpLoader} from '@ngx-translate/http-loader';
-
-
+import { HttpModule } from '@angular/http';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { AccordionModule } from 'primeng/accordion';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
@@ -103,20 +101,26 @@ import { CountryService } from './demo/service/countryservice';
 import { EventService } from './demo/service/eventservice';
 import { NodeService } from './demo/service/nodeservice';
 import { BreadcrumbService } from './breadcrumb.service';
-import {Constants} from './app.constants';
+import { Constants } from './app.constants';
 import { TokenInterceptor } from './app.interceptor';
-import {Routes, RouterModule} from '@angular/router';
-import {routes} from './app.routes';
-import {Login} from './components/login';
-import {Landing} from './components/website/landing';
-import {Header} from './components/website/header';
-import {Footer} from './components/website/footer';
-import {CommonSharedModule} from './modules/common.shared.module';
+import { Routes, RouterModule } from '@angular/router';
+import { routes } from './app.routes';
+import { Login } from './components/website/login';
+import { Landing } from './components/website/landing';
+import { Header } from './components/website/header';
+import { Footer } from './components/website/footer';
+import { CommonSharedModule } from './modules/common.shared.module';
 import {
   GenericService, UserService, TokenStorage, AuthenticationService, BillingService, LoggedInGuard, AdmissionService,
-    AppointmentService, VisitService} from './services/';
-import {GlobalEventsManager} from './services/globalEventsManager';
+  AppointmentService, VisitService
+} from './services/';
+import { GlobalEventsManager } from './services/globalEventsManager';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { Industries } from './components/website/industries';
+import { SingleSection } from './components/website/singleSection';
+import { AboutUs } from './components/website/aboutUs';
+import { Contact } from './components/website/contact';
+import { Services } from './components/website/services';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(httpClient: HttpClient) {
@@ -206,39 +210,27 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
   ],
   declarations: [
     AppComponent,
-    AppRightPanelComponent,
-    AppMenuComponent,
-    AppSubMenuComponent,
-    AppMegamenuComponent,
-    AppBreadcrumbComponent,
-    AppTopBarComponent,
-    AppFooterComponent,
-    AppProfileComponent,
-    DashboardDemoComponent,
-    SampleDemoComponent,
-    FormsDemoComponent,
-    DataDemoComponent,
-    PanelsDemoComponent,
-    OverlaysDemoComponent,
-    MenusDemoComponent,
-    MessagesDemoComponent,
-    MessagesDemoComponent,
-    MiscDemoComponent,
-    ChartsDemoComponent,
-    EmptyDemoComponent,
-    FileDemoComponent,
-    DocumentationComponent,
-    Login,
-    Landing, 
-    Header, 
-    Footer
+    AppRightPanelComponent, AppMenuComponent,
+    AppSubMenuComponent, AppMegamenuComponent,
+    AppBreadcrumbComponent, AppTopBarComponent,
+    AppFooterComponent, AppProfileComponent,
+    DashboardDemoComponent, SampleDemoComponent,
+    FormsDemoComponent, DataDemoComponent,
+    PanelsDemoComponent, OverlaysDemoComponent,
+    MenusDemoComponent, MessagesDemoComponent,
+    MessagesDemoComponent, MiscDemoComponent,
+    ChartsDemoComponent, EmptyDemoComponent,
+    FileDemoComponent, DocumentationComponent,
+    Login, Services, Landing, Header,
+    Footer, Industries, SingleSection, AboutUs,
+    Contact, Landing, Header, Footer,
   ],
   providers: [
     { provide: LocationStrategy, useClass: HashLocationStrategy },
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
     CarService, CountryService, EventService, NodeService, BreadcrumbService,
-    
-    GenericService, AdmissionService, UserService, BillingService, Constants, GlobalEventsManager, TokenStorage, 
+
+    GenericService, AdmissionService, UserService, BillingService, Constants, GlobalEventsManager, TokenStorage,
     AuthenticationService, LoggedInGuard, AppointmentService, VisitService
   ],
   bootstrap: [AppComponent]

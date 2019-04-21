@@ -1,0 +1,56 @@
+<form name="form" (ngSubmit)="f.form.valid && save()" #f="ngForm" validate>
+	<div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="sliderText">
+		<p-messages [(value)]="messages"></p-messages>
+		<div class="ui-grid-row">
+			<div class="ui-grid-col-5 ui-sm-12">		
+				<div class="form-group">
+					<label for="slider">{{ 'COMMON.SLIDER' | translate }}</label>
+					<p-autoComplete [(ngModel)]="sliderText.slider"
+						(onDropdownClick)="sliderDropdown.handleDropdownClick($event)"
+						[suggestions]="sliderDropdown.filteredSliders" [dropdown]="true"
+						id="slider" (completeMethod)="sliderDropdown.filter($event)"
+						name="slider" field="name" [size]="30" placeholder=""
+						[minLength]="1"></p-autoComplete>
+				</div>
+            </div>
+            <div class="ui-grid-col-2 ui-sm-12">
+            </div>
+			<div class="ui-grid-col-5 ui-sm-12">
+				<div class="form-group">		
+					<label for="name">{{ 'COMMON.TEXT' | translate }}1</label>
+					<input pInputText id="text1" [(ngModel)]="sliderText.text1" name="text1" #text1="ngModel" />
+				</div>
+            </div>
+        </div>
+        <div class="ui-grid-row">
+			<div class="ui-grid-col-5 ui-sm-12">
+				<div class="form-group">		
+					<label for="name">{{ 'COMMON.TEXT' | translate }}2</label>
+					<input pInputText id="text2" [(ngModel)]="sliderText.text2" name="text2" #text2="ngModel" />
+				</div>
+            </div>
+            <div class="ui-grid-col-2 ui-sm-12"></div>
+            <div class="ui-grid-col-5 ui-sm-12">
+				<div class="form-group">		
+					<label for="name">{{ 'COMMON.TEXT' | translate }}3</label>
+					<input pInputText id="text3" [(ngModel)]="sliderText.text3" name="text3" #text3="ngModel" />
+				</div>
+            </div>
+        </div>
+        <div class="ui-grid-row">
+            <div class="ui-grid-col-5 ui-sm-12">
+                <label for="language">{{'COMMON.LANGUAGE' | translate}}<font color="red">*</font></label>
+                <p-radioButton name="language" value="EN" label="{{'COMMON.ENGLISH' | translate}}" [(ngModel)]="sliderText.language"
+                        #language="ngModel" required></p-radioButton>
+                <p-radioButton name="language" value="FR" label="{{'COMMON.FRENCH' | translate}}" [(ngModel)]="sliderText.language"
+                        #language="ngModel" required ></p-radioButton>
+                <p-message *ngIf="f.submitted && language.invalid" severity="error" text="Field is required"></p-message>
+            </div>
+        </div>
+	</div>
+	<br />
+	<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+        <button type="button" pButton icon="fa fa-refresh" (click)="clear()" label="{{ 'COMMON.ADD' | translate }}"></button>&nbsp;&nbsp;
+        <button pButton icon="fa fa-check"  label="{{ 'COMMON.SAVE' | translate }}"></button>
+	</div>
+</form>	

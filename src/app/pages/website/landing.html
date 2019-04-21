@@ -1,115 +1,284 @@
-<!DOCTYPE html>
-<html>
+<app-web-header></app-web-header>
+<div role="main" class="main">
 
-    <head>
-        <script>document.write('<base href="' + document.location + '" />');</script>
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
-        <meta name="apple-mobile-web-app-capable" content="yes" />
-        <title>PrimeNG - California - Landing Page</title>
+    <div class="slider-container rev_slider_wrapper" style="height: 600px;">
+        <div id="revolutionSlider" class="slider rev_slider" data-version="5.4.8" data-plugin-revolution-slider
+            data-plugin-options="{'delay': 9000, 'gridwidth': 1170, 'gridheight': 600, 'disableProgressBar': 'on', 'responsiveLevels': [4096,1200,992,500], 'parallax': { 'type': 'scroll', 'origo': 'enterpoint', 'speed': 1000, 'levels': [2,3,4,5,6,7,8,9,12,50], 'disable_onmobile': 'on' }, 'navigation' : {'arrows': { 'enable': false }, 'bullets': {'enable': true, 'style': 'bullets-style-1', 'h_align': 'center', 'v_align': 'bottom', 'space': 7, 'v_offset': 70, 'h_offset': 0}}}">
+            <ul>
+                <li class="slide-overlay slide-overlay-primary" data-transition="fade">
+                    <img src="assets/images/slides/slide-1.jpg" alt="" data-bgposition="center center" data-bgfit=""
+                        data-bgrepeat="no-repeat" class="rev-slidebg">
 
-        <link id="theme-css" rel="stylesheet" type="text/css" href="assets/theme/theme-blue.css">
-        <link id="layout-css" rel="stylesheet" type="text/css" href="assets/layout/css/layout-blue.css">
-        <link rel="stylesheet" type="text/css" href="assets/pages/primeng.min.css">
-    </head>
+                    <div class="tp-caption" data-x="center" data-hoffset="['-150','-150','-150','-240']" data-y="center"
+                        data-voffset="['-50','-50','-50','-75']" data-start="1000"
+                        data-transform_in="x:[-300%];opacity:0;s:500;" data-transform_idle="opacity:0.2;s:500;"><img
+                            src="assets/img/slides/slide-title-border.png" alt=""></div>
 
-    <body class="landing-body">
-        <div class="landing-wrapper">
-            <app-web-header></app-web-header>
-            <div id="about" class="features">
-                <h2>About Us</h2>
-                <div class="ui-grid-row">
-					<div class="ui-grid-col-4 ui-sm-12">	
-						<div class="ui-g-12 ui-lg-3">
-                            <img src="assets/docs/Section/{{aboutUsSection.fileLocation}}" alt="" />
-                        </div>
-                        <div class="ui-g-12 ui-lg-9">
-                            <h3>{{aboutUsSection.title}}</h3>
-                            <p>{{aboutUsSection.description}} </p>
-                            <span class="learn-more">Learn More</span>
-                            <i class="fa fa-arrow-right"></i>
-                        </div>
-					</div>
-					<div class="ui-grid-col-8 ui-sm-12">	
-		                <div class="ui-g" *ngFor="let aboutUsItem of aboutUsItems">
-		                    <div class="ui-g-12 ui-md-6">
-		                        <div class="ui-g-12 ui-lg-3">
-		                            <img src="assets/docs/SectionItem/{{aboutUsItem.fileLocation}}" alt="" />
-		                        </div>
-		                        <div class="ui-g-12 ui-lg-9">
-		                            <h3>{{aboutUsItem.title}}</h3>
-		                            <p>{{aboutUsItem.description}} </p>
-		                            <span class="learn-more">Learn More</span>
-		                            <i class="fa fa-arrow-right"></i>
-		                        </div>
-		                    </div>	                    
-		                </div>
-		             </div>
-		         </div>
-            </div>
+                    <div class="tp-caption text-color-light font-weight-normal" data-x="center" data-y="center"
+                        data-voffset="['-50','-50','-50','-75']" data-start="700" data-fontsize="['22','22','22','40']"
+                        data-lineheight="['25','25','25','45']" data-transform_in="y:[-50%];opacity:0;s:500;">
+                        {{sliderTexts[1].text1}} </div>
 
-            <div id="service" class="news">
-                <h2>Services</h2>
-                <div class="ui-g">
-                    <div class="ui-g-12 ui-md-6 ui-lg-3" *ngFor="let serviceItem of serviceItems">
-                        <div class="ui-g-12 news-icon">
-                            <img src="assets/docs/SectionItem/{{serviceItem.fileLocation}}" alt="" />
-                        </div>
-                        <div class="ui-g-12">
-                            <h3>{{serviceItem.title}}</h3>
-                            <p>{{serviceItem.description}}</p>
-                            <a href="#">
-                                <span class="learn-more">Learn More</span>
-                            </a>
-                            <i class="fa fa-arrow-right"></i>
-                        </div>
-                    </div>
-                    
-                </div>
-            </div>
-            
-           <div id="doctor" class="news">
-           		<h2>Doctors</h2>
-                <div class="ui-g">
-            		<div class="ui-g-12 ui-md-6 ui-lg-3" *ngFor="let doctor of doctorDropdown.doctors">
-            		<div class="ui-g-12">
-			            <p-panel header={{doctor.user.userGroup.name}} >
-	                        <img src="assets/images/User/{{doctor.user.picture}}" alt="california-layout" />
-	                        
-                            <h3 class="team-member">{{doctor.user.firstName}} {{doctor.user.lastName}}</h3>
-                            <p class="team-member-role">{{doctor.designation}} - {{doctor.specialist}}</p>
-	                       
-			            </p-panel>
-			         </div>
-		        	</div>
-            	</div>
-           </div>
+                    <div class="tp-caption d-none d-md-block"
+                        data-frames='[{"delay":2200,"speed":500,"frame":"0","from":"opacity:0;x:10%;","to":"opacity:1;x:0;","ease":"Power3.easeInOut"},{"delay":"wait","speed":300,"frame":"999","to":"opacity:0;fb:0;","ease":"Power3.easeInOut"}]'
+                        data-x="center" data-hoffset="['80','80','80','135']" data-y="center"
+                        data-voffset="['-33','-33','-33','-55']"><img src="assets/img/slides/slide-white-line.png"
+                            alt=""></div>
 
-		  <div id="department" class="news">
-                <h2>Departments</h2>
-                <div class="ui-g">
-                    <div class="ui-g-12 ui-md-6 ui-lg-3" *ngFor="let department of departmentDropdown.departments">
-                        <div class="ui-g-12 news-icon">
-                            <img src="assets/docs/Department/{{department.fileLocation}}" alt="" />
-                        </div>
-                        <div class="ui-g-12">
-                            <h3>{{department.name}}</h3>
-                            <p>{{department.description}}</p>
-                            <a href="#">
-                                <span class="learn-more">Learn More</span>
-                            </a>
-                            <i class="fa fa-arrow-right"></i>
-                        </div>
-                    </div>
-                    
-                </div>
-            </div>
-            
-            <app-web-footer></app-web-footer>
-            
+                    <div class="tp-caption" data-x="center" data-hoffset="['150','150','150','240']" data-y="center"
+                        data-voffset="['-50','-50','-50','-75']" data-start="1000"
+                        data-transform_in="x:[300%];opacity:0;s:500;" data-transform_idle="opacity:0.2;s:500;"><img
+                            src="assets/img/slides/slide-title-border.png" alt=""></div>
+
+                    <h1 class="tp-caption font-weight-extra-bold text-color-light negative-ls-2"
+                        data-frames='[{"delay":1000,"speed":2000,"frame":"0","from":"sX:1.5;opacity:0;fb:20px;","to":"o:1;fb:0;","ease":"Power3.easeInOut"},{"delay":"wait","speed":300,"frame":"999","to":"opacity:0;fb:0;","ease":"Power3.easeInOut"}]'
+                        data-x="center" data-y="center" data-fontsize="['50','50','50','90']"
+                        data-lineheight="['55','55','55','95']">{{sliderTexts[1].text2}}</h1>
+
+                    <div class="tp-caption text-light font-weight-light"
+                        data-frames='[{"from":"opacity:0;","speed":300,"to":"o:1;","delay":2000,"split":"chars","splitdelay":0.05,"ease":"Power2.easeInOut"},{"delay":"wait","speed":1000,"to":"y:[100%];","mask":"x:inherit;y:inherit;s:inherit;e:inherit;","ease":"Power2.easeInOut"}]'
+                        data-x="center" data-y="center" data-voffset="['40','40','40','80']"
+                        data-fontsize="['18','18','18','50']" data-lineheight="['20','20','20','55']">
+                        {{sliderTexts[1].text3}}</div>
+
+                </li>
+                <li class="slide-overlay slide-overlay-primary" data-transition="fade">
+                    <img src="assets/slides/slide-2.jpg" alt="" data-bgposition="center center" data-bgfit="cover"
+                        data-bgrepeat="no-repeat" class="rev-slidebg">
+
+                    <div class="tp-caption" data-x="center" data-hoffset="['-150','-150','-150','-240']" data-y="center"
+                        data-voffset="['-50','-50','-50','-75']" data-start="1000"
+                        data-transform_in="x:[-300%];opacity:0;s:500;" data-transform_idle="opacity:0.2;s:500;"><img
+                            src="assets/img/slides/slide-title-border.png" alt=""></div>
+
+                    <div class="tp-caption text-color-light font-weight-normal" data-x="center" data-y="center"
+                        data-voffset="['-50','-50','-50','-75']" data-start="700" data-fontsize="['22','22','22','40']"
+                        data-lineheight="['25','25','25','45']" data-transform_in="y:[-50%];opacity:0;s:500;">
+                        {{sliderTexts[2].text1}} </div>
+
+                    <div class="tp-caption d-none d-md-block"
+                        data-frames='[{"delay":2200,"speed":500,"frame":"0","from":"opacity:0;x:10%;","to":"opacity:1;x:0;","ease":"Power3.easeInOut"},{"delay":"wait","speed":300,"frame":"999","to":"opacity:0;fb:0;","ease":"Power3.easeInOut"}]'
+                        data-x="center" data-hoffset="['80','80','80','135']" data-y="center"
+                        data-voffset="['-33','-33','-33','-55']"><img src="assets/img/slides/slide-white-line.png"
+                            alt=""></div>
+
+                    <div class="tp-caption" data-x="center" data-hoffset="['150','150','150','240']" data-y="center"
+                        data-voffset="['-50','-50','-50','-75']" data-start="1000"
+                        data-transform_in="x:[300%];opacity:0;s:500;" data-transform_idle="opacity:0.2;s:500;"><img
+                            src="assets/img/slides/slide-title-border.png" alt=""></div>
+
+                    <h1 class="tp-caption font-weight-extra-bold text-color-light negative-ls-2"
+                        data-frames='[{"delay":1000,"speed":2000,"frame":"0","from":"sX:1.5;opacity:0;fb:20px;","to":"o:1;fb:0;","ease":"Power3.easeInOut"},{"delay":"wait","speed":300,"frame":"999","to":"opacity:0;fb:0;","ease":"Power3.easeInOut"}]'
+                        data-x="center" data-y="center" data-fontsize="['50','50','50','90']"
+                        data-lineheight="['55','55','55','95']">{{sliderTexts[2].text2}}</h1>
+
+                    <div class="tp-caption text-light font-weight-light"
+                        data-frames='[{"from":"opacity:0;","speed":300,"to":"o:1;","delay":2000,"split":"chars","splitdelay":0.05,"ease":"Power2.easeInOut"},{"delay":"wait","speed":1000,"to":"y:[100%];","mask":"x:inherit;y:inherit;s:inherit;e:inherit;","ease":"Power2.easeInOut"}]'
+                        data-x="center" data-y="center" data-voffset="['40','40','40','80']"
+                        data-fontsize="['18','18','18','50']" data-lineheight="['20','20','20','55']">
+                        {{sliderTexts[2].text3}}</div>
+
+                </li>
+                <li class="slide-overlay slide-overlay-primary" data-transition="fade">
+                    <img src="assets/slides/slide-3.jpg" alt="" data-bgposition="center center" data-bgfit="cover"
+                        data-bgrepeat="no-repeat" class="rev-slidebg">
+
+                    <div class="tp-caption" data-x="center" data-hoffset="['-150','-150','-150','-240']" data-y="center"
+                        data-voffset="['-50','-50','-50','-75']" data-start="1000"
+                        data-transform_in="x:[-300%];opacity:0;s:500;" data-transform_idle="opacity:0.2;s:500;"><img
+                            src="assets/img/slides/slide-title-border.png" alt=""></div>
+
+                    <div class="tp-caption text-color-light font-weight-normal" data-x="center" data-y="center"
+                        data-voffset="['-50','-50','-50','-75']" data-start="700" data-fontsize="['22','22','22','40']"
+                        data-lineheight="['25','25','25','45']" data-transform_in="y:[-50%];opacity:0;s:500;">
+                        {{sliderTexts[3].text1}} </div>
+
+                    <div class="tp-caption d-none d-md-block"
+                        data-frames='[{"delay":2200,"speed":500,"frame":"0","from":"opacity:0;x:10%;","to":"opacity:1;x:0;","ease":"Power3.easeInOut"},{"delay":"wait","speed":300,"frame":"999","to":"opacity:0;fb:0;","ease":"Power3.easeInOut"}]'
+                        data-x="center" data-hoffset="['80','80','80','135']" data-y="center"
+                        data-voffset="['-33','-33','-33','-55']"><img src="assets/img/slides/slide-white-line.png"
+                            alt=""></div>
+
+                    <div class="tp-caption" data-x="center" data-hoffset="['150','150','150','240']" data-y="center"
+                        data-voffset="['-50','-50','-50','-75']" data-start="1000"
+                        data-transform_in="x:[300%];opacity:0;s:500;" data-transform_idle="opacity:0.2;s:500;"><img
+                            src="assets/img/slides/slide-title-border.png" alt=""></div>
+
+                    <h1 class="tp-caption font-weight-extra-bold text-color-light negative-ls-2"
+                        data-frames='[{"delay":1000,"speed":2000,"frame":"0","from":"sX:1.5;opacity:0;fb:20px;","to":"o:1;fb:0;","ease":"Power3.easeInOut"},{"delay":"wait","speed":300,"frame":"999","to":"opacity:0;fb:0;","ease":"Power3.easeInOut"}]'
+                        data-x="center" data-y="center" data-fontsize="['50','50','50','90']"
+                        data-lineheight="['55','55','55','95']">{{sliderTexts[3].text2}}</h1>
+
+                    <div class="tp-caption text-light font-weight-light"
+                        data-frames='[{"from":"opacity:0;","speed":300,"to":"o:1;","delay":2000,"split":"chars","splitdelay":0.05,"ease":"Power2.easeInOut"},{"delay":"wait","speed":1000,"to":"y:[100%];","mask":"x:inherit;y:inherit;s:inherit;e:inherit;","ease":"Power2.easeInOut"}]'
+                        data-x="center" data-y="center" data-voffset="['40','40','40','80']"
+                        data-fontsize="['18','18','18','50']" data-lineheight="['20','20','20','55']">
+                        {{sliderTexts[3].text3}}</div>
+
+                </li>
+                <li class="slide-overlay slide-overlay-primary" data-transition="fade">
+                    <img src="assets/slides/slide-4.jpg" alt="" data-bgposition="center center" data-bgfit="cover"
+                        data-bgrepeat="no-repeat" class="rev-slidebg">
+
+                    <div class="tp-caption" data-x="center" data-hoffset="['-150','-150','-150','-240']" data-y="center"
+                        data-voffset="['-50','-50','-50','-75']" data-start="1000"
+                        data-transform_in="x:[-300%];opacity:0;s:500;" data-transform_idle="opacity:0.2;s:500;"><img
+                            src="assets/img/slides/slide-title-border.png" alt=""></div>
+
+                    <div class="tp-caption text-color-light font-weight-normal" data-x="center" data-y="center"
+                        data-voffset="['-50','-50','-50','-75']" data-start="700" data-fontsize="['22','22','22','40']"
+                        data-lineheight="['25','25','25','45']" data-transform_in="y:[-50%];opacity:0;s:500;">
+                        {{sliderTexts[4].text1}} </div>
+
+                    <div class="tp-caption d-none d-md-block"
+                        data-frames='[{"delay":2200,"speed":500,"frame":"0","from":"opacity:0;x:10%;","to":"opacity:1;x:0;","ease":"Power3.easeInOut"},{"delay":"wait","speed":300,"frame":"999","to":"opacity:0;fb:0;","ease":"Power3.easeInOut"}]'
+                        data-x="center" data-hoffset="['80','80','80','135']" data-y="center"
+                        data-voffset="['-33','-33','-33','-55']"><img src="assets/img/slides/slide-white-line.png"
+                            alt=""></div>
+
+                    <div class="tp-caption" data-x="center" data-hoffset="['150','150','150','240']" data-y="center"
+                        data-voffset="['-50','-50','-50','-75']" data-start="1000"
+                        data-transform_in="x:[300%];opacity:0;s:500;" data-transform_idle="opacity:0.2;s:500;"><img
+                            src="assets/img/slides/slide-title-border.png" alt=""></div>
+
+                    <h1 class="tp-caption font-weight-extra-bold text-color-light negative-ls-2"
+                        data-frames='[{"delay":1000,"speed":2000,"frame":"0","from":"sX:1.5;opacity:0;fb:20px;","to":"o:1;fb:0;","ease":"Power3.easeInOut"},{"delay":"wait","speed":300,"frame":"999","to":"opacity:0;fb:0;","ease":"Power3.easeInOut"}]'
+                        data-x="center" data-y="center" data-fontsize="['50','50','50','90']"
+                        data-lineheight="['55','55','55','95']">{{sliderTexts[4].text2}}</h1>
+
+                    <div class="tp-caption text-light font-weight-light"
+                        data-frames='[{"from":"opacity:0;","speed":300,"to":"o:1;","delay":2000,"split":"chars","splitdelay":0.05,"ease":"Power2.easeInOut"},{"delay":"wait","speed":1000,"to":"y:[100%];","mask":"x:inherit;y:inherit;s:inherit;e:inherit;","ease":"Power2.easeInOut"}]'
+                        data-x="center" data-y="center" data-voffset="['40','40','40','80']"
+                        data-fontsize="['18','18','18','50']" data-lineheight="['20','20','20','55']">
+                        {{sliderTexts[4].text3}}</div>
+
+                </li>
+                -->
+
+            </ul>
         </div>
-    </body>
-</html>
+    </div>
 
 
+
+    <div class="home-intro" id="home-intro">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-12">
+                    <p>
+                        {{company.bannerContentHeader}}
+                        <span
+                            class="highlighted-word text-color-primary font-weight-semibold text-5">{{company.bannerContentParagraph}}</span>
+                        <div class="get-started text-left text-lg-right">
+                            <a href="#/services"
+                                class="btn btn-primary btn-lg text-3 font-weight-semibold px-4 py-3">Our Services</a>
+                        </div>
+
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+    <section class="section-secondary custom-section-padding" *ngFor="let sectionEntry of sectionMap | keyvalue">
+        <div class="container">
+            <div class="row mb-4">
+                <div class="col">
+                    <h2 class="font-weight-bold text-color-dark mb-3">* {{sectionEntry.key}}</h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4" *ngFor="let sectionItem of sectionEntry.value">
+                    <a class="text-decoration-none" data-appear-animation="fadeInUp" data-appear-animation-delay="1">
+                        <div class="feature-box custom-feature-box feature-box-style-2">
+                            <div class="feature-box-icon">
+                                <img src="assets/images/sectionItem/{{sectionItem.fileLocation}}" alt="">
+                            </div>
+                            <div class="feature-box-info ml-3">
+                                <h4 class="font-weight-normal text-5">{{sectionItem.title}}</h4>
+                                <p class="text-2">{{sectionItem.description}}</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <a class="btn btn-outline custom-border-width btn-primary custom-border-radius font-weight-semibold text-uppercase mb-3"
+                        href="#/section?sectionId={{sectionEntry.value[0].section.id}}"
+                        title="View All">{{'COMMON.VIEW_ALL' | translate}}</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section class="section-secondary custom-section-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <h2 class="font-weight-bold text-color-dark">* {{'COMMON.OUR_TEAM' | translate}}</h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col" *ngFor="let manager of managers">
+                    <div class="show-nav-title custom-dots-style-1 custom-dots-position custom-xs-arrows-style-2 mb-0"
+                        data-plugin-options="{'items': 4, 'margin': 20, 'autoHeight': true, 'loop': false, 'nav': false, 'dots': true}">
+                        <div>
+                            <div class="team-item p-0">
+                                <a class="text-decoration-none">
+                                    <span class="image-wrapper">
+                                        <img src="assets/images/user/{{manager.user.picture}}" alt="PIC"
+                                            class="img-fluid" />
+                                    </span>
+                                </a>
+                                <div class="team-infos">
+                                    <div class="share">
+                                        <i class="fas fa-share-alt"></i>
+                                        <div class="share-icons bg-color-light">
+                                            <a href="#" class="text-decoration-none" title="Share on Facebook"><i
+                                                    class="fab fa-facebook-f"></i></a>
+                                            <a href="#" class="text-decoration-none" title="Share on Instagram"><i
+                                                    class="fab fa-instagram"></i></a>
+                                            <a href="#" class="text-decoration-none" title="Share on Linkedin"><i
+                                                    class="fab fa-linkedin-in"></i></a>
+                                        </div>
+                                    </div>
+                                    <a class="text-decoration-none">
+                                        <span
+                                            class="team-member-name text-color-dark font-weight-semibold text-4">{{manager.name}}</span>
+                                        <span class="team-member-desc font-weight-light">{{manager.designation}}</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row text-center mt-5">
+                <div class="col">
+                    <a class="btn btn-outline custom-border-width btn-primary custom-border-radius font-weight-semibold text-uppercase"
+                        href="#/about">{{'COMMON.VIEW_ALL' | translate}}</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section
+        class="call-to-action call-to-action-default with-button-arrow content-align-center call-to-action-in-footer call-to-action-in-footer-margin-top">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-9 col-lg-9">
+                    <div class="call-to-action-content">
+                        <h2 class="font-weight-normal text-6 mb-0">{{company.footerParagraph1}}</h2>
+                        <p class="mb-0">{{company.footerParagraph2}}</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+</div>
+<app-web-footer></app-web-footer>

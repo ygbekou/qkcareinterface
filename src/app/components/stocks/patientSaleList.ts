@@ -3,7 +3,6 @@ import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { Constants } from '../../app.constants';
 import { Admission, Employee, User, Visit, SearchCriteria } from '../../models';
 import { PatientSale, PatientSaleProduct } from '../../models/stocks/patientSale';
-import { FileUploader } from './../fileUploader';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
 import { ToolbarModule, DialogModule, InputTextareaModule, CheckboxModule } from 'primeng/primeng';
 import { GenericService, PurchasingService, GlobalEventsManager } from '../../services';

@@ -4,82 +4,76 @@ import {NgModule} from '@angular/core';
 import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
 import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
-
-
-import {AdminMain} from '../components/adminMain';
-import {AdminAppointment} from '../components/adminAppointment';
-import {DocumentDetails} from '../components/documentDetails';
-import {DocumentList} from '../components/documentList';
-import {ScheduleDetails} from '../components/scheduleDetails';
-import {ScheduleList} from '../components/scheduleList';
-import {AppointmentScheduler} from '../components/appointmentScheduler';
-import {AppointmentDetails} from '../components/appointmentDetails';
-import {AppointmentList} from '../components/appointmentList';
-import {EmployeeDetails} from '../components/employeeDetails';
-import {EmployeeList} from '../components/employeeList';
+import {AdminMain} from '../components/admin/adminMain';
+import {AdminAppointment} from '../components/admin/adminAppointment';
+import {DocumentDetails} from '../components/admin/documentDetails';
+import {DocumentList} from '../components/admin/documentList';
+import {ScheduleDetails} from '../components/admin/scheduleDetails';
+import {ScheduleList} from '../components/admin/scheduleList';
+import {AppointmentScheduler} from '../components/admin/appointmentScheduler';
+import {AppointmentDetails} from '../components/admin/appointmentDetails';
+import {AppointmentList} from '../components/admin/appointmentList';
+import {EmployeeDetails} from '../components/admin/employeeDetails';
+import {EmployeeList} from '../components/admin/employeeList';
 import {AdminMenu} from '../components/menu/adminMenu';
 import {CommonSharedModule} from './common.shared.module';
-import {FileUploader} from '../components/fileUploader';
-import {PatientDetails} from '../components/patientDetails';
-import {PatientList} from '../components/patientList';
-import {CaseStudyDetails} from '../components/caseStudyDetails';
-import {CaseStudyList} from '../components/caseStudyList';
-import {ReferenceDetails} from '../components/referenceDetails';
-import {ReferenceList} from '../components/referenceList';
-import {ReferenceWithCategoryDetails} from '../components/referenceWithCategoryDetails';
-import {ReferenceWithCategoryList} from '../components/referenceWithCategoryList';
-import {MedicineDetails} from '../components/medicineDetails';
-import {MedicineList} from '../components/medicineList';
-import {PrescriptionDetails} from '../components/prescriptionDetails';
-import {PrescriptionList} from '../components/prescriptionList';
-import {AccountDetails} from '../components/accountDetails';
-import {AccountList} from '../components/accountList';
-import {InvoiceDetails} from '../components/invoiceDetails';
-import {InvoiceList} from '../components/invoiceList';
-import {PaymentDetails} from '../components/paymentDetails';
-import {PaymentList} from '../components/paymentList';
-import {InsuranceDetails} from '../components/insuranceDetails';
-import {InsuranceList} from '../components/insuranceList';
-import {PackageDetails} from '../components/packageDetails';
-import {PackageList} from '../components/packageList';
-import {ServiceDetails} from '../components/serviceDetails';
-import {ServiceList} from '../components/serviceList';
-import {BillDetails} from '../components/billDetails';
-import {BillList} from '../components/billList';
-import {VitalSignDetails} from '../components/vitalSignDetails';
-import {VitalSignList} from '../components/vitalSignList';
-import {DoctorOrderDetails} from '../components/doctorOrderDetails';
-import {DoctorOrderList} from '../components/doctorOrderList';
-import {AdmissionDetails} from '../components/admissionDetails';
-import {AdmissionList} from '../components/admissionList';
-import {BedTransfer} from '../components/bedTransfer';
-import {FloorDetails} from '../components/floorDetails';
-import {FloorList} from '../components/floorList';
-import {RoomDetails} from '../components/roomDetails';
-import {RoomList} from '../components/roomList';
-import {BedDetails} from '../components/bedDetails';
-import {BedList} from '../components/bedList';
-import {AdminBedStatus} from '../components/adminBedStatus';
-import {AdmissionDiagnoses} from '../components/admissionDiagnoses';
-import {AdminReference} from '../components/adminReference';
+import {FileUploader} from '../components/admin/fileUploader';
+import {PatientDetails} from '../components/admin/patientDetails';
+import {PatientList} from '../components/admin/patientList';
+import {CaseStudyDetails} from '../components/admin/caseStudyDetails';
+import {CaseStudyList} from '../components/admin/caseStudyList';
+import {ReferenceDetails} from '../components/admin/referenceDetails';
+import {ReferenceList} from '../components/admin/referenceList';
+import {ReferenceWithCategoryDetails} from '../components/admin/referenceWithCategoryDetails';
+import {ReferenceWithCategoryList} from '../components/admin/referenceWithCategoryList';
+import {MedicineDetails} from '../components/admin/medicineDetails';
+import {MedicineList} from '../components/admin/medicineList';
+import {PrescriptionDetails} from '../components/admin/prescriptionDetails';
+import {PrescriptionList} from '../components/admin/prescriptionList';
+import {AccountDetails} from '../components/admin/accountDetails';
+import {AccountList} from '../components/admin/accountList';
+import {InvoiceDetails} from '../components/admin/invoiceDetails';
+import {InvoiceList} from '../components/admin/invoiceList';
+import {PaymentDetails} from '../components/admin/paymentDetails';
+import {PaymentList} from '../components/admin/paymentList';
+import {InsuranceDetails} from '../components/admin/insuranceDetails';
+import {InsuranceList} from '../components/admin/insuranceList';
+import {PackageDetails} from '../components/admin/packageDetails';
+import {PackageList} from '../components/admin/packageList';
+import {ServiceDetails} from '../components/admin/serviceDetails';
+import {ServiceList} from '../components/admin/serviceList';
+import {BillDetails} from '../components/admin/billDetails';
+import {BillList} from '../components/admin/billList';
+import {VitalSignDetails} from '../components/admin/vitalSignDetails';
+import {VitalSignList} from '../components/admin/vitalSignList';
+import {DoctorOrderDetails} from '../components/admin/doctorOrderDetails';
+import {DoctorOrderList} from '../components/admin/doctorOrderList';
+import {AdmissionDetails} from '../components/admin/admissionDetails';
+import {AdmissionList} from '../components/admin/admissionList';
+import {BedTransfer} from '../components/admin/bedTransfer';
+import {FloorDetails} from '../components/admin/floorDetails';
+import {FloorList} from '../components/admin/floorList';
+import {RoomDetails} from '../components/admin/roomDetails';
+import {RoomList} from '../components/admin/roomList';
+import {BedDetails} from '../components/admin/bedDetails';
+import {BedList} from '../components/admin/bedList';
+import {AdminBedStatus} from '../components/admin/adminBedStatus';
+import {AdmissionDiagnoses} from '../components/admin/admissionDiagnoses';
+import {AdminReference} from '../components/admin/adminReference';
 import {CategoryDropdown, PackageDropdown, DoctorDropdown} from '../components/dropdowns';
-
-
-import {AdminPatient} from '../components/adminPatient';
-import {VisitDetails} from '../components/visitDetails';
-import {VisitList} from '../components/visitList';
-import {AllergyDetails} from '../components/allergyDetails';
-import {SymptomDetails} from '../components/symptomDetails';
-import {MedicalHistoryDetails} from '../components/medicalHistoryDetails';
-import {SocialHistoryDetails} from '../components/socialHistoryDetails';
-import {VaccineDetails} from '../components/vaccineDetails';
-import {DischargeDetails} from '../components/dischargeDetails';
-import {LabTestDetails} from '../components/labTestDetails';
-import {LabTestList} from '../components/labTestList';
-
-import {InvestigationDetails} from '../components/investigationDetails';
-import {InvestigationList} from '../components/investigationList';
-
+import {AdminPatient} from '../components/admin/adminPatient';
+import {VisitDetails} from '../components/admin/visitDetails';
+import {VisitList} from '../components/admin/visitList';
+import {AllergyDetails} from '../components/admin/allergyDetails';
+import {SymptomDetails} from '../components/admin/symptomDetails';
+import {MedicalHistoryDetails} from '../components/admin/medicalHistoryDetails';
+import {SocialHistoryDetails} from '../components/admin/socialHistoryDetails';
+import {VaccineDetails} from '../components/admin/vaccineDetails';
+import {DischargeDetails} from '../components/admin/dischargeDetails';
+import {LabTestDetails} from '../components/admin/labTestDetails';
+import {LabTestList} from '../components/admin/labTestList';
+import {InvestigationDetails} from '../components/admin/investigationDetails';
+import {InvestigationList} from '../components/admin/investigationList';
 import {PurchaseOrderDetails} from '../components/stocks/purchaseOrderDetails';
 import {PurchaseOrderList} from '../components/stocks/purchaseOrderList';
 import {ReceiveOrderDetails} from '../components/stocks/receiveOrderDetails';
@@ -88,33 +82,38 @@ import {PatientSaleDetails} from '../components/stocks/patientSaleDetails';
 import {PatientSaleList} from '../components/stocks/patientSaleList';
 import {SaleReturnDetails} from '../components/stocks/saleReturnDetails';
 import {SaleReturnList} from '../components/stocks/saleReturnList';
-
 import {BirthReportDetails} from '../components/activities/birthReportDetails';
 import {BirthReportList} from '../components/activities/birthReportList';
 import {DeathReportDetails} from '../components/activities/deathReportDetails';
 import {DeathReportList} from '../components/activities/deathReportList';
-import {HospitalLocationDetails} from '../components/hospitalLocationDetails';
-import {HospitalLocationList} from '../components/hospitalLocationList';
-import {HospitalDetails} from '../components/hospitalDetails';
-
+import {HospitalLocationDetails} from '../components/admin/hospitalLocationDetails';
+import {HospitalLocationList} from '../components/admin/hospitalLocationList';
+import {HospitalDetails} from '../components/admin/hospitalDetails';
 import {PatientLookup} from '../components/includes/patientLookup';
 import {PatientSaleLookup} from '../components/includes/patientSaleLookup';
 import {VisitAdmLookup} from '../components/includes/visitAdmLookup';
 import {PurchaseOrderLookup} from '../components/includes/purchaseOrderLookup';
-import {WaitingList} from '../components/waitingList';
-
-import {EnquiryDetails} from '../components/enquiryDetails';
-import {EnquiryList} from '../components/enquiryList';
+import {WaitingList} from '../components/admin/waitingList';
+import {EnquiryDetails} from '../components/admin/enquiryDetails';
+import {EnquiryList} from '../components/admin/enquiryList';
 import { SearchComponent } from '../components/includes/search';
 import { BillingService, VisitService, TokenStorage, LoggedInGuard } from '../services';
-
-import {SectionDetails} from '../components/website/sectionDetails';
-import {SectionList} from '../components/website/sectionList';
-import {SectionItemDetails} from '../components/website/sectionItemDetails';
-import {SectionItemList} from '../components/website/sectionItemList';
-import {AdminWebsite} from '../components/website/adminWebsite';
-import {DepartmentDetails} from '../components/departmentDetails';
-import {DepartmentList} from '../components/departmentList';
+import {SectionDetails} from '../components/admin/sectionDetails';
+import {SectionList} from '../components/admin/sectionList';
+import {SectionItemDetails} from '../components/admin/sectionItemDetails';
+import {SectionItemList} from '../components/admin/sectionItemList';
+import {AdminWebsite} from '../components/admin/adminWebsite';
+import {DepartmentDetails} from '../components/admin/departmentDetails';
+import {DepartmentList} from '../components/admin/departmentList';
+import { AdminHeader } from '../components/admin/adminHeader'; 
+import { SliderDetails } from '../components/admin/sliderDetails';
+import { SliderList } from '../components/admin/sliderList';
+import { SliderTextList } from '../components/admin/sliderTextList';
+import { SliderTextDetails } from '../components/admin/sliderTextDetails';
+import { CompanyDetails } from '../components/admin/companyDetails';
+import { CompanyList } from '../components/admin/companyList';
+import { ContactDetails } from '../components/admin/contactDetails';
+import { ContactList } from '../components/admin/contactList';
 
 const routes: Routes = [
   {path: 'adminMain', component: AdminMain},
@@ -189,7 +188,7 @@ const routes: Routes = [
   {path: 'enquiryDetails', component: EnquiryDetails},
   {path: 'enquiryList', component: EnquiryList},
   {path: 'waitingList', component: WaitingList},
-  {path: 'adminWebsite', component: AdminWebsite},
+  {path: 'adminWebsite', component: AdminWebsite}
 ];
 
 // AoT requires an exported function for factories
@@ -227,7 +226,9 @@ export function HttpLoaderFactory(http: HttpClient) {
     PatientSaleDetails, PatientSaleList, SaleReturnDetails, SaleReturnList, BirthReportDetails, BirthReportList,
     DeathReportDetails, DeathReportList, HospitalLocationDetails, HospitalLocationList, PatientLookup, VisitAdmLookup,
     PurchaseOrderLookup, PatientSaleLookup, HospitalDetails, EnquiryDetails, EnquiryList, WaitingList,
-    SectionDetails, SectionList, SectionItemDetails, SectionItemList, AdminWebsite, DepartmentDetails, DepartmentList],
+    SectionDetails, SectionList, SectionItemDetails, SectionItemList, DepartmentDetails,
+    DepartmentList, AdminWebsite, AdminHeader, SliderDetails, SliderList,SliderTextList,SliderTextDetails,
+    CompanyDetails, CompanyList, ContactDetails,ContactList],
 
   providers: [
     CategoryDropdown, PackageDropdown, DoctorDropdown, TokenStorage,  BillingService, VisitService, LoggedInGuard]

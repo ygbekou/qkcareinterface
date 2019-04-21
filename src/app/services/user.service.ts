@@ -153,7 +153,22 @@ export class UserService {
       })
       .catch(this.handleError);
   }
+  public changePassword = (user: User): Observable<Boolean> => {
+    let toAdd = JSON.stringify(user);
+    toAdd = toAdd.replace(/'/g, '&#039;');
+    const actionUrl = Constants.apiServer + '/service/user/forgot/changePassword';
 
+    return this.http.post(actionUrl, toAdd, {headers: this.headers})
+      .map((response: Response) => {
+
+        if (response && response.json().result === 'Success') {
+          return true;
+        } else {
+          return false;
+        }
+      })
+      .catch(this.handleError);
+  }
   private handleError(error: Response) {
     console.error(error);
     return Observable.throw(error.json().error || 'Server error');

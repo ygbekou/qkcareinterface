@@ -1,0 +1,32 @@
+
+        <app-web-header></app-web-header>
+        <div role="main" class="main">
+				<section class="section-secondary custom-section-padding">
+					<div class="container">
+						<div class="row mb-4">
+							<div class="col">
+								<h2 class="font-weight-bold text-color-dark mb-3">* Industries</h2>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-lg-4"  *ngFor="let industryItem of industryItems">
+								<a class="text-decoration-none" data-appear-animation="fadeInUp" data-appear-animation-delay="1">
+									<div class="feature-box custom-feature-box feature-box-style-2">
+										<div class="feature-box-icon">
+											<img src="assets/images/sectionItem/{{industryItem.fileLocation}}" alt="">
+										</div>
+										<div class="feature-box-info ml-3">
+											<h4 class="font-weight-normal text-5">{{industryItem.title}}</h4>
+											<p class="text-2">{{industryItem.description}}</p>
+										</div>
+									</div>
+								</a>
+							</div>
+						</div>
+					</div>
+				</section>			
+        </div>
+        <br/>
+        <br/>
+        <app-web-footer></app-web-footer>
+   

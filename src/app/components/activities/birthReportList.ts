@@ -4,7 +4,6 @@ import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { Constants } from '../../app.constants';
 import { Admission } from '../../models/admission';
 import { BirthReport } from '../../models/activities';
-import { FileUploader } from './../fileUploader';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
 import { DialogModule, InputTextareaModule, CheckboxModule } from 'primeng/primeng';
 import { User } from '../../models/user';  

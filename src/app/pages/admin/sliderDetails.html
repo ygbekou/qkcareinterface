@@ -1,0 +1,44 @@
+<form name="form" (ngSubmit)="f.form.valid && save()" #f="ngForm" validate>
+    <div class="ui-g-12 ui-sm-12" style="padding: 15px;">
+        <div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="slider">
+            <p-messages [(value)]="messages"></p-messages>
+            <div class="ui-grid-row">
+                <div class="ui-grid-col-5 ui-sm-12">
+                    <div class="form-group">		
+                        <label for="name">{{ 'COMMON.NAME' | translate }}</label>
+                        <input pInputText id="name" [(ngModel)]="slider.name" name="name" #name="ngModel" required />
+                        <p-message *ngIf="f.submitted && name.invalid" severity="error" text="Field is required"></p-message>
+                    </div>
+                </div>
+                <div class="ui-grid-col-2 ui-sm-12">
+
+                </div>
+                <div class="ui-grid-col-5 ui-sm-12">
+                    <div class="ui-grid-col-2">
+                        <label for="picture">{{'COMMON.PICTURE' | translate}}</label>
+                        <img class="thumb" src="assets/docs/Slider/{{slider.fileLocation}}" alt="" class="img-fluid" 
+                            *ngIf="slider.fileLocation !== '' && slider.fileLocation !== 'null'"/>
+                        <button pButton icon="fa fa-delete" (click)="slider.fileLocation = ''" label="Remove" 
+                            *ngIf="slider.fileLocation !== '' && slider.fileLocation !== null"></button>
+                        <img class="thumb" src="{{pictureUrl}}" alt="" class="img-fluid" *ngIf="pictureUrl !== ''"/>
+                        <button pButton icon="fa fa-delete" (click)="clearPictureFile()" label="Remove" 
+                            *ngIf="pictureUrl !== '' && pictureUrl !== null"></button>
+                    </div>
+                    <br/>
+                    <div class="ui-grid-col-12 ui-sm-12">
+                        <div class="form-group">
+                            <input type="file" (change)="readUrl($event)" [attr.multiple]="null" name="picture" #picture>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br />
+    
+	<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+        <button type="button" pButton icon="fa fa-close" (click)="clear()" label="{{ 'COMMON.ADD' | translate }}"></button>&nbsp;&nbsp;
+        <button pButton icon="fa fa-check"  label="{{ 'COMMON.SAVE' | translate }}"></button>
+    </div>
+    
+</form>	

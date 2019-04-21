@@ -9,10 +9,10 @@ export class AuthToken {
   token: string;
   roleName: string;
   picture: string;
+  firstTimeLogin: string;
   authorities: number[];
-  
+
   constructor() {
-    
   }
-  
+
 }

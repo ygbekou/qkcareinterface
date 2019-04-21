@@ -12,7 +12,7 @@ export class GlobalEventsManager {
     private patientIdSource = new BehaviorSubject<number>(0);
     currentModuleName = this.moduleNameSource.asObservable();
     currentPatientId = this.patientIdSource.asObservable();
-  
+    currentLang = 'en';
     selectedReferenceType: string;
     selectedReferenceWithCategoryType: string;
     selectedParentId: number;

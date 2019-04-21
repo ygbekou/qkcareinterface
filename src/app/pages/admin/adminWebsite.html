@@ -1,0 +1,78 @@
+        <app-admin-header></app-admin-header>
+
+        <div class="ui-grid-row"> 
+		<div class="ui-g-12 ui-sm-12" style="padding: 15px;">
+			
+			<p-tabView (onChange)="onTabChange($event)"> 
+                <p-tabPanel header="{{'COMMON.COMPANY' | translate}}">
+			    	<div *ngIf="activeTab == 0" class="ui-grid-row">
+                        <p-tabView [activeIndex]="activeCompanyTab" (onChange)="onCompanyTabChange($event)">
+                            <p-tabPanel header="{{'COMMON.DETAILS' | translate}}">
+                                <app-company-details></app-company-details>
+                            </p-tabPanel>
+                            <p-tabPanel header="{{'COMMON.LIST' | translate}}">
+                                <app-company-list (companyIdEvent)="onCompanySelected($event)"></app-company-list>
+                            </p-tabPanel>
+                        </p-tabView>
+				    </div>
+			    </p-tabPanel>
+			 	<p-tabPanel header="{{'COMMON.SECTION' | translate | uppercase}}">
+			    	<div *ngIf="activeTab == 1" class="ui-grid-row">
+				        <app-section-details></app-section-details>
+				        <br/> 
+				        <br/>
+				        <app-section-list (sectionIdEvent)="onSectionSelected($event)"></app-section-list>
+				    </div>
+			    </p-tabPanel>
+			    <p-tabPanel header="{{'COMMON.SECTION_ITEM' | translate}}">
+			    	<div *ngIf="activeTab == 2" class="ui-grid-row">
+				        <app-sectionItem-details></app-sectionItem-details>
+				        <br/> 
+				        <br/>
+				        <app-sectionItem-list (sectionItemIdEvent)="onSectionItemSelected($event)"></app-sectionItem-list>
+				    </div>
+                </p-tabPanel>
+                <p-tabPanel header="{{'COMMON.EMPLOYEE' | translate}}">
+			    	<div *ngIf="activeTab == 3" class="ui-grid-row">
+                        <p-tabView [activeIndex]="activeEmployeeTab" (onChange)="onEmployeeTabChange($event)">
+                            <p-tabPanel header="{{'COMMON.DETAILS' | translate}}">
+                                <app-employee-details></app-employee-details>
+                            </p-tabPanel>
+                            <p-tabPanel header="{{'COMMON.LIST' | translate}}">
+                                <app-employee-list (employeeIdEvent)="onEmployeeSelected($event)"></app-employee-list>
+                            </p-tabPanel>
+                        </p-tabView>
+				    </div>
+                </p-tabPanel>
+                <p-tabPanel header="{{'COMMON.MESSAGES' | translate}}">
+			    	<div *ngIf="activeTab == 4" class="ui-grid-row">
+                        <app-contact-details></app-contact-details>
+                        <br/>
+                        
+                        <app-contact-list (contactUsMessageIdEvent)="onContactSelected($event)"></app-contact-list>
+				    </div>
+                </p-tabPanel>
+                <p-tabPanel header="{{'COMMON.SLIDER' | translate | uppercase}}">
+			    	<div *ngIf="activeTab == 5" class="ui-grid-row">
+                        <p-tabView [activeIndex]="activeSliderTab" (onChange)="onSliderTabChange($event)">
+                            <p-tabPanel header="{{'COMMON.SLIDER_IMAGE' | translate | uppercase}}" uppercase>
+                                <app-slider-details></app-slider-details>
+                                <br/>
+                        
+                                <app-slider-list (sliderIdEvent)="onSliderSelected($event)"></app-slider-list>
+                            </p-tabPanel>
+                            <p-tabPanel header="{{'COMMON.SLIDER_TEXT' | translate | uppercase}}">
+                                <app-sliderText-details></app-sliderText-details>
+                                <br/>
+                        
+                                <app-sliderText-list (sliderTextIdEvent)="onSliderTextSelected($event)"></app-sliderText-list>
+                            </p-tabPanel>
+                        </p-tabView>
+				    </div>
+                </p-tabPanel>
+
+			</p-tabView>
+        </div>
+    </div>
+
+ 
