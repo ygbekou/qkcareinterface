@@ -1,10 +1,10 @@
-import {Component, OnInit, Output, EventEmitter, NgZone} from '@angular/core';
-import {Router, ActivatedRoute} from '@angular/router';
-import {GenericService} from '../../services';
-import {Constants} from '../../app.constants';
-import {User} from '../../models/user';
-import {GlobalEventsManager} from '../../services/globalEventsManager';
-import {Message } from 'primeng/primeng';
+import { Component, OnInit, Output, EventEmitter, NgZone } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
+import { GenericService } from '../../services';
+import { Constants } from '../../app.constants';
+import { User } from '../../models/user';
+import { GlobalEventsManager } from '../../services/globalEventsManager';
+import { Message } from 'primeng/primeng';
 import { SectionItem } from '../../models/website';
 import { Employee } from '../../models/employee';
 
@@ -18,14 +18,14 @@ import { Employee } from '../../models/employee';
 // tslint:disable-next-line:component-class-suffix
 export class AboutUs implements OnInit {
 
-    managers: Employee [] = [];
+  managers: Employee[] = [];
 
   constructor(
     private router: Router,
     private globalEventsManager: GlobalEventsManager,
     private genericService: GenericService,
     private route: ActivatedRoute) {
-        this.globalEventsManager.showMenu = false;
+    this.globalEventsManager.showMenu = false;
 
   }
 
@@ -33,11 +33,11 @@ export class AboutUs implements OnInit {
     const parameters = [];
     parameters.push('e.managing = |managing|0|Integer');
     this.genericService.getAllByCriteria('Employee', parameters)
-         .subscribe((data: Employee[]) => {
+      .subscribe((data: Employee[]) => {
         this.managers = data;
-    },
-    error => console.log(error),
-    () => console.log('Get all Managers complete'));
+      },
+        error => console.log(error),
+        () => console.log('Get all Managers complete'));
   }
 
   setDefaults() {

@@ -65,7 +65,7 @@ export class Login implements OnInit {
                     this.user.password = '';
                     this.display = true;
                 } else {
-                    this.router.navigate(['adminWebsite']);
+                    this.router.navigate(['dashboard']);
                 }
             } else {
                 this.translate.get(['MESSAGE.INVALID_USER_PASS', 'COMMON.LOGIN']).subscribe(res => {

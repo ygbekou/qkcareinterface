@@ -73,7 +73,7 @@ import { Section } from '../../models/website';
 								<div class="header-row">
 									<div class="header-logo">
 										<a href="index.html">
-											<img alt="ATC" width="200" height="96" src="assets/docs/Company/{{company.logo}}">
+											<img alt="Quick care" height="70" src="assets/images/company/logo.png">
 										</a>
 									</div>
 								</div>
@@ -115,7 +115,7 @@ import { Section } from '../../models/website';
                                                         </a>
                                                     </li>
                                                     <li class="dropdown" *ngIf="tokenStorage.hasToken()">
-                                                        <a class="dropdown-item dropdown-toggle" href="#/adminWebsite">
+                                                        <a class="dropdown-item dropdown-toggle" href="#/dashboard">
                                                             {{ 'COMMON.ADMIN_PAGE' | translate }}
                                                         </a>
                                                     </li>

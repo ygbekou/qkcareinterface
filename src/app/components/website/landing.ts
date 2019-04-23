@@ -31,7 +31,7 @@ export class Landing implements OnInit, OnDestroy {
     ) {
 
       this.loadData();
-
+      this.globalEventsManager.showMenu = false;
       this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
         this.loadData();
     });
