@@ -223,7 +223,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     FileDemoComponent, DocumentationComponent,
     Login, Services, Landing, Header,
     Footer, Industries, SingleSection, AboutUs,
-    Contact, Landing, Header, Footer,
+    Contact, Landing, Header, Footer
   ],
   providers: [
     { provide: LocationStrategy, useClass: HashLocationStrategy },

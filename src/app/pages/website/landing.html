@@ -1,9 +1,8 @@
 <app-web-header></app-web-header>
 <div role="main" class="main">
-
-    <div class="slider-container rev_slider_wrapper" style="height: 600px;">
+    <div class="slider-container rev_slider_wrapper" style="height: 450px;">
         <div id="revolutionSlider" class="slider rev_slider" data-version="5.4.8" data-plugin-revolution-slider
-            data-plugin-options="{'delay': 9000, 'gridwidth': 1170, 'gridheight': 600, 'disableProgressBar': 'on', 'responsiveLevels': [4096,1200,992,500], 'parallax': { 'type': 'scroll', 'origo': 'enterpoint', 'speed': 1000, 'levels': [2,3,4,5,6,7,8,9,12,50], 'disable_onmobile': 'on' }, 'navigation' : {'arrows': { 'enable': false }, 'bullets': {'enable': true, 'style': 'bullets-style-1', 'h_align': 'center', 'v_align': 'bottom', 'space': 7, 'v_offset': 70, 'h_offset': 0}}}">
+            data-plugin-options="{'delay': 9000, 'gridwidth': 1170, 'gridheight': 450, 'disableProgressBar': 'on', 'responsiveLevels': [4096,1200,992,500], 'parallax': { 'type': 'scroll', 'origo': 'enterpoint', 'speed': 1000, 'levels': [2,3,4,5,6,7,8,9,12,50], 'disable_onmobile': 'on' }, 'navigation' : {'arrows': { 'enable': false }, 'bullets': {'enable': true, 'style': 'bullets-style-1', 'h_align': 'center', 'v_align': 'bottom', 'space': 7, 'v_offset': 70, 'h_offset': 0}}}">
             <ul>
                 <li data-transition="fade">
                     <img src="assets/images/slides/slide-1.jpg" alt="" data-bgposition="center center" data-bgfit=""
@@ -44,8 +43,8 @@
 
                 </li>
                 <li data-transition="fade">
-                    <img src="assets/images/slides/slide-2.jpg" alt="" data-bgposition="center center" data-bgfit="cover"
-                        data-bgrepeat="no-repeat" class="rev-slidebg">
+                    <img src="assets/images/slides/slide-2.jpg" alt="" data-bgposition="center center"
+                        data-bgfit="cover" data-bgrepeat="no-repeat" class="rev-slidebg">
 
                     <div class="tp-caption" data-x="center" data-hoffset="['-150','-150','-150','-240']" data-y="center"
                         data-voffset="['-50','-50','-50','-75']" data-start="1000"
@@ -82,8 +81,8 @@
 
                 </li>
                 <li data-transition="fade">
-                    <img src="assets/images/slides/slide-3.jpg" alt="" data-bgposition="center center" data-bgfit="cover"
-                        data-bgrepeat="no-repeat" class="rev-slidebg">
+                    <img src="assets/images/slides/slide-3.jpg" alt="" data-bgposition="center center"
+                        data-bgfit="cover" data-bgrepeat="no-repeat" class="rev-slidebg">
 
                     <div class="tp-caption" data-x="center" data-hoffset="['-150','-150','-150','-240']" data-y="center"
                         data-voffset="['-50','-50','-50','-75']" data-start="1000"
@@ -120,8 +119,8 @@
 
                 </li>
                 <li data-transition="fade">
-                    <img src="assets/images/slides/slide-4.jpg" alt="" data-bgposition="center center" data-bgfit="cover"
-                        data-bgrepeat="no-repeat" class="rev-slidebg">
+                    <img src="assets/images/slides/slide-4.jpg" alt="" data-bgposition="center center"
+                        data-bgfit="cover" data-bgrepeat="no-repeat" class="rev-slidebg">
 
                     <div class="tp-caption" data-x="center" data-hoffset="['-150','-150','-150','-240']" data-y="center"
                         data-voffset="['-50','-50','-50','-75']" data-start="1000"
@@ -157,7 +156,11 @@
                         {{sliderTexts[4].text3}}</div>
                 </li>
             </ul>
+
+
         </div>
+        <div class="subnav blue"></div>
+        <div class="blue-concave-curve"></div>
     </div>
 
 
@@ -181,6 +184,7 @@
 
         </div>
     </div>
+
 
     <section class="section-secondary custom-section-padding" *ngFor="let sectionEntry of sectionMap | keyvalue">
         <div class="container">

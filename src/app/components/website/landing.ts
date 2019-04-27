@@ -8,6 +8,7 @@ import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
 @Component({
   selector: 'app-landing',
   templateUrl: '../../pages/website/landing.html',
+  styleUrls: ['./landing.css'],
   providers: [GenericService]
 })
 // tslint:disable-next-line:component-class-suffix
