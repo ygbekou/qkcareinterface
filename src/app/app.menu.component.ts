@@ -22,15 +22,10 @@ export class AppMenuComponent implements OnInit {
     public app: AppComponent) {}
 
   ngOnInit() {
-    
     this.globalEventsManager.showNavBar.subscribe((data: boolean) => {
-      
-    }, error => console.log(error));
-    
-   
-    
+  }, error => console.log(error));
 
-    this.model = [
+  this.model = [
       {label: 'Dashboard', icon: 'fa fa-fw fa-home', routerLink: ['/dashboard'], displayList: '1,2,3,4,5,6,20'},
       {
         label: 'Patients', icon: '  fa fa-wheelchair' , displayList: '1,2,3',
@@ -131,8 +126,7 @@ export class AppMenuComponent implements OnInit {
         items: [
           {label: 'Chambres et lits', icon: 'fa fa-bed', routerLink: ['/admin/adminBedStatus']},
           {label: 'config. des References', icon: 'fa fa-search', routerLink: ['/admin/adminReference']},
-          {label: 'config. du site web', icon: 'fa fa-search', routerLink: ['/admin/adminWebsite']} 
-         
+          {label: 'config. du site web', icon: 'fa fa-search', routerLink: ['/admin/adminWebsite']}         
         ]
       },
       {

@@ -312,7 +312,12 @@
 
     "SLIDER": "Slider",
     "SLIDER_IMAGE": "Slider Image",
-    "SLIDER_TEXT": "Slider Text"
+    "SLIDER_TEXT": "Slider Text",
+    "ADD": "Ajouter",
+    "EMAIL":"E-mail",
+    "TEXT1":"Texte 1",
+    "TEXT2":"Texte 2",
+    "TEXT3":"Texte 3"
     
   },
   "MESSAGE": {
