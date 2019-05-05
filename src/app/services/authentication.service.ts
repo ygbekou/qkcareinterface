@@ -21,7 +21,7 @@ export class AuthenticationService {
     this.headers.append('Content-Type', 'application/json');
     this.headers.append('Accept', 'application/json');
 
-    this.menuMap.set('/dashboard', [1, 2, 3, 4, 5, 6]);
+    this.menuMap.set('/admin/dashboard', [1, 2, 3, 4, 5, 6]);
     this.menuMap.set('/admin/patientDetails', [1]);
     this.menuMap.set('/admin/patientList', [1, 2, 3]);
     this.menuMap.set('/admin/employeeDetails', [1, 2]);
@@ -68,6 +68,7 @@ export class AuthenticationService {
   }
 
   public isGroupAllowForMenu = (menuItem: string, group: string = this.tokenStorage.getRole()): boolean => {
+    
     const groups = this.menuMap.get(menuItem);
     if (groups == null) {
       return false;

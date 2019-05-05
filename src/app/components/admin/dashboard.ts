@@ -4,6 +4,7 @@ import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
 // tslint:disable-next-line:import-blacklist
 import { Subscription } from 'rxjs/Rx';
 import { Appointment } from '../../models';
+import { GlobalEventsManager } from '../../services/globalEventsManager';
 
 @Component({
     templateUrl: '../../pages/admin/dashboard.html'
@@ -23,9 +24,11 @@ export class Dashboard implements OnInit, OnDestroy {
         private appointmentService: AppointmentService,
         private admissionService: AdmissionService,
         private visitService: VisitService,
-        private translate: TranslateService
+        private translate: TranslateService,
+        private globalEventsManager: GlobalEventsManager
     ) {
-
+    
+        this.globalEventsManager.showMenu = true;
         console.log('In dashboard');
         this.subscription = this.appointmentService.getByMonths()
               .subscribe((data: any) => {

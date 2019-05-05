@@ -17,7 +17,7 @@ import { TranslateService } from '@ngx-translate/core';
 // tslint:disable-next-line:component-class-suffix
 export class Contact implements OnInit {
 
-    company: Company = new Company;
+    company: Company = new Company();
     contactUsMessage: ContactUsMessage = new ContactUsMessage();
     messages: Message[] = [];
 

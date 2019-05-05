@@ -5,7 +5,7 @@
                 'layout-wrapper-sidebar-mobile-active': staticMenuMobileActive}">
 
 	<div class="layout-main-content">
-		<router-outlet></router-outlet>
+		<ng-container *ngTemplateOutlet="template"></ng-container>
 	</div>
 
 </div>
@@ -48,10 +48,15 @@
 		<app-breadcrumb></app-breadcrumb>
 
 		<div class="layout-main-content">
-			<router-outlet></router-outlet>
+			<ng-container *ngTemplateOutlet="template"></ng-container>
 		</div>
 		<!--  
         <app-footer></app-footer>
         -->
 	</div>
 </div>
+
+<ng-template #template>
+  <router-outlet>
+  </router-outlet>
+</ng-template>
