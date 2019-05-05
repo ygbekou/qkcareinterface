@@ -1,9 +1,9 @@
-import {Component, OnInit} from '@angular/core';
-import {Router, ActivatedRoute} from '@angular/router';
-import {AuthenticationService, TokenStorage, UserService} from '../../services';
-import {Constants} from '../../app.constants';
-import {User} from '../../models/user';
-import {GlobalEventsManager} from '../../services/globalEventsManager';
+import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
+import { AuthenticationService, TokenStorage, UserService } from '../../services';
+import { Constants } from '../../app.constants';
+import { User } from '../../models/user';
+import { GlobalEventsManager } from '../../services/globalEventsManager';
 import { Message } from 'primeng/api';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -61,23 +61,27 @@ export class Login implements OnInit {
         this.authenticationService.attemptAuth(this.user)
           .subscribe(data => {
             if (this.tokenStorage.getToken() !== '' && this.tokenStorage.getToken() !== null) {
-                if (this.tokenStorage.getFirstTimeLogin() === 'Y') {
-                    this.user.password = '';
-                    this.display = true;
-                } else {
-                    this.router.navigate(['dashboard']);
-                }
+              if (this.tokenStorage.getFirstTimeLogin() === 'Y') {
+                this.user.password = '';
+                this.display = true;
+              } else {
+                this.globalEventsManager.showMenu=true;
+                console.log('Navigating to dashboard');
+                this.router.navigate(['/admin/dashboard']);
+                window.location.reload();
+              }
+
             } else {
-                this.translate.get(['MESSAGE.INVALID_USER_PASS', 'COMMON.LOGIN']).subscribe(res => {
-                    this.messages.push({severity: Constants.ERROR, summary: res['COMMON.LOGIN'], detail: res['MESSAGE.INVALID_USER_PASS']});
-                });
+              this.translate.get(['MESSAGE.INVALID_USER_PASS', 'COMMON.LOGIN']).subscribe(res => {
+                this.messages.push({ severity: Constants.ERROR, summary: res['COMMON.LOGIN'], detail: res['MESSAGE.INVALID_USER_PASS'] });
+              });
             }
           });
       }
     } catch (e) {
-        this.translate.get(['MESSAGE.INVALID_USER_PASS', 'COMMON.LOGIN']).subscribe(res => {
-            this.messages.push({severity: Constants.ERROR, summary: res['COMMON.LOGIN'], detail: res['MESSAGE.INVALID_USER_PASS']});
-        });
+      this.translate.get(['MESSAGE.INVALID_USER_PASS', 'COMMON.LOGIN']).subscribe(res => {
+        this.messages.push({ severity: Constants.ERROR, summary: res['COMMON.LOGIN'], detail: res['MESSAGE.INVALID_USER_PASS'] });
+      });
     }
 
 
@@ -89,21 +93,27 @@ export class Login implements OnInit {
         .subscribe(result => {
           if (result === true) {
             this.translate.get(['MESSAGE.PASSWORD_SENT', 'COMMON.READ']).subscribe(res => {
-                this.messages.push({severity: Constants.SUCCESS, summary: res['COMMON.READ'],
-                    detail: res['MESSAGE.PASSWORD_SENT'] + this.user.email});
+              this.messages.push({
+                severity: Constants.SUCCESS, summary: res['COMMON.READ'],
+                detail: res['MESSAGE.PASSWORD_SENT'] + this.user.email
+              });
             });
           } else {
-           this.translate.get(['MESSAGE.PASSWORD_NOT_SENT', 'COMMON.READ']).subscribe(res => {
-                this.messages.push({severity: Constants.ERROR, summary: res['COMMON.READ'],
-                    detail: res['MESSAGE.PASSWORD_NOT_SENT']});
+            this.translate.get(['MESSAGE.PASSWORD_NOT_SENT', 'COMMON.READ']).subscribe(res => {
+              this.messages.push({
+                severity: Constants.ERROR, summary: res['COMMON.READ'],
+                detail: res['MESSAGE.PASSWORD_NOT_SENT']
+              });
             });
           }
         });
     } catch (e) {
       this.translate.get(['MESSAGE.ERROR_OCCURRED', 'COMMON.READ']).subscribe(res => {
-            this.messages.push({severity: Constants.ERROR, summary: res['COMMON.READ'],
-                detail: res['MESSAGE.ERROR_OCCURRED']});
+        this.messages.push({
+          severity: Constants.ERROR, summary: res['COMMON.READ'],
+          detail: res['MESSAGE.ERROR_OCCURRED']
         });
+      });
     }
 
   }
@@ -111,41 +121,50 @@ export class Login implements OnInit {
 
   public changePassword() {
     try {
-        this.messages = [];
-        if (this.user.confirmPassword !== this.user.password) {
-            this.translate.get(['MESSAGE.PASSWORD_NOT_MATCHED', 'COMMON.READ']).subscribe(res => {
-                this.messages.push({severity: Constants.ERROR, summary: res['COMMON.READ'],
-                    detail: res['MESSAGE.PASSWORD_NOT_MATCHED']});
-            });
-            return;
-        }
+      this.messages = [];
+      if (this.user.confirmPassword !== this.user.password) {
+        this.translate.get(['MESSAGE.PASSWORD_NOT_MATCHED', 'COMMON.READ']).subscribe(res => {
+          this.messages.push({
+            severity: Constants.ERROR, summary: res['COMMON.READ'],
+            detail: res['MESSAGE.PASSWORD_NOT_MATCHED']
+          });
+        });
+        return;
+      }
       this.userService.changePassword(this.user)
         .subscribe(result => {
           if (result) {
             this.translate.get(['MESSAGE.PASSWORD_CHANGED', 'COMMON.READ']).subscribe(res => {
-                this.messages.push({severity: Constants.SUCCESS, summary: res['COMMON.READ'],
-                    detail: res['MESSAGE.PASSWORD_CHANGED']});
+              this.messages.push({
+                severity: Constants.SUCCESS, summary: res['COMMON.READ'],
+                detail: res['MESSAGE.PASSWORD_CHANGED']
+              });
             });
             this.display = false;
             this.closePasswordUpdateDialog();
           } else {
-           this.translate.get(['MESSAGE.PASSWORD_NOT_CHANGED', 'COMMON.READ']).subscribe(res => {
-                this.messages.push({severity: Constants.ERROR, summary: res['COMMON.READ'],
-                    detail: res['MESSAGE.PASSWORD_NOT_CHANGED']});
+            this.translate.get(['MESSAGE.PASSWORD_NOT_CHANGED', 'COMMON.READ']).subscribe(res => {
+              this.messages.push({
+                severity: Constants.ERROR, summary: res['COMMON.READ'],
+                detail: res['MESSAGE.PASSWORD_NOT_CHANGED']
+              });
             });
           }
         });
     } catch (e) {
       this.translate.get(['MESSAGE.ERROR_OCCURRED', 'COMMON.READ']).subscribe(res => {
-            this.messages.push({severity: Constants.ERROR, summary: res['COMMON.READ'],
-                detail: res['MESSAGE.ERROR_OCCURRED']});
+        this.messages.push({
+          severity: Constants.ERROR, summary: res['COMMON.READ'],
+          detail: res['MESSAGE.ERROR_OCCURRED']
         });
+      });
     }
 
   }
 
   closePasswordUpdateDialog() {
-    this.router.navigate(['adminWebsite']);
+    this.router.navigate(['/admin/dashboard']);
+    //window.location.reload();
   }
 
 }

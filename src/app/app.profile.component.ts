@@ -8,7 +8,7 @@ import {trigger, state, transition, style, animate} from '@angular/animations';
     template: `
         <div class="user-profile">
             <a href="#" (click)="onClick($event)" id="sidebar-profile-button">
-                <img src="assets/images/User/{{tokenStorage.getPicture()}}" alt="california-layout"/>
+                <img src="assets/images/user/{{tokenStorage.getPicture()}}" alt="california-layout"/>
                 <span class="sidebar-profile-name">{{tokenStorage.getName()}}</span>
                 <span class="sidebar-profile-role">{{tokenStorage.getRoleName()}}</span>
             </a>

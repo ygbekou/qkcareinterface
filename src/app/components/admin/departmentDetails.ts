@@ -102,6 +102,7 @@ export class DepartmentDetails implements OnInit, OnDestroy {
     }
   }
 
+  delete(){}
 
 
  }

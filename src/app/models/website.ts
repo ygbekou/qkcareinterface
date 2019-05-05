@@ -45,7 +45,7 @@ export class SectionItem {
 
  export class Slider {
   id: number;
-  name: string;
+  name:  '';
   fileLocation: string;
   status: number;
 
@@ -58,9 +58,9 @@ export class SectionItem {
  export class SliderText {
   id: number;
   slider: Slider;
-  text1: string;
-  text2: string;
-  text3: string;
+  text1: ''; 
+  text2: '';
+  text3: '';
   language: string;
 
 }

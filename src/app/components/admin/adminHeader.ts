@@ -89,7 +89,7 @@ import { TranslateService } from '@ngx-translate/core';
 														</a>
                                                     </li>
                                                     <li class="dropdown">
-														<a class="dropdown-item dropdown-toggle active" href="#/adminWebsite">
+														<a class="dropdown-item dropdown-toggle active" (click)="goToDashboard()">
 															{{ 'COMMON.WEB_MENU' | translate }}
 														</a>
                                                     </li>
@@ -164,5 +164,8 @@ export class AdminHeader implements OnInit, OnDestroy {
         this.tokenStorage.signOut();
         this.router.navigate(['/login']);
     }
-
+    goToDashboard(){
+        this.router.navigate(['/admin/dashboard']);
+        window.location.reload();
+    }
  }

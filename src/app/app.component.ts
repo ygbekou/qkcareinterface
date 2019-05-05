@@ -1,18 +1,20 @@
 import { GlobalEventsManager } from './services';
 import { TokenStorage } from './services/token.storage';
-import {Component, AfterViewInit, ElementRef, Renderer2, ViewChild, OnDestroy, Input} from '@angular/core';
-import {Location} from "@angular/common";
-import {ScrollPanel} from 'primeng/primeng';
-import { TranslateService} from '@ngx-translate/core';
-import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
-import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+import { Component, AfterViewInit, ElementRef, Renderer2, ViewChild, OnDestroy, Input, AfterViewChecked, ChangeDetectorRef } from '@angular/core';
+import { Location } from "@angular/common";
+import { ScrollPanel } from 'primeng/primeng';
+import { TranslateService } from '@ngx-translate/core';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { Cookie } from 'ng2-cookies/ng2-cookies';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements AfterViewInit {
+export class AppComponent implements AfterViewInit, AfterViewChecked {
+
 
   layoutMode = 'static';
 
@@ -51,46 +53,60 @@ export class AppComponent implements AfterViewInit {
   @ViewChild('layoutMenuScroller') layoutMenuScrollerViewChild: ScrollPanel;
 
   constructor(public globalEventsManager: GlobalEventsManager,
-              private location: Location,
-              public translate: TranslateService,
-              private token: TokenStorage,
-              public renderer: Renderer2) {
-    
-    translate.addLangs(['en', 'fr']);
-    translate.setDefaultLang('en');
+    private location: Location,
+    public translate: TranslateService,
+    private token: TokenStorage,
+    public renderer: Renderer2,
+    private cdRef: ChangeDetectorRef) {
+    /**
+        translate.addLangs(['en', 'fr']);
+        translate.setDefaultLang('fr');
+        
+        const browserLang = translate.getBrowserLang();
+        translate.use(browserLang.match(/en|fr/) ? browserLang : 'en');
+    */
 
-    const browserLang = translate.getBrowserLang();
-    translate.use(browserLang.match(/en|fr/) ? browserLang : 'en');
-    
+    let lang = navigator.language;
+    if (lang) {
+      lang = lang.substring(0, 2);
+    }
+    if (Cookie.get('lang')) {
+      this.translate.use(Cookie.get('lang'));
+      console.log('Using cookie lang=' + Cookie.get('lang'));
+    } else if (lang) {
+      console.log('Using browser lang=' + lang);
+      this.translate.use(lang);
+    } else {
+      this.translate.use('fr');
+      console.log('Using default lang=fr');
+    }
   }
 
-//  ngOnInit() {
-//    this.location.subscribe(
-//      x => {
-//      }
-//    );
-//  }
-  
   ngAfterViewInit() {
     setTimeout(() => {
       if (this.layoutMenuScrollerViewChild)
-        this.layoutMenuScrollerViewChild.moveBar(); 
+        this.layoutMenuScrollerViewChild.moveBar();
     }, 100);
   }
 
-  onLayoutClick() {
+  ngAfterViewChecked(): void {
+    if (this.globalEventsManager.showMenu) {
+      this.cdRef.detectChanges();
+    }
+  }
+  onLayoutClick() { 
     if (!this.topbarItemClick) {
       this.activeTopbarItem = null;
       this.topbarMenuActive = false;
     }
 
-      if (!this.rightPanelClick) {
-          this.rightPanelActive = false;
-      }
+    if (!this.rightPanelClick) {
+      this.rightPanelActive = false;
+    }
 
-      if (!this.megaMenuClick) {
-          this.megaMenuActive = false;
-      }
+    if (!this.megaMenuClick) {
+      this.megaMenuActive = false;
+    }
 
     if (!this.menuClick) {
       if (this.overlayMenuActive || this.staticMenuMobileActive) {
@@ -100,8 +116,8 @@ export class AppComponent implements AfterViewInit {
 
     this.topbarItemClick = false;
     this.menuClick = false;
-      this.rightPanelClick = false;
-      this.megaMenuClick = false;
+    this.rightPanelClick = false;
+    this.megaMenuClick = false;
   }
 
   onMenuButtonClick(event) {
@@ -112,8 +128,10 @@ export class AppComponent implements AfterViewInit {
       this.overlayMenuActive = !this.overlayMenuActive;
     } else {
       if (this.isDesktop()) {
-        this.staticMenuDesktopInactive = !this.staticMenuDesktopInactive; } else {
-        this.staticMenuMobileActive = !this.staticMenuMobileActive; }
+        this.staticMenuDesktopInactive = !this.staticMenuDesktopInactive;
+      } else {
+        this.staticMenuMobileActive = !this.staticMenuMobileActive;
+      }
     }
 
     event.preventDefault();
@@ -137,8 +155,10 @@ export class AppComponent implements AfterViewInit {
     this.topbarItemClick = true;
 
     if (this.activeTopbarItem === item) {
-      this.activeTopbarItem = null; } else {
-      this.activeTopbarItem = item; }
+      this.activeTopbarItem = null;
+    } else {
+      this.activeTopbarItem = item;
+    }
 
     event.preventDefault();
   }
@@ -147,25 +167,25 @@ export class AppComponent implements AfterViewInit {
     event.preventDefault();
   }
 
-    onRightPanelButtonClick(event) {
-        this.rightPanelClick = true;
-        this.rightPanelActive = !this.rightPanelActive;
-        event.preventDefault();
-    }
+  onRightPanelButtonClick(event) {
+    this.rightPanelClick = true;
+    this.rightPanelActive = !this.rightPanelActive;
+    event.preventDefault();
+  }
 
-    onRightPanelClick() {
-        this.rightPanelClick = true;
-    }
+  onRightPanelClick() {
+    this.rightPanelClick = true;
+  }
 
-    onMegaMenuButtonClick(event) {
-        this.megaMenuClick = true;
-        this.megaMenuActive = !this.megaMenuActive;
-        event.preventDefault();
-    }
+  onMegaMenuButtonClick(event) {
+    this.megaMenuClick = true;
+    this.megaMenuActive = !this.megaMenuActive;
+    event.preventDefault();
+  }
 
-    onMegaMenuClick() {
-        this.megaMenuClick = true;
-    }
+  onMegaMenuClick() {
+    this.megaMenuClick = true;
+  }
 
   hideOverlayMenu() {
     this.overlayMenuActive = false;

@@ -29,7 +29,7 @@ export class CompanyDetails implements OnInit, OnDestroy {
       private genericService: GenericService,
       public translate: TranslateService,
       private route: ActivatedRoute,
-      private router: Router
+      private router: Router 
     ) {
 
   }

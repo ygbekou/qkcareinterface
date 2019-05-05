@@ -1,74 +1,79 @@
+<app-web-header></app-web-header>
 
-
-        <app-web-header></app-web-header>
-
-        <p-dialog header="First Time Login - Change Password" [(visible)]="display" [style]="{width: '2000px', height: '2000px'}" 
-            (onHide)="closePasswordUpdateDialog()" [blockScroll]="true" [draggable]="false">
-            <form name="form1" (ngSubmit)="f1.form.valid && changePassword()" #f1="ngForm" validate>
-                <div class="form-group">
-                    <label for="password1">{{ 'COMMON.NEW_PASSWORD' | translate }}:<font color="red">*</font></label> 
-                    <input type="password" pPassword class="form-control" id="password1" 
-                        [(ngModel)]="user.password" name="password1" #password1="ngModel" required>
-                    <p-message *ngIf="f1.submitted && password1.invalid" severity="error" text="Field is required"></p-message>
-                </div>
-            
-                <div class="form-group">
-                    <label for="confirmPassword">{{ 'COMMON.CONFIRM_PASSWORD' | translate }}:<font color="red">*</font></label> 
-                    <input type="confirmPassword" pPassword class="form-control" id="confirmPassword" 
-                        [(ngModel)]="user.confirmPassword" name="confirmPassword" #confirmPassword="ngModel" required>
-                    <p-message *ngIf="f1.submitted && confirmPassword.invalid" severity="error" text="Field is required"></p-message>
-                </div>
-               
-                <button pButton icon="fa fa-save" label="{{'COMMON.SUBMIT' | translate}}"></button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <button type="button" pButton icon="fa fa-delete" (click)="closePasswordUpdateDialog()" label="{{'COMMON.CANCEL' | translate}}"></button>
-            </form>
-        </p-dialog>
-
-
-        <div class="container">
-            <div class="row pt-3">
-                <br/>
-                <br/>
-                <div class="col-lg-4">
-
-                </div>
-                <div class="col-lg-8">
-
-                    <form name="form" (ngSubmit)="f.form.valid && login()" #f="ngForm" validate>
-                        <p-messages [(value)]="messages"></p-messages>
-                        <div class="ui-grid ui-grid-responsive ui-fluid">
-                            <div class="ui-grid-row">
-                                <div class="form-group">
-                                    <label for="email">{{ 'COMMON.USERNAME' | translate }}<font color="red">*</font></label> 
-                                    <input type="text" pInputText class="form-control" id="email" required 
-                                        [(ngModel)]="user.userName" name="email" #email="ngModel">
-                                    <p-message *ngIf="f.submitted && email.invalid" severity="error" text="Field is required"></p-message>
-                                </div>
-                            </div>
-                            <div class="ui-grid-row">
-                                <div class="form-group">
-                                    <label for="password">{{ 'COMMON.PASSWORD' | translate }} <font color="red">*</font></label> 
-                                    <input type="password" pInputText class="form-control" id="password"
-                                        [(ngModel)]="user.password" name="password" #password="ngModel">
-                                    <p-message *ngIf="f.submitted && password.invalid" severity="error" text="Field is required"></p-message>
-                                </div>
-                            </div>
-                        </div>
-
-                        <br/>
-                        <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
-                            <button pButton type="submit" icon="fa fa-play-circle" label="{{ 'COMMON.SUBMIT' | translate }}"></button>
-                            <br/>
-                            <br/>
-                            						
-                            {{'MESSAGE.FORGET_PASSWORD' | translate}} &nbsp;&nbsp;<button pButton (click)="button='password'" icon="fa fa-play-circle" label="{{'MESSAGE.SEND_PASSWORD' | translate}}"></button>
-                            
-                        </div>
-                    </form> 
-                </div>
-            </div>
+<p-dialog header="First Time Login - Change Password" [(visible)]="display"
+    [style]="{width: '2000px', height: '2000px'}" (onHide)="closePasswordUpdateDialog()" [blockScroll]="true"
+    [draggable]="false">
+    <form name="form1" (ngSubmit)="f1.form.valid && changePassword()" #f1="ngForm" validate>
+        <div class="form-group">
+            <label for="password1">{{ 'COMMON.NEW_PASSWORD' | translate }}:<font color="red">*</font></label>
+            <input type="password" pPassword class="form-control" id="password1" [(ngModel)]="user.password"
+                name="password1" #password1="ngModel" required>
+            <p-message *ngIf="f1.submitted && password1.invalid" severity="error" text="Field is required"></p-message>
         </div>
-        <br/>
-        <br/>
-        <app-web-footer></app-web-footer>
 
+        <div class="form-group">
+            <label for="confirmPassword">{{ 'COMMON.CONFIRM_PASSWORD' | translate }}:<font color="red">*</font></label>
+            <input type="confirmPassword" pPassword class="form-control" id="confirmPassword"
+                [(ngModel)]="user.confirmPassword" name="confirmPassword" #confirmPassword="ngModel" required>
+            <p-message *ngIf="f1.submitted && confirmPassword.invalid" severity="error" text="Field is required">
+            </p-message>
+        </div>
+
+        <button pButton icon="fa fa-save"
+            label="{{'COMMON.SUBMIT' | translate}}"></button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <button type="button" pButton icon="fa fa-delete" (click)="closePasswordUpdateDialog()"
+            label="{{'COMMON.CANCEL' | translate}}"></button>
+    </form>
+</p-dialog>
+
+
+<div class="container">
+    <div class="row pt-3">
+        <br />
+        <br />
+        <div class="col-lg-4">
+
+        </div>
+        <div class="col-lg-8">
+
+            <form name="form" (ngSubmit)="f.form.valid && login()" #f="ngForm" validate>
+                <p-messages [(value)]="messages"></p-messages>
+                <div class="ui-grid ui-grid-responsive ui-fluid">
+                    <div class="ui-grid-row">
+                        <div class="form-group">
+                            <label for="email">{{ 'COMMON.USERNAME' | translate }}<font color="red">*</font></label>
+                            <input type="text" pInputText class="form-control" id="email" required
+                                [(ngModel)]="user.userName" name="email" #email="ngModel">
+                            <p-message *ngIf="f.submitted && email.invalid" severity="error" text="Field is required">
+                            </p-message>
+                        </div>
+                    </div>
+                    <div class="ui-grid-row">
+                        <div class="form-group">
+                            <label for="password">{{ 'COMMON.PASSWORD' | translate }} <font color="red">*</font></label>
+                            <input type="password" pInputText class="form-control" id="password"
+                                [(ngModel)]="user.password" name="password" #password="ngModel">
+                            <p-message *ngIf="f.submitted && password.invalid" severity="error"
+                                text="Field is required"></p-message>
+                        </div>
+                    </div>
+                </div>
+
+                <br />
+                <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+                    <button pButton type="submit" icon="fa fa-play-circle"
+                        label="{{ 'COMMON.SUBMIT' | translate }}"></button>
+                    <br />
+                    <br />
+
+                    {{'MESSAGE.FORGET_PASSWORD' | translate}} &nbsp;&nbsp;<button pButton (click)="button='password'"
+                        icon="fa fa-play-circle" label="{{'MESSAGE.SEND_PASSWORD' | translate}}"></button>
+
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<br />
+<br />
+<app-web-footer></app-web-footer>

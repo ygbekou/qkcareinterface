@@ -11,7 +11,7 @@ import { ContactUsMessage } from '../../models/website';
   templateUrl: '../../pages/admin/contactDetails.html',
   providers: [GenericService]
 })
-// tslint:disable-next-line:component-class-suffix
+// tslint:disable-next-line:component-class-suffix 
 export class ContactDetails implements OnInit, OnDestroy {
 
   contactUsMessage: ContactUsMessage = new ContactUsMessage();

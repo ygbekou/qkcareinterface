@@ -18,7 +18,7 @@ export class Landing implements OnInit, OnDestroy {
   aboutUsSection: Section = new Section();
   serviceSection: Section = new Section();
   industrySection: Section = new Section();
-  sliderTexts: SliderText[] = [];
+  sliderTexts: SliderText[] = [new SliderText(),new SliderText(),new SliderText(),new SliderText()];
   sectionMap: Map<string, SectionItem[]> = new Map();
   managers: Employee[] = [];
   company: Company = new Company();
@@ -34,16 +34,16 @@ export class Landing implements OnInit, OnDestroy {
     let lang = navigator.language;
     if (lang) {
       lang = lang.substring(0, 2);
-    }
-    console.log('browser lang=' + lang);
+    } 
     if (Cookie.get('lang')) {
       this.translate.use(Cookie.get('lang'));
-      console.log('cookie lang=' + lang);
+      console.log('Using cookie lang=' + Cookie.get('lang'));
     } else if (lang) {
+      console.log('Using browser lang=' + lang);
       this.translate.use(lang);
     } else {
       this.translate.use('fr');
-      console.log('Defaulting lang to =' + lang);
+      console.log('Using default lang=fr'); 
     }
 
     this.loadData();
@@ -60,16 +60,13 @@ export class Landing implements OnInit, OnDestroy {
 
   loadData(): void {
     this.sectionMap = new Map();
-    this.sliderTexts[1] = new SliderText();
-    this.sliderTexts[2] = new SliderText();
-    this.sliderTexts[3] = new SliderText();
-    this.sliderTexts[4] = new SliderText();
+    this.sliderTexts = [new SliderText(),new SliderText(),new SliderText(),new SliderText()]; 
 
     let parameters: string[] = [];
     parameters.push('e.language = |language|' + this.translate.currentLang + '|String');
     this.genericService.getAllByCriteria('com.qkcare.model.website.SliderText', parameters)
       .subscribe((data: SliderText[]) => {
-        let i = 1;
+        let i = 0;
         for (const item of data) {
           this.sliderTexts[i] = item;
           i = i + 1;
