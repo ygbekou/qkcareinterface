@@ -3,16 +3,16 @@ import { ActivatedRoute } from '@angular/router';
 import { Constants } from '../../app.constants';
 import { Employee } from '../../models/employee';
 import { UserGroup } from '../../models/userGroup';
-import { UserGroupDropdown } from '../dropdowns';
+import { UserGroupDropdown, CountryDropdown, DepartmentDropdown } from '../dropdowns';
 import { User } from '../../models/user';
 import { GenericService, UserService } from '../../services';
-import { TranslateService} from '@ngx-translate/core';
+import { TranslateService } from '@ngx-translate/core';
 import { Message } from 'primeng/api';
 
 @Component({
   selector: 'app-employee-details',
   templateUrl: '../../pages/admin/employeeDetails.html',
-  providers: [GenericService, UserService, UserGroupDropdown]
+  providers: [GenericService, UserService, UserGroupDropdown, CountryDropdown,DepartmentDropdown]
 })
 // tslint:disable-next-line:component-class-suffix
 export class EmployeeDetails implements OnInit, OnDestroy {
@@ -24,46 +24,47 @@ export class EmployeeDetails implements OnInit, OnDestroy {
   displayDialog: boolean;
   employee: Employee = new Employee();
   messages: Message[] = [];
-  pictureUrl: any = '';
-
+  pictureUrl: any = ''; 
   constructor
     (
       private genericService: GenericService,
       private userService: UserService,
       private translate: TranslateService,
+      public countryDropdown: CountryDropdown,
+      public departmentDropdown: DepartmentDropdown,
       public userGroupDropdown: UserGroupDropdown,
       private route: ActivatedRoute,
-    ) {
-        this.employee.user = new User();
+  ) {
+    this.employee.user = new User(); 
   }
 
   ngOnInit(): void {
 
     let employeeId = null;
     this.route
-        .queryParams
-        .subscribe(params => {
+      .queryParams
+      .subscribe(params => {
 
-          this.employee.user = new User();
-          this.employee.user.userGroup = new UserGroup();
-          employeeId = params['employeeId'];
+        this.employee.user = new User();
+        this.employee.user.userGroup = new UserGroup();
+        employeeId = params['employeeId'];
 
-          if (employeeId != null) {
-              this.genericService.getOne(employeeId, 'Employee')
-                  .subscribe(result => {
-                if (result.id > 0) {
-                  this.employee = result;
-                  if (this.employee.user.birthDate != null) {
-                    this.employee.user.birthDate = new Date(this.employee.user.birthDate);
-                  }
-                } else {
-                  this.error = Constants.SAVE_UNSUCCESSFUL;
-                  this.displayDialog = true;
+        if (employeeId != null) {
+          this.genericService.getOne(employeeId, 'Employee')
+            .subscribe(result => {
+              if (result.id > 0) {
+                this.employee = result;
+                if (this.employee.user.birthDate != null) {
+                  this.employee.user.birthDate = new Date(this.employee.user.birthDate);
                 }
-              });
-          } else {
-          }
-        });
+              } else {
+                this.error = Constants.SAVE_UNSUCCESSFUL;
+                this.displayDialog = true;
+              }
+            });
+        } else {
+        }
+      });
 
   }
 
@@ -73,19 +74,19 @@ export class EmployeeDetails implements OnInit, OnDestroy {
 
   save() {
     this.formData = new FormData();
-        let inputEl;
-        if (this.picture) {
-            inputEl = this.picture.nativeElement;
+    let inputEl;
+    if (this.picture) {
+      inputEl = this.picture.nativeElement;
 
-            if (inputEl && inputEl.files && (inputEl.files.length > 0)) {
-            const files: FileList = inputEl.files;
-            for (let i = 0; i < files.length; i++) {
-                this.formData.append('file', files[i], files[i].name);
-            }
-            } else {
-                this.formData.append('file', null, null);
-            }
+      if (inputEl && inputEl.files && (inputEl.files.length > 0)) {
+        const files: FileList = inputEl.files;
+        for (let i = 0; i < files.length; i++) {
+          this.formData.append('file', files[i], files[i].name);
         }
+      } else {
+        this.formData.append('file', null, null);
+      }
+    }
 
     try {
       this.error = '';
@@ -108,7 +109,7 @@ export class EmployeeDetails implements OnInit, OnDestroy {
             if (result.id > 0) {
               this.employee = result;
               if (this.employee.user.birthDate != null) {
-                    this.employee.user.birthDate = new Date(this.employee.user.birthDate);
+                this.employee.user.birthDate = new Date(this.employee.user.birthDate);
               }
             } else {
               this.error = Constants.SAVE_UNSUCCESSFUL;
@@ -129,21 +130,23 @@ export class EmployeeDetails implements OnInit, OnDestroy {
     alert('To Do');
   }
 
-   getEmployee(employeeId: number) {
+  getEmployee(employeeId: number) {
     this.messages = [];
     this.genericService.getOne(employeeId, 'Employee')
-        .subscribe(result => {
-      if (result.id > 0) {
-        this.employee = result;
-      } else {
-        this.translate.get(['COMMON.READ', 'MESSAGE.READ_FAILED']).subscribe(res => {
-          this.messages.push({severity:
-            Constants.ERROR, summary:
-            res['COMMON.READ'], detail:
-            res['MESSAGE.READ_FAILED']});
-        });
-      }
-    });
+      .subscribe(result => {
+        if (result.id > 0) {
+          this.employee = result;
+        } else {
+          this.translate.get(['COMMON.READ', 'MESSAGE.READ_FAILED']).subscribe(res => {
+            this.messages.push({
+              severity:
+                Constants.ERROR, summary:
+                res['COMMON.READ'], detail:
+                res['MESSAGE.READ_FAILED']
+            });
+          });
+        }
+      });
   }
 
   readUrl(event: any) {
@@ -164,4 +167,4 @@ export class EmployeeDetails implements OnInit, OnDestroy {
     this.picture.nativeElement.value = '';
   }
 
- }
+}

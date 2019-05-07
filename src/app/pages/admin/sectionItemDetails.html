@@ -8,8 +8,8 @@
 					<p-autoComplete [(ngModel)]="sectionItem.section"
 						(onDropdownClick)="sectionDropdown.handleDropdownClick($event)"
 						[suggestions]="sectionDropdown.filteredSections" [dropdown]="true"
-						id="section" (completeMethod)="sectionDropdown.filter($event)"
-						name="section" field="sectionLabel" [size]="30" placeholder=""
+                        id="section" (completeMethod)="sectionDropdown.filter($event)"
+                        #section="ngModel" name="name" field="name" [size]="30" placeholder="{{ 'COMMON.SECTION' | translate }}"
 						[minLength]="1"></p-autoComplete>
 				</div>
             </div>

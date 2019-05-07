@@ -1,211 +1,226 @@
 <form name="form" (ngSubmit)="f.form.valid && save()" #f="ngForm" validate>
 	<div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="employee">
-		<p-accordion> <p-accordionTab header="{{ 'COMMON.DEMOGRAPHIC_INFO' | translate }}"
-			selected="true">
-		
-		<div class="ui-grid-row">
-			<div class="ui-grid-col-8 ui-sm-12">
+		<p-accordion>
+			<p-accordionTab header="{{ 'COMMON.DEMOGRAPHIC_INFO' | translate }}" selected="true">
+
 				<div class="ui-grid-row">
-					<div class="ui-grid-col-6 ui-sm-12">
-						<div class="form-group">
-							<label for="userName">{{ 'COMMON.USER_NAME' | translate }}:<font color="red">*</font>
-							</label> <input type="text" pInputText class="form-control" id="userName"
-								[(ngModel)]="employee.user.userName" name="userName" #userName="ngModel" required>
-							<p-message *ngIf="f.submitted && userName.invalid" severity="error" text="Field is required"></p-message>
-						</div>
-					</div>
-					<div class="ui-grid-col-6 ui-sm-12">
-						<div class="form-group">
-							<label for="password">{{ 'COMMON.PASSWORD' | translate }}:<font color="red">*</font></label> 
-							<input type="password" pPassword class="form-control" id="password1" 
-								[(ngModel)]="employee.user.password" name="password1" #password1="ngModel" required>
-							<p-message *ngIf="f.submitted && password1.invalid" severity="error" text="Field is required"></p-message>
-						</div>
-					</div>
-				</div>
-				<div class="ui-grid-row">
-					<div class="ui-grid-col-6 ui-sm-12">
-						<div class="form-group">
-							<label for="lastName">{{ 'COMMON.LAST_NAME' | translate }}<font color="red">*</font>:
-							</label> <input type="text" pInputText class="form-control" id="lastName"
-								 [(ngModel)]="employee.user.lastName" name="lastName" #lastName="ngModel" required>
-							<p-message *ngIf="f.submitted && lastName.invalid" severity="error" text="Field is required"></p-message>
-						</div>
-					</div>
-					<div class="ui-grid-col-6 ui-sm-12">
-						<div class="form-group">
-							<label i18n="@@firstName" for="firstName">First Name<font color="red">*</font>:
-							</label> <input type="text" pInputText class="form-control" id="firstName"
-								 [(ngModel)]="employee.user.firstName" name="firstName" #firstName="ngModel" required>
-							<p-message *ngIf="f.submitted && firstName.invalid" severity="error" text="Field is required"></p-message>
-						</div>
-					</div>
-				</div>
-				<div class="ui-grid-row">
-					<div class="ui-grid-col-6 ui-sm-12">
-						<div class="form-group">
-							<label for="middleName">{{ 'COMMON.MIDDLE_NAME' | translate }}</label> 
-							<input type="text" pInputText class="form-control" id="middleName"
-								[(ngModel)]="employee.user.middleName" name="middleName" #middleName="ngModel">
-						</div>
-					</div>
-					<div class="ui-grid-col-6 ui-sm-12">
-						<div class="form-group">
-							<label i18n="@@email" for="email">E-mail<font color="red">*</font></label> 
-							<input type="text" pInputText class="form-control" id="email"
-								[(ngModel)]="employee.user.email" name="email" #email="ngModel" email>
-							<p-message *ngIf="f.submitted && email.errors && email.errors.email" severity="error" text="Invalid email"></p-message>
-						</div>
-					</div>
-				</div>
-				<div class="ui-grid-row">
-					<div class="ui-grid-col-4 ui-sm-12">
-						<div class="form-group">
-							<div class="ui-grid-row">
-								<label for="sex">{{ 'COMMON.DEMOGRAPHIC_INFO' | translate }}</label>
+					<div class="ui-grid-col-8 ui-sm-12">
+						<div class="ui-grid-row">
+							<div class="ui-grid-col-6 ui-sm-12">
+								<div class="form-group">
+									<label for="userName">{{ 'COMMON.USER_NAME' | translate }}:<font color="red">*
+										</font>
+									</label> <input type="text" pInputText class="form-control" id="userName"
+										[(ngModel)]="employee.user.userName" name="userName" #userName="ngModel"
+										required>
+									<p-message *ngIf="f.submitted && userName.invalid" severity="error"
+										text="Field is required"></p-message>
+								</div>
 							</div>
-							<div class="ui-grid-row">
-								<p-radioButton name="sex" value="M" label="Male"
-									[(ngModel)]="employee.user.sex" #gender="ngModel" required></p-radioButton>
-								<p-radioButton name="sex" value="F" label="Female"
-									[(ngModel)]="employee.user.sex"#gender="ngModel" required></p-radioButton>
-								<p-message *ngIf="f.submitted && gender.errors && gender.errors.required" severity="error" text="Field is required"></p-message>
+							<div class="ui-grid-col-6 ui-sm-12">
+								<div class="form-group">
+									<label for="password">{{ 'COMMON.PASSWORD' | translate }}:<font color="red">*</font>
+									</label>
+									<input type="password" pPassword class="form-control" id="password1"
+										[(ngModel)]="employee.user.password" name="password1" #password1="ngModel"
+										required>
+									<p-message *ngIf="f.submitted && password1.invalid" severity="error"
+										text="Field is required"></p-message>
+								</div>
 							</div>
 						</div>
-					</div>
-					<div class="ui-grid-col-4 ui-sm-12">
-						<div class="form-group">
-							<label for="phone">{{ 'COMMON.PHONE' | translate }}<font color="red">*</font>
-							</label> <input type="text" pInputText class="form-control" id="phone"
-								[(ngModel)]="employee.user.homePhone" name="phone" #phone="ngModel" required>
-							<p-message *ngIf="f.submitted && phone.invalid" severity="error" text="Invalid Phone"></p-message>
-						
+						<div class="ui-grid-row">
+							<div class="ui-grid-col-6 ui-sm-12">
+								<div class="form-group">
+									<label for="lastName">{{ 'COMMON.LAST_NAME' | translate }}<font color="red">*</font>
+										:
+									</label> <input type="text" pInputText class="form-control" id="lastName"
+										[(ngModel)]="employee.user.lastName" name="lastName" #lastName="ngModel"
+										required>
+									<p-message *ngIf="f.submitted && lastName.invalid" severity="error"
+										text="Field is required"></p-message>
+								</div>
+							</div>
+							<div class="ui-grid-col-6 ui-sm-12">
+								<div class="form-group">
+									<label i18n="@@firstName" for="firstName">First Name<font color="red">*</font>:
+									</label> <input type="text" pInputText class="form-control" id="firstName"
+										[(ngModel)]="employee.user.firstName" name="firstName" #firstName="ngModel"
+										required>
+									<p-message *ngIf="f.submitted && firstName.invalid" severity="error"
+										text="Field is required"></p-message>
+								</div>
+							</div>
+						</div>
+						<div class="ui-grid-row">
+							<div class="ui-grid-col-6 ui-sm-12">
+								<div class="form-group">
+									<label for="middleName">{{ 'COMMON.MIDDLE_NAME' | translate }}</label>
+									<input type="text" pInputText class="form-control" id="middleName"
+										[(ngModel)]="employee.user.middleName" name="middleName" #middleName="ngModel">
+								</div>
+							</div>
+							<div class="ui-grid-col-6 ui-sm-12">
+								<div class="form-group">
+									<label i18n="@@email" for="email">E-mail<font color="red">*</font></label>
+									<input type="text" pInputText class="form-control" id="email"
+										[(ngModel)]="employee.user.email" name="email" #email="ngModel" email>
+									<p-message *ngIf="f.submitted && email.errors" severity="error"
+										text="Invalid email"></p-message>
+								</div>
+							</div>
+						</div>
+						<div class="ui-grid-row">
+							<div class="ui-grid-col-4 ui-sm-12">
+								<div class="form-group">
+									<div class="ui-grid-row">
+										<label for="sex">{{ 'COMMON.DEMOGRAPHIC_INFO' | translate }}</label>
+									</div>
+									<div class="ui-grid-row">
+										<p-radioButton name="sex" value="M" label="Male" [(ngModel)]="employee.user.sex"
+											#gender="ngModel" required></p-radioButton>
+										<p-radioButton name="sex" value="F" label="Female"
+											[(ngModel)]="employee.user.sex" #gender="ngModel" required></p-radioButton>
+										<p-message *ngIf="f.submitted && gender.errors" severity="error"
+											text="Field is required"></p-message>
+									</div>
+								</div>
+							</div>
+							<div class="ui-grid-col-4 ui-sm-12">
+								<div class="form-group">
+									<label for="phone">{{ 'COMMON.PHONE' | translate }}<font color="red">*</font>
+									</label> <input type="text" pInputText class="form-control" id="phone"
+										[(ngModel)]="employee.user.homePhone" name="phone" #phone="ngModel" required>
+									<p-message *ngIf="f.submitted && phone.invalid" severity="error"
+										text="Invalid Phone"></p-message>
+
+								</div>
+							</div>
+							<div class="ui-grid-col-4 ui-sm-12">
+								<div class="form-group">
+									<label for="birthDate">{{ 'COMMON.BIRTH_DATE' | translate }}<font color="red">*
+										</font>:</label>
+									<p-calendar [(ngModel)]="employee.user.birthDate" id="birthDate" name="birthDate"
+										#birthDate="ngModel" required date></p-calendar>
+									<p-message *ngIf="f.submitted && birthDate.invalid" severity="error"
+										text="Birth Date is required"></p-message>
+								</div>
+							</div>
+						</div>
+						<div class="ui-grid-row">
+							<div class="ui-grid-col-6 ui-sm-12">
+								<div class="form-group">
+									<label for="address">{{ 'COMMON.ADDRESS' | translate }}</label> <input type="text"
+										pInputText class="form-control" id="address" [(ngModel)]="employee.user.address"
+										name="address" #address="ngModel">
+								</div>
+							</div>
+							<div class="ui-grid-col-6 ui-sm-12">
+								<div class="form-group">
+									<label for="city">{{ 'COMMON.CITY' | translate }}</label> <input type="text"
+										pInputText class="form-control" id="city" [(ngModel)]="employee.user.city"
+										name="city" #city="ngModel">
+								</div>
+							</div>
+						</div>
+						<div class="ui-grid-row">
+							<div class="ui-grid-col-6 ui-sm-12">
+								<div class="form-group">
+									<label for="country">{{ 'COMMON.COUNTRY' | translate }}</label>
+									<p-autoComplete [(ngModel)]="employee.user.country"
+										(onDropdownClick)="countryDropdown.handleDropdownClick($event)"
+										[suggestions]="countryDropdown.filteredCountries" [dropdown]="true" id="country"
+										(completeMethod)="countryDropdown.filter($event)" name="country" field="name"
+										[size]="30" placeholder="{{ 'COMMON.COUNTRY' | translate }}" [minLength]="1">
+									</p-autoComplete>
+								</div>
+							</div>
+							<div class="ui-grid-col-6 ui-sm-12">
+								<div class="form-group">
+									<label for="zipCode">{{ 'COMMON.ZIP_CODE' | translate }}</label>
+									<input type="text" pInputText class="form-control" id="zipCode"
+										[(ngModel)]="employee.user.zipCode" name="zipCode" #zipCode="ngModel">
+								</div>
+							</div>
 						</div>
 					</div>
+
+
 					<div class="ui-grid-col-4 ui-sm-12">
+						<div class="ui-grid-col-2">
+							<img class="thumb" src="assets/images/user/{{employee.user.picture}}" alt="" />
+						</div>
+						<div class="ui-grid-col-12 ui-sm-12">
+							<div class="form-group">
+								<input type="file" #uploadFile [attr.multiple]="false">
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+			</p-accordionTab>
+			<p-accordionTab header="{{ 'COMMON.PROFESSIONAL_INFO' | translate }}">
+				<div class="ui-grid-row">
+					<div class="ui-grid-col-6 ui-sm-12">
 						<div class="form-group">
-							<label for="birthDate">{{ 'COMMON.BIRTH_DATE' | translate }}<font color="red">*</font>:</label>
-							<p-calendar [(ngModel)]="employee.user.birthDate" id="birthDate" name="birthDate" #birthDate="ngModel" required date></p-calendar>
-							<p-message *ngIf="f.submitted && birthDate.invalid" severity="error" text="Birth Date is required"></p-message>
+							<label for="designation">{{ 'COMMON.DESIGNATION' | translate }}</label>
+							<input type="text" pInputText class="form-control" id="designation"
+								[(ngModel)]="employee.designation" name="designation" #designation="ngModel">
+						</div>
+					</div>
+					<div class="ui-grid-col-6 ui-sm-12">
+						<div class="form-group">
+							<label for="specialist">{{ 'COMMON.SPECIALIST' | translate }}</label>
+							<input type="text" pInputText class="form-control" id="specialist"
+								[(ngModel)]="employee.specialist" name="specialist" #specialist="ngModel">
 						</div>
 					</div>
 				</div>
 				<div class="ui-grid-row">
 					<div class="ui-grid-col-6 ui-sm-12">
 						<div class="form-group">
-							<label for="address">{{ 'COMMON.ADDRESS' | translate }}</label> <input
-								type="text" pInputText class="form-control" id="address"
-								[(ngModel)]="employee.user.address" name="address" #address="ngModel">
+							<label for="department">{{ 'COMMON.DEPARTMENT' | translate }}</label>
+							<p-autoComplete [(ngModel)]="employee.department"
+								(onDropdownClick)="departmentDropdown.handleDropdownClick($event)"
+								[suggestions]="departmentDropdown.filteredDepartments" [dropdown]="true" id="department"
+								(completeMethod)="departmentDropdown.filter($event)" name="department" field="name"
+								[size]="30" placeholder="{{ 'COMMON.DEPARTMENT' | translate }}" [minLength]="1">
+							</p-autoComplete>
 						</div>
 					</div>
 					<div class="ui-grid-col-6 ui-sm-12">
 						<div class="form-group">
-							<label for="city">{{ 'COMMON.CITY' | translate }}</label> <input type="text"
-								pInputText class="form-control" id="city" [(ngModel)]="employee.user.city" name="city" #city="ngModel">
+							<label for="userGroup">{{ 'COMMON.ROLE' | translate }}</label>
+							<p-autoComplete [(ngModel)]="employee.user.userGroup"
+								[disabled]="employee.user.userGroup.id == 1"
+								(onDropdownClick)="userGroupDropdown.handleDropdownClick($event)"
+								[suggestions]="userGroupDropdown.filteredUserGroups" [dropdown]="true" id="userGroup"
+								(completeMethod)="userGroupDropdown.filter($event)" name="userGroup" field="name"
+								[size]="30" placeholder="{{ 'COMMON.ROLE' | translate }}" [minLength]="1">
+							</p-autoComplete>
 						</div>
 					</div>
+
 				</div>
+
 				<div class="ui-grid-row">
 					<div class="ui-grid-col-6 ui-sm-12">
 						<div class="form-group">
-							<label for="country">{{ 'COMMON.COUNTRY' | translate }}</label>
-							<p-autoComplete [(ngModel)]="employee.user.country"
-								(onDropdownClick)="countryDropdown.handleDropdownClick($event)"
-								[suggestions]="countryDropdown.filteredCountries"
-								[dropdown]="true" id="country"
-								(completeMethod)="countryDropdown.filter($event)" name="country"
-								field="name" [size]="30" placeholder="{{COUNTRY}}"
-								[minLength]="1"></p-autoComplete>
+							<label for="resume">{{ 'COMMON.RESUME' | translate }}</label>
+							<p-editor [(ngModel)]="employee.resume" [style]="{'height':'100px'}"></p-editor>
 						</div>
 					</div>
 					<div class="ui-grid-col-6 ui-sm-12">
 						<div class="form-group">
-							<label for="zipCode">{{ 'COMMON.ZIP_CODE' | translate }}</label> 
-							<input type="text" pInputText class="form-control" id="zipCode"
-								[(ngModel)]="employee.user.zipCode" name="zipCode" #zipCode="ngModel">
+							<label for="shortBiography">{{ 'COMMON.BIOGRAPHY' | translate }}</label>
+							<p-editor [(ngModel)]="employee.shortBiographie" [style]="{'height':'100px'}"></p-editor>
 						</div>
 					</div>
 				</div>
-			</div>
-			
-			
-			<div class="ui-grid-col-4 ui-sm-12">
-				<div class="ui-grid-col-2">
-					<img class="thumb"
-						src="assets/images/user/{{employee.user.picture}}" alt="" />
-				</div>
-				<div class="ui-grid-col-12 ui-sm-12">
-					<div class="form-group">
-						<input type="file" #uploadFile
-							[attr.multiple]="multiple ? true : null">
-					</div>
-				</div>
-			</div>
-		</div>	
-			
-		
-		</p-accordionTab> <p-accordionTab header="{{ 'COMMON.PROFESSIONAL_INFO' | translate }}">
-		<div class="ui-grid-row">
-			<div class="ui-grid-col-6 ui-sm-12">
-				<div class="form-group">
-					<label for="designation">{{ 'COMMON.DESIGNATION' | translate }}</label>
-					<input type="text" pInputText class="form-control"
-						id="designation" [(ngModel)]="employee.designation" name="designation" #designation="ngModel">
-				</div>
-			</div>
-			<div class="ui-grid-col-6 ui-sm-12">
-				<div class="form-group">
-					<label for="specialist">{{ 'COMMON.SPECIALIST' | translate }}</label> 
-					<input type="text" pInputText class="form-control" id="specialist"
-						[(ngModel)]="employee.specialist" name="specialist" #specialist="ngModel">
-				</div>
-			</div>
-		</div>
-		<div class="ui-grid-row">
-			<div class="ui-grid-col-6 ui-sm-12">
-				<div class="form-group">
-					<label for="department">{{ 'COMMON.DEPARTMENT' | translate }}</label>
-					<p-autoComplete [(ngModel)]="employee.department"
-						(onDropdownClick)="departmentDropdown.handleDropdownClick($event)"
-						[suggestions]="departmentDropdown.filteredDepartments"
-						[dropdown]="true" id="department"
-						(completeMethod)="departmentDropdown.filter($event)"
-						name="department" field="name" [size]="30"
-						placeholder="{{DEPARTMENT}}" [minLength]="1"></p-autoComplete>
-				</div>
-			</div>
-			<div class="ui-grid-col-6 ui-sm-12">
-				<div class="form-group">
-					<label for="userGroup">{{ 'COMMON.ROLE' | translate }}</label>
-					<p-autoComplete [(ngModel)]="employee.user.userGroup"
-						[disabled]="employee.user.userGroup.id == 1"
-						(onDropdownClick)="userGroupDropdown.handleDropdownClick($event)"
-						[suggestions]="userGroupDropdown.filteredUserGroups"
-						[dropdown]="true" id="userGroup"
-						(completeMethod)="userGroupDropdown.filter($event)"
-						name="userGroup" field="name" [size]="30" placeholder="{{ROLE}}"
-						[minLength]="1"></p-autoComplete>
-				</div>
-			</div>
 
-		</div>
-
-		<div class="ui-grid-row">
-			<div class="ui-grid-col-6 ui-sm-12">
-				<div class="form-group">
-					<label for="resume">{{ 'COMMON.RESUME' | translate }}</label>
-					<p-editor [(ngModel)]="employee.resume" [style]="{'height':'100px'}"></p-editor>
-				</div>
-			</div>
-			<div class="ui-grid-col-6 ui-sm-12">
-				<div class="form-group">
-					<label for="shortBiography">{{ 'COMMON.BIOGRAPHY' | translate }}</label>
-					<p-editor [(ngModel)]="employee.shortBiographie" [style]="{'height':'100px'}"></p-editor>
-				</div>
-			</div>
-		</div>
-
-		</p-accordionTab> </p-accordion>
+			</p-accordionTab>
+		</p-accordion>
 		<br />
 
 	</div>
@@ -213,10 +228,13 @@
 
 	<div class="form-group">
 		<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
-			<button type="button" pButton icon="fa fa-refresh" (click)="clear()"label="{{ 'COMMON.CLEAR' | translate }}"></button>&nbsp;&nbsp;
-			<button pButton icon="fa fa-save" label="{{ 'COMMON.SAVE' | translate }}"></button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			<button type="button" pButton icon="fa fa-close" (click)="delete()" label="{{ 'COMMON.DELETE' | translate }}"></button>
-			
+			<button type="button" pButton icon="fa fa-refresh" (click)="clear()"
+				label="{{ 'COMMON.CLEAR' | translate }}"></button>&nbsp;&nbsp;
+			<button pButton icon="fa fa-save"
+				label="{{ 'COMMON.SAVE' | translate }}"></button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<button type="button" pButton icon="fa fa-close" (click)="delete()"
+				label="{{ 'COMMON.DELETE' | translate }}"></button>
+
 		</div>
 	</div>
 </form>

@@ -5,8 +5,7 @@
     "CONTACT_INFO": "Contact Information",
     "PAYER_INFO": "Payer Information",
     "PROFESSIONAL_INFO": "Information Professionelle",
-    "SEARCH_CRITERIA": "Search Criteria",
-    
+    "SEARCH_CRITERIA": "Search Criteria",    
     "USER_NAME": "User Name",
     "PASSWORD": "Password",
   	"NAME": "Name",
@@ -37,16 +36,14 @@
     "INSURANCE": "Insurance",
     "POLICY_NUMBER": "Policy Number",
     "IS_SELF_RESPONSIBLE": "Is Self Responsible",
-    "RESPONSIBLE_PARTY": "Responsible Party",
-    
+    "RESPONSIBLE_PARTY": "Responsible Party",    
     "DESIGNATION": "Designation",
     "SPECIALIST": "Specialist",
     "DEPARTMENT": "Department",
     "ROLE": "Role",
     "RESUME": "Resume",
     "BIOGRAPHY": "Biography",
-    "STATUS": "Status",
-    
+    "STATUS": "Status",    
     "ADMISSION": "Admission",
     "ADMISSION_DETAILS": "Admission Details",
     "ADMISSION_LIST": "ADMISSION LIST",
@@ -62,17 +59,14 @@
     "BED": "Bed",
     "DOCTOR": "Doctor",
     "PATIENT_ID": "Patient ID",
-    "PATIENT_NAME": "Patient Name",
-    
+    "PATIENT_NAME": "Patient Name",    
     "TRANSFER_DATE": "Transfer Date",
     "LOCATION": "Location",
     "AVAILABLE_DAYS": "Available Days",
     "START_TIME": "Start Time",
     "END_TIME": "End Time",
-    "PER_PATIENT_TIME": "Per Patient Time",
-    
-    "APPOINTMENT_DATE": "Appointment Date",
-    
+    "PER_PATIENT_TIME": "Per Patient Time",    
+    "APPOINTMENT_DATE": "Appointment Date",    
     "VISIT_NUMBER": "Visit No.",
     "VISIT_DATETIME": "Visit Date/Time",
     "CHIEF_OF_COMPLAIN": "Chief Of Complain",
@@ -96,8 +90,7 @@
     "VISIT_DATE": "Visit Date",
     "VISIT_LIST": "VISIT LIST",
     "BMI": "BMI",
-    "PACKAGE": "Package",
-    
+    "PACKAGE": "Package",    
     "INVESTIGATION_DATETIME": "Invest. Date Time",
     "DESCRIPTION": "Description",
     "LAB_TEST_GROUP": "Lab Test / Group",
@@ -119,8 +112,7 @@
     "NORMAL_RANGE_MINIMUM": "Normal Range Minimum",
     "NORMAL_RANGE_MAXIMUM": "Normal Range Maximum",
     "CRITICAL_LOW": "Critical Low",
-    "CRITICAL_HIGH": "Criical High",
-    
+    "CRITICAL_HIGH": "Criical High",    
 	"BILL_DATE": "Bill Date",    
 	"DUE_DATE": "Due Date", 
 	"NOTES": "Notes",      
@@ -137,12 +129,10 @@
 	"PAYER_AMOUNT": "Payer Amount",
 	"PATIENT_AMOUNT": "Patient Amount",
 	"AMOUNT": "Amount",
-	"PAYMENT_LIST": "PAYMENT LIST",
-	
+	"PAYMENT_LIST": "PAYMENT LIST",	
 	"SERVICE_TYPE": "Service Type",
 	"RATE": "Rate",
-	"PACKAGE_LIST": "Package List",
-	
+	"PACKAGE_LIST": "Package List",	
 	"SUPPLIER": "Supplier",
 	"ORDER_DATE": "Order Date",
 	"REQUESTOR": "Requestor",
@@ -151,13 +141,11 @@
 	"PURCHASE_ORDER_ID": "Purchase Order ID",
 	"PRODUCT_LIST": "Product List",
 	"TOTAL": "Total",
-	"PURCHASE_ORDER_LIST": "Purchase Order List",
-	
+	"PURCHASE_ORDER_LIST": "Purchase Order List",	
 	"DELIVERY_DATE": "Delivery Date",
 	"QUANTITY_ORDERED": "Quantity Ordered",
 	"QUANTITY_RECEIVED": "Quantity Received",
-	"ORDER_RECEIPT_LIST": "Order Receipt List",
-	
+	"ORDER_RECEIPT_LIST": "Order Receipt List",	
 	"SALE_ID": "Sale ID",
 	"SALE_DATETIME": "Sale. Date Time",
 	"DISCOUNT_PERCENTAGE": "Discount in %",
@@ -166,8 +154,7 @@
 	"RETURN_DATETIME": "Return Date / Time",
 	"QUANTITY_SOLD": "Quantity Sold",
 	"QUANTITY_RETURNED": "Quantity Returned",
-	"SALE_RETURN_LIST": "RETURN SALE LIST",
-	
+	"SALE_RETURN_LIST": "RETURN SALE LIST",	
 	"DOCTOR_ORDER_DATETIME": "Doctor Order Date / Time",
 	"DOCTOR_ORDER_PRIORITY": "Doctor Order Priority",
 	"DOCTOR_ORDER_TYPE": "Doctor Order Type",
@@ -175,24 +162,20 @@
 	"ORDERING_DOCTOR": "Ordering Doctor",
 	"ORDER_RECEIVED_DATETIME": "Order Receive Date / Time",
 	"FOR_NURSES_USE_ONLY": "For Nurses Use Only",
-	"DOCTOR_ORDER_LIST": "Doctor Order List",
-	
+	"DOCTOR_ORDER_LIST": "Doctor Order List",	
 	"MOTHER": "Mother",
 	"FATHER": "Father",
 	"BABY": "Baby",
 	"DEATH_DATETIME": "Death Date / Time",
 	"BIRTH_LIST": "Birth List",
-	"DEATH_LIST": "Death List",
-	
+	"DEATH_LIST": "Death List",	
     "VITAL_SIGN_LIST": "Vital Sign List",
     "DIAGNOSIS_LIST": "Diagnosis List",
     "MEDICINE_LIST": "Medicine List",
-    "PRESCRIPTION_LIST": "Prescription List",
-    
+    "PRESCRIPTION_LIST": "Prescription List",    
     "PRESCRIPTION_DATETIME": "Presc. Date Time",
     "PRESCRIPTION_TYPE": "Prescription Type",
-    "IS_DISCHARGE": "Is Discharge",
-    
+    "IS_DISCHARGE": "Is Discharge",    
     "MEDICINE": "Medicine",
 	"MEDICINE_TYPE": "Medicine Type",
 	"DOSAGE": "Dosage",
@@ -201,8 +184,7 @@
 	"DIAGNOSIS": "Diagnosis",
 	"INSTRUCTIONS": "Instructions",
 	"BED_NUMBER": "Bed Number",
-	"MANUFACTURER": "Manufacturer",
-	
+	"MANUFACTURER": "Manufacturer",	
 	"WARD_LIST": "Ward List",
 	"CATEGORY_LIST": "Category List",
 	"BUILDING_LIST": "Building List",
@@ -226,8 +208,7 @@
 	"MANUFACTURER_LIST": "Manufacturer List",
 	"MEDICINE_TYPE_LIST": "Medicine Type List",
 	"ENQUIRY_LIST": "Enquiry List",
-	"WAITING_LIST": "Waiting List",
-	
+	"WAITING_LIST": "Waiting List",	
 	"ADMITTANCE_REASON": "Admittance Reason",
 	"TREATMENT_SUMMARY": "Treatment Summary",
 	"DISCHARGE_DATETIME": "Discharge Date/Time",
@@ -237,12 +218,10 @@
 	"NEXT_CHECKUP_DATE": "Next Checkup Date",
 	"CLIENT_CONSENT_APPROVAL": "Client Consent Approval",
 	"FURTHER_TREATMENT_PLAN": "Further Treatment Plan",
-	"DISCHARGE_NOTES": "Discharge Notes",
-	
+	"DISCHARGE_NOTES": "Discharge Notes",	
 	"READ": "Read / Unread",
 	"CHECKED_BY": "Read By",
-	"ENQUIRY_DATETIME": "Enquiry Date / Time",
-	
+	"ENQUIRY_DATETIME": "Enquiry Date / Time",	
 	"APPLICATION_TITLE": "Application Title",
 	"META_KEYWORD": "Meta Keyword",
 	"META_DESCRIPTION": "Meta Description",
@@ -252,12 +231,10 @@
 	"GOOGLE_MAP": "Google Map",
 	"FACEBOOK_URL": "Facebook Url",
 	"TWITTER_URL": "Twitter Url",
-	"INSTAGRAM_URL": "Instagram Url",
-	
+	"INSTAGRAM_URL": "Instagram Url",	
 	"SECTION": "Section",
 	"TITLE": "Title",
-	"PICTURE": "Picture",
-	
+	"PICTURE": "Picture",	
     "CLEAR": "Clear",
     "DELETE": "Delete",
     "SAVE": "Save",
@@ -281,7 +258,6 @@
     "LOGOUT": "Logout",
     "ADMIN_PAGE": "Admin",
     "WEB_MENU": "Web Menu",
-
     "COMPANY": "COMPANY",
     "DETAILS": "DETAILS",
     "LIST": "LIST",
@@ -306,7 +282,6 @@
     "TO_EMAIL": "To Email",
     "NEW_PASSWORD": "New Password",
     "CONFIRM_PASSWORD": "Confirm Password",
-
     "SLIDER": "Slider",
     "SLIDER_IMAGE": "Slider Image",
     "SLIDER_TEXT": "Slider Text",
@@ -315,7 +290,10 @@
     "EMAIL":"E-mail",
     "TEXT1":"Text 1",
     "TEXT2":"Text 2",
-    "TEXT3":"Text 3"
+    "TEXT3":"Text 3",
+    "GOOGLE_PLUS_URL":"Google plus",
+    "SHOW_IN_MENU":"Display in menu",
+    "OUR_SERVICE":"Our service"
   },
   "MESSAGE": {
   	"TRANFER_DOCTOR_FAILED": "The transfer doctor should be different than the current doctor.",

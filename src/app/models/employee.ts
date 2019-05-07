@@ -3,7 +3,7 @@ import { User } from './user';
 
 export class Employee {
   id: number;
-  user: User;
+  user: User= new User();
   department: Department;
   designation: string;
   shortBiographie: string;

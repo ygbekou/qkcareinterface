@@ -58,14 +58,6 @@ export class AppComponent implements AfterViewInit, AfterViewChecked {
     private token: TokenStorage,
     public renderer: Renderer2,
     private cdRef: ChangeDetectorRef) {
-    /**
-        translate.addLangs(['en', 'fr']);
-        translate.setDefaultLang('fr');
-        
-        const browserLang = translate.getBrowserLang();
-        translate.use(browserLang.match(/en|fr/) ? browserLang : 'en');
-    */
-
     let lang = navigator.language;
     if (lang) {
       lang = lang.substring(0, 2);

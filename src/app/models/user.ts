@@ -11,7 +11,7 @@ export class User {
   lastName: string;
   middleName: string;
   email: string;
-  picture: string;
+  picture = 'user.jpg';
   sex: string;
   homePhone: string;
   mobilePhone: string;

@@ -41,5 +41,6 @@ export class GlobalEventsManager {
         Cookie.set('lang',selectLang);
         console.log('setting the language to: '+selectLang);
         console.log('language in cookie='+Cookie.get('lang'));
+        window.location.reload();
     }
 }

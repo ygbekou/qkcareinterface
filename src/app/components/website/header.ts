@@ -34,7 +34,7 @@ export class Header implements OnInit, OnDestroy {
         ) {
 
         this.setActiveTab();
-        this.globalEventsManager.currentLang =  translate.currentLang;
+        this.globalEventsManager.currentLang = translate.currentLang;
     }
 
     setActiveTab() {
@@ -110,15 +110,16 @@ export class Header implements OnInit, OnDestroy {
 
     logOut() {
         this.tokenStorage.signOut();
-        this.router.navigate(['login']);
+        this.router.navigate(['/']);
+        window.location.reload();
     }
 
     gotoDashboard() {
-        this.globalEventsManager.showMenu=true;
+        this.globalEventsManager.showMenu = true;
         console.log("going to dashboard");
-        this.router.navigate(['/admin/patientDetails']);
+        this.router.navigate(['/admin/dashboard']);
         console.log("gone to dashboard");
-       // window.location.reload();
+        // window.location.reload();
         console.log("after reload to dashboard");
     }
 

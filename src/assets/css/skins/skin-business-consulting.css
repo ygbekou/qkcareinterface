@@ -41,7 +41,7 @@ html .text-dark {
 
 html .text-color-light,
 html .text-light {
-	color: #ffffff !important;
+	color: rgb(15, 58, 95) !important;
 }
 
 html .bg-color-primary,
