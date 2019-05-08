@@ -293,7 +293,8 @@
     "TEXT3":"Text 3",
     "GOOGLE_PLUS_URL":"Google plus",
     "SHOW_IN_MENU":"Display in menu",
-    "OUR_SERVICE":"Our service"
+    "OUR_SERVICE":"Our service",
+    "CONTACT_US_FOR_DEMO":"Contact us for demo"
   },
   "MESSAGE": {
   	"TRANFER_DOCTOR_FAILED": "The transfer doctor should be different than the current doctor.",

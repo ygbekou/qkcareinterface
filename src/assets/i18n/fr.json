@@ -293,7 +293,8 @@
     "TEXT3": "Texte 3",
     "GOOGLE_PLUS_URL": "Google plus",
     "SHOW_IN_MENU": "Afficher dans menu",
-    "OUR_SERVICE":"Nos services"
+    "OUR_SERVICE":"Nos services",
+    "CONTACT_US_FOR_DEMO":"Contactez-nous pour une demo"
   },
   "MESSAGE": {
     "TRANFER_DOCTOR_FAILED": "Le nouveau docteur assigne doit etre different de l'ancien.",

@@ -2,7 +2,7 @@
 <div role="main" class="main">
     <div class="slider-container rev_slider_wrapper" style="height: 450px;">
         <div id="revolutionSlider" class="slider rev_slider" data-version="5.4.8" data-plugin-revolution-slider
-            data-plugin-options="{'delay': 9000, 'gridwidth': 1170, 'gridheight': 450, 'disableProgressBar': 'on', 'responsiveLevels': [4096,1200,992,500], 'parallax': { 'type': 'scroll', 'origo': 'enterpoint', 'speed': 1000, 'levels': [2,3,4,5,6,7,8,9,12,50], 'disable_onmobile': 'on' }, 'navigation' : {'arrows': { 'enable': false }, 'bullets': {'enable': true, 'style': 'bullets-style-1', 'h_align': 'center', 'v_align': 'bottom', 'space': 7, 'v_offset': 70, 'h_offset': 0}}}">
+            data-plugin-options="{'delay': 9000, 'gridwidth': 1170, 'gridheight': 350, 'disableProgressBar': 'on', 'responsiveLevels': [4096,1200,992,500], 'parallax': { 'type': 'scroll', 'origo': 'enterpoint', 'speed': 1000, 'levels': [2,3,4,5,6,7,8,9,12,50], 'disable_onmobile': 'on' }, 'navigation' : {'arrows': { 'enable': false }, 'bullets': {'enable': true, 'style': 'bullets-style-1', 'h_align': 'center', 'v_align': 'bottom', 'space': 7, 'v_offset': 70, 'h_offset': 0}}}">
             <ul>
                 <li data-transition="fade">
                     <img src="assets/images/slides/slide-1.jpg" alt="" data-bgposition="center center" data-bgfit=""
@@ -158,26 +158,28 @@
             </ul>
         </div>
     </div>
-
     <div class="home-intro" id="home-intro">
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-lg-12">
                     <p>
-                        {{company.bannerContentHeader}}
+                        {{company.bannerContentHeader}} 
                         <span
                             class="highlighted-word text-color-primary font-weight-semibold text-5">{{company.bannerContentParagraph}}</span>
                     </p>
                     <div class="get-started text-left text-lg-right">
-                        <a href="#/services"
-                            class="btn btn-primary btn-lg text-3 font-weight-semibold px-4 py-3">{{'COMMON.OUR_SERVICE' | translate}}</a>
+                        <a href="#/contact"
+                            class="btn btn-primary btn-lg text-3 font-weight-semibold px-4 py-3">{{'COMMON.CONTACT_US_FOR_DEMO' | translate}}</a>
                     </div>
 
                 </div>
             </div>
         </div>
+
     </div>
 
+   <div class="subnav blue"> </div>
+    <div class="blue-concave-curve"></div>
 
     <section class="section-secondary custom-section-padding" *ngFor="let sectionEntry of sectionMap | keyvalue">
         <div class="container">

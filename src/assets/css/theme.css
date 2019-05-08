@@ -844,7 +844,7 @@ li {
 
 #header .header-nav-features .header-nav-features-user .header-nav-features-dropdown {
 	margin-right: -27px;
-	min-width: 420px;
+	min-width: 350px;
 	padding: 35px;
 }
 
@@ -5342,8 +5342,8 @@ aside .twitter-account:hover {
 
 /* Home Slider - Revolution Slider */
 .slider-container {
-	background: #151719;
-	height: 500px;
+	background: #eef4f2;
+	height: 420px;
 	overflow: hidden;
 	width: 100%;
 	direction: ltr;
@@ -5790,10 +5790,10 @@ section.section-custom-map section.section {
 /* Home Intro */
 .home-intro {
 	background-color: #212529;
-	margin-bottom: 60px;
+	margin-bottom: 0px;
 	overflow: hidden;
-	padding: 38.4px 0;
-	padding: 2.4rem 0;
+	padding: 10px 0;
+	/*padding: 2.4rem 0;*/
 	position: relative;
 	text-align: left;
 }

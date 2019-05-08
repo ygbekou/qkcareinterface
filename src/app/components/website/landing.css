@@ -1,5 +1,5 @@
 .subnav {
-    padding: 16px;
+    padding: 16px; 
 }
 .blue {
     background-color: #699ac5;
@@ -8,7 +8,7 @@
 .blue-concave-curve {
     position: relative;
     z-index: 1;
-    height: 101px;
+    height: 50px;
     background-image: url(/assets/images/slides/blue-concave-curve.png);
     background-position: center top;
     background-repeat: repeat-x;

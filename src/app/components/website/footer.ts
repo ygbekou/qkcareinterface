@@ -56,7 +56,7 @@ import { TranslateService } from '@ngx-translate/core';
 					<div class="container py-2">
 						<div class="row py-4">
 							<div class="col-lg-7 d-flex align-items-center justify-content-center justify-content-lg-start mb-4 mb-lg-0">
-								<p>ï¿½ {{company.copyright}}</p>
+								<p>{{company.copyright}}</p>
 							</div>
 						</div>
 					</div>
