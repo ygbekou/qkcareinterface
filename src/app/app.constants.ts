@@ -8,7 +8,7 @@ export class Constants {
   public static ADD_IMAGE = 'Ajouter Image';
   public static ADD_LABEL = 'Add';
   public static CLEAR_LABEL = 'Clear';
-  public static CLOSE_LABEL = 'Close';
+  public static CLOSE_LABEL = 'Close'; 
   public static SAVE_LABEL = 'Save';
   public static DELETE_LABEL = 'Delete';
   public static DEPARTMENT = 'Department';
