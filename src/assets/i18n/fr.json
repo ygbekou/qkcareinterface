@@ -325,7 +325,8 @@
     "PASSWORD_CHANGED": "Votre mot de passe a été changé avec succès.",
     "PASSWORD_NOT_CHANGED": "Le system n'a pas pu changer votre mot de passe. Vérifiez et essayez à nouveau.",
     "PASSWORD_NOT_MATCHED": "Le nouveau mot de passe ne correspond pas au mot de passe de confirmation. Verifiez et essayez à nouveau.",
-    "SEND_US_MESSAGE": "Envoie un Message"
+    "SEND_US_MESSAGE": "Envoie un Message",
+    "FORM_HAS_ERRORS": "Le formulaire comporte des erreurs. S'il vous pla�t v�rifier et corriger."
   },
   "VALIDATION":{
     "IS_INVALID": "est invalide",
