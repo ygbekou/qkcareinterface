@@ -136,7 +136,6 @@ export class PatientList implements OnInit, OnDestroy {
           parameters.push('e.user.birthDate = |birthDate|' + this.searchCriteria.birthDate.toLocaleDateString() + '|Date')
         }  
         
-        
         this.genericService.getAllByCriteria('Patient', parameters)
           .subscribe((data: Patient[]) => 
           { 
