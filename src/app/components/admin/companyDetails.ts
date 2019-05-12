@@ -79,6 +79,8 @@ export class CompanyDetails implements OnInit, OnDestroy {
     }
 
     try {
+      console.log('Nomber of files: '+nbFiles);
+      console.log(this.formData);
       if (nbFiles > 0) {
         this.company.logo = '';
         this.company.favicon = '';

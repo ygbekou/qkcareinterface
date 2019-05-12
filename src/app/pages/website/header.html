@@ -63,7 +63,7 @@
                     <div class="header-row">
                         <div class="header-logo">
                             <a href="index.html">
-                                <img alt="Quick care" height="70" src="assets/images/company/logo.png">
+                                <img alt="Quick care" height="70" src="assets/images/company/{{company.logo}}">
                             </a>
                         </div>
                     </div>
@@ -85,19 +85,7 @@
                                                 href="#/section?sectionId={{menuSection.id}}">
                                                 {{ menuSection.name }}
                                             </a>
-                                        </li>
-                                        <!--
-                                        <li class="dropdown">
-                                            <a class="dropdown-item dropdown-toggle {{aboutActive}}" href="#/about">
-                                                {{ 'COMMON.ABOUT_US' | translate }}
-                                            </a>
-                                        </li>
-                                        <li class="dropdown">
-                                            <a class="dropdown-item dropdown-toggle {{contactActive}}" href="#/contact">
-                                                {{ 'COMMON.CONTACT_US' | translate }}
-                                            </a>
-                                        </li>
-                                        -->
+                                        </li> 
                                         <li class="dropdown" *ngIf="!tokenStorage.hasToken()">
                                             <a class="dropdown-item dropdown-toggle {{loginActive}}" href="#/login">
                                                 {{ 'COMMON.LOGIN' | translate }}
