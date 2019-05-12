@@ -28,7 +28,7 @@ export class Patient {
   insurance: Insurance;
   policyNumber: string;
   insuranceExpiryDate: Date;
-  isSelfResponsible: boolean;
+  isSelfResponsible: boolean = true;
   responsiblePartyFirstName: string;
   responsiblePartyLastName: string;
   accountNumber: string;

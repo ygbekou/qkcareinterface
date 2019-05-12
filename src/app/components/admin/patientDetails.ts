@@ -28,9 +28,9 @@ export class PatientDetails implements OnInit, OnDestroy {
   ROLE: string = Constants.ROLE;
   SELECT_OPTION: string = Constants.SELECT_OPTION;
   
-  @ViewChild('uploadFile') input: ElementRef;
+  @ViewChild('picture') picture: ElementRef;
   formData = new FormData();
-  url: any
+  pictureUrl: any
   
   reportView: ReportView = new ReportView();
   reportName: string;
@@ -87,22 +87,24 @@ export class PatientDetails implements OnInit, OnDestroy {
   }
 
   save() {
-    this.formData = new FormData();
-    let inputEl = this.input.nativeElement;
-    //if (inputEl.files.length == 0) return;
     
-    if (inputEl && inputEl.files && (inputEl.files.length > 0)) {
-      let files :FileList = inputEl.files;
-      for(var i = 0; i < files.length; i++){
+    this.formData = new FormData();
+
+    const pictureEl = this.picture.nativeElement;
+    if (pictureEl && pictureEl.files && (pictureEl.files.length > 0)) {
+      const files: FileList = pictureEl.files;
+      for (let i = 0; i < files.length; i++) {
           this.formData.append('file', files[i], files[i].name);
       }
     } else {
        this.formData.append('file', null, null);
     }
+
+
     try {
       this.patient.user.userName = this.patient.user.email;
       this.patient.user.userGroup.id = Constants.USER_GROUP_PATIENT;
-      if (inputEl && inputEl.files && (inputEl.files.length > 0)) {
+      if (pictureEl && pictureEl.files && (pictureEl.files.length > 0)) {
         this.userService.saveUserWithPicture('Patient', this.patient, this.formData)
           .subscribe(result => {
             if (result.id > 0) {
@@ -159,17 +161,26 @@ export class PatientDetails implements OnInit, OnDestroy {
   
   
   readUrl(event:any) {
+    
     if (event.target.files && event.target.files[0]) {
       var reader = new FileReader();
   
       reader.onload = (event: ProgressEvent) => {
-        this.url = (<FileReader>event.target).result;
+        this.pictureUrl = (<FileReader>event.target).result;
       }
   
       reader.readAsDataURL(event.target.files[0]);
     }
+
+    this.patient.user.picture = '';
   }
   
+  clearPictureFile() {
+    this.patient.user.picture = '';
+    this.pictureUrl = '';
+    this.picture.nativeElement.value = '';
+  }
+
   clear() {
     this.patient = new Patient();
   }

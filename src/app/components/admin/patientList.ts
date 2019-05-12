@@ -1,8 +1,6 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Patient, SearchCriteria, User } from '../../models';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
-import { Constants } from '../../app.constants';
-import { Cookie } from 'ng2-cookies/ng2-cookies';
 import { GenericService, GlobalEventsManager } from '../../services';
 import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
 
@@ -16,7 +14,7 @@ export class PatientList implements OnInit, OnDestroy {
   patients: Patient[] = [];
   cols: any[];
   searchCriteria: SearchCriteria = new SearchCriteria();
-  originalPage: string;
+  originalPage: string = '';
   
   LAST_NAME: any;
   
@@ -25,7 +23,6 @@ export class PatientList implements OnInit, OnDestroy {
     private genericService: GenericService,
     private translate: TranslateService,
     private globalEventsManager: GlobalEventsManager,
-    private changeDetectorRef: ChangeDetectorRef,
     private route: ActivatedRoute,
     private router: Router,
     ) {
@@ -48,7 +45,7 @@ export class PatientList implements OnInit, OnDestroy {
             { field: 'firstName', header: 'First Name', headerKey: 'COMMON.FIRST_NAME', type:'user' },
             { field: 'birthDate', header: 'Birth Date', headerKey: 'COMMON.BIRTH_DATE', type:'date' },
             { field: 'email', header: 'Email', headerKey: 'COMMON.E_MAIL', type:'user' },
-            { field: 'phone', header: 'Phone', headerKey: 'COMMON.PHONE_1', type:'user' },
+            { field: 'phone', header: 'Phone', headerKey: 'COMMON.PHONE', type:'user' },
             { field: 'address', header: 'Address', headerKey: 'COMMON.ADDRESS', type:'user' },
             { field: 'sex', header: 'Sex', headerKey: 'COMMON.GENDER', type:'user' }
         ];
@@ -65,10 +62,10 @@ export class PatientList implements OnInit, OnDestroy {
         this.originalPage = params['originalPage'];
      });
     
-    this.updateCols();
-    this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
+     this.updateCols();
+     this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
         this.updateCols();
-    });
+     });
   }
  
   
