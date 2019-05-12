@@ -1,6 +1,6 @@
 {
   "COMMON": {
-    "SELECT": "Choisir un Language: ",
+    "SELECT": "Selectioner",
     "DEMOGRAPHIC_INFO": "Information Demographique",
     "CONTACT_INFO": "Information Contact",
     "PAYER_INFO": "Information Payeur",
@@ -21,6 +21,8 @@
     "RELIGION": "Religion",
     "MEDICAL_HISTORY": "Histoire Medicale",
     "PHONE": "Phone",
+    "HOME_PHONE": "Home Phone",
+    "MOBILE_PHONE": "Mobile Phone",
     "ADDRESS": "Adresse",
     "CITY": "Ville",
     "COUNTRY": "Pays",
@@ -294,7 +296,10 @@
     "GOOGLE_PLUS_URL": "Google plus",
     "SHOW_IN_MENU": "Afficher dans menu",
     "OUR_SERVICE":"Nos services",
-    "CONTACT_US_FOR_DEMO":"Contactez-nous pour une demo"
+    "CONTACT_US_FOR_DEMO":"Contactez-nous pour une demo",
+    "EDIT": "Modifier",
+    "PATIENT_LIST": "Liste des Patients",
+    "LIST_SUMMARY": "Il y'a {{ITEM_NUMBERS}}"
   },
   "MESSAGE": {
     "TRANFER_DOCTOR_FAILED": "Le nouveau docteur assigne doit etre different de l'ancien.",
@@ -319,6 +324,10 @@
     "PASSWORD_NOT_CHANGED": "Le system n'a pas pu change votre mot de passe. Verifiez et essayez a nouveau.",
     "PASSWORD_NOT_MATCHED": "Le nouveau mot de passe ne correspond pas au mot de passe de confirmation. Verifiez et essayez à nouveau.",
     "SEND_US_MESSAGE": "Envoie un Message"
+  },
+  "VALIDATION":{
+    "IS_INVALID": "est invalide",
+    "IS_REQUIRED": "est necessaire"
   },
   "DATE": {
     "1": "Jan",
