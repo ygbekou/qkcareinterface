@@ -295,7 +295,12 @@
     "OUR_SERVICE":"Our service",
     "CONTACT_US_FOR_DEMO":"Contact us for demo",
     "FAX": "Fax",
-    "REMOVE": "Remove"
+    "REMOVE": "Remove",
+    "HOME_PHONE": "Home Phone",
+    "MOBILE_PHONE": "Mobile Phone" ,  
+    "EDIT": "Edit",  
+    "PATIENT_LIST": "Patient list",
+    "LIST_SUMMARY": "There is {{ITEM_NUMBERS}}"
   },
   "MESSAGE": {
   	"TRANFER_DOCTOR_FAILED": "The transfer doctor should be different from the current doctor.",
@@ -321,6 +326,11 @@
     "PASSWORD_NOT_MATCHED": "The new passord didn't match the confirmed pasword. Verify and try again.",
     "SEND_US_MESSAGE": "Send a Message"
   },
+"VALIDATION":{
+    "IS_INVALID": "is invalid",
+    "IS_REQUIRED": "is required"
+  },
+
   "DATE": {
   	"1": "Jan",
   	"2": "Feb",
