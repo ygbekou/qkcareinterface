@@ -329,7 +329,8 @@
   },
   "VALIDATION":{
     "IS_INVALID": "est invalide",
-    "IS_REQUIRED": "est necessaire"
+    "IS_REQUIRED": "est necessaire",
+    "FIELD_REQUIRED":"Champs requis"
   },
   "DATE": {
     "1": "Jan",

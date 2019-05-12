@@ -6,7 +6,7 @@
 					<label for="name">{{'COMMON.NAME' | translate}}<font color="red">*</font></label>
 					<input type="text" pInputText class="form-control" id="name" [(ngModel)]="company.name" name="name"
 						#name="ngModel" required>
-					<p-message *ngIf="f.submitted && name.invalid" severity="error" text="Field is required">
+					<p-message *ngIf="f.submitted && name.invalid" severity="error" text="{{ 'VALIDATION.FIELD_REQUIRED' | translate }}">
 					</p-message>
 				</div>
 			</div>
@@ -24,7 +24,7 @@
 					<label for="address">{{'COMMON.ADDRESS' | translate}}<font color="red">*</font></label>
 					<input type="text" pInputText class="form-control" id="address" [(ngModel)]="company.address"
 						name="address" #address="ngModel" required>
-					<p-message *ngIf="f.submitted && address.invalid" severity="error" text="Field is required">
+					<p-message *ngIf="f.submitted && address.invalid" severity="error" text="{{ 'VALIDATION.FIELD_REQUIRED' | translate }}">
 					</p-message>
 				</div>
 			</div>
@@ -114,7 +114,7 @@
 					[(ngModel)]="company.language" #language="ngModel" required></p-radioButton>&nbsp;&nbsp;
 				<p-radioButton name="language" value="FR" label="{{'COMMON.FRENCH' | translate}}"
 					[(ngModel)]="company.language" #language="ngModel" required></p-radioButton>
-				<p-message *ngIf="f.submitted && language.invalid" severity="error" text="Field is required">
+				<p-message *ngIf="f.submitted && language.invalid" severity="error" text="{{ 'VALIDATION.FIELD_REQUIRED' | translate }}">
 				</p-message>
 			</div>
 		</div>

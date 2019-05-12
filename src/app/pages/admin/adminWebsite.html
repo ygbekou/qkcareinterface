@@ -17,16 +17,14 @@
             <p-tabPanel header="{{'COMMON.SECTION' | translate | uppercase}}">
                 <div *ngIf="activeTab == 1" class="ui-grid-row">
                     <app-section-details></app-section-details>
-                    <br />
-                    <br />
+                    <br /> 
                     <app-section-list (sectionIdEvent)="onSectionSelected($event)"></app-section-list>
                 </div>
             </p-tabPanel>
             <p-tabPanel header="{{'COMMON.SECTION_ITEM' | translate}}">
                 <div *ngIf="activeTab == 2" class="ui-grid-row">
                     <app-sectionItem-details></app-sectionItem-details>
-                    <br />
-                    <br />
+                    <br /> 
                     <app-sectionItem-list (sectionItemIdEvent)="onSectionItemSelected($event)"></app-sectionItem-list>
                 </div>
             </p-tabPanel>
@@ -46,7 +44,6 @@
                 <div *ngIf="activeTab == 4" class="ui-grid-row">
                     <app-contact-details></app-contact-details>
                     <br />
-
                     <app-contact-list (contactUsMessageIdEvent)="onContactSelected($event)"></app-contact-list>
                 </div>
             </p-tabPanel>

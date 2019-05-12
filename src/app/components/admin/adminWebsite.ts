@@ -14,7 +14,7 @@ import { SliderTextDetails } from './sliderTextDetails';
 @Component({
   selector: 'app-admin-website',
   templateUrl: '../../pages/admin/adminWebsite.html',
-  providers: [GenericService ]
+  providers: [GenericService]
 })
 // tslint:disable-next-line:component-class-suffix
 export class AdminWebsite implements OnInit, OnDestroy {
@@ -36,7 +36,7 @@ export class AdminWebsite implements OnInit, OnDestroy {
   public activeCompanyTab = 1;
   public activeSliderTab = 0;
 
-  constructor (
+  constructor(
     private globalEventsManager: GlobalEventsManager,
   ) {
 
@@ -44,9 +44,10 @@ export class AdminWebsite implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.globalEventsManager.showMenu = true;
+    this.sectionDetails.sectionList = this.sectionList;
   }
 
-  ngOnDestroy () {
+  ngOnDestroy() {
     this.sectionDetails = null;
     this.sectionList = null;
     this.sectionItemDetails = null;
@@ -54,47 +55,47 @@ export class AdminWebsite implements OnInit, OnDestroy {
   }
 
   onSectionSelected($event) {
-      const sectionId = $event;
-      this.sectionDetails.getSection(sectionId);
+    const sectionId = $event;
+    this.sectionDetails.getSection(sectionId);
   }
   onSectionItemSelected($event) {
-      const sectionItemId = $event;
-      this.sectionItemDetails.getSectionItem(sectionItemId);
+    const sectionItemId = $event;
+    this.sectionItemDetails.getSectionItem(sectionItemId);
   }
   onEmployeeSelected($event) {
-      this.activeEmployeeTab = 0;
-      const employeeId = $event;
-      this.employeeDetails.getEmployee(employeeId);
+    this.activeEmployeeTab = 0;
+    const employeeId = $event;
+    this.employeeDetails.getEmployee(employeeId);
 
   }
   onCompanySelected($event) {
-      this.activeCompanyTab = 0;
-      const companyId = $event;
-      this.companyDetails.getCompany(companyId);
+    this.activeCompanyTab = 0;
+    const companyId = $event;
+    this.companyDetails.getCompany(companyId);
 
   }
 
   onContactSelected($event) {
-      const contactId = $event;
-      this.contactDetails.getContact(contactId);
+    const contactId = $event;
+    this.contactDetails.getContact(contactId);
   }
 
   onSliderSelected($event) {
-      const sliderId = $event;
-      this.sliderDetails.getSlider(sliderId);
+    const sliderId = $event;
+    this.sliderDetails.getSlider(sliderId);
   }
 
   onSliderTextSelected($event) {
-      const sliderTextId = $event;
-      this.sliderTextDetails.getSliderText(sliderTextId);
+    const sliderTextId = $event;
+    this.sliderTextDetails.getSliderText(sliderTextId);
   }
 
   onTabChange(evt) {
     this.activeTab = evt.index;
     setTimeout(() => {
-        if (evt.index === 0) {
-        } else if (evt.index === 1) {
-        }
+      if (evt.index === 0) {
+      } else if (evt.index === 1) {
+      }
     }, 0);
   }
 
@@ -102,7 +103,7 @@ export class AdminWebsite implements OnInit, OnDestroy {
     this.activeEmployeeTab = evt.index;
   }
 
-   onCompanyTabChange(evt) {
+  onCompanyTabChange(evt) {
     this.activeCompanyTab = evt.index;
   }
 
