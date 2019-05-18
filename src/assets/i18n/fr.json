@@ -349,7 +349,7 @@
   },
 
   "PROPERTY": {
-      "DATE_FORMAT": "dd/MM/yyyy",
+      "DATE_FORMAT": "dd/mm/yy",
       "LOCALE": "fr-FR"
   }
 }
