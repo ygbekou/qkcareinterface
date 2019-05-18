@@ -101,7 +101,7 @@
 									<label for="birthDate">{{ 'COMMON.BIRTH_DATE' | translate }}<font color="red">*
 										</font>:</label>
 									<p-calendar [(ngModel)]="employee.user.birthDate" id="birthDate" name="birthDate"
-										dateFormat={{globalEventsManager.DATE_FORMAT}} #birthDate="ngModel" required date></p-calendar>
+										dateFormat={{globalEventsManager.CAL_DATE_FORMAT}} #birthDate="ngModel" required date></p-calendar>
 									<p-message *ngIf="f.submitted && birthDate.invalid" severity="error"
 										text="Birth Date is required"></p-message>
 								</div>

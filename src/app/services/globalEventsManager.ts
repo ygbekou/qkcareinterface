@@ -19,7 +19,8 @@ export class GlobalEventsManager {
     selectedParentId: number;
     selectedAdmissionId: number;
 
-    public DATE_FORMAT = 'mm/dd/yy';
+    public DATE_FORMAT = 'MM/dd/yyyy';
+    public CAL_DATE_FORMAT = 'mm/dd/yy';
     public LOCALE = 'en-US';
   
     constructor(private token: TokenStorage,
@@ -29,7 +30,8 @@ export class GlobalEventsManager {
       }
 
       this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
-        this.translate.get(['PROPERTY.DATE_FORMAT', 'PROPERTY.LOCALE']).subscribe(res => {
+        this.translate.get(['PROPERTY.CAL_DATE_FORMAT', 'PROPERTY.DATE_FORMAT', 'PROPERTY.LOCALE']).subscribe(res => {
+            this.CAL_DATE_FORMAT = res['PROPERTY.CAL_DATE_FORMAT'];
             this.DATE_FORMAT = res['PROPERTY.DATE_FORMAT'];
             this.LOCALE = res['PROPERTY.LOCALE'];
         });
