@@ -350,8 +350,9 @@
   },
 
   "PROPERTY": {
-      "DATE_FORMAT": "mm/dd/yy",
-      "LOCALE": "en-US"
+      "DATE_FORMAT": "MM/dd/yyyy",
+      "LOCALE": "en-US",
+      "CAL_DATE_FORMAT": "mm/dd/yy"
   }
 
 }

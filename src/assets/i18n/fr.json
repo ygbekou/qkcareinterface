@@ -349,7 +349,8 @@
   },
 
   "PROPERTY": {
-      "DATE_FORMAT": "dd/mm/yy",
-      "LOCALE": "fr-FR"
+      "DATE_FORMAT": "dd/MM/yyyy",
+      "LOCALE": "fr-FR",
+      "CAL_DATE_FORMAT": "dd/mm/yy"
   }
 }
