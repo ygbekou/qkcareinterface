@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild, Input, Outp
 import { Section } from '../../models/website';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { GenericService, GlobalEventsManager } from '../../services';
-import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
+import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-section-list',
@@ -22,38 +22,37 @@ export class SectionList implements OnInit, OnDestroy {
 
   constructor
     (
-    private genericService: GenericService,
-    private translate: TranslateService,
-    private globalEventsManager: GlobalEventsManager,
-    private changeDetectorRef: ChangeDetectorRef,
-    private route: ActivatedRoute,
-    private router: Router,
-    ) {
+      private genericService: GenericService,
+      private translate: TranslateService,
+      private globalEventsManager: GlobalEventsManager,
+      private changeDetectorRef: ChangeDetectorRef,
+      private route: ActivatedRoute,
+      private router: Router,
+  ) {
   }
 
   ngOnInit(): void {
 
     this.cols = [
-            { field: 'name', header: 'Name', headerKey: 'COMMON.NAME' },
-            { field: 'title', header: 'Title', headerKey: 'COMMON.TITLE' },
-            { field: 'language', header: 'Language', headerKey: 'COMMON.LANGUAGE' },
-            { field: 'picture', header: 'Picture', headerKey: 'COMMON.PICTURE' },
-            { field: 'statusDesc', header: 'Status', headerKey: 'COMMON.STATUS' }
-        ];
+      { field: 'name', header: 'Name', headerKey: 'COMMON.NAME' },
+      { field: 'title', header: 'Title', headerKey: 'COMMON.TITLE' },
+      { field: 'language', header: 'Language', headerKey: 'COMMON.LANGUAGE' },
+      { field: 'statusDesc', header: 'Status', headerKey: 'COMMON.STATUS' }
+    ];
 
     this.route
-        .queryParams
-        .subscribe(params => {
+      .queryParams
+      .subscribe(params => {
 
-          const parameters: string [] = [];
+        const parameters: string[] = [];
 
-          this.genericService.getAllByCriteria('com.qkcare.model.website.Section', parameters)
-            .subscribe((data: Section[]) => {
-              this.sections = data;
-            },
+        this.genericService.getAllByCriteria('com.qkcare.model.website.Section', parameters)
+          .subscribe((data: Section[]) => {
+            this.sections = data;
+          },
             error => console.log(error),
             () => console.log('Get all Section complete'));
-     });
+      });
 
 
     this.updateCols();
@@ -62,6 +61,15 @@ export class SectionList implements OnInit, OnDestroy {
     });
   }
 
+  getAll() {
+    const parameters: string[] = [];
+    this.genericService.getAllByCriteria('com.qkcare.model.website.Section', parameters)
+      .subscribe((data: Section[]) => {
+        this.sections = data;
+      },
+        error => console.log(error),
+        () => console.log('Get all Section complete'));
+  }
 
   updateCols() {
     // tslint:disable-next-line:forin
@@ -79,7 +87,7 @@ export class SectionList implements OnInit, OnDestroy {
   }
 
   edit(sectionId: number) {
-      this.sectionIdEvent.emit(sectionId + '');
+    this.sectionIdEvent.emit(sectionId + '');
   }
 
   delete(sectionId: number) {
@@ -95,4 +103,25 @@ export class SectionList implements OnInit, OnDestroy {
     }
   }
 
- }
+
+  updateTable(aSection: Section) {
+    let found = false;
+    console.log(aSection.id);
+    for (const aSec of this.sections) {
+      console.log(aSec.id);
+      if (aSec.id === aSection.id) {
+        this.sections[this.sections.indexOf(aSec)] = aSection;
+        found = true;
+        console.log('Matched with '+aSec.id);
+        break;
+      }
+    }
+    if (!found) {
+      this.sections.push(aSection);
+    }
+    var onTheFly: Section[] = [];
+    onTheFly.push(...this.sections);
+    this.sections = onTheFly;
+    this.changeDetectorRef.detectChanges();
+  }
+}

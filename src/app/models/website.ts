@@ -9,6 +9,7 @@ export class Section {
   showInMenu: string;
   language: string;
   sectionLabel: string;
+  statusDesc: string;
 
   constructor() {
       this.fileLocation = '';

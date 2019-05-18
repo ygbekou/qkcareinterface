@@ -330,7 +330,8 @@
   },
 "VALIDATION":{
     "IS_INVALID": "is invalid",
-    "IS_REQUIRED": "is required"
+    "IS_REQUIRED": "is required",
+    "FIELD_REQUIRED":"Field required"
   },
 
   "DATE": {
