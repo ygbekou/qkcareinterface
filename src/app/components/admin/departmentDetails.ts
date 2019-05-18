@@ -19,6 +19,7 @@ export class DepartmentDetails implements OnInit, OnDestroy {
     messages: Message[] = [];
     @ViewChild('picture') picture: ElementRef;
     formData = new FormData();
+    multiple=false;
 
     constructor
     (

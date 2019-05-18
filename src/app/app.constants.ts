@@ -1,14 +1,15 @@
 export class Constants {
-  public static apiServer = 'http://localhost:8080'; 
+  public static apiServer = 'http://localhost:8080';
+// tslint:disable-next-line: comment-format
   //public static apiServer = 'http://ec2-52-14-22-228.us-east-2.compute.amazonaws.com:8080';
   public static DETAIL = 'Details';
   public static ABSENCES = 'Absenses';
   public static ACTIF = 'Active';
-  public static ACTIVE = 'Active?'; 
+  public static ACTIVE = 'Active?';
   public static ADD_IMAGE = 'Ajouter Image';
   public static ADD_LABEL = 'Add';
   public static CLEAR_LABEL = 'Clear';
-  public static CLOSE_LABEL = 'Close'; 
+  public static CLOSE_LABEL = 'Close';
   public static SAVE_LABEL = 'Save';
   public static DELETE_LABEL = 'Delete';
   public static DEPARTMENT = 'Department';
