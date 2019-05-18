@@ -1,35 +1,38 @@
 <div class="ui-g-12 ui-sm-12" style="padding: 15px;">
-	<p-fieldset legend="Search Criteria">
-		<div class="ui-grid-row">
-			<div class="ui-grid-col-3 ui-sm-12">
-				<div class="form-group">
-					<label for="lastName">{{ 'COMMON.LAST_NAME' | translate }}:</label> 
-					<input type="text" pInputText class="form-control" id="lastName"
-						 [(ngModel)]="searchCriteria.lastName" name="lastName" >
-				</div>
-			</div>
-			<div class="ui-grid-col-3 ui-sm-12">
-				<div class="form-group">
-					<label for="firstName">{{ 'COMMON.FIRST_NAME' | translate }}:</label> 
-					<input type="text" pInputText class="form-control" id="firstName"
-						 [(ngModel)]="searchCriteria.firstName" name="firstName">
-				</div>
-			</div>
-			<div class="ui-grid-col-3 ui-sm-12">
-				<div class="form-group">
-                    <label for="birthDate">{{ 'COMMON.BIRTH_DATE' | translate }}:</label> 
-                    <br>
-                    <p-calendar [(ngModel)]="searchCriteria.birthDate" id="birthDate" monthNavigator="true" 
-                        yearNavigator="true" yearRange="1940:2050" name="birthDate" #birthDate="ngModel" date></p-calendar>
-				</div>
-			</div>
-			<div class="ui-grid-col-3 ui-sm-12">
-                <br/>
-                <br/>
-                <button pButton icon="fa fa-search" label="{{ 'COMMON.SEARCH' | translate }}" (click)="search()"></button>
-			</div>
-		</div>
-	</p-fieldset>
+    <form name="form" (ngSubmit)="f.form.valid && search()" #f="ngForm" validate>
+        <p-fieldset legend="{{ 'COMMON.SEARCH_CRITERIA' | translate }}">
+            <p-messages [(value)]="messages"></p-messages>
+            <div class="ui-grid-row">
+                <div class="ui-grid-col-3 ui-sm-12">
+                    <div class="form-group">
+                        <label for="lastName">{{ 'COMMON.LAST_NAME' | translate }}:</label> 
+                        <input type="text" pInputText class="form-control" id="lastName"
+                            [(ngModel)]="searchCriteria.lastName" name="lastName" >
+                    </div>
+                </div>
+                <div class="ui-grid-col-3 ui-sm-12">
+                    <div class="form-group">
+                        <label for="firstName">{{ 'COMMON.FIRST_NAME' | translate }}:</label> 
+                        <input type="text" pInputText class="form-control" id="firstName"
+                            [(ngModel)]="searchCriteria.firstName" name="firstName">
+                    </div>
+                </div>
+                <div class="ui-grid-col-3 ui-sm-12">
+                    <div class="form-group">
+                        <label for="birthDate">{{ 'COMMON.BIRTH_DATE' | translate }} ({{ 'PROPERTY.DATE_FORMAT' | translate }}):</label> 
+                        <br>
+                        <p-calendar [(ngModel)]="searchCriteria.birthDate" id="birthDate" monthNavigator="true" 
+                            yearNavigator="true" yearRange="1940:2050" name="birthDate" #birthDate="ngModel" date></p-calendar>
+                    </div>
+                </div>
+                <div class="ui-grid-col-3 ui-sm-12">
+                    <br/>
+                    <br/>
+                    <button pButton icon="fa fa-search" label="{{ 'COMMON.SEARCH' | translate }}"></button>
+                </div>
+            </div>
+        </p-fieldset>
+    </form>
 	<br/>
 	<br/>
 	<p-table [columns]="cols" [value]="patients" [responsive]="true">
@@ -38,8 +41,12 @@
 	    </ng-template>
 		<ng-template pTemplate="header" let-columns>
 		<tr>
-			<th *ngFor="let col of columns" [pSortableColumn]="col.field">
-				{{col.header}} <p-sortIcon [field]="col.field"></p-sortIcon>
+			<th *ngFor="let col of columns" [pSortableColumn]="col.field" [ngStyle]="col.style">
+                {{col.header}}
+                <span *ngIf="col.type == 'date'">
+                    ({{globalEventsManager.DATE_FORMAT}})
+                </span>
+                <p-sortIcon [field]="col.field"></p-sortIcon>
 			</th>
 			<th>Action</th>
 		</tr>
@@ -50,7 +57,7 @@
                         {{rowData[col.field]}}
                     </div>
                     <div *ngIf="col.type == 'date'">
-                        {{rowData[col.field] | date:'dd/MM/yyyy'}}
+                        {{rowData[col.field] | date: globalEventsManager.DATE_FORMAT}}
                     </div>
                 </td>
                 <td>

@@ -301,7 +301,6 @@
     "EDIT": "Modifier",  
     "PATIENT_LIST": "Liste des Patients",
     "LIST_SUMMARY": "Il y'a {{ITEM_NUMBERS}}"
-
   },
   "MESSAGE": {
     "TRANFER_DOCTOR_FAILED": "Le nouveau docteur assigné doit être différent de l'ancien.",
@@ -326,7 +325,8 @@
     "PASSWORD_NOT_CHANGED": "Le system n'a pas pu changer votre mot de passe. Vérifiez et essayez à nouveau.",
     "PASSWORD_NOT_MATCHED": "Le nouveau mot de passe ne correspond pas au mot de passe de confirmation. Verifiez et essayez à nouveau.",
     "SEND_US_MESSAGE": "Envoie un Message",
-    "FORM_HAS_ERRORS": "Le formulaire comporte des erreurs. S'il vous pla�t v�rifier et corriger."
+    "FORM_HAS_ERRORS": "Le formulaire comporte des erreurs. S'il vous pla�t v�rifier et corriger.",
+    "NO_CRITERIA_SET": "Au moins une critère de recherche est nécessaire"
   },
   "VALIDATION":{
     "IS_INVALID": "est invalide",
@@ -345,5 +345,10 @@
     "10": "Oct",
     "11": "Nov",
     "12": "Dec"
+  },
+
+  "PROPERTY": {
+      "DATE_FORMAT": "dd/MM/yyyy",
+      "LOCALE": "fr-FR"
   }
 }

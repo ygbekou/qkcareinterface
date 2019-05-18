@@ -3,6 +3,8 @@ import { Patient, SearchCriteria, User } from '../../models';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { GenericService, GlobalEventsManager } from '../../services';
 import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
+import { Message } from 'primeng/api';
+import { Constants } from '../../app.constants';
 
 @Component({
   selector: 'app-patient-list',
@@ -10,136 +12,156 @@ import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
   providers: [GenericService]
 })
 export class PatientList implements OnInit, OnDestroy {
-  
+
+  messages: Message[] = [];
   patients: Patient[] = [];
   cols: any[];
   searchCriteria: SearchCriteria = new SearchCriteria();
-  originalPage: string = '';
-  
+  originalPage = '';
+
   LAST_NAME: any;
-  
+
   constructor
     (
     private genericService: GenericService,
     private translate: TranslateService,
-    private globalEventsManager: GlobalEventsManager,
+    public globalEventsManager: GlobalEventsManager,
     private route: ActivatedRoute,
     private router: Router,
     ) {
 
-    
+
   }
 
   updateCols() {
-    for (var index in this.cols) {
-      let col = this.cols[index];
+    for (const index in this.cols) {
+      const col = this.cols[index];
       this.translate.get(col.headerKey).subscribe((res: string) => {
         col.header = res;
       });
     }
   }
-  
-  generateCols(){
+
+  generateCols() {
     this.cols = [
-            { field: 'lastName', header: 'Last Name', headerKey: 'COMMON.LAST_NAME', type:'user' },
-            { field: 'firstName', header: 'First Name', headerKey: 'COMMON.FIRST_NAME', type:'user' },
-            { field: 'birthDate', header: 'Birth Date', headerKey: 'COMMON.BIRTH_DATE', type:'date' },
-            { field: 'email', header: 'Email', headerKey: 'COMMON.E_MAIL', type:'user' },
-            { field: 'phone', header: 'Phone', headerKey: 'COMMON.PHONE', type:'user' },
-            { field: 'address', header: 'Address', headerKey: 'COMMON.ADDRESS', type:'user' },
-            { field: 'sex', header: 'Sex', headerKey: 'COMMON.GENDER', type:'user' }
+            { field: 'lastName', header: 'Last Name', headerKey: 'COMMON.LAST_NAME', type: 'user',
+                                        style: {width: '13%', 'text-align': 'center'} },
+            { field: 'firstName', header: 'First Name', headerKey: 'COMMON.FIRST_NAME', type: 'user',
+                                        style: {width: '13%', 'text-align': 'center'} },
+            { field: 'birthDate', header: 'Birth Date', headerKey: 'COMMON.BIRTH_DATE', type: 'date',
+                                        style: {width: '13%', 'text-align': 'center'} },
+            { field: 'email', header: 'Email', headerKey: 'COMMON.E_MAIL', type: 'user',
+                                        style: {width: '15%', 'text-align': 'center'}  },
+            { field: 'phone', header: 'Phone', headerKey: 'COMMON.PHONE', type: 'user',
+                                        style: {width: '10%'}  },
+            { field: 'address', header: 'Address', headerKey: 'COMMON.ADDRESS', type: 'user',
+                                        style: {width: '20%', 'text-align': 'center'}  },
+            { field: 'sex', header: 'Sex', headerKey: 'COMMON.GENDER', type: 'user',
+                                        style: {width: '5%', 'text-align': 'center'}  }
         ];
   }
-  
+
   ngOnInit(): void {
-    
+
     this.generateCols();
 
      this.route
         .queryParams
         .subscribe(params => {
-     
+
         this.originalPage = params['originalPage'];
      });
-    
+
      this.updateCols();
      this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
         this.updateCols();
      });
   }
- 
-  
+
+
   ngOnDestroy() {
     this.patients = null;
   }
-  
+
   edit(patientId: number) {
-    
+
     this.globalEventsManager.changePatientId(patientId);
     try {
-      let navigationExtras: NavigationExtras = {
+      const navigationExtras: NavigationExtras = {
         queryParams: {
-          "patientId": patientId,
+          'patientId': patientId,
         }
-      }
-      this.router.navigate(["/admin/adminPatient"], navigationExtras);
-    }
-    catch (e) {
+      };
+      this.router.navigate(['/admin/adminPatient'], navigationExtras);
+    } catch (e) {
       console.log(e);
     }
   }
 
   redirectToOrigialPage(patient: Patient) {
     try {
-      let navigationExtras: NavigationExtras = {
+      const navigationExtras: NavigationExtras = {
         queryParams: {
-          "patientId": patient.id,
-          "patientName": patient.name,
-          "mrn": patient.medicalRecordNumber,
-          "birthDate": patient.user.birthDate,
-          "gender": patient.user.sex,
+          'patientId': patient.id,
+          'patientName': patient.name,
+          'mrn': patient.medicalRecordNumber,
+          'birthDate': patient.user.birthDate,
+          'gender': patient.user.sex,
         }
-      }
+      };
       this.router.navigate([this.originalPage], navigationExtras);
-    }
-    catch (e) {
+    } catch (e) {
       console.log(e);
     }
   }
-  
-  delete(patientId : number) {
+
+  delete(patientId: number) {
     try {
-      let navigationExtras: NavigationExtras = {
+      const navigationExtras: NavigationExtras = {
         queryParams: {
-          "patientId": patientId,
+          'patientId': patientId,
         }
-      }
-      this.router.navigate(["/admin/patientDetails"], navigationExtras);
-    }
-    catch (e) {
+      };
+      this.router.navigate(['/admin/patientDetails'], navigationExtras);
+    } catch (e) {
       console.log(e);
     }
   }
-  
+
   search() {
-   
-        let parameters: string [] = []; 
-            
-        parameters.push('e.status = |status|0|Integer')
+
+        const parameters: string [] = [];
+        this.messages = [];
+
+        parameters.push('e.status = |status|0|Integer');
         if (this.searchCriteria.lastName != null && this.searchCriteria.lastName.length > 0)  {
-          parameters.push('e.user.lastName like |lastName|' + '%' + this.searchCriteria.lastName + '%' + '|String')
+          parameters.push('e.user.lastName like |lastName|' + '%' + this.searchCriteria.lastName + '%' + '|String');
         }
         if (this.searchCriteria.firstName != null && this.searchCriteria.firstName.length > 0)  {
-          parameters.push('e.user.firstName like |firstName|' + '%' + this.searchCriteria.firstName + '%' + '|String')
-        } 
+          parameters.push('e.user.firstName like |firstName|' + '%' + this.searchCriteria.firstName + '%' + '|String');
+        }
         if (this.searchCriteria.birthDate != null)  {
-          parameters.push('e.user.birthDate = |birthDate|' + this.searchCriteria.birthDate.toLocaleDateString() + '|Date')
-        }  
-        
+          parameters.push('e.user.birthDate = |birthDate|' +
+            this.searchCriteria.birthDate.toLocaleDateString(this.globalEventsManager.LOCALE,
+                Constants.LOCAL_DATE_OPTIONS) + '|Date');
+        }
+
+        alert(parameters.length)
+
+        if (parameters.length === 1) {
+            this.translate.get(['MESSAGE.NO_CRITERIA_SET', 'COMMON.SEARCH']).subscribe(res => {
+              this.messages.push({
+                severity: Constants.ERROR, summary: res['COMMON.SEARCH'],
+                detail: res['MESSAGE.NO_CRITERIA_SET']
+              });
+            });
+            this.patients = [];
+            return false;
+        }
+
         this.genericService.getAllByCriteria('Patient', parameters)
-          .subscribe((data: Patient[]) => 
-          { 
-            this.patients = data 
+          .subscribe((data: Patient[]) => {
+            this.patients = data;
           },
           error => console.log(error),
           () => console.log('Get all Patients complete'));

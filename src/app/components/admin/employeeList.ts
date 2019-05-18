@@ -1,12 +1,11 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
-import { Constants } from '../../app.constants';
-import { Cookie } from 'ng2-cookies/ng2-cookies';
-import {  } from 'primeng/primeng';
+import { Message } from 'primeng/api';
 import { GenericService } from '../../services';
 import { Employee, User, SearchCriteria } from '../../models';
 import { DepartmentDropdown } from '../dropdowns';
 import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
+import { Constants } from 'src/app/app.constants';
 
 @Component({
   selector: 'app-employee-list',
@@ -15,6 +14,7 @@ import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
 })
 export class EmployeeList implements OnInit, OnDestroy {
   
+  messages: Message[] = [];
   employees: Employee[] = [];
   cols: any[];
   searchCriteria: SearchCriteria = new SearchCriteria();
@@ -23,9 +23,7 @@ export class EmployeeList implements OnInit, OnDestroy {
     (
     private genericService: GenericService,
     private translate: TranslateService,
-    private changeDetectorRef: ChangeDetectorRef,
     public departmentDropdown: DepartmentDropdown,
-    private route: ActivatedRoute,
     private router: Router,
     ) {
 
@@ -105,14 +103,23 @@ export class EmployeeList implements OnInit, OnDestroy {
           parameters.push('e.department.id = |departmentId|' + this.searchCriteria.department.id + '|Long')
         }  
         
-        
+        if (parameters.length === 1) {
+            this.translate.get(['MESSAGE.NO_CRITERIA_SET', 'COMMON.SEARCH']).subscribe(res => {
+              this.messages.push({
+                severity: Constants.ERROR, summary: res['COMMON.SEARCH'],
+                detail: res['MESSAGE.NO_CRITERIA_SET']
+              });
+            });
+            this.employees = [];
+            return false;
+        }
+
         this.genericService.getAllByCriteria('Employee', parameters)
-          .subscribe((data: Employee[]) => 
-          { 
-            this.employees = data 
-          },
-          error => console.log(error),
-          () => console.log('Get all Employees complete'));
+          .subscribe((data: Employee[]) => {
+            this.employees = data;
+        },
+        error => console.log(error),
+        () => console.log('Get all Employees complete'));
   }
 
   getStatusDesc(employee: Employee): string {
