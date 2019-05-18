@@ -64,7 +64,7 @@ export class SectionDetails implements OnInit, OnDestroy {
 
   save() {
     try {
-      this.section.showInMenu = this.showInMenu ? 'Y' : 'N';
+      this.section.showInMenu = this.showInMenu ? 'Y' : 'N'; 
       this.genericService.save(this.section, 'com.qkcare.model.website.Section')
         .subscribe(result => {
           if (result.id > 0) {
