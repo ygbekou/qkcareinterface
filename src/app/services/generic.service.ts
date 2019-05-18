@@ -25,7 +25,7 @@ export class GenericService {
     this.headers.append('Accept', 'application/json');
 
     this.bloodGroups = [
-            {label: '', value: ''},
+            {label: '', value: 'EMPTY'},
             {label: 'A+', value: 'A_PLUS'},
             {label: 'A-', value: 'A_MINUS'},
             {label: 'B+', value: 'B_PLUS'},

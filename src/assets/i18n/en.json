@@ -308,7 +308,7 @@
   	"TRANFER_DATE_FAILED": "The Transfer Date should be greater than the current assignment Date.",
   	"APPOINTMENT_DISPLAY_FAILED": "Please Select a Department and a Doctor to add an appointment.",
     "SAVE_SUCCESS": "Save was successful",
-    "SAVE_UNSUCCESS": "Save was unsuccessful",
+    "SAVE_UNSUCCESS": "Save was unsuccessful. See errors below: ",
     "READ_SUCCESS": "Read was successful",
     "READ_UNSUCCESS": "Read was unsuccessful",
     "OVERLAP_SCHEDULE": "Two schedules are overlaping",

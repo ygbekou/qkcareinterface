@@ -6,6 +6,7 @@ import { CountryDropdown, ReligionDropdown, OccupationDropdown, PayerTypeDropdow
 import { GenericService, UserService, ReportService, GlobalEventsManager } from '../../services';
 import { Message } from 'primeng/api';
 import { TranslateService} from '@ngx-translate/core';
+import { BaseComponent } from './baseComponent';
 
 
 @Component({
@@ -14,7 +15,7 @@ import { TranslateService} from '@ngx-translate/core';
   providers: [GenericService, UserService, ReportService, CountryDropdown, ReligionDropdown,
      OccupationDropdown, PayerTypeDropdown, InsuranceDropdown]
 })
-export class PatientDetails implements OnInit, OnDestroy {
+export class PatientDetails extends BaseComponent implements OnInit, OnDestroy {
 
   messages: Message[] = [];
   patient: Patient = new Patient();
@@ -47,7 +48,7 @@ export class PatientDetails implements OnInit, OnDestroy {
       private route: ActivatedRoute,
       private router: Router
     ) {
-
+      super(translate);
   }
 
   ngOnInit(): void {
@@ -86,6 +87,7 @@ export class PatientDetails implements OnInit, OnDestroy {
 
   save() {
 
+    this.messages = [];
     this.formData = new FormData();
 
     const pictureEl = this.picture.nativeElement;
@@ -105,22 +107,12 @@ export class PatientDetails implements OnInit, OnDestroy {
       if (pictureEl && pictureEl.files && (pictureEl.files.length > 0)) {
         this.userService.saveUserWithPicture('Patient', this.patient, this.formData)
           .subscribe(result => {
-            if (result.id > 0) {
-              this.patient = result;
-              this.messages.push({severity: Constants.SUCCESS, summary: Constants.SAVE_LABEL, detail: Constants.SAVE_SUCCESSFUL});
-            } else {
-              this.messages.push({severity: Constants.ERROR, summary: Constants.SAVE_LABEL, detail: Constants.SAVE_UNSUCCESSFUL});
-            }
+            this.processResult(result, this.patient, this.messages, this.pictureUrl);
           });
       } else {
         this.userService.saveUserWithoutPicture('Patient', this.patient)
           .subscribe(result => {
-            if (result.id > 0) {
-              this.patient = result;
-              this.messages.push({severity: Constants.SUCCESS, summary: Constants.SAVE_LABEL, detail: Constants.SAVE_SUCCESSFUL});
-            } else {
-              this.messages.push({severity: Constants.ERROR, summary: Constants.SAVE_LABEL, detail: Constants.SAVE_UNSUCCESSFUL});
-            }
+            this.processResult(result, this.patient, this.messages, this.pictureUrl);
           });
       }
     } catch (e) {
@@ -128,7 +120,6 @@ export class PatientDetails implements OnInit, OnDestroy {
       this.messages.push({severity: Constants.ERROR, summary: Constants.SAVE_LABEL, detail: Constants.SAVE_UNSUCCESSFUL});
     }
   }
-
 
 
   printIdCard() {

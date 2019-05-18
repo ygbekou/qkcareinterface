@@ -308,7 +308,7 @@
     "TRANFER_DATE_FAILED": "La date de transfer doit être plus grande que l'ancienne date.",
     "APPOINTMENT_DISPLAY_FAILED": "Selectionner un Départment et un Doctor pour ajouter un rendez-vous.",
     "SAVE_SUCCESS": "La sauvegarde a marché",
-    "SAVE_UNSUCCESS": "Sauvegarde n'a pas marché",
+    "SAVE_UNSUCCESS": "La sauvegarde n'a pas marché. Voir les erreurs ci-dessous: ",
     "READ_SUCCESS": "Lecture avec succès",
     "READ_UNSUCCESS": "Echec de lecture",
     "OVERLAP_SCHEDULE": "Deux horaires se chevauchent",
