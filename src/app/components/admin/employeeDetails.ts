@@ -5,14 +5,14 @@ import { Employee } from '../../models/employee';
 import { UserGroup } from '../../models/userGroup';
 import { UserGroupDropdown, CountryDropdown, DepartmentDropdown } from '../dropdowns';
 import { User } from '../../models/user';
-import { GenericService, UserService } from '../../services';
+import { GenericService, UserService, GlobalEventsManager } from '../../services';
 import { TranslateService } from '@ngx-translate/core';
 import { Message } from 'primeng/api';
 
 @Component({
   selector: 'app-employee-details',
   templateUrl: '../../pages/admin/employeeDetails.html',
-  providers: [GenericService, UserService, UserGroupDropdown, CountryDropdown,DepartmentDropdown]
+  providers: [GenericService, UserService, UserGroupDropdown, CountryDropdown, DepartmentDropdown]
 })
 // tslint:disable-next-line:component-class-suffix
 export class EmployeeDetails implements OnInit, OnDestroy {
@@ -24,18 +24,19 @@ export class EmployeeDetails implements OnInit, OnDestroy {
   displayDialog: boolean;
   employee: Employee = new Employee();
   messages: Message[] = [];
-  pictureUrl: any = ''; 
+  pictureUrl: any = '';
   constructor
     (
       private genericService: GenericService,
       private userService: UserService,
       private translate: TranslateService,
+      public globalEventsManager: GlobalEventsManager,
       public countryDropdown: CountryDropdown,
       public departmentDropdown: DepartmentDropdown,
       public userGroupDropdown: UserGroupDropdown,
       private route: ActivatedRoute,
   ) {
-    this.employee.user = new User(); 
+    this.employee.user = new User();
   }
 
   ngOnInit(): void {
@@ -98,6 +99,7 @@ export class EmployeeDetails implements OnInit, OnDestroy {
               if (this.employee.user.birthDate != null) {
                 this.employee.user.birthDate = new Date(this.employee.user.birthDate);
               }
+              this.pictureUrl = '';
             } else {
               this.error = Constants.SAVE_UNSUCCESSFUL;
               this.displayDialog = true;
@@ -111,6 +113,7 @@ export class EmployeeDetails implements OnInit, OnDestroy {
               if (this.employee.user.birthDate != null) {
                 this.employee.user.birthDate = new Date(this.employee.user.birthDate);
               }
+              this.pictureUrl = '';
             } else {
               this.error = Constants.SAVE_UNSUCCESSFUL;
               this.displayDialog = true;
@@ -150,19 +153,22 @@ export class EmployeeDetails implements OnInit, OnDestroy {
   }
 
   readUrl(event: any) {
+
     if (event.target.files && event.target.files[0]) {
       const reader = new FileReader();
 
-      // tslint:disable-next-line:no-shadowed-variable
       reader.onload = (event: ProgressEvent) => {
         this.pictureUrl = (<FileReader>event.target).result;
       };
 
       reader.readAsDataURL(event.target.files[0]);
     }
+
+    this.employee.user.picture = '';
   }
 
-  clearPicture() {
+  clearPictureFile() {
+    this.employee.user.picture = '';
     this.pictureUrl = '';
     this.picture.nativeElement.value = '';
   }

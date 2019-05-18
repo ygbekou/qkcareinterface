@@ -19,7 +19,7 @@ export class GlobalEventsManager {
     selectedParentId: number;
     selectedAdmissionId: number;
 
-    public DATE_FORMAT = 'MM/dd/yyyy';
+    public DATE_FORMAT = 'mm/dd/yy';
     public LOCALE = 'en-US';
   
     constructor(private token: TokenStorage,

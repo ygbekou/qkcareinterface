@@ -146,8 +146,6 @@ export class PatientList implements OnInit, OnDestroy {
                 Constants.LOCAL_DATE_OPTIONS) + '|Date');
         }
 
-        alert(parameters.length)
-
         if (parameters.length === 1) {
             this.translate.get(['MESSAGE.NO_CRITERIA_SET', 'COMMON.SEARCH']).subscribe(res => {
               this.messages.push({
