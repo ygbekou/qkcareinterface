@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, EventEmitter, Output } from '@angular/core';
 import { Section } from '../../models/website';
 import { Constants } from '../../app.constants';
 import { GenericService } from '../../services';
@@ -21,6 +21,7 @@ export class SectionDetails implements OnInit, OnDestroy {
   formData = new FormData();
   pictureUrl: any = '';
   showInMenu = false;
+  @Output() sectionEvent = new EventEmitter<Section>();
   constructor
     (
       private genericService: GenericService,
@@ -38,7 +39,6 @@ export class SectionDetails implements OnInit, OnDestroy {
   }
 
   getSection(sectionId: number) {
-
     this.messages = [];
     this.genericService.getOne(sectionId, 'com.qkcare.model.website.Section')
       .subscribe(result => {
@@ -69,7 +69,8 @@ export class SectionDetails implements OnInit, OnDestroy {
         .subscribe(result => {
           if (result.id > 0) {
             this.section = result;
-            this.sectionList.updateTable(result);
+            this.sectionEvent.emit(result);
+            //this.sectionList.updateTable(result);
             this.messages.push({ severity: Constants.SUCCESS, summary: Constants.SAVE_LABEL, detail: Constants.SAVE_SUCCESSFUL });
           } else {
             this.messages.push({ severity: Constants.ERROR, summary: Constants.SAVE_LABEL, detail: Constants.SAVE_UNSUCCESSFUL });
@@ -88,12 +89,10 @@ export class SectionDetails implements OnInit, OnDestroy {
   readUrl(event: any, targetName: any) {
     if (event.target.files && event.target.files[0]) {
       const reader = new FileReader();
-
       // tslint:disable-next-line:no-shadowed-variable
       reader.onload = (event: ProgressEvent) => {
         this.pictureUrl = (<FileReader>event.target).result;
       };
-
       reader.readAsDataURL(event.target.files[0]);
     }
   }

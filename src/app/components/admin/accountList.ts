@@ -19,11 +19,9 @@ export class AccountList implements OnInit, OnDestroy {
   displayDialog: boolean;
   accounts: Account[] = [];
   cols: any[];
-  
   DETAIL: string = Constants.DETAIL;
   ADD_IMAGE: string = Constants.ADD_IMAGE;
-  ADD_LABEL: string = Constants.ADD_LABEL;  
-  
+  ADD_LABEL: string = Constants.ADD_LABEL;
   constructor
     (
     private genericService: GenericService,
