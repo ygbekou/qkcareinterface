@@ -342,7 +342,7 @@
 	</div>
 	<br />
     <p-messages [(value)]="messages"></p-messages>
-    <p-message *ngIf="!f.form.valid" severity="error" 
+    <p-message *ngIf="!f.form.valid &&f.submitted" severity="error" 
 			text="{{ 'MESSAGE.FORM_HAS_ERRORS' | translate }}"></p-message>
     <br/>
     <br/>

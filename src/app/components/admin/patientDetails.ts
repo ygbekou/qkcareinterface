@@ -41,11 +41,11 @@ export class PatientDetails implements OnInit, OnDestroy {
       private userService: UserService,
       private reportService: ReportService,
       private translate: TranslateService,
-      private countryDropdown: CountryDropdown,
-      private religionDropdown: ReligionDropdown,
-      private occupationDropdown: OccupationDropdown,
-      private payerTypeDropdown: PayerTypeDropdown,
-      private insuranceDropdown: InsuranceDropdown,
+      public countryDropdown: CountryDropdown,
+      public religionDropdown: ReligionDropdown,
+      public occupationDropdown: OccupationDropdown,
+      public payerTypeDropdown: PayerTypeDropdown,
+      public insuranceDropdown: InsuranceDropdown,
       private changeDetectorRef: ChangeDetectorRef,
       private route: ActivatedRoute,
       private router: Router
@@ -99,8 +99,6 @@ export class PatientDetails implements OnInit, OnDestroy {
     } else {
        this.formData.append('file', null, null);
     }
-
-
     try {
       this.patient.user.userName = this.patient.user.email;
       this.patient.user.userGroup.id = Constants.USER_GROUP_PATIENT;
@@ -143,10 +141,8 @@ export class PatientDetails implements OnInit, OnDestroy {
     parameter.name = 'PATIENT_ID_PARAM';
     parameter.dataType = 'Long';
     parameter.value = this.patient.id + '';
-    
     this.reportView.parameters = [];
     this.reportView.parameters.push(parameter);
-    
     this.reportService.runReport(this.reportView)
         .subscribe(result => {
           if (result.reportName) {
