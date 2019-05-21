@@ -11,6 +11,7 @@ import { SliderList } from './sliderList';
 import { SliderDetails } from './sliderDetails';
 import { SliderTextList } from './sliderTextList';
 import { SliderTextDetails } from './sliderTextDetails';
+import { Section, SectionItem } from 'src/app/models/website';
 @Component({
   selector: 'app-admin-website',
   templateUrl: '../../pages/admin/adminWebsite.html',
@@ -44,7 +45,6 @@ export class AdminWebsite implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.globalEventsManager.showMenu = true;
-    this.sectionDetails.sectionList = this.sectionList;
   }
 
   ngOnDestroy() {
@@ -58,6 +58,16 @@ export class AdminWebsite implements OnInit, OnDestroy {
     const sectionId = $event;
     this.sectionDetails.getSection(sectionId);
   }
+  onSectionSaved($event) {
+    const aSection: Section = $event;
+    this.sectionList.updateTable(aSection);
+  }
+
+  onSectionItemSaved($event) {
+    const aSectionItem: SectionItem = $event;
+    this.sectionItemList.updateTable(aSectionItem);
+  }
+
   onSectionItemSelected($event) {
     const sectionItemId = $event;
     this.sectionItemDetails.getSectionItem(sectionItemId);

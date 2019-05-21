@@ -8,6 +8,7 @@ import { User } from '../../models/user';
 import { GenericService, UserService, GlobalEventsManager } from '../../services';
 import { TranslateService } from '@ngx-translate/core';
 import { Message } from 'primeng/api';
+import { BaseComponent } from './baseComponent';
 
 @Component({
   selector: 'app-employee-details',
@@ -15,7 +16,7 @@ import { Message } from 'primeng/api';
   providers: [GenericService, UserService, UserGroupDropdown, CountryDropdown, DepartmentDropdown]
 })
 // tslint:disable-next-line:component-class-suffix
-export class EmployeeDetails implements OnInit, OnDestroy {
+export class EmployeeDetails extends BaseComponent implements OnInit, OnDestroy {
 
   @ViewChild('picture') picture: ElementRef;
   formData = new FormData();
@@ -36,7 +37,8 @@ export class EmployeeDetails implements OnInit, OnDestroy {
       public userGroupDropdown: UserGroupDropdown,
       private route: ActivatedRoute,
   ) {
-    this.employee.user = new User();
+      super(translate);
+      this.employee.user = new User();
   }
 
   ngOnInit(): void {
@@ -74,6 +76,7 @@ export class EmployeeDetails implements OnInit, OnDestroy {
   }
 
   save() {
+    this.messages = [];
     this.formData = new FormData();
     let inputEl;
     if (this.picture) {
@@ -94,30 +97,12 @@ export class EmployeeDetails implements OnInit, OnDestroy {
       if (inputEl && inputEl.files && (inputEl.files.length > 0)) {
         this.userService.saveUserWithPicture('Employee', this.employee, this.formData)
           .subscribe(result => {
-            if (result.id > 0) {
-              this.employee = result;
-              if (this.employee.user.birthDate != null) {
-                this.employee.user.birthDate = new Date(this.employee.user.birthDate);
-              }
-              this.pictureUrl = '';
-            } else {
-              this.error = Constants.SAVE_UNSUCCESSFUL;
-              this.displayDialog = true;
-            }
+            this.processResult(result, this.employee, this.messages, this.pictureUrl);
           });
       } else {
         this.userService.saveUserWithoutPicture('Employee', this.employee)
           .subscribe(result => {
-            if (result.id > 0) {
-              this.employee = result;
-              if (this.employee.user.birthDate != null) {
-                this.employee.user.birthDate = new Date(this.employee.user.birthDate);
-              }
-              this.pictureUrl = '';
-            } else {
-              this.error = Constants.SAVE_UNSUCCESSFUL;
-              this.displayDialog = true;
-            }
+            this.processResult(result, this.employee, this.messages, this.pictureUrl);
           });
       }
     } catch (e) {

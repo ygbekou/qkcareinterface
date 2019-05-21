@@ -16,28 +16,17 @@
             </p-tabPanel>
             <p-tabPanel header="{{'COMMON.SECTION' | translate | uppercase}}">
                 <div *ngIf="activeTab == 1" class="ui-grid-row">
-                    <app-section-details></app-section-details>
-                    <br /> 
+                    <app-section-details (sectionSavedEvent)="onSectionSaved($event)"></app-section-details>
+                    <br />
                     <app-section-list (sectionIdEvent)="onSectionSelected($event)"></app-section-list>
                 </div>
             </p-tabPanel>
             <p-tabPanel header="{{'COMMON.SECTION_ITEM' | translate}}">
                 <div *ngIf="activeTab == 2" class="ui-grid-row">
-                    <app-sectionItem-details></app-sectionItem-details>
-                    <br /> 
+                    <app-sectionItem-details (sectionItemSavedEvent)="onSectionItemSaved($event)">
+                    </app-sectionItem-details>
+                    <br />
                     <app-sectionItem-list (sectionItemIdEvent)="onSectionItemSelected($event)"></app-sectionItem-list>
-                </div>
-            </p-tabPanel>
-            <p-tabPanel header="{{'COMMON.EMPLOYEE' | translate}}">
-                <div *ngIf="activeTab == 3" class="ui-grid-row">
-                    <p-tabView [activeIndex]="activeEmployeeTab" (onChange)="onEmployeeTabChange($event)">
-                        <p-tabPanel header="{{'COMMON.DETAILS' | translate}}">
-                            <app-employee-details></app-employee-details>
-                        </p-tabPanel>
-                        <p-tabPanel header="{{'COMMON.LIST' | translate}}">
-                            <app-employee-list (employeeIdEvent)="onEmployeeSelected($event)"></app-employee-list>
-                        </p-tabPanel>
-                    </p-tabView>
                 </div>
             </p-tabPanel>
             <p-tabPanel header="{{'COMMON.MESSAGES' | translate}}">

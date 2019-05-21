@@ -105,14 +105,11 @@ export class SectionList implements OnInit, OnDestroy {
 
 
   updateTable(aSection: Section) {
-    let found = false;
-    console.log(aSection.id);
-    for (const aSec of this.sections) {
-      console.log(aSec.id);
+    let found = false; 
+    for (const aSec of this.sections) { 
       if (aSec.id === aSection.id) {
         this.sections[this.sections.indexOf(aSec)] = aSection;
-        found = true;
-        console.log('Matched with '+aSec.id);
+        found = true; 
         break;
       }
     }

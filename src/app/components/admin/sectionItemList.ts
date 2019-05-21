@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild, Input, Outp
 import { SectionItem } from '../../models/website';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { GenericService, GlobalEventsManager } from '../../services';
-import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
+import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -23,35 +23,35 @@ export class SectionItemList implements OnInit, OnDestroy {
 
   constructor
     (
-    private genericService: GenericService,
-    private translate: TranslateService,
-    private route: ActivatedRoute,
-    private router: Router,
-    ) {
+      private genericService: GenericService,
+      private translate: TranslateService,
+      private route: ActivatedRoute,
+      private router: Router,
+  ) {
   }
 
   ngOnInit(): void {
 
     this.cols = [
-            { field: 'sectionName', header: 'Section', headerKey: 'COMMON.SECTION' },
-            { field: 'title', header: 'Title', headerKey: 'COMMON.TITLE' },
-            { field: 'picture', header: 'Picture', headerKey: 'COMMON.PICTURE' },
-            { field: 'statusDesc', header: 'Status', headerKey: 'COMMON.STATUS' }
-        ];
+      { field: 'sectionName', header: 'Section', headerKey: 'COMMON.SECTION' },
+      { field: 'title', header: 'Title', headerKey: 'COMMON.TITLE' },
+      { field: 'picture', header: 'Picture', headerKey: 'COMMON.PICTURE' },
+      { field: 'statusDesc', header: 'Status', headerKey: 'COMMON.STATUS' }
+    ];
 
     this.route
-        .queryParams
-        .subscribe(params => {
+      .queryParams
+      .subscribe(params => {
 
-          const parameters: string [] = [];
+        const parameters: string[] = [];
 
-          this.genericService.getAllByCriteria('com.qkcare.model.website.SectionItem', parameters)
-            .subscribe((data: SectionItem[]) => {
-              this.sectionItems = data ;
-            },
+        this.genericService.getAllByCriteria('com.qkcare.model.website.SectionItem', parameters)
+          .subscribe((data: SectionItem[]) => {
+            this.sectionItems = data;
+          },
             error => console.log(error),
             () => console.log('Get all SectionItem complete'));
-     });
+      });
 
 
     this.updateCols();
@@ -71,13 +71,30 @@ export class SectionItemList implements OnInit, OnDestroy {
     }
   }
 
+  updateTable(aSection: SectionItem) {
+    let found = false;
+    for (const aSec of this.sectionItems) {
+      if (aSec.id === aSection.id) {
+        this.sectionItems[this.sectionItems.indexOf(aSec)] = aSection;
+        found = true;
+        break;
+      }
+    }
+    if (!found) {
+      this.sectionItems.push(aSection);
+    }
+    var onTheFly: SectionItem[] = [];
+    onTheFly.push(...this.sectionItems);
+    this.sectionItems = onTheFly;
+    //this.changeDetectorRef.detectChanges();
+  }
 
   ngOnDestroy() {
     this.sectionItems = null;
   }
 
   edit(sectionItemId: number) {
-      this.sectionItemIdEvent.emit(sectionItemId + '');
+    this.sectionItemIdEvent.emit(sectionItemId + '');
   }
 
   delete(sectionItemId: number) {
@@ -94,4 +111,4 @@ export class SectionItemList implements OnInit, OnDestroy {
     }
   }
 
- }
+}

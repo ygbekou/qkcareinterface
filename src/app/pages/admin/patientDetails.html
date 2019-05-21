@@ -78,7 +78,8 @@
 						<div class="form-group">
 							<label for="birthDate">{{ 'COMMON.BIRTH_DATE' | translate }}<font color="red">*</font>:</label>
                             <p-calendar [(ngModel)]="patient.user.birthDate" id="birthDate" monthNavigator="true" 
-                                yearRange="1940:2050" yearNavigator="true" name="birthDate" #birthDate="ngModel" required date></p-calendar>
+                                yearRange="1940:2050" yearNavigator="true" name="birthDate" #birthDate="ngModel" required date
+                                dateFormat={{globalEventsManager.CAL_DATE_FORMAT}}></p-calendar>
 							<p-message *ngIf="f.submitted && birthDate.errors && birthDate.errors.required" severity="error" 
                                 text="{{ 'COMMON.BIRTH_DATE' | translate }} {{ 'VALIDATION.IS_REQUIRED' | translate }}"></p-message>
                             <p-message *ngIf="f.submitted && birthDate.errors && birthDate.errors.date" severity="error" 
@@ -269,7 +270,8 @@
 			<div class="ui-grid-col-3 ui-sm-12">
 				<div class="form-group">
 					<label for="expiryDate">{{ 'COMMON.EXPIRY_DATE' | translate }}:</label>
-					<p-calendar [(ngModel)]="patient.expiryDate" name="expiryDate"></p-calendar>
+                    <p-calendar [(ngModel)]="patient.expiryDate" name="expiryDate" 
+                        dateFormat={{globalEventsManager.CAL_DATE_FORMAT}}></p-calendar>
 				</div>
 			</div>
 			<div class="ui-grid-col-3 ui-sm-12">
@@ -305,7 +307,8 @@
 				<div class="ui-grid-col-3 ui-sm-12">
 					<div class="form-group">
 						<label for="insuranceExpiryDate">{{ 'COMMON.EXPIRY_DATE' | translate }}:</label>
-						<p-calendar [(ngModel)]="patient.insuranceExpiryDate" name="insuranceExpiryDate"></p-calendar>
+                        <p-calendar [(ngModel)]="patient.insuranceExpiryDate" name="insuranceExpiryDate"
+                            dateFormat={{globalEventsManager.CAL_DATE_FORMAT}}></p-calendar>
 					</div>
 				</div>
 			</div>

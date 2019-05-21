@@ -74,7 +74,7 @@
 							<div class="ui-grid-col-4 ui-sm-12">
 								<div class="form-group">
 									<div class="ui-grid-row">
-										<label for="sex">{{ 'COMMON.DEMOGRAPHIC_INFO' | translate }}</label>
+										<label for="sex">{{ 'COMMON.GENDER' | translate }}</label>
 									</div>
 									<div class="ui-grid-row">
 										<p-radioButton name="sex" value="M" label="Male" [(ngModel)]="employee.user.sex"
@@ -98,13 +98,15 @@
 							</div>
 							<div class="ui-grid-col-4 ui-sm-12">
 								<div class="form-group">
-									<label for="birthDate">{{ 'COMMON.BIRTH_DATE' | translate }}<font color="red">*
-										</font>:</label>
-									<p-calendar [(ngModel)]="employee.user.birthDate" id="birthDate" name="birthDate"
-										dateFormat={{globalEventsManager.DATE_FORMAT}} #birthDate="ngModel" required date></p-calendar>
-									<p-message *ngIf="f.submitted && birthDate.invalid" severity="error"
-										text="Birth Date is required"></p-message>
-								</div>
+                                    <label for="birthDate">{{ 'COMMON.BIRTH_DATE' | translate }}<font color="red">*</font>:</label>
+                                    <p-calendar [(ngModel)]="employee.user.birthDate" id="birthDate" monthNavigator="true" 
+                                        yearRange="1940:2050" yearNavigator="true" name="birthDate" #birthDate="ngModel" required date
+                                        dateFormat={{globalEventsManager.CAL_DATE_FORMAT}}></p-calendar>
+                                    <p-message *ngIf="f.submitted && birthDate.errors && birthDate.errors.required" severity="error" 
+                                        text="{{ 'COMMON.BIRTH_DATE' | translate }} {{ 'VALIDATION.IS_REQUIRED' | translate }}"></p-message>
+                                    <p-message *ngIf="f.submitted && birthDate.errors && birthDate.errors.date" severity="error" 
+                                        text="{{ 'COMMON.BIRTH_DATE' | translate }} {{ 'VALIDATION.IS_INVALID' | translate }}"></p-message>
+                                </div>
 							</div>
 						</div>
 						<div class="ui-grid-row">
@@ -189,25 +191,30 @@
 				<div class="ui-grid-row">
 					<div class="ui-grid-col-6 ui-sm-12">
 						<div class="form-group">
-							<label for="department">{{ 'COMMON.DEPARTMENT' | translate }}</label>
+							<label for="department">{{ 'COMMON.DEPARTMENT' | translate }}:</label><font color="red">*</font>
 							<p-autoComplete [(ngModel)]="employee.department"
 								(onDropdownClick)="departmentDropdown.handleDropdownClick($event)"
 								[suggestions]="departmentDropdown.filteredDepartments" [dropdown]="true" id="department"
 								(completeMethod)="departmentDropdown.filter($event)" name="department" field="name"
-								[size]="30" placeholder="{{ 'COMMON.DEPARTMENT' | translate }}" [minLength]="1">
-							</p-autoComplete>
+                                [size]="30" placeholder="{{ 'COMMON.DEPARTMENT' | translate }}" [minLength]="1" 
+                                #department="ngModel" required>
+                            </p-autoComplete>
+                            <p-message *ngIf="f.submitted && department.errors && department.errors.required" severity="error" 
+                                        text="{{ 'COMMON.DEPARTMENT' | translate }} {{ 'VALIDATION.IS_REQUIRED' | translate }}"></p-message>
 						</div>
 					</div>
 					<div class="ui-grid-col-6 ui-sm-12">
 						<div class="form-group">
-							<label for="userGroup">{{ 'COMMON.ROLE' | translate }}</label>
+							<label for="userGroup">{{ 'COMMON.ROLE' | translate }}</label><font color="red">*</font>
 							<p-autoComplete [(ngModel)]="employee.user.userGroup"
-								[disabled]="employee.user.userGroup.id === 1"
 								(onDropdownClick)="userGroupDropdown.handleDropdownClick($event)"
 								[suggestions]="userGroupDropdown.filteredUserGroups" [dropdown]="true" id="userGroup"
 								(completeMethod)="userGroupDropdown.filter($event)" name="userGroup" field="name"
-								[size]="30" placeholder="{{ 'COMMON.ROLE' | translate }}" [minLength]="1">
-							</p-autoComplete>
+                                [size]="30" placeholder="{{ 'COMMON.ROLE' | translate }}" [minLength]="1" 
+                                #role="ngModel" required>
+                            </p-autoComplete>
+                             <p-message *ngIf="f.submitted && role.errors && role.errors.required" severity="error" 
+                                        text="{{ 'COMMON.ROLE' | translate }} {{ 'VALIDATION.IS_REQUIRED' | translate }}"></p-message>
 						</div>
 					</div>
 
@@ -244,7 +251,7 @@
 		<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
 			<button type="button" pButton icon="fa fa-refresh" (click)="clear()"
 				label="{{ 'COMMON.CLEAR' | translate }}"></button>&nbsp;&nbsp;
-			<button pButton icon="fa fa-save"
+			<button pButton icon="fa fa-save" [disabled]="!f.form.valid"
 				label="{{ 'COMMON.SAVE' | translate }}"></button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			<button type="button" pButton icon="fa fa-close" (click)="delete()"
 				label="{{ 'COMMON.DELETE' | translate }}"></button>

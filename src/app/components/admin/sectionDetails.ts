@@ -1,10 +1,9 @@
-import { Component, OnInit, OnDestroy, ViewChild, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, OnDestroy, EventEmitter, Output } from '@angular/core';
 import { Section } from '../../models/website';
 import { Constants } from '../../app.constants';
 import { GenericService } from '../../services';
 import { TranslateService } from '@ngx-translate/core';
 import { Message } from 'primeng/api';
-import { SectionList } from './sectionList';
 
 @Component({
   selector: 'app-section-details',
@@ -17,11 +16,10 @@ export class SectionDetails implements OnInit, OnDestroy {
 
   section: Section = new Section();
   messages: Message[] = [];
-  sectionList: SectionList;
   formData = new FormData();
   pictureUrl: any = '';
   showInMenu = false;
-  @Output() sectionEvent = new EventEmitter<Section>();
+  @Output() sectionSavedEvent = new EventEmitter<Section>();
   constructor
     (
       private genericService: GenericService,
@@ -69,7 +67,7 @@ export class SectionDetails implements OnInit, OnDestroy {
         .subscribe(result => {
           if (result.id > 0) {
             this.section = result;
-            this.sectionEvent.emit(result);
+            this.sectionSavedEvent.emit(result);
             //this.sectionList.updateTable(result);
             this.messages.push({ severity: Constants.SUCCESS, summary: Constants.SAVE_LABEL, detail: Constants.SAVE_SUCCESSFUL });
           } else {

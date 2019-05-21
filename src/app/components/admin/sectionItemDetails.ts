@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef, Output, EventEmitter } from '@angular/core';
 import { SectionItem } from '../../models/website';
 import { Constants } from '../../app.constants';
 import { SectionDropdown } from './../dropdowns';
@@ -19,6 +19,7 @@ export class SectionItemDetails implements OnInit, OnDestroy {
     sectionItem: SectionItem = new SectionItem();
     messages: Message[] = [];
     @ViewChild('picture') picture: ElementRef;
+    @Output() sectionItemSavedEvent = new EventEmitter<SectionItem>();
     formData = new FormData();
     pictureUrl: any = '';
 
@@ -78,6 +79,7 @@ export class SectionItemDetails implements OnInit, OnDestroy {
           .subscribe(result => {
             if (result.id > 0) {
               this.sectionItem = result;
+              this.sectionItemSavedEvent.emit(result);
               this.messages.push({severity: Constants.SUCCESS, summary: Constants.SAVE_LABEL, detail: Constants.SAVE_SUCCESSFUL});
               this.clearPictureFile();
             } else {
@@ -89,6 +91,7 @@ export class SectionItemDetails implements OnInit, OnDestroy {
           .subscribe(result => {
             if (result.id > 0) {
               this.sectionItem = result;
+              this.sectionItemSavedEvent.emit(result);
               this.messages.push({severity: Constants.SUCCESS, summary: Constants.SAVE_LABEL, detail: Constants.SAVE_SUCCESSFUL});
             } else {
               this.messages.push({severity: Constants.ERROR, summary: Constants.SAVE_LABEL, detail: Constants.SAVE_UNSUCCESSFUL});

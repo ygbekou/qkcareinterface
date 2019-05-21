@@ -1,49 +1,53 @@
 <form name="form" (ngSubmit)="f.form.valid && save()" #f="ngForm" validate>
-	<div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="sectionItem">
-		<p-messages [(value)]="messages"></p-messages>
-		<div class="ui-grid-row">
-			<div class="ui-grid-col-5 ui-sm-12">		
-				<div class="form-group">
-					<label for="section">{{ 'COMMON.SECTION' | translate }}</label>
-					<p-autoComplete [(ngModel)]="sectionItem.section"
-						(onDropdownClick)="sectionDropdown.handleDropdownClick($event)"
-						[suggestions]="sectionDropdown.filteredSections" [dropdown]="true"
-                        id="section" (completeMethod)="sectionDropdown.filter($event)"
-                        #section="ngModel" name="name" field="name" [size]="30" placeholder="{{ 'COMMON.SECTION' | translate }}"
-						[minLength]="1"></p-autoComplete>
-				</div>
-            </div>
-            <div class="ui-grid-col-2 ui-sm-12">
+    <div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="sectionItem">
 
+        <div class="ui-grid-row">
+            <div class="ui-grid-col-6 ui-sm-12">
+                <div class="form-group">
+                    <label for="section">{{ 'COMMON.SECTION' | translate }}<font color="red">*</font></label>
+                    <p-autoComplete [(ngModel)]="sectionItem.section"
+                        (onDropdownClick)="sectionDropdown.handleDropdownClick($event)"
+                        [suggestions]="sectionDropdown.filteredSections" [dropdown]="true" id="section"
+                        (completeMethod)="sectionDropdown.filter($event)" #section="ngModel" name="name" field="name"
+                        [size]="30" placeholder="{{ 'COMMON.SECTION' | translate }}" [minLength]="1" required>
+                    </p-autoComplete>
+                    <p-message *ngIf="f.submitted && section.invalid" severity="error"
+                        text="{{ 'VALIDATION.FIELD_REQUIRED' | translate }}"></p-message>
+                </div>
             </div>
-			<div class="ui-grid-col-5 ui-sm-12">
-				<div class="form-group">		
-					<label for="name">{{ 'COMMON.TITLE' | translate }}</label>
-					<input pInputText id="title" [(ngModel)]="sectionItem.title" name="name" #title="ngModel" required />
-					<p-message *ngIf="f.submitted && title.invalid" severity="error" text="Field is required"></p-message>
-				</div>
+            <div class="ui-grid-col-6 ui-sm-12">
+                <div class="form-group">
+                    <label for="name">{{ 'COMMON.TITLE' | translate }}<font color="red">*</font></label>
+                    <input pInputText id="title" [(ngModel)]="sectionItem.title" name="title" #title="ngModel"
+                        required />
+                    <p-message *ngIf="f.submitted && title.invalid" severity="error"
+                        text="{{ 'VALIDATION.FIELD_REQUIRED' | translate }}">
+                    </p-message>
+                </div>
             </div>
         </div>
         <div class="ui-grid-row">
-			<div class="ui-grid-col-5 ui-sm-12">
-				<div class="form-group">		
-					<label for="description">{{ 'COMMON.DESCRIPTION' | translate }}</label>
-					<textarea pInputTextarea id="description" [rows]='5'
-							[(ngModel)]="sectionItem.description" name="description" #description="ngModel"> </textarea>
-				</div>
+            <div class="ui-grid-col-6 ui-sm-12">
+                <div class="form-group">
+                    <label for="description">{{ 'COMMON.DESCRIPTION' | translate }}</label>
+                    <textarea pInputTextarea id="description" [rows]='5' [(ngModel)]="sectionItem.description"
+                        name="description" #description="ngModel"> </textarea>
+                </div>
             </div>
-            <div class="ui-grid-col-2 ui-sm-12"></div>
-            <div class="ui-grid-col-5 ui-sm-12">
+            <div class="ui-grid-col-6 ui-sm-12">
                 <div class="ui-grid-col-2">
                     <label for="picture">{{'COMMON.PICTURE' | translate}}</label>
-                    <img class="thumb" src="assets/docs/SectionItem/{{sectionItem.fileLocation}}" alt="" class="img-fluid" 
-                        *ngIf="sectionItem.fileLocation !== '' && sectionItem.fileLocation !== 'null'"/>
-                    <button pButton type="button" icon="fa fa-delete" (click)="sectionItem.fileLocation = ''" label="Remove2" 
+                    <img class="thumb" src="assets/docs/SectionItem/{{sectionItem.fileLocation}}" alt=""
+                        class="img-fluid"
+                        *ngIf="sectionItem.fileLocation !== '' && sectionItem.fileLocation !== 'null'" />
+                    <button pButton type="button" icon="fa fa-delete" (click)="sectionItem.fileLocation = ''"
+                        label="Remove2"
                         *ngIf="sectionItem.fileLocation !== '' && sectionItem.fileLocation !== null"></button>
-                    <img class="thumb" src="{{pictureUrl}}" alt="" class="img-fluid" *ngIf="pictureUrl !== ''"/>
-                    <button pButton type="button" icon="fa fa-delete" (click)="clearPictureFile()" label="Remove1" *ngIf="pictureUrl !== ''"></button>
+                    <img class="thumb" src="{{pictureUrl}}" alt="" class="img-fluid" *ngIf="pictureUrl !== ''" />
+                    <button pButton type="button" icon="fa fa-delete" (click)="clearPictureFile()" label="Remove1"
+                        *ngIf="pictureUrl !== ''"></button>
                 </div>
-                <br/>
+                <br />
                 <div class="ui-grid-col-12 ui-sm-12">
                     <div class="form-group">
                         <input type="file" (change)="readUrl($event)" [attr.multiple]="null" name="picture" #picture>
@@ -52,28 +56,32 @@
             </div>
         </div>
         <div class="ui-grid-row">
-            <div class="ui-grid-col-5 ui-sm-12">
+            <div class="ui-grid-col-6 ui-sm-12">
                 <label for="language">{{'COMMON.LANGUAGE' | translate}}<font color="red">*</font></label>
-                <p-radioButton name="language" value="EN" label="{{'COMMON.ENGLISH' | translate}}" [(ngModel)]="sectionItem.language"
-                        #language="ngModel" required></p-radioButton>
-                <p-radioButton name="language" value="FR" label="{{'COMMON.FRENCH' | translate}}" [(ngModel)]="sectionItem.language"
-                        #language="ngModel" required ></p-radioButton>
-                <p-message *ngIf="f.submitted && language.invalid" severity="error" text="Field is required"></p-message>
+                <p-radioButton name="language" value="EN" label="{{'COMMON.ENGLISH' | translate}}"
+                    [(ngModel)]="sectionItem.language" #language="ngModel" required></p-radioButton>
+                <p-radioButton name="language" value="FR" label="{{'COMMON.FRENCH' | translate}}"
+                    [(ngModel)]="sectionItem.language" #language="ngModel" required></p-radioButton>
+                <p-message *ngIf="f.submitted && language.invalid" severity="error"
+                    text="{{ 'VALIDATION.FIELD_REQUIRED' | translate }}">
+                </p-message>
             </div>
-            <div class="ui-grid-col-2 ui-sm-12">
+            <div class="ui-grid-col-6 ui-sm-12">
+                <font color="red">*</font>
+                <p-radioButton name="status" value="0" label="Actif" [(ngModel)]="sectionItem.status" name="status"
+                    #status="ngModel" required></p-radioButton>
+                <p-radioButton name="status" value="1" label="Inactif" [(ngModel)]="sectionItem.status" name="status"
+                    #status="ngModel" required></p-radioButton>
+                <p-message *ngIf="f.submitted && status.invalid" severity="error"
+                    text="{{ 'VALIDATION.FIELD_REQUIRED' | translate }}"></p-message>
             </div>
-			<div class="ui-grid-col-5 ui-sm-12">
-				<p-radioButton name="status" value="0" label="Actif" [(ngModel)]="sectionItem.status"
-					name="status" #status="ngModel" required></p-radioButton>
-				<p-radioButton name="status" value="1" label="Inactif" [(ngModel)]="sectionItem.status"
-					name="status" #status="ngModel" required ></p-radioButton>
-				<p-message *ngIf="f.submitted && status.invalid" severity="error" text="Field is required"></p-message>
-			</div>
-		</div>
-	</div>
-	<br />
-	<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
-        <button type="button" pButton icon="fa fa-refresh" (click)="clear()" label="{{ 'COMMON.ADD' | translate }}"></button>&nbsp;&nbsp;
-        <button pButton icon="fa fa-check"  label="{{ 'COMMON.SAVE' | translate }}"></button>
-	</div>
-</form>	
+        </div>
+    </div>
+    <br />
+    <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+        <button type="button" pButton icon="fa fa-refresh" (click)="clear()"
+            label="{{ 'COMMON.ADD' | translate }}"></button>&nbsp;&nbsp;
+        <button pButton icon="fa fa-check" label="{{ 'COMMON.SAVE' | translate }}"></button>
+        <p-messages [(value)]="messages"></p-messages>
+    </div>
+</form>

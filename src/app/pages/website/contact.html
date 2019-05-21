@@ -21,9 +21,7 @@
 
                 <h2 class="font-weight-bold text-color-dark">* {{ 'MESSAGE.SEND_US_MESSAGE' | translate }}</h2>
                 <form id="contactForm" name="form" class="contact-form custom-contact-form-style-1" 
-                    (ngSubmit)="f.form.valid && save(f)" #f="ngForm" validate>
-
-                    <p-messages [(value)]="messages"></p-messages>
+                    (ngSubmit)="f.form.valid && save(f)" #f="ngForm" validate>               
 
                     <input type="hidden" name="subject" value="Contact Message Received" />
                     <div class="form-row">
@@ -71,8 +69,9 @@
                     </div>
                     <div class="form-row">
                         <div class="form-group col">
-                            <button pButton icon="fa fa-save" label="{{ 'COMMON.SUBMIT' | translate }}"
+                            <button pButton icon="fa fa-save" label="{{ 'MESSAGE.SEND_MESSAGE' | translate }}"
                             class="btn btn-outline custom-border-width btn-primary custom-border-radius font-weight-semibold text-uppercase mb-4"></button>
+                             <p-messages [(value)]="messages"></p-messages>
                         </div>
                     </div>
                 </form>
