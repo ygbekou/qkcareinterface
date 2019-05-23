@@ -1,136 +1,140 @@
-    <app-web-header></app-web-header>
-    <section class="page-header page-header-modern bg-color-quaternary page-header-md custom-page-header">
-        <div class="container">
-            <div class="row mt-3">
-                <div class="col-md-8 order-2 order-md-1 align-self-center p-static">
-                    <h1>* {{ 'COMMON.CONTACT_US' | translate }}</h1>
-                </div>
-                <div class="col-md-4 order-1 order-md-2 align-self-center">
-                    <ul class="breadcrumb d-block text-md-right breadcrumb-light">
-                        <li><a href="demo-business-consulting.html">Home</a></li>
-                        <li class="active">Contact Us</li>
-                    </ul>
-                </div>
+<app-web-header></app-web-header>
+<section class="page-header page-header-modern bg-color-quaternary page-header-md custom-page-header">
+    <div class="container">
+        <div class="row mt-3">
+            <div class="col-md-8 order-2 order-md-1 align-self-center p-static">
+                <h1>* {{ 'COMMON.CONTACT_US' | translate }}</h1>
+            </div>
+            <div class="col-md-4 order-1 order-md-2 align-self-center">
+                <ul class="breadcrumb d-block text-md-right breadcrumb-light">
+                    <li><a href="demo-business-consulting.html">Home</a></li>
+                    <li class="active">Contact Us</li>
+                </ul>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
-    <div class="container">
-        <div class="row pt-1 pb-4 mb-3">
-            <div class="col-lg-8">
+<div class="container">
+    <div class="row pt-1 pb-4 mb-3">
+        <div class="col-lg-8">
 
-                <h2 class="font-weight-bold text-color-dark">* {{ 'MESSAGE.SEND_US_MESSAGE' | translate }}</h2>
-                <form id="contactForm" name="form" class="contact-form custom-contact-form-style-1" 
-                    (ngSubmit)="f.form.valid && save(f)" #f="ngForm" validate>               
+            <h2 class="font-weight-bold text-color-dark">* {{ 'MESSAGE.SEND_US_MESSAGE' | translate }}</h2>
+            <form id="contactForm" name="form" class="contact-form custom-contact-form-style-1"
+                (ngSubmit)="f.form.valid && save(f)" #f="ngForm" validate>
 
-                    <input type="hidden" name="subject" value="Contact Message Received" />
-                    <div class="form-row">
-                        <div class="form-group col">
-                            <div class="custom-input-box">
-                                <i class="icon-user icons text-color-primary"></i>
-                                <input type="text" value="" data-msg-required="Please enter your name." [(ngModel)]="contactUsMessage.name"
-                                 maxlength="100" class="form-control" name="name" id="name" placeholder="Name*" #name="ngModel" required>
-                                <p-message *ngIf="f.submitted && name.invalid" severity="error" text="Name is required"></p-message>
-                            </div>
+                <input type="hidden" name="subject" value="Contact Message Received" />
+                <div class="form-row">
+                    <div class="form-group col">
+                        <div class="custom-input-box">
+                            <i class="icon-user icons text-color-primary"></i>
+                            <input type="text" value="" data-msg-required="Please enter your name."
+                                [(ngModel)]="contactUsMessage.name" maxlength="100" class="form-control" name="name"
+                                id="name" placeholder="Name*" #name="ngModel" required>
+                            <p-message *ngIf="f.submitted && name.invalid" severity="error" text="Name is required">
+                            </p-message>
                         </div>
                     </div>
-                    <div class="form-row">
-                        <div class="form-group col">
-                            <div class="custom-input-box">
-                                <i class="icon-envelope icons text-color-primary"></i>
-                                <input type="email" value="" data-msg-required="Please enter your email address." 
-                                    data-msg-email="Please enter a valid email address." [(ngModel)]="contactUsMessage.email"
-                                    maxlength="100" class="form-control" name="email" id="email" placeholder="Email*" #email="ngModel" 
-                                    required email>
-                                <p-message *ngIf="f.submitted && email.invalid" severity="error" text="Valid Email is required"></p-message>
-                            </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col">
+                        <div class="custom-input-box">
+                            <i class="icon-envelope icons text-color-primary"></i>
+                            <input type="email" value="" data-msg-required="Please enter your email address."
+                                data-msg-email="Please enter a valid email address."
+                                [(ngModel)]="contactUsMessage.email" maxlength="100" class="form-control" name="email"
+                                id="email" placeholder="Email*" #email="ngModel" required email>
+                            <p-message *ngIf="f.submitted && email.invalid" severity="error"
+                                text="Valid Email is required"></p-message>
                         </div>
                     </div>
-                    <div class="form-row">
-                        <div class="form-group col">
-                            <div class="custom-input-box">
-                                <i class="icon-phone icons text-color-primary"></i>
-                                <input type="phone" value="" data-msg-required="Please enter your phone." [(ngModel)]="contactUsMessage.phone"
-                                    data-msg-email="Please enter a valid phone number." maxlength="100" class="form-control" 
-                                    name="phone" id="phone" placeholder="Phone Number">
-                            </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col">
+                        <div class="custom-input-box">
+                            <i class="icon-phone icons text-color-primary"></i>
+                            <input type="phone" value="" data-msg-required="Please enter your phone."
+                                [(ngModel)]="contactUsMessage.phone" data-msg-email="Please enter a valid phone number."
+                                maxlength="100" class="form-control" name="phone" id="phone" placeholder="Phone Number">
                         </div>
                     </div>
-                    <div class="form-row">
-                        <div class="form-group col">
-                            <div class="custom-input-box">
-                                <i class="icon-bubble icons text-color-primary"></i>
-                                <textarea maxlength="5000" data-msg-required="Please enter your message." rows="10" class="form-control"
-                                 name="message" id="message" placeholder="Message*"  [(ngModel)]="contactUsMessage.message" 
-                                 #message="ngModel" required></textarea>
-                                 <p-message *ngIf="f.submitted && message.invalid" severity="error" text="Message is required"></p-message>
-                            </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col">
+                        <div class="custom-input-box"> 
+                            <p-editor [(ngModel)]="contactUsMessage.message"
+                             name="message" id="message"  #message="ngModel" required
+                            [style]="{'height':'100px'}"></p-editor>
+                            <p-message *ngIf="f.submitted && message.invalid" severity="error"
+                                text="Message is required"></p-message>
                         </div>
                     </div>
-                    <div class="form-row">
-                        <div class="form-group col">
-                            <button pButton icon="fa fa-save" label="{{ 'MESSAGE.SEND_MESSAGE' | translate }}"
+                </div>
+                <div class="form-row">
+                    <div class="form-group col">
+                        <button pButton icon="fa fa-save" label="{{ 'MESSAGE.SEND_MESSAGE' | translate }}"
                             class="btn btn-outline custom-border-width btn-primary custom-border-radius font-weight-semibold text-uppercase mb-4"></button>
-                             <p-messages [(value)]="messages"></p-messages>
+                        <p-messages [(value)]="messages"></p-messages>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-lg-4">
+
+            <div class="row mb-4">
+                <div class="col">
+                    <div class="feature-box feature-box-style-2">
+                        <div class="feature-box-icon mt-1">
+                            <i class="icon-location-pin icons"></i>
+                        </div>
+                        <div class="feature-box-info">
+                            <h2 class="font-weight-bold text-color-dark">- {{ 'COMMON.ADDRESS' | translate }}</h2>
+                            <p class="text-4">
+                                {{company.address}}<br>
+                                {{company.country}}
+                            </p>
                         </div>
                     </div>
-                </form>
+                </div>
             </div>
-            <div class="col-lg-4">
-
-                <div class="row mb-4">
-                    <div class="col">
-                        <div class="feature-box feature-box-style-2">
-                            <div class="feature-box-icon mt-1">
-                                <i class="icon-location-pin icons"></i>
-                            </div>
-                            <div class="feature-box-info">
-                                <h2 class="font-weight-bold text-color-dark">- {{ 'COMMON.ADDRESS' | translate }}</h2>
-                                <p class="text-4">
-                                    {{company.address}}<br>
-                                    {{company.country}}
-                                </p>
-                            </div>
+            <div class="row mb-4">
+                <div class="col">
+                    <div class="feature-box feature-box-style-2">
+                        <div class="feature-box-icon mt-1">
+                            <i class="icon-phone icons"></i>
+                        </div>
+                        <div class="feature-box-info">
+                            <h2 class="font-weight-bold text-color-dark">- Phone</h2>
+                            <p class="text-4">
+                                {{company.phone}} <br>
+                            </p>
                         </div>
                     </div>
                 </div>
-                <div class="row mb-4">
-                    <div class="col">
-                        <div class="feature-box feature-box-style-2">
-                            <div class="feature-box-icon mt-1">
-                                <i class="icon-phone icons"></i>
-                            </div>
-                            <div class="feature-box-info">
-                                <h2 class="font-weight-bold text-color-dark">- Phone</h2>
-                                <p class="text-4">
-                                    {{company.phone}} <br>
-                                </p>
-                            </div>
+            </div>
+            <div class="row mb-4">
+                <div class="col">
+                    <div class="feature-box feature-box-style-2">
+                        <div class="feature-box-icon mt-1">
+                            <i class="icon-envelope icons"></i>
+                        </div>
+                        <div class="feature-box-info">
+                            <h2 class="font-weight-bold text-color-dark">- Email</h2>
+                            <p class="text-4">
+                                <a href="mailto:{{company.email}}"
+                                    class="text-decoration-none">{{company.email}}</a><br>
+                            </p>
                         </div>
                     </div>
                 </div>
-                <div class="row mb-4">
-                    <div class="col">
-                        <div class="feature-box feature-box-style-2">
-                            <div class="feature-box-icon mt-1">
-                                <i class="icon-envelope icons"></i>
-                            </div>
-                            <div class="feature-box-info">
-                                <h2 class="font-weight-bold text-color-dark">- Email</h2>
-                                <p class="text-4">
-                                    <a href="mailto:{{company.email}}" class="text-decoration-none">{{company.email}}</a><br>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
             </div>
 
         </div>
 
     </div>
 
-    <br/>
-    <br/>
-    <app-web-footer></app-web-footer>
+</div>
+
+<br />
+<br />
+<app-web-footer></app-web-footer>

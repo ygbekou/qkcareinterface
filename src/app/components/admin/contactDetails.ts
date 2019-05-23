@@ -54,5 +54,7 @@ export class ContactDetails implements OnInit, OnDestroy {
   clear() {
     this.contactUsMessage = new ContactUsMessage();
   }
-
+  delete(){
+    
+  }
  }

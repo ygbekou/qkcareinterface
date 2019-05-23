@@ -2,7 +2,7 @@
 <p-messages [(value)]="messages"></p-messages>
 <p-table [columns]="cols" [value]="contactUsMessages" [paginator]="true" [rows]="10" [responsive]="true"> 
     <ng-template pTemplate="caption">
-        {{ 'COMMON.LIST' | translate }}
+        {{ 'COMMON.MESSAGES' | translate }}
     </ng-template>
     <ng-template pTemplate="header" let-columns>
         <tr>
@@ -25,6 +25,7 @@
             </td>
             <td>
                 <button type="button" pButton icon="fa fa-edit" (click)="edit(rowData.id)"></button>&nbsp;&nbsp;
+                &nbsp;&nbsp;
                 <button type="button" pButton icon="fa fa-remove" (click)="delete(rowData.id)"></button>
             </td>
         </tr>

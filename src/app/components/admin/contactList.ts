@@ -59,10 +59,10 @@ export class ContactList implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.cols = [
+            { field: 'createDate', header: 'Date', headerKey: 'COMMON.DATE', type: 'Date' },
             { field: 'name', header: 'Name', headerKey: 'COMMON.NAME'},
-            { field: 'email', header: 'Email', headerKey: 'COMMON.EMAIL'},
-            { field: 'phone', header: 'Phone', headerKey: 'COMMON.PHONE' },
-            { field: 'message', header: 'Message', headerKey: 'COMMON.MESSAGE' }
+            { field: 'email', header: 'Email', headerKey: 'COMMON.FROM_EMAIL'},
+            { field: 'phone', header: 'Phone', headerKey: 'COMMON.PHONE' } 
         ];
 
     this.translate.onLangChange.subscribe((event: LangChangeEvent) => {

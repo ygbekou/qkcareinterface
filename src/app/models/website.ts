@@ -38,6 +38,7 @@ export class SectionItem {
 
  export class ContactUsMessage {
     id: number;
+    createDate: Date
     name: string;
     email: string;
     phone: string;
@@ -63,5 +64,4 @@ export class SectionItem {
   text2: '';
   text3: '';
   language: string;
-
 }
