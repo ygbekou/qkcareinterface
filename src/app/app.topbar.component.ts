@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import {NgModule} from '@angular/core';
 import { AppComponent} from './app.component';
-import { GenericService } from './services';
+import { GenericService, TokenStorage } from './services';
 import { Hospital } from './models';
 
 @Component({
@@ -10,9 +10,9 @@ import { Hospital } from './models';
 })
 export class AppTopBarComponent {
 
-    hospital: Hospital = new Hospital();
-
+    hospital: Hospital = new Hospital(); 
     constructor(private genericService: GenericService,
+      public tokenStorage: TokenStorage,
         public app: AppComponent) {
 
         const parameters = [];

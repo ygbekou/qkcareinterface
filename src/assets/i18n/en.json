@@ -300,7 +300,21 @@
     "MOBILE_PHONE": "Mobile Phone" ,  
     "EDIT": "Edit",  
     "PATIENT_LIST": "Patient list",
-    "LIST_SUMMARY": "There is {{ITEM_NUMBERS}}"
+    "LIST_SUMMARY": "There is {{ITEM_NUMBERS}}",
+    "ADD_PATIENT": "Add Patient",
+    "ADMIT_PATIENT": "Admit Patient",
+    "APPOINTMENT": "Appointment",
+    "VISIT": "Visit",
+    "BILLING": "Billing",
+    "REPORTS": "Reports",
+    "PENDING_PAYMENT": "Missing payments",
+    "FINANCE_REPORT": "Financial report",
+    "STOCK_REPORT": "Stock report",
+    "VISIT_OF_DAY": "Visits of the day",
+    "PATIENT_FILE": "Patient file",
+    "BED_ROOM":"Rooms & Beds",
+    "WEBSITE":"Website",
+    "REFERENCES":"References"
   },
   "MESSAGE": {
   	"TRANFER_DOCTOR_FAILED": "The transfer doctor should be different from the current doctor.",

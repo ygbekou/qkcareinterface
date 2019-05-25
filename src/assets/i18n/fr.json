@@ -246,7 +246,7 @@
     "MARK_AS_READ": "Marquer comme lu",
     "CANCEL": "Annuler",
     "CONFIRM": "Confirmer",
-    "SUBMIT": "Soumettre", 
+    "SUBMIT": "Soumettre",
     "ABOUT_US": "A propos",
     "CONTACT_US": "Contactez nous",
     "FOLLOW_US": "Suivez nous",
@@ -292,15 +292,29 @@
     "TEXT3": "Texte 3",
     "GOOGLE_PLUS_URL": "Google plus",
     "SHOW_IN_MENU": "Afficher dans menu",
-    "OUR_SERVICE":"Nos services",
-    "CONTACT_US_FOR_DEMO":"Contactez-nous pour une démo",
+    "OUR_SERVICE": "Nos services",
+    "CONTACT_US_FOR_DEMO": "Contactez-nous pour une démo",
     "FAX": "Fax",
     "REMOVE": "Enlever",
     "HOME_PHONE": "Téléphone fixe",
-    "MOBILE_PHONE": "Téléphone mobile",  
-    "EDIT": "Modifier",  
+    "MOBILE_PHONE": "Téléphone mobile",
+    "EDIT": "Modifier",
     "PATIENT_LIST": "Liste des Patients",
-    "LIST_SUMMARY": "Il y'a {{ITEM_NUMBERS}}"
+    "LIST_SUMMARY": "Il y'a {{ITEM_NUMBERS}}",
+    "ADD_PATIENT": "Ajouter Patient",
+    "ADMIT_PATIENT": "Admettre Patient",
+    "APPOINTMENT": "Rendez-vous",
+    "VISIT": "Visites",
+    "BILLING": "Facturation",
+    "REPORTS": "Etats",
+    "PENDING_PAYMENT": "Etat des impayés",
+    "FINANCE_REPORT": "Etat financier",
+    "STOCK_REPORT": "Etat des stocks",
+    "VISIT_OF_DAY": "Visites du jour",
+    "PATIENT_FILE": "Fiche du patient",
+    "BED_ROOM":"Chambres & lits",
+    "WEBSITE":"Site web",
+    "REFERENCES":"Références"
   },
   "MESSAGE": {
     "TRANFER_DOCTOR_FAILED": "Le nouveau docteur assigné doit être différent de l'ancien.",
@@ -331,10 +345,10 @@
     "FORM_HAS_ERRORS": "Le formulaire comporte des erreurs. S'il vous plait vérifier et corriger.",
     "NO_CRITERIA_SET": "Au moins une critère de recherche est nécessaire"
   },
-  "VALIDATION":{
+  "VALIDATION": {
     "IS_INVALID": "est invalide",
     "IS_REQUIRED": "est necessaire",
-    "FIELD_REQUIRED":"Champs requis"
+    "FIELD_REQUIRED": "Champs requis"
   },
   "DATE": {
     "1": "Jan",
@@ -350,10 +364,9 @@
     "11": "Nov",
     "12": "Dec"
   },
-
   "PROPERTY": {
-      "DATE_FORMAT": "dd/MM/yyyy",
-      "LOCALE": "fr-FR",
-      "CAL_DATE_FORMAT": "dd/mm/yy"
+    "DATE_FORMAT": "dd/MM/yyyy",
+    "LOCALE": "fr-FR",
+    "CAL_DATE_FORMAT": "dd/mm/yy"
   }
 }

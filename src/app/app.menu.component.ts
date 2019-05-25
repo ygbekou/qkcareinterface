@@ -1,8 +1,9 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {trigger, state, style, transition, animate} from '@angular/animations';
-import {MenuItem} from 'primeng/primeng';
-import {AppComponent} from './app.component';
+import { Component, Input, OnInit } from '@angular/core';
+import { trigger, state, style, transition, animate } from '@angular/animations';
+import { MenuItem } from 'primeng/primeng';
+import { AppComponent } from './app.component';
 import { TokenStorage, AuthenticationService, GlobalEventsManager } from './services';
+import { Cookie } from 'ng2-cookies/ng2-cookies';
 
 @Component({
   selector: 'app-menu',
@@ -16,124 +17,139 @@ export class AppMenuComponent implements OnInit {
   @Input() reset: boolean;
 
   model: any[];
-  
+  lang = 'fr';
   constructor(
     private globalEventsManager: GlobalEventsManager,
-    public app: AppComponent) {}
+    public app: AppComponent) { }
 
   ngOnInit() {
+    if (Cookie.get('lang')) {
+      this.lang = Cookie.get('lang');
+    }
     this.globalEventsManager.showNavBar.subscribe((data: boolean) => {
-  }, error => console.log(error));
+    }, error => console.log(error));
 
-  this.model = [
-      {label: 'Dashboard', icon: 'fa fa-fw fa-home', routerLink: ['/admin/dashboard'], displayList: '1,2,3,4,5,6,20'},
+    this.model = [
+      { label: 'Dashboard', icon: 'fa fa-fw fa-home', routerLink: ['/admin/dashboard'], displayList: '1,2,3,4,5,6,20' },
       {
-        label: 'Patients', icon: '  fa fa-wheelchair' , displayList: '1,2,3',
+        label: 'Patients', icon: 'fa fa-wheelchair', displayList: '1,2,3',
         items: [
-          {label: 'Ajouter un patient', icon: 'fa fa-plus', routerLink: ['/admin/patientDetails'], displayList: '1,2,3'},
-          {label: 'Liste des patients', icon: 'fa fa-search', routerLink: ['/admin/patientList'], displayList: '1,2,3'}
+          {
+            label: this.lang === 'fr' ? 'Ajouter un patient' : 'Add a patient',
+            icon: 'fa fa-plus', routerLink: ['/admin/patientDetails'], displayList: '1,2,3'
+          },
+          {
+            label: this.lang === 'fr' ? 'Liste des patients' : 'List patients',
+            icon: 'fa fa-search', routerLink: ['/admin/patientList'], displayList: '1,2,3'
+          }
         ]
       },
       {
-        label: 'Personnel', icon: 'fa fa-user-md', displayList: '1,2',
+        label: this.lang === 'fr' ? 'Personnel' : 'Employees', icon: 'fa fa-user-md', displayList: '1,2',
         items: [
-          {label: 'Ajouter un personnel', icon: 'fa fa-plus', routerLink: ['/admin/employeeDetails'], displayList: '1,2'}, 
-          {label: 'Liste du personnel', icon: 'fa fa-search', routerLink: ['/admin/employeeList'], displayList: '1,2'}
+          {
+            label: this.lang === 'fr' ? 'Ajouter un personnel' : 'Add employee',
+            icon: 'fa fa-plus', routerLink: ['/admin/employeeDetails'], displayList: '1,2'
+          },
+          {
+            label: this.lang === 'fr' ? 'Liste du personnel' : 'List employees',
+            icon: 'fa fa-search', routerLink: ['/admin/employeeList'], displayList: '1,2'
+          }
         ]
       },
       {
         label: 'Admission', icon: 'fa fa-ambulance',
         items: [
-          {label: 'Admettre un patient', icon: 'fa fa-plus', routerLink: ['/admin/admissionDetails'], displayList: '1,2'},
-          {label: 'Liste des admissions', icon: 'fa fa-search', routerLink: ['/admin/admissionList'], displayList: '1,2,20'},
-          {label: 'Changer de lit', icon: 'fa fa-edit', url: ['#/admin/bedTransfer?transferType=BED'], displayList: '1,2'},
-          {label: 'Changer de medecin', icon: 'fa fa-edit', url: ['#/admin/bedTransfer?transferType=DOCTOR'], displayList: '1,2'}
+          { label: this.lang === 'fr' ? 'Admettre un patient' : 'Admit a patient', icon: 'fa fa-plus', routerLink: ['/admin/admissionDetails'], displayList: '1,2' },
+          { label: this.lang === 'fr' ? 'Liste des admissions' : 'List admissions', icon: 'fa fa-search', routerLink: ['/admin/admissionList'], displayList: '1,2,20' },
+          { label: this.lang === 'fr' ? 'Changer de lit' : 'Change bed', icon: 'fa fa-edit', url: ['#/admin/bedTransfer?transferType=BED'], displayList: '1,2' },
+          { label: this.lang === 'fr' ? 'Changer de médecin' : 'Change doctor', icon: 'fa fa-edit', url: ['#/admin/bedTransfer?transferType=DOCTOR'], displayList: '1,2' }
         ]
       },
       {
-        label: 'Rendez-vous', icon: 'fa fa-calendar',
+        label: this.lang === 'fr' ? 'Rendez-vous' : 'Appointment', icon: 'fa fa-calendar',
         items: [
-          {label: 'Ajouter une requete', icon: 'fa fa-plus', routerLink: ['/admin/enquiryDetails'], displayList: '1,2,3,20'},
-          {label: 'Anciennes requete', icon: 'fa fa-plus', routerLink: ['/admin/enquiryList'], displayList: '1,2,3,20'},
-          {label: 'Ajouter un horaire', icon: 'fa fa-plus', routerLink: ['/admin/scheduleDetails'], displayList: '1'},
-          {label: 'Liste des horaires', icon: 'fa fa-search', routerLink: ['/admin/scheduleList'], displayList: '1'},
-          {label: 'Les Rendez-vous', icon: 'fa fa-calendar-check-o', routerLink: ['/admin/appointmentScheduler'], displayList: '1,2'} 
+          { label: this.lang === 'fr' ? 'Ajouter une requête' : 'Add a request', icon: 'fa fa-plus', routerLink: ['/admin/enquiryDetails'], displayList: '1,2,3,20' },
+          { label: this.lang === 'fr' ? 'Liste des requêtes' : 'List requests', icon: 'fa fa-plus', routerLink: ['/admin/enquiryList'], displayList: '1,2,3,20' },
+          { label: this.lang === 'fr' ? 'Ajouter un horaire' : 'Add schedule', icon: 'fa fa-plus', routerLink: ['/admin/scheduleDetails'], displayList: '1' },
+          { label: this.lang === 'fr' ? 'Liste des horaires' : 'List schedules', icon: 'fa fa-search', routerLink: ['/admin/scheduleList'], displayList: '1' },
+          { label: this.lang === 'fr' ? 'Les Rendez-vous' : 'Appointments', icon: 'fa fa-calendar-check-o', routerLink: ['/admin/appointmentScheduler'], displayList: '1,2' }
         ]
       },
       {
-        label: 'Visites', icon: ' fa fa-user-md',
+        label: this.lang === 'fr' ? 'Visites' : 'Visits', icon: 'fa fa-user-md',
         items: [
-          {label: 'Ajouter une visite', icon: 'fa fa-plus', routerLink: ['/admin/visitDetails']},
-          {label: 'Liste des visites', icon: 'fa fa-search', routerLink: ['/admin/visitList']},
-          {label: "Liste d'attente", icon: 'fa fa-search', routerLink: ['/admin/waitingList']},
+          { label: this.lang === 'fr' ? 'Ajouter une visite' : 'Add a visit', icon: 'fa fa-plus', routerLink: ['/admin/visitDetails'] },
+          { label: this.lang === 'fr' ? 'Liste des visites' : 'List visits', icon: 'fa fa-search', routerLink: ['/admin/visitList'] },
+          { label: this.lang === 'fr' ? "Liste d'attente" : 'Wait list', icon: 'fa fa-search', routerLink: ['/admin/waitingList'] },
         ]
       },
       {
-        label: 'Laboratoire', icon: 'fa fa-stethoscope',
+        label: this.lang === 'fr' ? 'Laboratoire' : 'Lab', icon: 'fa fa-stethoscope',
         items: [
-          {label: 'Ajouter un test', icon: 'fa fa-plus', routerLink: ['/admin/investigationDetails']},
-          {label: 'Liste des tests', icon: 'fa fa-search', routerLink: ['/admin/investigationList']} 
+          { label: this.lang === 'fr' ? 'Ajouter un test' : 'Add a test', icon: 'fa fa-plus', routerLink: ['/admin/investigationDetails'] },
+          { label: this.lang === 'fr' ? 'Liste des tests' : 'List tests', icon: 'fa fa-search', routerLink: ['/admin/investigationList'] }
         ]
       },
       {
-        label: 'Facturation', icon: 'fa fa-money',
+        label: this.lang === 'fr' ? 'Facturation' : 'Billing', icon: 'fa fa-money',
         items: [
-          {label: 'Nouvelle facture', icon: 'fa fa-plus', routerLink: ['/admin/billDetails']},
-          {label: 'Anciennes Factures', icon: 'fa fa-search', routerLink: ['/admin/billList']},
-          {label: 'Ajouter un tarif', icon: 'fa fa-plus', routerLink: ['/admin/serviceDetails']},
-          {label: 'Liste des tarifs', icon: 'fa fa-search', routerLink: ['/admin/serviceList']},
-          {label: 'Ajouter un paquet', icon: 'fa fa-plus', routerLink: ['/admin/packageDetails']},
-          {label: 'Liste des paquets', icon: 'fa fa-search', routerLink: ['/admin/packageList']}
+          { label: this.lang === 'fr' ? 'Nouvelle facture' : 'Add a bill', icon: 'fa fa-plus', routerLink: ['/admin/billDetails'] },
+          { label: this.lang === 'fr' ? 'Anciennes Factures' : 'List bills', icon: 'fa fa-search', routerLink: ['/admin/billList'] },
+          { label: this.lang === 'fr' ? 'Ajouter un tarif' : 'Add Tarif', icon: 'fa fa-plus', routerLink: ['/admin/serviceDetails'] },
+          { label: this.lang === 'fr' ? 'Liste des tarifs' : 'List Tarifs', icon: 'fa fa-search', routerLink: ['/admin/serviceList'] },
+          { label: this.lang === 'fr' ? 'Ajouter un paquet' : 'Add a paquet', icon: 'fa fa-plus', routerLink: ['/admin/packageDetails'] },
+          { label: this.lang === 'fr' ? 'Liste des paquets' : 'List paquets', icon: 'fa fa-search', routerLink: ['/admin/packageList'] }
         ]
       },
-      {
-        label: 'Pharmacy', icon: 'fa fa-ambulance',
+      { 
+        label: this.lang === 'fr' ? 'Pharmacie' : 'Pharmacy', icon: 'fa fa-ambulance',
         items: [
-          {label: 'Commander Medecine', icon: 'fa fa-plus', routerLink: ['/admin/purchaseOrderDetails']},
-          {label: 'Liste des commandes', icon: 'fa fa-search', routerLink: ['/admin/purchaseOrderList']},
-          {label: 'Reception de commande', icon: 'fa fa-plus', routerLink: ['/admin/receiveOrderDetails']},
-          {label: 'Liste des receptions', icon: 'fa fa-search', routerLink: ['/admin/receiveOrderList']},
-          {label: 'Ajouter une vente', icon: 'fa fa-plus', routerLink: ['/admin/patientSaleDetails']},
-          {label: 'Liste des ventes', icon: 'fa fa-search', routerLink: ['/admin/patientSaleList']},
-          {label: 'Ajouter un retour achat', icon: 'fa fa-plus', routerLink: ['/admin/saleReturnDetails']},
-          {label: 'Liste des retours', icon: 'fa fa-search', routerLink: ['/admin/saleReturnList']}
+          { label: this.lang === 'fr' ? 'Commander médicament' : 'Order medication', icon: 'fa fa-plus', routerLink: ['/admin/purchaseOrderDetails'] },
+          { label: this.lang === 'fr' ? 'Liste des commandes' : 'Order list', icon: 'fa fa-search', routerLink: ['/admin/purchaseOrderList'] },
+          { label: this.lang === 'fr' ? 'Réception de commande' : 'Receive Order', icon: 'fa fa-plus', routerLink: ['/admin/receiveOrderDetails'] },
+          { label: this.lang === 'fr' ? 'Liste des receptions' : 'List Order receipts', icon: 'fa fa-search', routerLink: ['/admin/receiveOrderList'] },
+          { label: this.lang === 'fr' ? 'Ajouter une vente' : 'Sell medication', icon: 'fa fa-plus', routerLink: ['/admin/patientSaleDetails'] },
+          { label: this.lang === 'fr' ? 'Liste des ventes' : 'List sales', icon: 'fa fa-search', routerLink: ['/admin/patientSaleList'] },
+          { label: this.lang === 'fr' ? 'Ajouter un retour achat' : 'Add return', icon: 'fa fa-plus', routerLink: ['/admin/saleReturnDetails'] },
+          { label: this.lang === 'fr' ? 'Liste des retours' : 'List returns', icon: 'fa fa-search', routerLink: ['/admin/saleReturnList'] }
         ]
       },
       {
-        label: 'Store', icon: 'fa fa-shopping-cart',
+        label: this.lang === 'fr' ? 'Magasin' : 'Store', icon: 'fa fa-shopping-cart',
         items: [
-          {label: 'Commander Produit', icon: 'fa fa-plus', routerLink: ['/admin/purchaseOrderDetails']},
-          {label: 'Liste des commandes', icon: 'fa fa-search', routerLink: ['/admin/purchaseOrderList']},
-          {label: 'Reception de commande', icon: 'fa fa-plus', routerLink: ['/admin/receiveOrderDetails']},
-          {label: 'Liste des receptions', icon: 'fa fa-search', routerLink: ['/admin/receiveOrderList']},
-          {label: 'Ajouter une vente', icon: 'fa fa-plus', routerLink: ['/admin/patientSaleDetails']},
-          {label: 'Liste des ventes', icon: 'fa fa-search', routerLink: ['/admin/patientSaleList']},
-          {label: 'Ajouter un retour achat', icon: 'fa fa-plus', routerLink: ['/admin/saleReturnDetails']},
-          {label: 'Liste des retours', icon: 'fa fa-search', routerLink: ['/admin/saleReturnList']}
+          { label: this.lang === 'fr' ? 'Commander Produit' : 'Order a product', icon: 'fa fa-plus', routerLink: ['/admin/purchaseOrderDetails'] },
+          { label: this.lang === 'fr' ? 'Liste des commandes' : 'List orders', icon: 'fa fa-search', routerLink: ['/admin/purchaseOrderList'] },
+          { label: this.lang === 'fr' ? 'Réception de commande' : 'Receive order', icon: 'fa fa-plus', routerLink: ['/admin/receiveOrderDetails'] },
+          { label: this.lang === 'fr' ? 'Liste des réceptions' : 'List receipts', icon: 'fa fa-search', routerLink: ['/admin/receiveOrderList'] },
+          { label: this.lang === 'fr' ? 'Ajouter une vente' : 'Add a sale', icon: 'fa fa-plus', routerLink: ['/admin/patientSaleDetails'] },
+          { label: this.lang === 'fr' ? 'Liste des ventes' : 'List sales', icon: 'fa fa-search', routerLink: ['/admin/patientSaleList'] },
+          { label: this.lang === 'fr' ? 'Ajouter un retour achat' : 'Add a return', icon: 'fa fa-plus', routerLink: ['/admin/saleReturnDetails'] },
+          { label: this.lang === 'fr' ? 'Liste des retours' : 'List returns', icon: 'fa fa-search', routerLink: ['/admin/saleReturnList'] }
         ]
       },
       {
-        label: 'Hospital Ativities', icon: 'fa fa-hospital-o',
+        label: this.lang === 'fr' ? 'Activités' : 'Hospital activities', icon: 'fa fa-hospital-o',
         items: [
-          {label: 'Nouvelle naissance', icon: 'fa fa-plus', routerLink: ['/admin/birthReportDetails']},
-          {label: 'Ancienne naissances', icon: 'fa fa-search', routerLink: ['/admin/birthReportList']},
-          {label: 'Mouveau deces', icon: 'fa fa-plus', routerLink: ['/admin/deathReportDetails']},
-          {label: 'Ancien deces', icon: 'fa fa-search', routerLink: ['/admin/deathReportList']}
+          { label: this.lang === 'fr' ? 'Déclarer une naissance' : 'Add birth', icon: 'fa fa-plus', routerLink: ['/admin/birthReportDetails'] },
+          { label: this.lang === 'fr' ? 'Liste des naissances' : 'List births', icon: 'fa fa-search', routerLink: ['/admin/birthReportList'] },
+          { label: this.lang === 'fr' ? 'Declarer un décès' : 'Declare death', icon: 'fa fa-plus', routerLink: ['/admin/deathReportDetails'] },
+          { label: this.lang === 'fr' ? 'Liste des décès' : 'List deaths', icon: 'fa fa-search', routerLink: ['/admin/deathReportList'] }
         ]
       },
       {
-        label: 'Configuration', icon: 'fa fa-cogs',
+        label: this.lang === 'fr' ? 'Configuration' : 'Configuration', icon: 'fa fa-cogs',
         items: [
-          {label: 'Chambres et lits', icon: 'fa fa-bed', routerLink: ['/admin/adminBedStatus']},
-          {label: 'config. des References', icon: 'fa fa-search', routerLink: ['/admin/adminReference']},
-          {label: 'config. du site web', icon: 'fa fa-search', routerLink: ['/admin/adminWebsite']}         
+          { label: this.lang === 'fr' ? 'Chambres et lits' : 'Room and beds', icon: 'fa fa-bed', routerLink: ['/admin/adminBedStatus'] },
+          { label: this.lang === 'fr' ? 'config. des Références' : 'Reference config.', icon: 'fa fa-fw fa-paint-brush', routerLink: ['/admin/adminReference'] },
+          { label: this.lang === 'fr' ? 'config. du site web' : 'Website config.', icon: 'fa fa-fw fa-globe', routerLink: ['/admin/adminWebsite'] }
         ]
       },
       {
-        label: 'Reglage Affichage', icon: 'fa fa-fw fa-paint-brush',
+        label: this.lang === 'fr' ? 'Réglage Affichage' : 'Display settings', icon: 'fa fa-fw fa-paint-brush',
         items: [
           {
-            label: 'Couleurs',
+            label: this.lang === 'fr' ? 'Couleurs' : 'Colors',
             icon: 'fa fa-fw fa-paint-brush',
             items: [
               {
@@ -485,22 +501,22 @@ export class AppMenuComponent implements OnInit {
             ]
           },
           {
-            label: 'Position Menu', icon: 'fa fa-fw fa-bars',
+            label: this.lang === 'fr' ? 'Position Menu' : 'Menu position', icon: 'fa fa-fw fa-bars',
             items: [
-              {label: 'Afficher Menu', icon: 'fa fa-fw fa-bars', command: () => this.app.layoutMode = 'static'},
-              {label: 'Cacher Menu', icon: 'fa fa-fw fa-bars', command: () => this.app.layoutMode = 'overlay'}
+              { label: this.lang === 'fr' ? 'Afficher Menu' : 'Display menu', icon: 'fa fa-fw fa-bars', command: () => this.app.layoutMode = 'static' },
+              { label: this.lang === 'fr' ? 'Cacher Menu' : 'Hide menu', icon: 'fa fa-fw fa-bars', command: () => this.app.layoutMode = 'overlay' }
             ]
           },
           {
-            label: 'Prosition Profile', icon: 'fa fa-fw fa-user',
+            label: this.lang === 'fr' ? 'Prosition Profile' : 'Profile position', icon: 'fa fa-fw fa-user',
             items: [
-              {label: 'Profile a gauche', icon: 'fa fa-sun-o fa-fw', command: () => this.app.profileMode = 'inline'},
-              {label: 'Profile en haut', icon: 'fa fa-moon-o fa-fw', command: () => this.app.profileMode = 'top'}
+              { label: this.lang === 'fr' ? 'Profile a gauche' : 'Profile on the left', icon: 'fa fa-sun-o fa-fw', command: () => this.app.profileMode = 'inline' },
+              { label: this.lang === 'fr' ? 'Profile en haut' : 'Profile at the top', icon: 'fa fa-moon-o fa-fw', command: () => this.app.profileMode = 'top' }
             ]
           }
         ]
       },
-      {label: 'Documentation', icon: 'fa fa-fw fa-book', routerLink: ['/documentation']}
+      { label: 'Documentation', icon: 'fa fa-fw fa-book', routerLink: ['/documentation'] }
     ];
   }
 
@@ -513,8 +529,8 @@ export class AppMenuComponent implements OnInit {
 
     this.app.menuMode = scheme;
   }
-  
-  
+
+
 }
 
 @Component({
@@ -574,7 +590,7 @@ export class AppSubMenuComponent {
 
   activeIndex: number;
 
-  constructor(public app: AppComponent, private authService: AuthenticationService, private tokenStorage: TokenStorage) {}
+  constructor(public app: AppComponent, private authService: AuthenticationService, private tokenStorage: TokenStorage) { }
 
   itemClick(event: Event, item: MenuItem, index: number) {
 
@@ -589,7 +605,7 @@ export class AppSubMenuComponent {
 
     // execute command
     if (item.command) {
-      item.command({originalEvent: event, item: item});
+      item.command({ originalEvent: event, item: item });
     }
 
     // prevent hash change
@@ -634,9 +650,9 @@ export class AppSubMenuComponent {
       this.activeIndex = null;
     }
   }
-  
+
   shouldDisplay(displayList: string) {
-     return this.authService.shouldDisplay(displayList, this.tokenStorage.getRole());
+    return this.authService.shouldDisplay(displayList, this.tokenStorage.getRole());
   }
 
 }

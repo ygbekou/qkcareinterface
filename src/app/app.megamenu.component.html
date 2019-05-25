@@ -1,98 +1,107 @@
 <div id="layout-megamenu" class="ui-g-12 layout-megamenu fadeInDown" [ngClass]="{'layout-megamenu-active': app.megaMenuActive,'layout-megamenu-dark': app.megaMenuMode !== 'light',
          'layout-megamenu-gradient':  app.megaMenuMode === 'gradient'}" (click)="app.onMegaMenuClick()">
     <div class="ui-g-12 ui-md-6 ui-lg-3 layout-megamenu-submenu">
-        <h4>System Reports</h4>
+        <h4> <i class="fa fa-wheelchair"></i>Patients</h4>
         <ul>
             <li>
-                <a href="#">
+                <a href="#/admin/patientDetails">
                     <i class="fa fa-fw fa-th-list"></i>
-                    <span>System Logs</span>
+                    <span>{{ 'COMMON.ADD_PATIENT' | translate }}</span>
                 </a>
             </li>
             <li>
-                <a href="#">
-                    <i class="fa fa-fw fa-server"></i>
-                    <span>Back-up Server</span>
+                <a href="#/admin/admissionDetails">
+                    <i class="fa fa-ambulance"></i>
+                    <span>{{ 'COMMON.ADMIT_PATIENT' | translate }}</span>
                 </a>
             </li>
             <li>
-                <a href="#">
-                    <i class="fa fa-fw fa-users"></i>
-                    <span>Conversions</span>
+                <a href="#/admin/appointmentScheduler">
+                    <i class="fa fa-calendar"></i>
+                    <span>{{ 'COMMON.APPOINTMENT' | translate }}</span>
                 </a>
+            </li>
+            <li>
+                <a href="#/admin/visitDetails">
+                    <i class="fa fa-user-md"></i>
+                    <span>{{ 'COMMON.VISIT' | translate }}</span>
+                </a>
+            </li>
 
-            </li>
             <li>
-                <a href="#">
-                    <i class="fa fa-fw fa-database"></i>
-                    <span>Storage Logs</span>
+                <a href="#/admin/billDetails">
+                    <i class="fa fa-money"></i>
+                    <span>{{ 'COMMON.BILLING' | translate }}</span>
                 </a>
-
             </li>
         </ul>
     </div>
     <div class="ui-g-12 ui-md-6 ui-lg-3 layout-megamenu-submenu">
-        <h4>Finance Reports</h4>
+        <h4><i class="fa fa-fw fa-bar-chart"></i> {{ 'COMMON.REPORTS' | translate }}</h4>
         <ul>
             <li>
                 <a href="#">
-                    <i class="fa fa-fw fa-file-text-o"></i>
-                    <span>Annual Reports</span>
+                    <i class="fa fa-money"></i>
+                    <span>{{ 'COMMON.PENDING_PAYMENT' | translate }}</span>
                 </a>
             </li>
             <li>
                 <a href="#">
                     <i class="fa fa-fw fa-dollar"></i>
-                    <span>Revenue Reports</span>
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <i class="fa fa-fw fa-user-o"></i>
-                    <span>HR Reports</span>
+                    <span>{{ 'COMMON.FINANCE_REPORT' | translate }}</span>
                 </a>
             </li>
             <li>
                 <a href="#">
                     <i class="fa fa-fw fa-bar-chart"></i>
-                    <span>Finance Margin</span>
+                    <span>{{ 'COMMON.STOCK_REPORT' | translate }}</span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fa fa-calendar"></i>
+                    <span>{{ 'COMMON.VISIT_OF_DAY' | translate }}</span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fa fa-fw fa-user-o"></i>
+                    <span>{{ 'COMMON.PATIENT_FILE' | translate }}</span>
                 </a>
             </li>
         </ul>
     </div>
     <div class="ui-g-12 ui-md-6 ui-lg-3 layout-megamenu-submenu">
-        <h4>Settings</h4>
+        <h4><i class="fa fa-cogs"></i> Configuration</h4>        
         <ul>
             <li>
-                <a href="#">
-                    <i class="fa fa-fw fa-envelope-o"></i>
-                    <span>E-mail Notifications</span>
+                <a href="#/admin/adminBedStatus">
+                    <i class="fa fa-bed"></i>
+                    <span>{{ 'COMMON.BED_ROOM' | translate }}</span>
                 </a>
             </li>
             <li>
-                <a href="#">
-                    <i class="fa fa-fw fa-mobile"></i>
-                    <span>Sms Alerts</span>
+                <a href="#/admin/adminReference">
+                    <i class="fa fa-fw fa-paint-brush"></i>
+                    <span>{{ 'COMMON.REFERENCES' | translate }}</span>
                 </a>
             </li>
             <li>
-                <a href="#">
+                <a href="#/admin/adminWebsite">
                     <i class="fa fa-fw fa-globe"></i>
-                    <span>Site Tracking</span>
+                    <span>{{ 'COMMON.WEBSITE' | translate }}</span>
                 </a>
             </li>
         </ul>
     </div>
     <div class="ui-g-12 ui-md-6 ui-lg-3 layout-megamenu-submenu">
         <div class="content-img">
-            <img src="assets/layout/images/image-mega.png" alt="california-layout" />
+            <img src="assets/images/company/image-mega.png" alt="Favoris" />
 
             <div class="img-megamenu">
-                <span class="ui-g-12 img-header">California</span>
-                <span class="ui-g-12 img-subheader">Application Template</span>
-            </div>
-
-            <p-button label="Buy Now" type="button" class="alt-btn"></p-button>
+                <span class="ui-g-12 img-header"></span>
+                <span class="ui-g-12 img-subheader"></span>
+            </div> 
         </div>
     </div>
 </div>

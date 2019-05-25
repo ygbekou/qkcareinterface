@@ -1,14 +1,17 @@
-import {Component} from '@angular/core';
-import { AppComponent} from './app.component';
+import { Component } from '@angular/core';
+import { AppComponent } from './app.component';
 import { TokenStorage } from './services';
-import {trigger, state, transition, style, animate} from '@angular/animations';
+import { trigger, state, transition, style, animate } from '@angular/animations';
 
 @Component({
     selector: 'app-inline-profile',
     template: `
         <div class="user-profile">
-            <a href="#" (click)="onClick($event)" id="sidebar-profile-button">
-                <img src="assets/images/user/{{tokenStorage.getPicture()}}" alt="california-layout"/>
+            <a href="#" (click)="onClick($event)" id="sidebar-profile-button"> 
+                
+                    <img src="assets/images/user/{{tokenStorage.getPicture()}}" alt="QkCare"
+                     class="img-fluid" style="margin-left: 0px;"/>
+                
                 <span class="sidebar-profile-name">{{tokenStorage.getName()}}</span>
                 <span class="sidebar-profile-role">{{tokenStorage.getRoleName()}}</span>
             </a>
@@ -148,7 +151,7 @@ export class AppProfileComponent {
     activeProfileItem: any;
 
     constructor(public app: AppComponent,
-    public tokenStorage: TokenStorage) {}
+        public tokenStorage: TokenStorage) { }
 
     onClick(event) {
         this.active = !this.active;
@@ -157,8 +160,10 @@ export class AppProfileComponent {
 
     onProfileItemClick(event, item) {
         if (this.activeProfileItem === item) {
-            this.activeProfileItem = null; } else {
-            this.activeProfileItem = item; }
+            this.activeProfileItem = null;
+        } else {
+            this.activeProfileItem = item;
+        }
 
         event.preventDefault();
     }
