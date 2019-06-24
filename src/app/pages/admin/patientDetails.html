@@ -42,7 +42,7 @@
 							<div class="ui-grid-col-6 ui-sm-12">
 								<div class="form-group">
 									<div class="ui-grid-row">
-										<label for="sex">{{ 'COMMON.GENDER' | translate }}</label>
+										<label for="sex">{{ 'COMMON.GENDER' | translate }}<font color="red">*</font></label>
 									</div>
 									<div class="ui-grid-row">
 										<p-radioButton name="sex" value="M" label="Male" name="sex"
@@ -127,21 +127,35 @@
             </div>
             <div class="ui-grid-col-4 ui-sm-12">
                 <div class="ui-grid-row">
-                    <img class="thumb" src="assets/images/user/{{patient.user.picture}}" alt="" class="img-fluid" 
+					<div class="ui-grid-col-3 ui-sm-12"></div>
+					 <div class="ui-grid-col-6 ui-sm-12">
+                		<img class="thumb" src="assets/images/user/{{patient.user.picture}}" alt="" class="img-fluid" 
                         *ngIf="patient.user.picture !== '' && patient.user.picture !== 'null'"/>
-                    <img class="thumb" src="{{pictureUrl}}" alt="" class="img-fluid" *ngIf="pictureUrl !== undefined"/>
-                </div>
+                    	<img class="thumb" src="{{pictureUrl}}" alt="" class="img-fluid" *ngIf="pictureUrl !== undefined"/>
+					 </div>
+					 <div class="ui-grid-col-3 ui-sm-12"></div>
+                    </div>
                 <div class="ui-grid-row">
+					<div class="ui-grid-col-3 ui-sm-12"></div>
+
+					<div class="ui-grid-col-6 ui-sm-12">
                     <button pButton type="button" icon="fa fa-delete" (click)="patient.user.picture = ''" label="Remove" 
                         *ngIf="patient.user.picture !== '' && patient.user.picture !== null"></button>
                     <button pButton type="button" icon="fa fa-delete" (click)="clearPictureFile()" 
-                        label="Remove" *ngIf="pictureUrl !== undefined"></button>
+						label="Remove" *ngIf="pictureUrl !== undefined"></button>
+						</div>
+						<div class="ui-grid-col-3 ui-sm-12"></div>
                 </div>
                 <br/>
                 <div class="ui-grid-row">
+					<div class="ui-grid-col-3 ui-sm-12"></div>
+
+					<div class="ui-grid-col-6 ui-sm-12">
                     <div class="form-group">
                         <input type="file" (change)="readUrl($event)" [attr.multiple]="null" name="picture" #picture>
-                    </div>
+					</div>
+					</div>
+					<div class="ui-grid-col-3 ui-sm-12"></div>
                 </div>
             </div>
 
@@ -213,7 +227,7 @@
 		<div class="ui-grid-row">
 			<div class="ui-grid-col-6 ui-sm-12">
 				<div class="form-group">
-					<label for="contact">{{ 'COMMON.CONTACT' | translate }}</label> 
+					<label for="contact">{{ 'COMMON.EMERGENCY_CONTACT' | translate }}</label> 
 					<input type="text" pInputText class="form-control" id="contact"
 						[(ngModel)]="patient.contact" name="contact" #contact="ngModel">
 				</div>
@@ -270,8 +284,9 @@
 			<div class="ui-grid-col-3 ui-sm-12">
 				<div class="form-group">
 					<label for="expiryDate">{{ 'COMMON.EXPIRY_DATE' | translate }}:</label>
-                    <p-calendar [(ngModel)]="patient.expiryDate" name="expiryDate" 
-                        dateFormat={{globalEventsManager.CAL_DATE_FORMAT}}></p-calendar>
+                    <p-calendar [(ngModel)]="patient.expiryDate" name="expiryDate" monthNavigator="true" 
+                                yearRange="1940:2050" yearNavigator="true"
+						dateFormat={{globalEventsManager.CAL_DATE_FORMAT}}></p-calendar> 
 				</div>
 			</div>
 			<div class="ui-grid-col-3 ui-sm-12">
@@ -307,7 +322,8 @@
 				<div class="ui-grid-col-3 ui-sm-12">
 					<div class="form-group">
 						<label for="insuranceExpiryDate">{{ 'COMMON.EXPIRY_DATE' | translate }}:</label>
-                        <p-calendar [(ngModel)]="patient.insuranceExpiryDate" name="insuranceExpiryDate"
+                        <p-calendar [(ngModel)]="patient.insuranceExpiryDate" name="insuranceExpiryDate" monthNavigator="true" 
+                                yearRange="1940:2050" yearNavigator="true"
                             dateFormat={{globalEventsManager.CAL_DATE_FORMAT}}></p-calendar>
 					</div>
 				</div>
@@ -346,9 +362,7 @@
 	<br />
     <p-messages [(value)]="messages"></p-messages>
     <p-message *ngIf="!f.form.valid &&f.submitted" severity="error" 
-			text="{{ 'MESSAGE.FORM_HAS_ERRORS' | translate }}"></p-message>
-    <br/>
-    <br/>
+			text="{{ 'MESSAGE.FORM_HAS_ERRORS' | translate }}"></p-message> 
 	<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
 			<button type="button" pButton icon="fa fa-refresh" (click)="clear()" label="{{ 'COMMON.CLEAR' | translate }}"></button>&nbsp;&nbsp;
 			<button pButton icon="fa fa-save" label="{{ 'COMMON.SAVE' | translate }}" [disabled]="!f.form.valid"></button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

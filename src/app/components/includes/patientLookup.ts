@@ -103,7 +103,7 @@ export class PatientLookup implements OnInit {
     let parameters: string [] = []; 
     let patient = null;
             
-    parameters.push('e.patientId = |patientId|' + this.schText + '|Long')
+    parameters.push('e.id = |patientId|' + this.schText + '|Long')
     let patientMatricule = this.schText;
     
     this.genericService.getAllByCriteria('Patient', parameters)
