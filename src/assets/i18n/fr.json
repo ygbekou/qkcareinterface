@@ -315,7 +315,10 @@
     "PATIENT_FILE": "Fiche du patient",
     "BED_ROOM": "Chambres & lits",
     "WEBSITE": "Site web",
-    "REFERENCES": "Références"
+	"REFERENCES": "Références",
+	"SHORTCUTS":"Raccourcis",
+	"DASHBOARD": "Dashboard",
+	"SCHEDULE": "Calendrier"
   },
   "MESSAGE": {
     "TRANFER_DOCTOR_FAILED": "Le nouveau docteur assigné doit être différent de l'ancien.",

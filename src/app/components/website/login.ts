@@ -61,7 +61,8 @@ export class Login implements OnInit {
         this.authenticationService.attemptAuth(this.user)
           .subscribe(data => {
             if (this.tokenStorage.getToken() !== '' && this.tokenStorage.getToken() !== null) {
-              if (this.tokenStorage.getFirstTimeLogin() === 'Y') {
+			  console.log('Token = '+this.tokenStorage.getToken());
+				if (this.tokenStorage.getFirstTimeLogin() === 'Y') {
                 this.user.password = '';
                 this.display = true;
               } else {

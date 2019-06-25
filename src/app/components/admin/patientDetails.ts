@@ -166,7 +166,7 @@ export class PatientDetails extends BaseComponent implements OnInit, OnDestroy {
 		this.patient = new Patient();
 	}
 
-	delete() {
-		this.genericService.delete();
+	delete(id: number) {
+		this.genericService.delete(id, 'com.qkcare.model.Patient');
 	}
 }
