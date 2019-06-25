@@ -3,26 +3,36 @@ import { AppComponent } from './app.component';
 import { BreadcrumbService } from './breadcrumb.service';
 import { Subscription } from 'rxjs';
 import { MenuItem } from 'primeng/primeng';
+import { Router } from '@angular/router';
+import { TokenStorage } from './services';
 
 @Component({
-    selector: 'app-breadcrumb',
-    templateUrl: './app.breadcrumb.component.html'
+	selector: 'app-breadcrumb',
+	templateUrl: './app.breadcrumb.component.html'
 })
 export class AppBreadcrumbComponent implements OnDestroy {
 
-    subscription: Subscription;
+	subscription: Subscription;
 
-    items: MenuItem[];
+	items: MenuItem[];
 
-    constructor(public breadcrumbService: BreadcrumbService) {
-        this.subscription = breadcrumbService.itemsHandler.subscribe(response => {
-            this.items = response;
-        });
-    }
+	constructor(public breadcrumbService: BreadcrumbService,
+		public tokenStorage: TokenStorage,
+		private router: Router) {
+		this.subscription = breadcrumbService.itemsHandler.subscribe(response => {
+			this.items = response;
+		});
+	}
 
-    ngOnDestroy() {
-        if (this.subscription) {
-            this.subscription.unsubscribe();
-        }
-    }
+	ngOnDestroy() {
+		if (this.subscription) {
+			this.subscription.unsubscribe();
+		}
+	}
+
+	logOut() {
+		this.tokenStorage.signOut();
+		this.router.navigate(['/']);
+		window.location.reload();
+	}
 }

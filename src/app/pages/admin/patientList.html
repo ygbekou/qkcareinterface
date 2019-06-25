@@ -60,10 +60,12 @@
                         {{rowData[col.field] | date: globalEventsManager.DATE_FORMAT}}
                     </div>
                 </td>
-                <td>
-                    <button type="button" pButton icon="fa fa-edit"	(click)="edit(rowData.id)" title="{{ 'COMMON.EDIT' | translate }}"></button> &nbsp;
+                <td align="justify">
+					<button type="button" pButton icon="fa fa-edit"	(click)="edit(rowData.id)" title="{{ 'COMMON.EDIT' | translate }}"></button> 
+					&nbsp;&nbsp;
                     <button type="button" pButton icon="fa fa-edit" (click)="redirectToOrigialPage(rowData)" 
-                        title="{{ 'COMMON.SELECT' | translate }}" *ngIf="this.originalPage !== undefined"></button>&nbsp;
+						title="{{ 'COMMON.SELECT' | translate }}" *ngIf="this.originalPage !== undefined"></button>
+					&nbsp;&nbsp;
                     <button type="button" pButton icon="fa fa-eraser" (click)="delete(rowData.id)" title="{{ 'COMMON.DELETE' | translate }}"></button>
                 </td>
             </tr>

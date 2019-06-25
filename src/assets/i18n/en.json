@@ -25,7 +25,8 @@
     "CITY": "City",
     "COUNTRY": "Country",
     "ZIP_CODE": "Zip Code",
-    "CONTACT": "Contact",
+	"CONTACT": "Contact",
+	"EMERGENCY_CONTACT": "Emergency contact",
     "CONTACT_PHONE": "Contact Phone",
     "PAYER_TYPE": "Payer Type",
     "ACCOUNT_NUMBER": "Account Number",
@@ -314,7 +315,10 @@
     "PATIENT_FILE": "Patient file",
     "BED_ROOM":"Rooms & Beds",
     "WEBSITE":"Website",
-    "REFERENCES":"References"
+    "REFERENCES":"References",
+	"SHORTCUTS":"Shortcuts",
+	"DASHBOARD": "Dashboard",
+	"SCHEDULE": "Schedule"
   },
   "MESSAGE": {
   	"TRANFER_DOCTOR_FAILED": "The transfer doctor should be different from the current doctor.",
