@@ -8,6 +8,7 @@ import { Reference } from '../models/reference';
 import { TokenStorage } from './token.storage';
 import {SelectItem} from 'primeng/api';
 import { ContactUsMessage } from '../models/website';
+import { GenericResponse } from '../models/genericResponse';
 
 @Injectable()
 export class GenericService {
@@ -178,26 +179,15 @@ export class GenericService {
         .catch(this.handleError);
    }
 
-    public delete = (id: number, entityClass: string): Observable<any> => {
+   public delete = (id: number, entityClass: string): Observable<GenericResponse> => {
 
-        const toDelete = JSON.stringify(id);
-        const re = /\"/gi;
-        const toSend = '{"json":"' + toDelete.replace(re, '\'') + '"}';
-
-        const actionUrl = Constants.apiServer + '/service/' + entityClass + '/delete';
-        return this.http.post(actionUrl, toSend, { headers: this.headers })
+        const actionUrl = Constants.apiServer + '/service/' + entityClass + '/delete/' + id;
+        return this.http.get(actionUrl, { headers: this.headers })
           .map((response: Response) => {
-              if (response && response.json()) {
-                const error = response.json() && response.json().error;
-                if (error == null) {
-
-                }
-              }
               return response.json();
           })
           .catch(this.handleError);
-     }
-
+    }
 
   public uploadFileWithFormData = (formData: FormData): Observable<any> => {
 
