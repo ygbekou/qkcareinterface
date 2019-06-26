@@ -12,7 +12,7 @@ import { NavigationExtras, Router } from '@angular/router';
               <div class="ui-grid-row">
                 <div class="ui-grid-col-5 ui-sm-12">  
                   <div class="ui-grid-row">
-                     <div class="form-group">
+                     <div class="ui-grid-row">
                         <label i18n="@@patientId" for="patientId">Patient ID</label>
                         <form #searchForm="ngForm">
                           <input type="text" pInputText class="form-control" id="searchT"
@@ -20,9 +20,6 @@ import { NavigationExtras, Router } from '@angular/router';
                             placeholder="{{SEARCH_TEXT}}" name="searchT"
                             #searchT="ngModel">
                         </form>
-                     </div>
-                     <div>
-                        <br/>
                         <button type="button" pButton icon="fa fa-search" (click)="openPatientSearchPage()"></button>    
                      </div>
                   </div>
@@ -86,16 +83,20 @@ export class PatientLookup implements OnInit {
   }
   
   openPatientSearchPage() {
-    try {
-      let navigationExtras: NavigationExtras = {
-        queryParams: {
-          "originalPage": this.originalPage,    
+      if (this.schText !== undefined && this.schText !== '') {
+        this.lookUpPatient();
+      } else {
+        try {
+            let navigationExtras: NavigationExtras = {
+                queryParams: {
+                    "originalPage": this.originalPage,    
+                }
+            }
+            this.router.navigate(["/admin/patientList"], navigationExtras);
         }
-      }
-      this.router.navigate(["/admin/patientList"], navigationExtras);
-    }
-    catch (e) {
-      console.log(e);
+        catch (e) {
+            console.log(e);
+        }
     }
   }
 
@@ -103,7 +104,7 @@ export class PatientLookup implements OnInit {
     let parameters: string [] = []; 
     let patient = null;
             
-    parameters.push('e.id = |patientId|' + this.schText + '|Long')
+    parameters.push('e.medicalRecordNumber = |patientId|' + this.schText + '|String')
     let patientMatricule = this.schText;
     
     this.genericService.getAllByCriteria('Patient', parameters)

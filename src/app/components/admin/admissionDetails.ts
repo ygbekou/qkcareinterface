@@ -71,7 +71,7 @@ export class AdmissionDetails implements OnInit, OnDestroy {
     this.initilizePatientAdmissionDoctor();
     
     // Initialize the selectedParentCategoryId 
-    this.categoryDropdown.getAllCategories(Constants.CATEGORY_MEDICINE);
+    this.categoryDropdown.getAllCategories(Constants.CATEGORY_BED);
   }
 
   initilizePatientAdmissionPatient() {
