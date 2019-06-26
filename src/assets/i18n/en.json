@@ -318,7 +318,8 @@
     "REFERENCES":"References",
 	"SHORTCUTS":"Shortcuts",
 	"DASHBOARD": "Dashboard",
-	"SCHEDULE": "Schedule"
+	"SCHEDULE": "Schedule",
+	"INBOX": "Inbox"
   },
   "MESSAGE": {
   	"TRANFER_DOCTOR_FAILED": "The transfer doctor should be different from the current doctor.",
