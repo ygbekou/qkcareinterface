@@ -49,6 +49,7 @@ export class PatientDetails extends BaseComponent implements OnInit, OnDestroy {
 			private router: Router
 		) {
 		super(translate);
+		this.patient.user = new User();
 	}
 
 	ngOnInit(): void {

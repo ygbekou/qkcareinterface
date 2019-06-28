@@ -110,16 +110,29 @@
           <div class="submenu-content events">
             <ul>
               <li *ngFor="let event of events">
-                <div class="calendar-event-date" style="height: 72px">
-                  <span class="date">{{event.start}}</span>
-                  <span class="date">{{event.end}}</span>
-                </div>
+                <a [routerLink]="['/admin/adminPatient']" [queryParams]="{patientId:event.patientId}"
+                  (click)="setPatientId(event.patientId,event.id)">
+                  <div class="calendar-event-date" style="height: 72px">
+                    <span class="date">{{event.start}}</span>
+                    <span class="date">{{event.end}}</span>
+                  </div>
+                </a>
                 <div class="calendar-event-detail">
-                  <span class="calendar-event-title">{{event.title}}</span>
+                  <span class="calendar-event-title">
+                    <a [routerLink]="['/admin/adminPatient']" [queryParams]="{patientId:event.patientId}"
+                      (click)="setPatientId(event.patientId,event.id)">
+                      {{event.title}}
+                    </a>
+                  </span>
                   <i class="material-icons  fa fa-phone"></i>
                   <span class="calendar-event-location">{{event.phone}}</span>
                   <br /><i class="material-icons  fa fa-user-md"></i>
-                  <span class="calendar-event-location">{{event.docName}}</span>
+                  <span class="calendar-event-location">
+					<a [routerLink]="['/admin/employeeDetails']" [queryParams]="{employeeId:event.employeeId}"
+                    >
+					  {{event.docName}} 
+                    </a>  
+					</span>
                 </div>
                 <div class="ui-grid-row">
                   <div class="ui-grid-col-6 ui-sm-6">

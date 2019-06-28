@@ -147,27 +147,38 @@
 						</div>
 					</div>
 
+					          <div class="ui-grid-col-4 ui-sm-12">
+            <div class="ui-grid-row">
+              <div class="ui-grid-col-3 ui-sm-12"></div>
+              <div class="ui-grid-col-6 ui-sm-12">
+                <img class="thumb" src="assets/images/user/{{employee.user.picture}}" alt="" class="img-fluid"
+                  *ngIf="employee.user.picture !== '' && employee.user.picture !== 'null'" />
+                <img class="thumb" src="{{pictureUrl}}" alt="" class="img-fluid" *ngIf="pictureUrl !== undefined" />
+              </div>
+              <div class="ui-grid-col-3 ui-sm-12"></div>
+            </div>
+            <div class="ui-grid-row">
+              <div class="ui-grid-col-3 ui-sm-12"></div>
 
-					<div class="ui-grid-col-4 ui-sm-12">
-                        <div class="ui-grid-row">
-                            <img class="thumb" src="assets/images/user/{{employee.user.picture}}" alt="" class="img-fluid" 
-                                *ngIf="employee.user.picture !== '' && employee.user.picture !== 'null'"/>
-                            <img class="thumb" src="{{pictureUrl}}" alt="" class="img-fluid" *ngIf="pictureUrl !== undefined"/>
-                        </div>
-                        <div class="ui-grid-row">
-                            <button pButton type="button" icon="fa fa-delete" (click)="employee.user.picture = ''" label="Remove" 
-                                *ngIf="employee.user.picture !== '' && employee.user.picture !== null"></button>
-                            <button pButton type="button" icon="fa fa-delete" (click)="clearPictureFile()" 
-                                label="Remove" *ngIf="pictureUrl !== undefined && pictureUrl !== ''"></button>
-                        </div>
-                        <br/>
-                        <div class="ui-grid-row">
-                            <div class="form-group">
-                                <input type="file" (change)="readUrl($event)" [attr.multiple]="null" name="picture" #picture>
-                            </div>
-                        </div>
-                    </div>
-				</div>
+              <div class="ui-grid-col-6 ui-sm-12">               
+                <button pButton type="button" icon="fa fa-delete" (click)="clearPictureFile()" label="{{ 'COMMON.REMOVE' | translate }}"
+                  *ngIf="pictureUrl !== undefined"></button>
+              </div>
+              <div class="ui-grid-col-3 ui-sm-12"></div>
+            </div>
+            <br />
+            <div class="ui-grid-row">
+              <div class="ui-grid-col-3 ui-sm-12"></div>
+
+              <div class="ui-grid-col-6 ui-sm-12">
+                <div class="form-group">
+                  <input type="file" (change)="readUrl($event)" [attr.multiple]="null" name="picture" #picture>
+                </div>
+              </div>
+              <div class="ui-grid-col-3 ui-sm-12"></div>
+            </div>
+          </div>
+		</div>
 
 
 			</p-accordionTab>

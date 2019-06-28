@@ -1,8 +1,8 @@
-import { Component, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, ViewChild, AfterViewInit, Output, EventEmitter } from '@angular/core';
 import { AppComponent } from './app.component';
 import { ScrollPanel } from 'primeng/primeng';
-import { Router } from '@angular/router';
-import { TokenStorage, GenericService, AppointmentService } from './services';
+import { Router, NavigationExtras } from '@angular/router';
+import { TokenStorage, GenericService, AppointmentService, GlobalEventsManager } from './services';
 import { ContactUsMessage } from './models/website';
 import { SearchCriteria } from './models';
 import { ScheduleEvent } from './models/scheduleEvent';
@@ -17,11 +17,11 @@ export class AppRightPanelComponent implements AfterViewInit {
 	public activeTab = 0;
 	events: ScheduleEvent[];
 	contactUsMessages: ContactUsMessage[] = [];
-	searchCriteria: SearchCriteria = new SearchCriteria();
-
+	searchCriteria: SearchCriteria = new SearchCriteria(); 
 	constructor(public app: AppComponent,
 		private genericService: GenericService,
 		private appointmentService: AppointmentService,
+		public globalEventsManager: GlobalEventsManager,
 		public tokenStorage: TokenStorage,
 		private router: Router) { }
 
@@ -92,4 +92,10 @@ export class AppRightPanelComponent implements AfterViewInit {
 		onTheFly.push(...this.events);
 		this.events = onTheFly;
 	}
+
+	setPatientId(patientId: number, appointmentId: number) {
+		this.globalEventsManager.changePatientId(patientId);
+		this.globalEventsManager.changeAppointmentId(patientId); 
+	}
+ 
 }

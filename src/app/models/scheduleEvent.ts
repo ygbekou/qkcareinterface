@@ -1,6 +1,8 @@
 
 export class ScheduleEvent {
-	id:number;
+	id: number;
+	patientId: number;
+	employeeId: number;
 	title: string;
 	start: string;
 	end: string;
