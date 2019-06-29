@@ -2,12 +2,12 @@ import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild, Input } fro
 import { Router, ActivatedRoute } from '@angular/router';
 import { Constants } from '../../app.constants';
 import { Admission, Visit, VitalSign, Patient, User } from '../../models';
-import { EditorModule } from 'primeng/editor';
-import { Cookie } from 'ng2-cookies/ng2-cookies';
-import { InputTextareaModule, CheckboxModule, MultiSelectModule, CalendarModule } from 'primeng/primeng';
 import { GenericService } from '../../services';
-import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
+import { TranslateService } from '@ngx-translate/core';
 import { Message } from 'primeng/api';
+import { CurrencyMaskModule } from "ng2-currency-mask";
+import { CurrencyMaskConfig, CURRENCY_MASK_CONFIG } from "ng2-currency-mask/src/currency-mask.config";
+
 
 @Component({ 
   selector: 'app-vitalSign-details',
@@ -117,6 +117,7 @@ export class VitalSignDetails implements OnInit, OnDestroy {
  
   validate() {
     this.messages = [];
+    alert(this.vitalSign.temperature)
     if (this.vitalSign.temperature == null && this.vitalSign.pulse == null
       && this.vitalSign.respiration == null && this.vitalSign.bloodPressure == null
       && this.vitalSign.bloodSugar == null && this.vitalSign.pain == null
@@ -126,4 +127,6 @@ export class VitalSignDetails implements OnInit, OnDestroy {
     
     return this.messages.length == 0;
   }
+
+
  }

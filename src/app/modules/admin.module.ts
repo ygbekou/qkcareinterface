@@ -115,6 +115,7 @@ import { CompanyList } from '../components/admin/companyList';
 import { ContactDetails } from '../components/admin/contactDetails';
 import { ContactList } from '../components/admin/contactList';
 import { Dashboard } from '../components/admin/dashboard';
+import { CurrencyMaskModule } from 'ng2-currency-mask';
 
 const routes: Routes = [
   { path: 'adminMain', component: AdminMain },
@@ -200,7 +201,7 @@ export function HttpLoaderFactory(http: HttpClient) {
 
 @NgModule({
   imports: [
-    RouterModule.forChild(routes), CommonSharedModule,
+    RouterModule.forChild(routes), CommonSharedModule, CurrencyMaskModule, 
     TranslateModule.forChild({
       loader: {
         provide: TranslateLoader,

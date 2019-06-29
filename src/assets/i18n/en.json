@@ -352,7 +352,9 @@
 "VALIDATION":{
     "IS_INVALID": "is invalid",
     "IS_REQUIRED": "is required",
-    "FIELD_REQUIRED":"Field required"
+	"FIELD_REQUIRED":"Field required",
+	"MINIMUM_VALUE":"Minimum value is: ",
+	"MAXIMUM_VALUE":"Maximal value is: "
   },
 
   "DATE": {

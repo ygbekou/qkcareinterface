@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, Validators } from '@angular/forms';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -121,6 +121,9 @@ import { SingleSection } from './components/website/singleSection';
 import { AboutUs } from './components/website/aboutUs';
 import { Contact } from './components/website/contact';
 import { Services } from './components/website/services';
+import { CurrencyMaskModule } from 'ng2-currency-mask';
+import { MinDirective } from './components/directives/min-validator.directive'
+import { MaxDirective } from './components/directives/max-validator.directive'
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(httpClient: HttpClient) {
@@ -206,7 +209,8 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     ToolbarModule,
     TooltipModule,
     TreeModule,
-    TreeTableModule
+    TreeTableModule,
+	CurrencyMaskModule
   ],
   declarations: [
     AppComponent,
@@ -223,7 +227,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     FileDemoComponent, DocumentationComponent,
     Login, Services, Landing, Header,
     Footer, Industries, SingleSection, AboutUs,
-    Contact, Landing, Header, Footer
+    Contact, Landing, Header, Footer, MinDirective, MaxDirective
   ],
   providers: [
     { provide: LocationStrategy, useClass: HashLocationStrategy },

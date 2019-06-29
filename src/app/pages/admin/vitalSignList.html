@@ -1,7 +1,12 @@
 <p-confirmDialog [style]="{width: '50vw'}"></p-confirmDialog>
 <div class="ui-g-12 ui-sm-12" style="padding: 15px;">
 	<div class="ui-grid ui-grid-responsive ui-fluid">
-		<p-table [columns]="cols" [value]="vitalSigns">
+		<p-table [columns]="cols" [value]="vitalSigns" [scrollable]="true" scrollHeight="200px" [resizableColumns]="true">
+			<ng-template pTemplate="colgroup" let-columns>
+				<colgroup>
+					<col *ngFor="let col of columns">
+				</colgroup>
+			</ng-template>
 			<ng-template pTemplate="caption">
 				{{ 'COMMON.VITAL_SIGN_LIST' | translate }}
 			</ng-template>

@@ -30,6 +30,7 @@
     "intl": "1.2.5",
     "moment": "2.18.1",
     "ng2-cookies": "^1.0.12",
+    "ng2-currency-mask": "^5.3.1",
     "npm": "^5.6.0",
     "primeicons": "1.0.0-beta.10",
     "primeng": "6.1.2",
