@@ -1,376 +1,363 @@
-
 <form name="form" (ngSubmit)="f.form.valid && save()" #f="ngForm" validate>
-	<div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="patient">
-		<p-accordion> <p-accordionTab header="{{ 'COMMON.DEMOGRAPHIC_INFO' | translate }}" selected="true">
-	 
-		<div class="ui-grid-row">
-			<div class="ui-grid-col-8 ui-sm-12">
-				<div class="ui-grid-row">
-					<div class="ui-grid-col-6 ui-sm-12">
-						<div class="form-group">
-							<label for="lastName">{{ 'COMMON.LAST_NAME' | translate }}<font
-								color="red">*</font>:
-							</label> <input type="text" pInputText class="form-control" id="lastName"
-								required [(ngModel)]="patient.user.lastName" name="lastName" #lastName="ngModel" >
-                            <p-message *ngIf="f.submitted && lastName.invalid" severity="error" 
-                                text="{{ 'COMMON.LAST_NAME' | translate }} {{ 'VALIDATION.IS_REQUIRED' | translate }}"></p-message>
-						</div>
-					</div>
-					<div class="ui-grid-col-6 ui-sm-12">
-						<div class="form-group">
-							<label for="firstName">{{ 'COMMON.FIRST_NAME' | translate }}<font
-								color="red">*</font>:
-							</label> <input type="text" pInputText class="form-control" id="firstName"
-								required [(ngModel)]="patient.user.firstName" name="firstName"
-								#firstName="ngModel">
-							<p-message *ngIf="f.submitted && firstName.invalid" severity="error" 
-								text="{{ 'COMMON.FIRST_NAME' | translate }} {{ 'VALIDATION.IS_REQUIRED' | translate }}"></p-message>
-						</div>
-					</div>
-				</div>
-				
-				<div class="ui-grid-row">
-					<div class="ui-grid-col-6 ui-sm-12">
-						<div class="form-group">
-							<label for="middleName">{{ 'COMMON.MIDDLE_NAME' | translate }}</label> 
-							<input type="text" pInputText class="form-control" id="middleName"
-								[(ngModel)]="patient.user.middleName" name="middleName" #middleName="ngModel">
-						</div>
-					</div>
-					<div class="ui-grid-col-6 ui-sm-12">
-						<div class="ui-grid-row">
-							<div class="ui-grid-col-6 ui-sm-12">
-								<div class="form-group">
-									<div class="ui-grid-row">
-										<label for="sex">{{ 'COMMON.GENDER' | translate }}<font color="red">*</font></label>
-									</div>
-									<div class="ui-grid-row">
-										<p-radioButton name="sex" value="M" label="Male" name="sex"
-											[(ngModel)]="patient.user.sex" #gender="ngModel" required></p-radioButton>
-										<p-radioButton name="sex" value="F" label="Female" name="sex"
-                                            [(ngModel)]="patient.user.sex" #gender="ngModel" required></p-radioButton>
-                                    </div>
-                                    <p-message *ngIf="f.submitted && firstName.invalid" severity="error" 
-								            text="{{ 'COMMON.GENDER' | translate }} {{ 'VALIDATION.IS_REQUIRED' | translate }}"></p-message>
-								</div>
-							</div>
-							<div class="ui-grid-col-4 ui-sm-12">
-								<div class="form-group">
-									<label for="bloodGroup">{{ 'COMMON.BLOOD_GROUP' | translate }}:</label>
-									<p-dropdown [options]="genericService.bloodGroups" name="bloodGroup"
-										[(ngModel)]="patient.bloodGroup" [style]="{'width':'190px'}"></p-dropdown>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="ui-grid-row">
-					<div class="ui-grid-col-4 ui-sm-12">
-						<div class="form-group">
-							<label for="email">{{ 'COMMON.E_MAIL' | translate }}
-							</label> <input type="text" pInputText class="form-control" id="email"
-                                [(ngModel)]="patient.user.email" name="email" #email="ngModel" email>
-							<p-message *ngIf="f.submitted && email.errors && email.errors.email" severity="error" 
-								text="{{ 'COMMON.E_MAIL' | translate }} {{ 'VALIDATION.IS_INVALID' | translate }}"></p-message>
-						</div>
-					</div>
-					<div class="ui-grid-col-4 ui-sm-12">
-						<div class="form-group">
-							<label for="birthDate">{{ 'COMMON.BIRTH_DATE' | translate }}<font color="red">*</font>:</label>
-                            <p-calendar [(ngModel)]="patient.user.birthDate" id="birthDate" monthNavigator="true" 
-                                yearRange="1940:2050" yearNavigator="true" name="birthDate" #birthDate="ngModel" required date
-                                dateFormat={{globalEventsManager.CAL_DATE_FORMAT}}></p-calendar>
-							<p-message *ngIf="f.submitted && birthDate.errors && birthDate.errors.required" severity="error" 
-                                text="{{ 'COMMON.BIRTH_DATE' | translate }} {{ 'VALIDATION.IS_REQUIRED' | translate }}"></p-message>
-                            <p-message *ngIf="f.submitted && birthDate.errors && birthDate.errors.date" severity="error" 
-								text="{{ 'COMMON.BIRTH_DATE' | translate }} {{ 'VALIDATION.IS_INVALID' | translate }}"></p-message>
-						</div>
-					</div>
-					<div class="ui-grid-col-4 ui-sm-12">
-						<div class="form-group">
-							<label for="nationality">{{ 'COMMON.CITIZENSHIP' | translate }}</label>
-							<p-autoComplete [(ngModel)]="patient.nationality"
-								(onDropdownClick)="countryDropdown.handleDropdownClick($event)"
-								[suggestions]="countryDropdown.filteredCountries" [dropdown]="true"
-								id="nationality" (completeMethod)="countryDropdown.filter($event)"
-								name="nationality" field="name" [size]="30"
-								placeholder="{{SELECT_OPTION}}" [minLength]="1"></p-autoComplete>
-						</div>
-					</div>
-				</div>
-				<div class="ui-grid-row">
-					<div class="ui-grid-col-6 ui-sm-12">
-						<div class="form-group">
-							<label for="occupation">{{ 'COMMON.OCCUPATION' | translate }}</label>
-							<p-autoComplete [(ngModel)]="patient.occupation"
-								(onDropdownClick)="occupationDropdown.handleDropdownClick($event)"
-								[suggestions]="occupationDropdown.filteredOccupations"
-								[dropdown]="true" id="occupation"
-								(completeMethod)="occupationDropdown.filter($event)"
-								name="occupation" field="name" [size]="30"
-								placeholder="{{SELECT_OPTION}}" [minLength]="1"></p-autoComplete>
-						</div>
-					</div>
-					<div class="ui-grid-col-6 ui-sm-12">
-						<div class="form-group">
-							<label for="religion">{{ 'COMMON.RELIGION' | translate }}</label>
-							<p-autoComplete [(ngModel)]="patient.religion"
-								(onDropdownClick)="religionDropdown.handleDropdownClick($event)"
-								[suggestions]="religionDropdown.filteredReligions"
-								[dropdown]="true" id="religion"
-								(completeMethod)="religionDropdown.filter($event)" name="religion"
-								field="name" [size]="30" placeholder="{{SELECT_OPTION}}"
-								[minLength]="1"></p-autoComplete>
-						</div>
-					</div>
-				</div>
-            </div>
-            <div class="ui-grid-col-4 ui-sm-12">
-                <div class="ui-grid-row">
-					<div class="ui-grid-col-3 ui-sm-12"></div>
-					 <div class="ui-grid-col-6 ui-sm-12">
-                		<img class="thumb" src="assets/images/user/{{patient.user.picture}}" alt="" class="img-fluid" 
-                        *ngIf="patient.user.picture !== '' && patient.user.picture !== 'null'"/>
-                    	<img class="thumb" src="{{pictureUrl}}" alt="" class="img-fluid" *ngIf="pictureUrl !== undefined"/>
-					 </div>
-					 <div class="ui-grid-col-3 ui-sm-12"></div>
-                    </div>
-                <div class="ui-grid-row">
-					<div class="ui-grid-col-3 ui-sm-12"></div>
+  <div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="patient">
+    <p-accordion>
+      <p-accordionTab header="{{ 'COMMON.DEMOGRAPHIC_INFO' | translate }}" selected="true">
 
-					<div class="ui-grid-col-6 ui-sm-12">
-                    <button pButton type="button" icon="fa fa-delete" (click)="patient.user.picture = ''" label="Remove" 
-                        *ngIf="patient.user.picture !== '' && patient.user.picture !== null"></button>
-                    <button pButton type="button" icon="fa fa-delete" (click)="clearPictureFile()" 
-						label="Remove" *ngIf="pictureUrl !== undefined"></button>
-						</div>
-						<div class="ui-grid-col-3 ui-sm-12"></div>
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-8 ui-sm-12">
+            <div class="ui-grid-row">
+              <div class="ui-grid-col-6 ui-sm-12">
+                <div class="form-group">
+                  <label for="lastName">{{ 'COMMON.LAST_NAME' | translate }}<font color="red">*</font>:
+                  </label> <input type="text" pInputText class="form-control" id="lastName" required
+                    [(ngModel)]="patient.user.lastName" name="lastName" #lastName="ngModel">
+                  <p-message *ngIf="f.submitted && lastName.invalid" severity="error"
+                    text="{{ 'COMMON.LAST_NAME' | translate }} {{ 'VALIDATION.IS_REQUIRED' | translate }}"></p-message>
                 </div>
-                <br/>
-                <div class="ui-grid-row">
-					<div class="ui-grid-col-3 ui-sm-12"></div>
+              </div>
+              <div class="ui-grid-col-6 ui-sm-12">
+                <div class="form-group">
+                  <label for="firstName">{{ 'COMMON.FIRST_NAME' | translate }}<font color="red">*</font>:
+                  </label> <input type="text" pInputText class="form-control" id="firstName" required
+                    [(ngModel)]="patient.user.firstName" name="firstName" #firstName="ngModel">
+                  <p-message *ngIf="f.submitted && firstName.invalid" severity="error"
+                    text="{{ 'COMMON.FIRST_NAME' | translate }} {{ 'VALIDATION.IS_REQUIRED' | translate }}"></p-message>
+                </div>
+              </div>
+            </div>
 
-					<div class="ui-grid-col-6 ui-sm-12">
+            <div class="ui-grid-row">
+              <div class="ui-grid-col-6 ui-sm-12">
+                <div class="form-group">
+                  <label for="middleName">{{ 'COMMON.MIDDLE_NAME' | translate }}</label>
+                  <input type="text" pInputText class="form-control" id="middleName"
+                    [(ngModel)]="patient.user.middleName" name="middleName" #middleName="ngModel">
+                </div>
+              </div>
+              <div class="ui-grid-col-6 ui-sm-12">
+                <div class="ui-grid-row">
+                  <div class="ui-grid-col-6 ui-sm-12">
                     <div class="form-group">
-                        <input type="file" (change)="readUrl($event)" [attr.multiple]="null" name="picture" #picture>
-					</div>
-					</div>
-					<div class="ui-grid-col-3 ui-sm-12"></div>
+                      <div class="ui-grid-row">
+                        <label for="sex">{{ 'COMMON.GENDER' | translate }}<font color="red">*</font></label>
+                      </div>
+                      <div class="ui-grid-row">
+                        <p-radioButton name="sex" value="M" label="Male" name="sex" [(ngModel)]="patient.user.sex"
+                          #gender="ngModel" required></p-radioButton>
+                        <p-radioButton name="sex" value="F" label="Female" name="sex" [(ngModel)]="patient.user.sex"
+                          #gender="ngModel" required></p-radioButton>
+                      </div>
+                      <p-message *ngIf="f.submitted && firstName.invalid" severity="error"
+                        text="{{ 'COMMON.GENDER' | translate }} {{ 'VALIDATION.IS_REQUIRED' | translate }}"></p-message>
+                    </div>
+                  </div>
+                  <div class="ui-grid-col-4 ui-sm-12">
+                    <div class="form-group">
+                      <label for="bloodGroup">{{ 'COMMON.BLOOD_GROUP' | translate }}:</label>
+                      <p-dropdown [options]="genericService.bloodGroups" name="bloodGroup"
+                        [(ngModel)]="patient.bloodGroup" [style]="{'width':'190px'}"></p-dropdown>
+                    </div>
+                  </div>
                 </div>
+              </div>
             </div>
+            <div class="ui-grid-row">
+              <div class="ui-grid-col-4 ui-sm-12">
+                <div class="form-group">
+                  <label for="email">{{ 'COMMON.E_MAIL' | translate }}
+                  </label> <input type="text" pInputText class="form-control" id="email"
+                    [(ngModel)]="patient.user.email" name="email" #email="ngModel" email>
+                  <p-message *ngIf="f.submitted && email.errors && email.errors.email" severity="error"
+                    text="{{ 'COMMON.E_MAIL' | translate }} {{ 'VALIDATION.IS_INVALID' | translate }}"></p-message>
+                </div>
+              </div>
+              <div class="ui-grid-col-4 ui-sm-12">
+                <div class="form-group">
+                  <label for="birthDate">{{ 'COMMON.BIRTH_DATE' | translate }}<font color="red">*</font>:</label>
+                  <p-calendar [(ngModel)]="patient.user.birthDate" id="birthDate" monthNavigator="true"
+                    yearRange="1940:2050" yearNavigator="true" name="birthDate" #birthDate="ngModel" required date
+                    dateFormat={{globalEventsManager.CAL_DATE_FORMAT}}></p-calendar>
+                  <p-message *ngIf="f.submitted && birthDate.errors && birthDate.errors.required" severity="error"
+                    text="{{ 'COMMON.BIRTH_DATE' | translate }} {{ 'VALIDATION.IS_REQUIRED' | translate }}"></p-message>
+                  <p-message *ngIf="f.submitted && birthDate.errors && birthDate.errors.date" severity="error"
+                    text="{{ 'COMMON.BIRTH_DATE' | translate }} {{ 'VALIDATION.IS_INVALID' | translate }}"></p-message>
+                </div>
+              </div>
+              <div class="ui-grid-col-4 ui-sm-12">
+                <div class="form-group">
+                  <label for="nationality">{{ 'COMMON.CITIZENSHIP' | translate }}</label>
+                  <p-autoComplete [(ngModel)]="patient.nationality"
+                    (onDropdownClick)="countryDropdown.handleDropdownClick($event)"
+                    [suggestions]="countryDropdown.filteredCountries" [dropdown]="true" id="nationality"
+                    (completeMethod)="countryDropdown.filter($event)" name="nationality" field="name" [size]="30"
+                    placeholder="{{SELECT_OPTION}}" [minLength]="1"></p-autoComplete>
+                </div>
+              </div>
+            </div>
+            <div class="ui-grid-row">
+              <div class="ui-grid-col-6 ui-sm-12">
+                <div class="form-group">
+                  <label for="occupation">{{ 'COMMON.OCCUPATION' | translate }}</label>
+                  <p-autoComplete [(ngModel)]="patient.occupation"
+                    (onDropdownClick)="occupationDropdown.handleDropdownClick($event)"
+                    [suggestions]="occupationDropdown.filteredOccupations" [dropdown]="true" id="occupation"
+                    (completeMethod)="occupationDropdown.filter($event)" name="occupation" field="name" [size]="30"
+                    placeholder="{{SELECT_OPTION}}" [minLength]="1"></p-autoComplete>
+                </div>
+              </div>
+              <div class="ui-grid-col-6 ui-sm-12">
+                <div class="form-group">
+                  <label for="religion">{{ 'COMMON.RELIGION' | translate }}</label>
+                  <p-autoComplete [(ngModel)]="patient.religion"
+                    (onDropdownClick)="religionDropdown.handleDropdownClick($event)"
+                    [suggestions]="religionDropdown.filteredReligions" [dropdown]="true" id="religion"
+                    (completeMethod)="religionDropdown.filter($event)" name="religion" field="name" [size]="30"
+                    placeholder="{{SELECT_OPTION}}" [minLength]="1"></p-autoComplete>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="ui-grid-col-4 ui-sm-12">
+            <div class="ui-grid-row">
+              <div class="ui-grid-col-3 ui-sm-12"></div>
+              <div class="ui-grid-col-6 ui-sm-12">
+                <img class="thumb" src="assets/images/user/{{patient.user.picture}}" alt="" class="img-fluid"
+                  *ngIf="patient.user.picture !== '' && patient.user.picture !== 'null'" />
+                <img class="thumb" src="{{pictureUrl}}" alt="" class="img-fluid" *ngIf="pictureUrl !== undefined" />
+              </div>
+              <div class="ui-grid-col-3 ui-sm-12"></div>
+            </div>
+            <div class="ui-grid-row">
+              <div class="ui-grid-col-3 ui-sm-12"></div>
 
-		</div>
-	
-		<div class="ui-grid-row">
-			<div class="ui-grid-col-12 ui-sm-12">
-				<div class="form-group">
-					<label for="medicalHistory">{{ 'COMMON.MEDICAL_HISTORY' | translate }}</label>
-					<p-editor [(ngModel)]="patient.medicalHistory" name="medicalHistory"
-						[style]="{'height':'100px'}"></p-editor>
-				</div>
-			</div>
-		</div>
-		</p-accordionTab> <p-accordionTab header="{{ 'COMMON.CONTACT_INFO' | translate }}">
-		<div class="ui-grid-row">
-			
-			<div class="ui-grid-col-4 ui-sm-12">
-				<div class="form-group">
-					<label for="homePhone">{{ 'COMMON.HOME_PHONE' | translate }}<font color="red">*</font></label> 
-					<input type="text" pInputText class="form-control" id="homePhone"
-						[(ngModel)]="patient.user.homePhone" name="homePhone" #homePhone="ngModel" required>
-					<p-message *ngIf="f.submitted && homePhone.errors && homePhone.errors.required" severity="error" 
-							text="{{ 'COMMON.HOME_PHONE' | translate }} {{ 'VALIDATION.IS_REQUIRED' | translate }}"></p-message>
-				</div>
-			</div>
-			<div class="ui-grid-col-4 ui-sm-12">
-				<div class="form-group">
-					<label for="mobilePhone">{{ 'COMMON.MOBILE_PHONE' | translate }}</label> 
-					<input type="text" pInputText class="form-control" id="mobilePhone"
-						[(ngModel)]="patient.user.mobilePhone" name="mobilePhone" #mobilePhone="ngModel">
-				</div>
-			</div>
-			<div class="ui-grid-col-4 ui-sm-12">
-				<div class="form-group">
-					<label for="address">{{ 'COMMON.ADDRESS' | translate }}</label> <input
-						type="text" pInputText class="form-control" id="address"
-						[(ngModel)]="patient.user.address" name="address" #address="ngModel">
-				</div>
-			</div>
-		</div>
-		<div class="ui-grid-row">
-			<div class="ui-grid-col-4 ui-sm-12">
-				<div class="form-group">
-					<label for="city">{{ 'COMMON.CITY' | translate }}</label> <input type="text"
-						pInputText class="form-control" id="city"
-						[(ngModel)]="patient.user.city" name="city" #city="ngModel">
-				</div>
-			</div>
-			<div class="ui-grid-col-4 ui-sm-12">
-				<div class="form-group">
-					<label for="country">{{ 'COMMON.COUNTRY' | translate }}</label>
-					<p-autoComplete [(ngModel)]="patient.user.country"
-						(onDropdownClick)="countryDropdown.handleDropdownClick($event)"
-						[suggestions]="countryDropdown.filteredCountries" [dropdown]="true"
-						id="country" (completeMethod)="countryDropdown.filter($event)"
-						name="country" field="name" [size]="30" placeholder="{{COUNTRY}}"
-						[minLength]="1"></p-autoComplete>
-				</div>
-			</div>
-			<div class="ui-grid-col-4 ui-sm-12">
-				<div class="form-group">
-					<label for="zipCode">{{ 'COMMON.ZIP_CODE' | translate }}</label> 
-					<input type="text" pInputText class="form-control" id="zipCode"
-						[(ngModel)]="patient.user.zipCode" name="zipCode" #zipCode="ngModel">
-				</div>
-			</div>
-		</div>
-		<div class="ui-grid-row">
-			<div class="ui-grid-col-6 ui-sm-12">
-				<div class="form-group">
-					<label for="contact">{{ 'COMMON.EMERGENCY_CONTACT' | translate }}</label> 
-					<input type="text" pInputText class="form-control" id="contact"
-						[(ngModel)]="patient.contact" name="contact" #contact="ngModel">
-				</div>
-			</div>
-			<div class="ui-grid-col-6 ui-sm-12">
-				<div class="form-group">
-					<label for="contactPhone">{{ 'COMMON.CONTACT_PHONE' | translate }}</label> 
-					<input type="text" pInputText class="form-control" id="contactPhone" [(ngModel)]="patient.contactPhone"
-						name="contactPhone" #contactPhone="ngModel">
-				</div>
-			</div>
-	
-		</div>
-		</p-accordionTab> <p-accordionTab header="{{ 'COMMON.PAYER_INFO' | translate }}">
-		<div class="ui=grid-row">
-			<div class="ui-grid-col-3 ui-sm-12">
-				<div class="form-group">
-					<label for="payerType">{{ 'COMMON.PAYER_TYPE' | translate }}</label>
-					<p-autoComplete [(ngModel)]="patient.payerType"
-						(onDropdownClick)="payerTypeDropdown.handleDropdownClick($event)"
-						[suggestions]="payerTypeDropdown.filteredPayerTypes"
-						[dropdown]="true" id="payerType"
-						(completeMethod)="payerTypeDropdown.filter($event)" name="payerType"
-						field="name" [size]="30" placeholder="{{SELECT_OPTION}}"
-						[minLength]="1"></p-autoComplete>
-				</div>
-			</div>
-			<div class="ui-grid-col-3 ui-sm-12">
-				<div class="form-group">
-					<label for="accountNumber">{{ 'COMMON.ACCOUNT_NUMBER' | translate }}</label> <input
-						type="text" pInputText class="form-control" id="accountNumber" [(ngModel)]="patient.accountNumber"
-						 name="accountNumber" #accountNumber="ngModel">
-				</div>
-			</div>
-		</div>
-		<div class="ui-grid-row">
-			<div class="ui-grid-col-3 ui-sm-12">
-				<div class="form-group">
-					<label for="employer">{{ 'COMMON.EMPLOYER' | translate }}</label> <input
-						type="text" pInputText class="form-control" id="employer"
-						[(ngModel)]="patient.employer" name="employer" #employer="ngModel">
-				</div>
-			</div>
-			<div class="ui-grid-col-3 ui-sm-12">
-				<div class="form-group">
-					<label for="authorizationLetterNumber">{{ 'COMMON.AUTHORIZATION_LETTER_NUMBER' | translate }}</label>
-					<input type="text" pInputText class="form-control"
-						id="authorizationLetterNumber"
-						[(ngModel)]="patient.authorizationLetterNumber"
-						name="authorizationLetterNumber"
-						#authorizationLetterNumber="ngModel">
-				</div>
-			</div>
-			<div class="ui-grid-col-3 ui-sm-12">
-				<div class="form-group">
-					<label for="expiryDate">{{ 'COMMON.EXPIRY_DATE' | translate }}:</label>
-                    <p-calendar [(ngModel)]="patient.expiryDate" name="expiryDate" monthNavigator="true" 
-                                yearRange="1940:2050" yearNavigator="true"
-						dateFormat={{globalEventsManager.CAL_DATE_FORMAT}}></p-calendar> 
-				</div>
-			</div>
-			<div class="ui-grid-col-3 ui-sm-12">
-				<div class="form-group">
-					<label for="employeeId">{{ 'COMMON.EMPLOYEE_ID' | translate }}</label> <input
-						type="text" pInputText class="form-control" id="employeeId"
-						[(ngModel)]="patient.employeeId" name="employeeId"
-						#employeeId="ngModel">
-				</div>
-			</div>
-		</div>
-		<p-fieldset legend="{{ 'COMMON.INSURANCE' | translate }}">
-			<div class="ui-grid-row">
-				<div class="ui-grid-col-3 ui-sm-12">
-					<div class="form-group">
-						<label for="insurance">{{ 'COMMON.NAME' | translate }}</label>
-						<p-autoComplete [(ngModel)]="patient.insurance"
-							(onDropdownClick)="insuranceDropdown.handleDropdownClick($event)"
-							[suggestions]="insuranceDropdown.filteredInsurances"
-							[dropdown]="true" id="insurance"
-							(completeMethod)="insuranceDropdown.filter($event)"
-							name="insurance" field="name" [size]="30"
-							placeholder="{{SELECT_OPTION}}" [minLength]="1"></p-autoComplete>
-					</div>
-				</div>
-				<div class="ui-grid-col-3 ui-sm-12">
-					<div class="form-group">
-						<label for="policyNumber">{{ 'COMMON.POLICY_NUMBER' | translate }}</label> <input type="text" pInputText class="form-control"
-							id="policyNumber" [(ngModel)]="patient.policyNumber"
-							name="policyNumber" #policyNumber="ngModel">
-					</div>
-				</div>
-				<div class="ui-grid-col-3 ui-sm-12">
-					<div class="form-group">
-						<label for="insuranceExpiryDate">{{ 'COMMON.EXPIRY_DATE' | translate }}:</label>
-                        <p-calendar [(ngModel)]="patient.insuranceExpiryDate" name="insuranceExpiryDate" monthNavigator="true" 
-                                yearRange="1940:2050" yearNavigator="true"
-                            dateFormat={{globalEventsManager.CAL_DATE_FORMAT}}></p-calendar>
-					</div>
-				</div>
-			</div>
-		</p-fieldset>
-		<p-fieldset legend="{{ 'COMMON.RESPONSIBLE_PARTY' | translate }}">
-			<div class="ui-grid-row">
-				<div class="ui-grid-col-3 ui-sm-12">
-					<div class="form-group">
-						<br/>
-						<p-checkbox [(ngModel)]="patient.isSelfResponsible" binary="true"
-								 name="isSelfResponsible" #isSelfResponsible="ngModel"> </p-checkbox>&nbsp;
-						<label for="isSelfResponsible">{{ 'COMMON.IS_SELF_RESPONSIBLE' | translate }}?</label> 
-					</div>
-				</div>
-				<div class="ui-grid-col-3 ui-sm-12" *ngIf="!patient.isSelfResponsible">
-					<div class="form-group">
-						<label for="responsiblePartyLastName">{{ 'COMMON.LAST_NAME' | translate }}</label> 
-						<input type="text" pInputText class="form-control" id="responsiblePartyLastName" 
-						[(ngModel)]="patient.responsiblePartyLastName" name="responsiblePartyLastName" #responsiblePartyLastName="ngModel">
-					</div>
-				</div>
-				<div class="ui-grid-col-3 ui-sm-12" *ngIf="!patient.isSelfResponsible">
-					<div class="form-group">
-						<label for="responsiblePartyFirstName">{{ 'COMMON.FIRST_NAME' | translate }}</label> 
-						<input type="text" pInputText class="form-control" id="responsiblePartyFirstName" 
-						[(ngModel)]="patient.responsiblePartyFirstName" name="responsiblePartyFirstName" #responsiblePartyFirstName="ngModel">
-					</div>
-				</div>
-			</div>
-		</p-fieldset>
-		</p-accordionTab> </p-accordion>
-		<br />
-	
-	</div>
-	<br />
-    <p-messages [(value)]="messages"></p-messages>
-    <p-message *ngIf="!f.form.valid &&f.submitted" severity="error" 
-			text="{{ 'MESSAGE.FORM_HAS_ERRORS' | translate }}"></p-message> 
-	<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
-			<button type="button" pButton icon="fa fa-refresh" (click)="clear()" label="{{ 'COMMON.CLEAR' | translate }}"></button>&nbsp;&nbsp;
-			<button pButton icon="fa fa-save" label="{{ 'COMMON.SAVE' | translate }}" [disabled]="!f.form.valid"></button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			<button type="button" pButton icon="fa fa-remove" (click)="delete()" label="{{ 'COMMON.DELETE' | translate }}"></button> &nbsp;&nbsp;
-			<button type="button" pButton icon="fa fa-print" (click)="printIdCard()" label="{{ 'COMMON.PRINT_ID_CARD' | translate }}"></button>
-			<div>
-				<a *ngIf="reportName" target="_blank" href="assets/reports/{{reportName}}">{{ 'COMMON.DOWNLOAD_REPORT' | translate }} {{reportName}}</a>
-			</div>
-	</div>
+              <div class="ui-grid-col-6 ui-sm-12">
+                <button pButton type="button" icon="fa fa-delete" (click)="patient.user.picture = ''" label="Remove"
+                  *ngIf="patient.user.picture !== '' && patient.user.picture !== null"></button>
+                <button pButton type="button" icon="fa fa-delete" (click)="clearPictureFile()" label="{{ 'COMMON.REMOVE' | translate }}"
+                  *ngIf="pictureUrl !== undefined"></button>
+              </div>
+              <div class="ui-grid-col-3 ui-sm-12"></div>
+            </div>
+            <br />
+            <div class="ui-grid-row">
+              <div class="ui-grid-col-3 ui-sm-12"></div>
+
+              <div class="ui-grid-col-6 ui-sm-12">
+                <div class="form-group">
+                  <input type="file" (change)="readUrl($event)" [attr.multiple]="null" name="picture" #picture>
+                </div>
+              </div>
+              <div class="ui-grid-col-3 ui-sm-12"></div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-12 ui-sm-12">
+            <div class="form-group">
+              <label for="medicalHistory">{{ 'COMMON.MEDICAL_HISTORY' | translate }}</label>
+              <p-editor [(ngModel)]="patient.medicalHistory" name="medicalHistory" [style]="{'height':'100px'}">
+              </p-editor>
+            </div>
+          </div>
+        </div>
+      </p-accordionTab>
+      <p-accordionTab header="{{ 'COMMON.CONTACT_INFO' | translate }}">
+        <div class="ui-grid-row">
+
+          <div class="ui-grid-col-4 ui-sm-12">
+            <div class="form-group">
+              <label for="homePhone">{{ 'COMMON.HOME_PHONE' | translate }}<font color="red">*</font></label>
+              <input type="text" pInputText class="form-control" id="homePhone" [(ngModel)]="patient.user.homePhone"
+                name="homePhone" #homePhone="ngModel" required>
+              <p-message *ngIf="f.submitted && homePhone.errors && homePhone.errors.required" severity="error"
+                text="{{ 'COMMON.HOME_PHONE' | translate }} {{ 'VALIDATION.IS_REQUIRED' | translate }}"></p-message>
+            </div>
+          </div>
+          <div class="ui-grid-col-4 ui-sm-12">
+            <div class="form-group">
+              <label for="mobilePhone">{{ 'COMMON.MOBILE_PHONE' | translate }}</label>
+              <input type="text" pInputText class="form-control" id="mobilePhone" [(ngModel)]="patient.user.mobilePhone"
+                name="mobilePhone" #mobilePhone="ngModel">
+            </div>
+          </div>
+          <div class="ui-grid-col-4 ui-sm-12">
+            <div class="form-group">
+              <label for="address">{{ 'COMMON.ADDRESS' | translate }}</label> <input type="text" pInputText
+                class="form-control" id="address" [(ngModel)]="patient.user.address" name="address" #address="ngModel">
+            </div>
+          </div>
+        </div>
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-4 ui-sm-12">
+            <div class="form-group">
+              <label for="city">{{ 'COMMON.CITY' | translate }}</label> <input type="text" pInputText
+                class="form-control" id="city" [(ngModel)]="patient.user.city" name="city" #city="ngModel">
+            </div>
+          </div>
+          <div class="ui-grid-col-4 ui-sm-12">
+            <div class="form-group">
+              <label for="country">{{ 'COMMON.COUNTRY' | translate }}</label>
+              <p-autoComplete [(ngModel)]="patient.user.country"
+                (onDropdownClick)="countryDropdown.handleDropdownClick($event)"
+                [suggestions]="countryDropdown.filteredCountries" [dropdown]="true" id="country"
+                (completeMethod)="countryDropdown.filter($event)" name="country" field="name" [size]="30"
+                placeholder="{{COUNTRY}}" [minLength]="1"></p-autoComplete>
+            </div>
+          </div>
+          <div class="ui-grid-col-4 ui-sm-12">
+            <div class="form-group">
+              <label for="zipCode">{{ 'COMMON.ZIP_CODE' | translate }}</label>
+              <input type="text" pInputText class="form-control" id="zipCode" [(ngModel)]="patient.user.zipCode"
+                name="zipCode" #zipCode="ngModel">
+            </div>
+          </div>
+        </div>
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-6 ui-sm-12">
+            <div class="form-group">
+              <label for="contact">{{ 'COMMON.EMERGENCY_CONTACT' | translate }}</label>
+              <input type="text" pInputText class="form-control" id="contact" [(ngModel)]="patient.contact"
+                name="contact" #contact="ngModel">
+            </div>
+          </div>
+          <div class="ui-grid-col-6 ui-sm-12">
+            <div class="form-group">
+              <label for="contactPhone">{{ 'COMMON.CONTACT_PHONE' | translate }}</label>
+              <input type="text" pInputText class="form-control" id="contactPhone" [(ngModel)]="patient.contactPhone"
+                name="contactPhone" #contactPhone="ngModel">
+            </div>
+          </div>
+
+        </div>
+      </p-accordionTab>
+      <p-accordionTab header="{{ 'COMMON.PAYER_INFO' | translate }}">
+        <div class="ui=grid-row">
+          <div class="ui-grid-col-3 ui-sm-12">
+            <div class="form-group">
+              <label for="payerType">{{ 'COMMON.PAYER_TYPE' | translate }}</label>
+              <p-autoComplete [(ngModel)]="patient.payerType"
+                (onDropdownClick)="payerTypeDropdown.handleDropdownClick($event)"
+                [suggestions]="payerTypeDropdown.filteredPayerTypes" [dropdown]="true" id="payerType"
+                (completeMethod)="payerTypeDropdown.filter($event)" name="payerType" field="name" [size]="30"
+                placeholder="{{SELECT_OPTION}}" [minLength]="1"></p-autoComplete>
+            </div>
+          </div>
+          <div class="ui-grid-col-3 ui-sm-12">
+            <div class="form-group">
+              <label for="accountNumber">{{ 'COMMON.ACCOUNT_NUMBER' | translate }}</label> <input type="text" pInputText
+                class="form-control" id="accountNumber" [(ngModel)]="patient.accountNumber" name="accountNumber"
+                #accountNumber="ngModel">
+            </div>
+          </div>
+        </div>
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-3 ui-sm-12">
+            <div class="form-group">
+              <label for="employer">{{ 'COMMON.EMPLOYER' | translate }}</label> <input type="text" pInputText
+                class="form-control" id="employer" [(ngModel)]="patient.employer" name="employer" #employer="ngModel">
+            </div>
+          </div>
+          <div class="ui-grid-col-3 ui-sm-12">
+            <div class="form-group">
+              <label for="authorizationLetterNumber">{{ 'COMMON.AUTHORIZATION_LETTER_NUMBER' | translate }}</label>
+              <input type="text" pInputText class="form-control" id="authorizationLetterNumber"
+                [(ngModel)]="patient.authorizationLetterNumber" name="authorizationLetterNumber"
+                #authorizationLetterNumber="ngModel">
+            </div>
+          </div>
+          <div class="ui-grid-col-3 ui-sm-12">
+            <div class="form-group">
+              <label for="expiryDate">{{ 'COMMON.EXPIRY_DATE' | translate }}:</label>
+              <p-calendar [(ngModel)]="patient.expiryDate" name="expiryDate" monthNavigator="true" yearRange="1940:2050"
+                yearNavigator="true" dateFormat={{globalEventsManager.CAL_DATE_FORMAT}}></p-calendar>
+            </div>
+          </div>
+          <div class="ui-grid-col-3 ui-sm-12">
+            <div class="form-group">
+              <label for="employeeId">{{ 'COMMON.EMPLOYEE_ID' | translate }}</label> <input type="text" pInputText
+                class="form-control" id="employeeId" [(ngModel)]="patient.employeeId" name="employeeId"
+                #employeeId="ngModel">
+            </div>
+          </div>
+        </div>
+        <p-fieldset legend="{{ 'COMMON.INSURANCE' | translate }}">
+          <div class="ui-grid-row">
+            <div class="ui-grid-col-3 ui-sm-12">
+              <div class="form-group">
+                <label for="insurance">{{ 'COMMON.NAME' | translate }}</label>
+                <p-autoComplete [(ngModel)]="patient.insurance"
+                  (onDropdownClick)="insuranceDropdown.handleDropdownClick($event)"
+                  [suggestions]="insuranceDropdown.filteredInsurances" [dropdown]="true" id="insurance"
+                  (completeMethod)="insuranceDropdown.filter($event)" name="insurance" field="name" [size]="30"
+                  placeholder="{{SELECT_OPTION}}" [minLength]="1"></p-autoComplete>
+              </div>
+            </div>
+            <div class="ui-grid-col-3 ui-sm-12">
+              <div class="form-group">
+                <label for="policyNumber">{{ 'COMMON.POLICY_NUMBER' | translate }}</label> <input type="text" pInputText
+                  class="form-control" id="policyNumber" [(ngModel)]="patient.policyNumber" name="policyNumber"
+                  #policyNumber="ngModel">
+              </div>
+            </div>
+            <div class="ui-grid-col-3 ui-sm-12">
+              <div class="form-group">
+                <label for="insuranceExpiryDate">{{ 'COMMON.EXPIRY_DATE' | translate }}:</label>
+                <p-calendar [(ngModel)]="patient.insuranceExpiryDate" name="insuranceExpiryDate" monthNavigator="true"
+                  yearRange="1940:2050" yearNavigator="true" dateFormat={{globalEventsManager.CAL_DATE_FORMAT}}>
+                </p-calendar>
+              </div>
+            </div>
+          </div>
+        </p-fieldset>
+        <p-fieldset legend="{{ 'COMMON.RESPONSIBLE_PARTY' | translate }}">
+          <div class="ui-grid-row">
+            <div class="ui-grid-col-3 ui-sm-12">
+              <div class="form-group">
+                <br />
+                <p-checkbox [(ngModel)]="patient.isSelfResponsible" binary="true" name="isSelfResponsible"
+                  #isSelfResponsible="ngModel"> </p-checkbox>&nbsp;
+                <label for="isSelfResponsible">{{ 'COMMON.IS_SELF_RESPONSIBLE' | translate }}?</label>
+              </div>
+            </div>
+            <div class="ui-grid-col-3 ui-sm-12" *ngIf="!patient.isSelfResponsible">
+              <div class="form-group">
+                <label for="responsiblePartyLastName">{{ 'COMMON.LAST_NAME' | translate }}</label>
+                <input type="text" pInputText class="form-control" id="responsiblePartyLastName"
+                  [(ngModel)]="patient.responsiblePartyLastName" name="responsiblePartyLastName"
+                  #responsiblePartyLastName="ngModel">
+              </div>
+            </div>
+            <div class="ui-grid-col-3 ui-sm-12" *ngIf="!patient.isSelfResponsible">
+              <div class="form-group">
+                <label for="responsiblePartyFirstName">{{ 'COMMON.FIRST_NAME' | translate }}</label>
+                <input type="text" pInputText class="form-control" id="responsiblePartyFirstName"
+                  [(ngModel)]="patient.responsiblePartyFirstName" name="responsiblePartyFirstName"
+                  #responsiblePartyFirstName="ngModel">
+              </div>
+            </div>
+          </div>
+        </p-fieldset>
+      </p-accordionTab>
+    </p-accordion>
+    <br />
+
+  </div>
+  <br />
+  <p-messages [(value)]="messages"></p-messages>
+  <p-message *ngIf="!f.form.valid &&f.submitted" severity="error" text="{{ 'MESSAGE.FORM_HAS_ERRORS' | translate }}">
+  </p-message>
+  <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+    <button type="button" pButton icon="fa fa-refresh" (click)="clear()"
+      label="{{ 'COMMON.CLEAR' | translate }}"></button>&nbsp;&nbsp;
+    <button pButton icon="fa fa-save" label="{{ 'COMMON.SAVE' | translate }}" [disabled]="!f.form.valid"></button>
+    &nbsp;&nbsp;
+    <button type="button" pButton icon="fa fa-print" (click)="printIdCard()"
+      label="{{ 'COMMON.PRINT_ID_CARD' | translate }}"></button>
+    <div>
+      <a *ngIf="reportName" target="_blank"
+        href="assets/reports/{{reportName}}">{{ 'COMMON.DOWNLOAD_REPORT' | translate }} {{reportName}}</a>
+    </div>
+  </div>
 </form>
-

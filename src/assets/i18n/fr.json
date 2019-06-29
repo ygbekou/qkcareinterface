@@ -318,7 +318,8 @@
 	"REFERENCES": "Références",
 	"SHORTCUTS":"Raccourcis",
 	"DASHBOARD": "Dashboard",
-	"SCHEDULE": "Calendrier"
+	"SCHEDULE": "Calendrier",
+	"INBOX": "Boite de reception"
   },
   "MESSAGE": {
     "TRANFER_DOCTOR_FAILED": "Le nouveau docteur assigné doit être différent de l'ancien.",

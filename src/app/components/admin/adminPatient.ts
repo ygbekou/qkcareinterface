@@ -34,6 +34,7 @@ export class AdminPatient implements OnInit {
 	}
 
 	ngOnInit() {
+		console.log("AdminPatient Inited: appointmentId=" + this.globalEventsManager.selectedAppointmentId);
 		this.globalEventsManager.currentPatientId.subscribe(patientId => this.patient.id = patientId)
 		if (this.currentUser == null) {
 			this.currentUser = new User();
@@ -50,7 +51,7 @@ export class AdminPatient implements OnInit {
 		if (evt.index == 0) {
 			this.activeTab = 0
 		} else if (evt.index == 1) {
-			this.activeTab = 1
+			this.activeTab = 1;
 		}
 	}
 }
