@@ -2,24 +2,26 @@ import { Component, ViewChild, AfterViewInit, Output, EventEmitter } from '@angu
 import { AppComponent } from './app.component';
 import { ScrollPanel } from 'primeng/primeng';
 import { Router, NavigationExtras } from '@angular/router';
-import { TokenStorage, GenericService, AppointmentService, GlobalEventsManager } from './services';
+import { TokenStorage, GenericService, AppointmentService, GlobalEventsManager, VisitService } from './services';
 import { ContactUsMessage } from './models/website';
-import { SearchCriteria } from './models';
+import { SearchCriteria, Visit } from './models';
 import { ScheduleEvent } from './models/scheduleEvent';
 @Component({
 	selector: 'app-rightpanel',
 	templateUrl: './app.rightpanel.component.html',
-	providers: [GenericService, AppointmentService]
+	providers: [GenericService, AppointmentService, VisitService]
 })
 export class AppRightPanelComponent implements AfterViewInit {
 
 	@ViewChild('scrollRightPanel') rightPanelMenuScrollerViewChild: ScrollPanel;
 	public activeTab = 0;
 	events: ScheduleEvent[];
+	visits: Visit[];
 	contactUsMessages: ContactUsMessage[] = [];
-	searchCriteria: SearchCriteria = new SearchCriteria(); 
+	searchCriteria: SearchCriteria = new SearchCriteria();
 	constructor(public app: AppComponent,
 		private genericService: GenericService,
+		private visitService: VisitService,
 		private appointmentService: AppointmentService,
 		public globalEventsManager: GlobalEventsManager,
 		public tokenStorage: TokenStorage,
@@ -48,6 +50,7 @@ export class AppRightPanelComponent implements AfterViewInit {
 				this.activeTab = 0;
 			} else if (evt.index === 1) {
 				this.activeTab = 1;
+				this.getWaitList(10);
 			} else {
 				this.activeTab = 2;
 				this.getTopN(5);
@@ -95,7 +98,50 @@ export class AppRightPanelComponent implements AfterViewInit {
 
 	setPatientId(patientId: number, appointmentId: number) {
 		this.globalEventsManager.changePatientId(patientId);
-		this.globalEventsManager.changeAppointmentId(patientId); 
+		this.globalEventsManager.changeAppointmentId(appointmentId);
 	}
- 
+
+	getWaitList(topN: number) {
+		console.log("getting top " + topN + " Visits");
+		this.visits = [];
+		this.visitService.getWaitList(topN)
+			.subscribe(result => {
+				if (result.length > 0) {
+					this.visits = result;
+					console.log(this.visits);
+				}
+			});
+	}
+
+	cancelVisit(id: number) {
+		this.visitService.cancelVisit(id)
+			.subscribe(result => {
+				if (result) {
+					this.removeVisitFromTable(id);
+				}
+			});
+	}
+
+	endVisit(id: number) {
+		this.visitService.endVisit(id)
+			.subscribe(result => {
+				if (result) {
+					this.removeVisitFromTable(id);
+				}
+			});
+	}
+
+	removeVisitFromTable(id: number) {
+		let found = false;
+		for (const aSec of this.visits) {
+			if (aSec.id === id) {
+				this.visits.splice(this.visits.indexOf(aSec), 1);
+				found = true;
+				break;
+			}
+		}
+		var onTheFly: Visit[] = [];
+		onTheFly.push(...this.visits);
+		this.visits = onTheFly;
+	}
 }

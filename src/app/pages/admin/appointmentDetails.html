@@ -1,32 +1,87 @@
-
 <div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="appointment">
-	<div class="ui-grid-row">
-		<div class="ui-grid-col-4">
-			<label i18n="@@appointmentDate" for="appointmentDate">Date:</label> 
-			<label>{{appointment.appointmentDate | date:'MM/dd/yyyy'}}</label> 
-		</div>
-		<div class="ui-grid-col-4">
-			<label i18n="@@beginTime" for="beginTime">Start Time</label> 
-			<label>{{appointment.beginTime}}</label> 
-		</div>
-		<div class="ui-grid-col-4">
-			<label i18n="@@endTime" for="endTime">End Time</label> 
-			<label>{{appointment.endTime}}</label> 
-		</div>
-	</div>
-	<div class="ui-grid-row">
-		<div class="ui-grid-col-4">
-			<label i18n="@@doctor" for="doctor">Doctor:</label> 
-			<label>{{appointment.doctor.name}}</label> 
-		</div>
-		<div class="ui-grid-col-4">
-			<label i18n="@@department" for="department">Department:</label> 
-			<label>{{appointment.department.name}}</label>
-		</div>
-		<div class="ui-grid-col-4"> 
-			<label i18n="@@problem" for="problem">Problem:</label> 
-			<textarea pInputTextarea id="problem" rows="4" cols="40" pInputTextarea maxlength="1000" 
-					[(ngModel)]="appointment.problem" #problem="ngModel"> </textarea>
-		</div>
-	</div>
+  <div class="ui-grid-row">
+    <div class="ui-grid-col-4 ui-sm-12">
+      <div class="form-group">
+        <label for="doctor">Date<font color="red">*</font></label>
+        <p-calendar [(ngModel)]="appointment.appointmentDate" id="appointmentDate" monthNavigator="true"
+          yearRange="1940:2050" yearNavigator="true" name="appointmentDate" #appointmentDate="ngModel" required date
+          dateFormat={{globalEventsManager.CAL_DATE_FORMAT}}></p-calendar>
+      </div>
+
+      <div class="ui-grid-row">
+        <div class="ui-grid-col-6 ui-sm-12">
+          <div class="form-group">
+            <label for="doctor">{{ 'COMMON.START_TIME' | translate }}<font color="red">*</font></label> 
+			<p-calendar id="beginTime" [stepMinute]="5" dataType="string" [(ngModel)]="appointment.beginTime" [timeOnly]="true"></p-calendar>
+          </div>
+        </div>
+        <div class="ui-grid-col-6 ui-sm-12">
+          <div class="form-group">
+            <label for="doctor">{{ 'COMMON.END_TIME' | translate }}<font color="red">*</font></label> 
+			<p-calendar id="endTime" [stepMinute]="5" dataType="string"  [(ngModel)]="appointment.endTime" [timeOnly]="true"></p-calendar>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="ui-grid-col-4 ui-sm-12">
+      <div class="ui-grid-row">
+        <div class="ui-grid-col-6 ui-sm-12">
+          <div class="form-group">
+            <label for="department">{{ 'COMMON.DEPARTMENT' | translate }}</label>
+            <p-autoComplete [(ngModel)]="appointment.department"
+              (onDropdownClick)="departmentDropdown.handleDropdownClick($event)"
+              [suggestions]="departmentDropdown.filteredDepartments" [dropdown]="true" id="department"
+              (completeMethod)="departmentDropdown.filter($event)" name="department" field="name" [size]="30"
+              placeholder="" [minLength]="1"></p-autoComplete>
+          </div>
+        </div>
+        <div class="ui-grid-col-6 ui-sm-12">
+          <div class="form-group">
+            <label for="location">{{ 'COMMON.LOCATION' | translate }}</label>
+            <p-autoComplete [(ngModel)]="appointment.hospitalLocation"
+              (onDropdownClick)="hospitalLocationDropdown.handleDropdownClick($event)"
+              [suggestions]="hospitalLocationDropdown.filteredLocations" [dropdown]="true" id="location"
+              (completeMethod)="hospitalLocationDropdown.filter($event)" name="location" field="name" [size]="30"
+              placeholder="" [minLength]="1"></p-autoComplete>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="doctor">{{ 'COMMON.DOCTOR' | translate }}<font color="red">*</font></label>
+        <p-autoComplete [(ngModel)]="appointment.doctor"
+          (onSelect)="appointment.department = appointment.doctor.department"
+          (onDropdownClick)="doctorDropdown.handleDropdownClick($event)" [suggestions]="doctorDropdown.filteredDoctors"
+          [dropdown]="true" id="doctor" (completeMethod)="doctorDropdown.filter($event)" name="doctor" field="name"
+          [size]="30" placeholder="" [minLength]="1"></p-autoComplete>
+      </div>
+    </div>
+    <div class="ui-grid-col-1 ui-sm-1"></div>
+    <div class="ui-grid-col-3 ui-sm-12">
+      <label i18n="@@problem" for="problem">{{ 'COMMON.PROBLEM' | translate }}</label>
+      <textarea pInputTextarea id="problem" rows="4" cols="40" pInputTextarea maxlength="1000"
+        [(ngModel)]="appointment.problem" #problem="ngModel"> </textarea>
+    </div>
+  </div>
+  <p-messages [(value)]="messages"></p-messages>
+  <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+    <div class="ui-grid-row">
+      <div class="ui-grid-col-2 ui-sm-12"> <button type="button" pButton icon="fa fa-refresh" (click)="clear()"
+          label="{{ 'COMMON.CLEAR' | translate }}"></button></div>
+      <div class="ui-grid-col-1 ui-sm-12"></div>
+      <div class="ui-grid-col-2 ui-sm-12"> <button pButton icon="fa fa-save" label="{{ 'COMMON.SAVE' | translate }}"
+          (click)="save()"></button>
+      </div>
+      <div class="ui-grid-col-1 ui-sm-12"></div>
+      <div class="ui-grid-col-2 ui-sm-12"><button pButton icon="fa fa-check" label="{{ 'COMMON.CONFIRM' | translate }}"
+          (click)="confirm()"></button>
+      </div>
+      <div class="ui-grid-col-1 ui-sm-12"></div>
+      <div class="ui-grid-col-2 ui-sm-12"><button pButton icon="fa fa-close" label="{{ 'COMMON.CANCEL' | translate }}"
+          (click)="cancel()"></button>
+      </div>
+    </div>
+
+  </div>
 </div>
