@@ -322,7 +322,8 @@
 	"DASHBOARD": "Dashboard",
 	"SCHEDULE": "Calendrier",
 	"INBOX": "Boite de reception",
-	"END":"Terminer"
+	"END":"Terminer",
+	"PATIENT":"Patient"
   },
   "MESSAGE": {
     "TRANFER_DOCTOR_FAILED": "Le nouveau docteur assigné doit être différent de l'ancien.",

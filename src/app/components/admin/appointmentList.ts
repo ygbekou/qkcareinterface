@@ -8,6 +8,7 @@ import { DataTableModule, DialogModule, InputTextareaModule, CheckboxModule, Mes
 import { User } from '../../models/user';
 import { GenericService, GlobalEventsManager } from '../../services';
 import { Patient } from 'src/app/models';
+import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
 
 @Component({
 	selector: 'app-appointment-list',
@@ -32,6 +33,7 @@ export class AppointmentList implements OnInit, OnDestroy {
 			private genericService: GenericService,
 			private changeDetectorRef: ChangeDetectorRef,
 			private route: ActivatedRoute,
+			private translate: TranslateService,
 			public globalEventsManager: GlobalEventsManager,
 			private router: Router,
 	) {
@@ -68,9 +70,21 @@ export class AppointmentList implements OnInit, OnDestroy {
 						error => console.log(error),
 						() => console.log('Get all Appointment complete'));
 			});
+
+		this.updateCols();
+		this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
+			this.updateCols();
+		});
 	}
 
-
+	updateCols() {
+		for (var index in this.cols) {
+			let col = this.cols[index];
+			this.translate.get(col.headerKey).subscribe((res: string) => {
+				col.header = res;
+			});
+		}
+	}
 	ngOnDestroy() {
 		this.appointments = null;
 	}
@@ -97,7 +111,7 @@ export class AppointmentList implements OnInit, OnDestroy {
 			if (aSec.id === apt.id) {
 				this.appointments[this.appointments.indexOf(aSec)] = apt;
 				found = true;
-				console.log ('found. id='+aSec.id);
+				console.log('found. id=' + aSec.id);
 				break;
 			}
 		}

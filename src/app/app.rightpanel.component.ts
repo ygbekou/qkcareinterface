@@ -50,7 +50,7 @@ export class AppRightPanelComponent implements AfterViewInit {
 				this.activeTab = 0;
 			} else if (evt.index === 1) {
 				this.activeTab = 1;
-				this.getWaitList(10);
+				this.getWaitList(5);
 			} else {
 				this.activeTab = 2;
 				this.getTopN(5);

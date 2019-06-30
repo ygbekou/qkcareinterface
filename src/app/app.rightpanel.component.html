@@ -84,8 +84,8 @@
                 </span>
                 <span class="message-text">
                   <a [routerLink]="['/admin/visitDetails']" [queryParams]="{visitId:visit.id}">
-                    {{'COMMON.ARRIVAL_TIME' | translate }} :
-                    {{visit.visitDatetime|date:'hh:mm'}}
+                    {{'COMMON.ARRIVAL_TIME' | translate }} : {{visit.visitDatetime|date:'hh:mm'}}
+                    <br />{{'COMMON.APPOINTMENT' | translate }} : {{visit.appointment?visit.appointment.beginTime:'-'}}
                   </a>
                 </span>
                 <div class="ui-grid-row">

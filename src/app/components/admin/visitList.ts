@@ -33,7 +33,7 @@ export class VisitList implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.cols = [
-            { field: 'id', header: 'Visit ID', headerKey: 'COMMON.VISIT_ID' },
+			{ field: 'id', header: 'Visit ID', headerKey: 'COMMON.VISIT_ID' },
             { field: 'visitDatetime', header: 'Date', headerKey: 'COMMON.VISIT_DATETIME', type:'date' },
             { field: 'patientId', header: 'Patient ID', headerKey: 'COMMON.PATIENT_ID' },
             { field: 'patientName', header: 'Patient Name', headerKey: 'COMMON.PATIENT_NAME' },
