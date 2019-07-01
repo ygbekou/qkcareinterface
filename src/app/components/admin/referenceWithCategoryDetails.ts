@@ -1,14 +1,8 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Constants } from '../../app.constants';
-import { Product } from '../../models/product';
-import { Reference } from '../../models/reference';
 import { ReferenceWithCategory } from '../../models/referenceWithCategory';
-import { FileUploader } from './fileUploader';
-import { EditorModule } from 'primeng/editor';
 import { CategoryDropdown } from '../dropdowns';
-import { Cookie } from 'ng2-cookies/ng2-cookies';
-import { DataTableModule, DialogModule, InputTextareaModule, CheckboxModule, MultiSelectModule, CalendarModule } from 'primeng/primeng';
 import { GenericService, GlobalEventsManager } from '../../services';
 
 @Component({
@@ -17,20 +11,20 @@ import { GenericService, GlobalEventsManager } from '../../services';
   providers: [GenericService]
 })
 export class ReferenceWithCategoryDetails implements OnInit, OnDestroy {
-  
+
   public error: String = '';
   displayDialog: boolean;
   referenceWithCategory: ReferenceWithCategory = new ReferenceWithCategory();
   referenceWithCategoryType: string;
-  
+
   DETAIL: string = Constants.DETAIL;
   ADD_IMAGE: string = Constants.ADD_IMAGE;
-  ADD_LABEL: string = Constants.ADD_LABEL;  
+  ADD_LABEL: string = Constants.ADD_LABEL;
   DEPARTMENT: string = Constants.DEPARTMENT;
   COUNTRY: string = Constants.COUNTRY;
   ROLE: string = Constants.ROLE;
   SELECT_OPTION: string = Constants.SELECT_OPTION;
-  
+
   constructor
     (
       private genericService: GenericService,
@@ -40,7 +34,7 @@ export class ReferenceWithCategoryDetails implements OnInit, OnDestroy {
       private route: ActivatedRoute,
       private router: Router
     ) {
-   
+
   }
 
   ngOnInit(): void {
@@ -49,28 +43,27 @@ export class ReferenceWithCategoryDetails implements OnInit, OnDestroy {
     let referenceWithCategoryType = null;
     this.route
         .queryParams
-        .subscribe(params => {          
+        .subscribe(params => {
           referenceWithCategoryId = params['referenceWithCategoryId'];
           referenceWithCategoryType = params['referenceWithCategoryType'];
-          
+
           if (referenceWithCategoryId != null) {
               this.genericService.getOne(referenceWithCategoryId, referenceWithCategoryType)
                   .subscribe(result => {
                 if (result.id > 0) {
-                  this.referenceWithCategory = result
-                }
-                else {
+                  this.referenceWithCategory = result;
+                } else {
                   this.error = Constants.SAVE_UNSUCCESSFUL;
                   this.displayDialog = true;
                 }
-              })
+              });
           } else {
-              
+
           }
         });
-    
+
   }
-  
+
   ngOnDestroy() {
     this.referenceWithCategory = null;
   }
@@ -81,15 +74,13 @@ export class ReferenceWithCategoryDetails implements OnInit, OnDestroy {
       this.genericService.save(this.referenceWithCategory, this.globalEventsManager.selectedReferenceWithCategoryType)
         .subscribe(result => {
           if (result.id > 0) {
-            this.referenceWithCategory = result
-          }
-          else {
+            this.referenceWithCategory = result;
+          } else {
             this.error = Constants.SAVE_UNSUCCESSFUL;
             this.displayDialog = true;
           }
-        })
-    }
-    catch (e) {
+        });
+    } catch (e) {
       console.log(e);
     }
   }
@@ -98,17 +89,16 @@ export class ReferenceWithCategoryDetails implements OnInit, OnDestroy {
     this.genericService.getOne(referenceWithCategoryId, referenceWithCategoryType)
         .subscribe(result => {
       if (result.id > 0) {
-        this.referenceWithCategory = result
-      }
-      else {
+        this.referenceWithCategory = result;
+      } else {
         this.error = Constants.SAVE_UNSUCCESSFUL;
         this.displayDialog = true;
       }
-    })
+    });
   }
-  
+
   delete() {
-    
+
   }
-  
+
  }

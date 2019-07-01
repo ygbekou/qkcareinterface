@@ -1,15 +1,15 @@
-import { EventEmitter, Injectable } from "@angular/core";
+import { EventEmitter, Injectable } from '@angular/core';
 import { TokenStorage } from './token.storage';
 import { BehaviorSubject } from 'rxjs';
-import { TranslateService, LangChangeEvent } from "@ngx-translate/core";
-import { Cookie } from "ng2-cookies/ng2-cookies";
+import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
+import { Cookie } from 'ng2-cookies/ng2-cookies';
 
 @Injectable()
 export class GlobalEventsManager {
 	public showNavBar: EventEmitter<Boolean> = new EventEmitter<Boolean>();
 	public showMenu: Boolean = false;
 
-	private moduleNameSource = new BehaviorSubject<string>("");
+	private moduleNameSource = new BehaviorSubject<string>('');
 	private patientIdSource = new BehaviorSubject<number>(0);
 	currentModuleName = this.moduleNameSource.asObservable();
 	currentPatientId = this.patientIdSource.asObservable();
@@ -21,6 +21,7 @@ export class GlobalEventsManager {
 	selectedAdmissionId: number;
 
 	public DATE_FORMAT = 'MM/dd/yyyy';
+	public DATE_TIME_FORMAT = 'MM/dd/yyyy HH:mm:ss';
 	public CAL_DATE_FORMAT = 'mm/dd/yy';
 	public LOCALE = 'en-US';
 

@@ -166,6 +166,14 @@
 			    	<div *ngIf="activeTab == 20" class="ui-grid-row">
 				        <app-hospital-details></app-hospital-details>
 				    </div>
+				</p-tabPanel>
+				<p-tabPanel header="Vital Sign Config">
+			    	<div *ngIf="activeTab == 21" class="ui-grid-row">
+				        <app-referenceWithCategory-details></app-referenceWithCategory-details>
+				        <br/> 
+				        <br/>
+				        <app-referenceWithCategory-list (referenceWithCategoryIdEvent)="onReferenceWithCategorySelected($event, 'VitalSign')"></app-referenceWithCategory-list>
+				    </div>
 			    </p-tabPanel>
 			</p-tabView>
 		</div>

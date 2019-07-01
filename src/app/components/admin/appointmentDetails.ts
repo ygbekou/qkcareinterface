@@ -1,14 +1,9 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild, ElementRef, Input } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Constants } from '../../app.constants';
 import { Appointment } from '../../models/appointment';
 import { Patient } from '../../models/patient';
-import { EditorModule } from 'primeng/editor';
-import { CountryDropdown, ReligionDropdown, OccupationDropdown } from '../dropdowns';
-import { Cookie } from 'ng2-cookies/ng2-cookies';
-import { DataTableModule, DialogModule, InputTextareaModule, CheckboxModule } from 'primeng/primeng';
-import { User } from '../../models/user';
-import { GenericService, UserService, GlobalEventsManager } from '../../services';
+import { GenericService, GlobalEventsManager } from '../../services';
 
 @Component({
 	selector: 'app-appointment-details',
@@ -34,11 +29,8 @@ export class AppointmentDetails implements OnInit, OnDestroy {
 	constructor
 		(
 			private genericService: GenericService,
-			private userService: UserService,
-			private changeDetectorRef: ChangeDetectorRef,
 			private globalEventsManager: GlobalEventsManager,
 			private route: ActivatedRoute,
-			private router: Router
 		) {
 
 	}

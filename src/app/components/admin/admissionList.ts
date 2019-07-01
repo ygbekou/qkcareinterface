@@ -1,17 +1,16 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { SearchCriteria } from '../../models';
 import { Admission } from '../../models/admission';
-import { GenericService } from '../../services';
+import { GenericService, GlobalEventsManager } from '../../services';
 import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
 
 @Component({
-  // tslint:disable-next-line:component-selector
   selector: 'app-patientAdmission-list',
   templateUrl: '../../pages/admin/admissionList.html',
   providers: [GenericService]
 })
-// tslint:disable-next-line:component-class-suffix
+
 export class AdmissionList implements OnInit, OnDestroy {
 
   admissions: Admission[] = [];
@@ -21,8 +20,8 @@ export class AdmissionList implements OnInit, OnDestroy {
   constructor
     (
     private genericService: GenericService,
-    private translate: TranslateService,
-    private changeDetectorRef: ChangeDetectorRef,
+	private translate: TranslateService,
+	public globalEventsManager: GlobalEventsManager,
     private route: ActivatedRoute,
     private router: Router,
     ) {
@@ -31,14 +30,8 @@ export class AdmissionList implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.cols = [
-            { field: 'admissionNumber', header: 'Admission No', headerKey: 'COMMON.ADMISSION_NUMBER' },
-            { field: 'admissionDatetime', header: 'Date/Time', headerKey: 'COMMON.ADMISSION_DATETIME', type: 'date' },
-            { field: 'patientId', header: 'Patient ID', headerKey: 'COMMON.PATIENT_ID' },
-            { field: 'patientName', header: 'Patient Name', headerKey: 'COMMON.PATIENT_NAME' },
-            { field: 'status', header: 'Status', headerKey: 'COMMON.STATUS', type: 'string' }
-        ];
-
+	this.generateCols();
+    
     this.updateCols();
     this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
         this.updateCols();
@@ -75,6 +68,21 @@ export class AdmissionList implements OnInit, OnDestroy {
         col.header = res;
       });
     }
+  }
+
+  generateCols() {
+	  this.cols = [
+            { field: 'admissionNumber', header: 'Admission No', headerKey: 'COMMON.ADMISSION_NUMBER', type: 'string',
+                                        style: {width: '10%', 'text-align': 'center'} },
+            { field: 'admissionDatetime', header: 'Date/Time', headerKey: 'COMMON.ADMISSION_DATETIME', type: 'date_time',
+                                        style: {width: '15%', 'text-align': 'center'}  },
+            { field: 'patientId', header: 'Patient ID', headerKey: 'COMMON.PATIENT_ID', type: 'string',
+                                        style: {width: '15%', 'text-align': 'center'}  },
+            { field: 'patientName', header: 'Patient Name', headerKey: 'COMMON.PATIENT_NAME', type: 'string',
+                                        style: {width: '20%', 'text-align': 'center'}  },
+            { field: 'statusDesc', header: 'Status', headerKey: 'COMMON.STATUS', type: 'string',
+                                        style: {width: '15%', 'text-align': 'center'}  }
+        ];
   }
 
   ngOnDestroy() {
