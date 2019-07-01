@@ -51,6 +51,7 @@ export class AppointmentService {
 		let actionUrl = Constants.apiServer + '/service/appointment/cancel';
 		return this.http.post(actionUrl, toAdd, { headers: this.headers })
 			.map((response: Response) => {
+				console.log(response);
 				if (response && response.json() && response.json().result === 'Success') {
 					return true;
 				} else {

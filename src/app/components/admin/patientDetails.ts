@@ -67,6 +67,8 @@ export class PatientDetails extends BaseComponent implements OnInit, OnDestroy {
 								this.patient = result;
 								if (this.patient.user.birthDate != null) {
 									this.patient.user.birthDate = new Date(this.patient.user.birthDate);
+									this.patient.expiryDate = new Date(this.patient.expiryDate);
+									this.patient.insuranceExpiryDate = new Date(this.patient.insuranceExpiryDate);
 								}
 							}
 						});

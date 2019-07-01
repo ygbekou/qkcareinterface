@@ -4,6 +4,7 @@ import { Package } from './package';
 import { Patient } from './patient';
 import { Reference } from './reference';
 import { VitalSign } from './vitalSign';
+import { Appointment } from './appointment';
 
 export class Visit {
   id: number;
@@ -14,7 +15,7 @@ export class Visit {
   visitDatetime: Date = new Date();
   status: number;
   isHealthCheckupSel: number;
-  
+  appointment: Appointment;
   vitalSign: VitalSign;
   selectedAllergies: Reference[];
   selectedSymptoms: Reference[];

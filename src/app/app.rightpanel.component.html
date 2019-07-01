@@ -62,43 +62,42 @@
             </ul>
           </div>
         </p-tabPanel>
-        <p-tabPanel leftIcon="fa fa-inbox">
+        <p-tabPanel leftIcon="fa fa-list-ol">
           <div class="submenu-title">
-            <span>{{ 'COMMON.INBOX' | translate }}</span>
+            <span>{{ 'COMMON.WAITING_LIST' | translate }}</span>
           </div>
           <div class="submenu-content messages">
             <ul>
-              <li>
+              <li *ngFor="let visit of visits">
                 <div>
-                  <img src="assets/layout/images/avatar-john.png" alt="california-layout" />
-                  <span class="time-stamp">1m</span>
+                  <a [routerLink]="['/admin/adminPatient']" [queryParams]="{patientId:visit.patient.id}"
+                    (click)="setPatientId(visit.patient.id,(visit.appointment?visit.appointment.id:0))">
+                    <img src="assets/images/user/{{visit.patient.user.picture}}" alt="" />
+                    <span class="time-stamp">{{visit.id}}</span>
+                  </a>
                 </div>
-                <span class="messager-name">John Swisher</span>
-                <span class="message-text">Ab nobis, magnam sunt eum. Laudantium…</span>
-              </li>
-              <li>
-                <div>
-                  <img src="assets/layout/images/avatar-warren.png" alt="california-layout" />
-                  <span class="time-stamp">33m</span>
+                <span class="messager-name">
+                  <a [routerLink]="['/admin/adminPatient']" [queryParams]="{patientId:visit.patient.id}"
+                    (click)="setPatientId(visit.patient.id,(visit.appointment?visit.appointment.id:0))">
+                    {{visit.patient.name}}
+                  </a>
+                </span>
+                <span class="message-text">
+                  <a [routerLink]="['/admin/visitDetails']" [queryParams]="{visitId:visit.id}">
+                    {{'COMMON.ARRIVAL_TIME' | translate }} : {{visit.visitDatetime|date:'hh:mm'}}
+                    <br />{{'COMMON.APPOINTMENT' | translate }} : {{visit.appointment?visit.appointment.beginTime:'-'}}
+                  </a>
+                </span>
+                <div class="ui-grid-row">
+                  <div class="ui-grid-col-6 ui-sm-6">
+                    <button type="button" pButton icon="fa fa-close" (click)="cancelVisit(visit.id)"
+                      label="{{ 'COMMON.CANCEL' | translate }}"></button>&nbsp;
+                  </div>
+                  <div class="ui-grid-col-6 ui-sm-6">
+                    <button pButton icon="fa fa-check" (click)="endVisit(visit.id)"
+                      label="{{ 'COMMON.END' | translate }}"></button>
+                  </div>
                 </div>
-                <span class="messager-name">Warren Shaw</span>
-                <span class="message-text">Ab nobis, magnam sunt eum. Laudantium…</span>
-              </li>
-              <li>
-                <div>
-                  <img src="assets/layout/images/avatar-brenda.png" alt="california-layout" />
-                  <span class="time-stamp">2h</span>
-                </div>
-                <span class="messager-name">Brenda Soto</span>
-                <span class="message-text">Ab nobis, magnam sunt eum. Laudantium…</span>
-              </li>
-              <li>
-                <div>
-                  <img src="assets/layout/images/avatar-arlene.png" alt="california-layout" />
-                  <span class="time-stamp">1d</span>
-                </div>
-                <span class="messager-name">Arlene Welch</span>
-                <span class="message-text">Ab nobis, magnam sunt eum. Laudantium…</span>
               </li>
             </ul>
           </div>
@@ -128,11 +127,10 @@
                   <span class="calendar-event-location">{{event.phone}}</span>
                   <br /><i class="material-icons  fa fa-user-md"></i>
                   <span class="calendar-event-location">
-					<a [routerLink]="['/admin/employeeDetails']" [queryParams]="{employeeId:event.employeeId}"
-                    >
-					  {{event.docName}} 
-                    </a>  
-					</span>
+                    <a [routerLink]="['/admin/employeeDetails']" [queryParams]="{employeeId:event.employeeId}">
+                      {{event.docName}}
+                    </a>
+                  </span>
                 </div>
                 <div class="ui-grid-row">
                   <div class="ui-grid-col-6 ui-sm-6">

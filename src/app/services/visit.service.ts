@@ -104,6 +104,41 @@ export class VisitService {
 			.catch(this.handleError);
 	}
 
+	public getWaitList = (topN: number): Observable<Visit[]> => {
+		const actionUrl = Constants.apiServer + '/service/visit/getWaitList/' + topN;
+		return this.http.get(actionUrl, { headers: this.headers })
+			.map((response: Response) => <any[]>response.json())
+			.catch(this.handleError);
+	}
+
+	public endVisit = (id: number): Observable<boolean> => {
+		let toAdd = JSON.stringify(id);
+		let actionUrl = Constants.apiServer + '/service/visit/endVisit';
+		return this.http.post(actionUrl, toAdd, { headers: this.headers })
+			.map((response: Response) => {
+				console.log(response);
+				if (response && response.json() && response.json().result === 'Success') {
+					return true;
+				} else {
+					return false;
+				}
+			})
+			.catch(this.handleError);
+	}
+	public cancelVisit = (id: number): Observable<boolean> => {
+		let toAdd = JSON.stringify(id);
+		let actionUrl = Constants.apiServer + '/service/visit/cancelVisit';
+		return this.http.post(actionUrl, toAdd, { headers: this.headers })
+			.map((response: Response) => {
+				console.log(response);
+				if (response && response.json() && response.json().result === 'Success') {
+					return true;
+				} else {
+					return false;
+				}
+			})
+			.catch(this.handleError);
+	}
 	private handleError(error: Response) {
 		console.error(error);
 		return Observable.throw(error.json().error || 'Server error');

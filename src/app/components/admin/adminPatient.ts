@@ -7,6 +7,7 @@ import { Patient } from '../../models/patient';
 import { UserGroup } from '../../models/userGroup';
 import { GenericService, UserService, GlobalEventsManager } from '../../services';
 import { AppointmentDetails } from './appointmentDetails';
+import { AppointmentList } from './appointmentList';
 
 @Component({
 	selector: 'app-admin-patient',
@@ -18,6 +19,7 @@ export class AdminPatient implements OnInit {
 
 	@ViewChild(PatientDetails) patientDetails: PatientDetails;
 	@ViewChild(AppointmentDetails) appointmentDetails: AppointmentDetails;
+	@ViewChild(AppointmentList) appointmentList: AppointmentList;
 	public user: User;
 	public patient: Patient;
 	public activeTab = 0;
@@ -44,6 +46,9 @@ export class AdminPatient implements OnInit {
 	onAppointmentSelected($event) {
 		let appointmentId = $event;
 		this.appointmentDetails.getAppointment(appointmentId);
+	}
+	onAptSaved($event){ 
+		this.appointmentList.updateTable($event);
 	}
 
 	onTabChange(evt) {

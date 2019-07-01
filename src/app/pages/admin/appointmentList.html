@@ -1,30 +1,32 @@
-
-	<p-table [columns]="cols" [value]="appointments">
-	    <ng-template pTemplate="header" let-columns>
-	        <tr>
-	            <th *ngFor="let col of columns" [pSortableColumn]="col.field">
-	                {{col.header}}
-	                <p-sortIcon [field]="col.field"></p-sortIcon>
-	            </th>
-	            <th>Action</th>
-	        </tr>
-	    </ng-template>
-	    <ng-template pTemplate="body" let-rowData let-columns="columns">
-	        <tr>			           
-	            <td *ngFor="let col of columns">
-	            	<div *ngIf="col.type === 'Date'">
-	                	{{rowData[col.field] | date:'dd/MM/yyyy'}} 
-	                </div>
-	                <div *ngIf="col.type !== 'Date'">
-	                	{{rowData[col.field]}}
-	                </div>
-	            </td>
-	            <td>
-	            	<button type="button" pButton icon="fa-edit" style="float: left"
-						(click)="edit(rowData.id)"></button>
-					<button type="button" pButton icon="fa-eraser" style="float: left"
-						(click)="delete(rowData.id)"></button>
-	            </td>
-	        </tr>
-	    </ng-template>
-	</p-table>
+  <p-messages [(value)]="messages"></p-messages>
+  <p-table [columns]="cols" [value]="appointments">
+    <ng-template pTemplate="header" let-columns>
+      <tr>
+        <th *ngFor="let col of columns" [pSortableColumn]="col.field" [ngStyle]="col.style">
+          {{col.header}}
+          <span *ngIf="col.type == 'date'">
+            ({{globalEventsManager.DATE_FORMAT}})
+          </span>
+          <p-sortIcon [field]="col.field"></p-sortIcon>
+        </th>
+        <th>Action</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-rowData let-columns="columns">
+      <tr>
+        <td *ngFor="let col of columns">
+          <div *ngIf="col.type === 'Date'">
+            {{rowData[col.field] | date:'dd/MM/yyyy'}}
+          </div>
+          <div *ngIf="col.type !== 'Date'">
+            {{rowData[col.field]}}
+          </div>
+        </td>
+        <td>
+          <button type="button" pButton icon="fa fa-edit" (click)="edit(rowData.id)"></button>
+          &nbsp;&nbsp;
+          <button type="button" pButton icon="fa fa-eraser" (click)="delete(rowData)"></button>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
