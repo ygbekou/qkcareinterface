@@ -133,8 +133,8 @@
               <div class="ui-grid-col-6 ui-sm-12">
                 <button pButton type="button" icon="fa fa-delete" (click)="patient.user.picture = ''" label="Remove"
                   *ngIf="patient.user.picture !== '' && patient.user.picture !== null"></button>
-                <button pButton type="button" icon="fa fa-delete" (click)="clearPictureFile()" label="{{ 'COMMON.REMOVE' | translate }}"
-                  *ngIf="pictureUrl !== undefined"></button>
+                <button pButton type="button" icon="fa fa-delete" (click)="clearPictureFile()"
+                  label="{{ 'COMMON.REMOVE' | translate }}" *ngIf="pictureUrl !== undefined"></button>
               </div>
               <div class="ui-grid-col-3 ui-sm-12"></div>
             </div>
@@ -341,10 +341,8 @@
         </p-fieldset>
       </p-accordionTab>
     </p-accordion>
-    <br />
-
   </div>
-  <br />
+   <br />
   <p-messages [(value)]="messages"></p-messages>
   <p-message *ngIf="!f.form.valid &&f.submitted" severity="error" text="{{ 'MESSAGE.FORM_HAS_ERRORS' | translate }}">
   </p-message>
