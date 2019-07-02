@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild, Input } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild, Input, Output, EventEmitter } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Constants } from '../../app.constants';
 import { Admission, Visit, VitalSign, Patient, User } from '../../models';
@@ -20,6 +20,7 @@ export class VitalSignDetails implements OnInit, OnDestroy {
   displayDialog: boolean;
   @Input() vitalSign: VitalSign = new VitalSign();
   @Input() admission: Admission;
+  @Output() vitalSignSaveEvent = new EventEmitter<VitalSign>();
 
   messages: Message[] = [];
 
@@ -77,7 +78,8 @@ export class VitalSignDetails implements OnInit, OnDestroy {
       this.genericService.save(this.vitalSign, 'VitalSign')
         .subscribe(result => {
           if (result.id > 0) {
-		  	this.vitalSign = result;
+			  this.vitalSign = result;
+			  this.vitalSignSaveEvent.emit(this.vitalSign);
           } else {
             this.error = Constants.SAVE_UNSUCCESSFUL;
             this.displayDialog = true;

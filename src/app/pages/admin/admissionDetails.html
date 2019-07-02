@@ -144,12 +144,12 @@
 			</div>
 		</p-tabPanel>
 		<p-tabPanel header="VITAL SIGNS" *ngIf="admission && admission.id > 0">
-			<app-vitalSign-details [admission]="admission"></app-vitalSign-details> <br />
+			<app-vitalSign-details [admission]="admission" (vitalSignSaveEvent)="onVitalSignSaved($event)"></app-vitalSign-details> <br />
 			<app-vitalSign-list [admission]="admission" (vitalSignIdEvent)="onVitalSignSelected($event)">
 			</app-vitalSign-list><br />
 		</p-tabPanel>
 		<p-tabPanel header="DOCTOR ORDERS" *ngIf="admission && admission.id > 0">
-			<app-doctorOrder-details [admission]="admission"></app-doctorOrder-details> <br /> <br />
+			<app-doctorOrder-details [admission]="admission" (doctorOrderSaveEvent)="onDoctorOrderSaved($event)"></app-doctorOrder-details> <br /> <br />
 			<app-doctorOrder-list [admission]="admission" (doctorOrderIdEvent)="onDoctorOrderSelected($event)">
 			</app-doctorOrder-list><br />
 		</p-tabPanel>
