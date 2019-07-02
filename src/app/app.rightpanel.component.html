@@ -90,11 +90,13 @@
                 </span>
                 <div class="ui-grid-row">
                   <div class="ui-grid-col-6 ui-sm-6">
-                    <button type="button" pButton icon="fa fa-close" (click)="cancelVisit(visit.id)"
+					<button type="button" pButton icon="fa fa-close" (click)="cancelVisit(visit.id)"
+					class="ui-button-rounded ui-button-warning"
                       label="{{ 'COMMON.CANCEL' | translate }}"></button>&nbsp;
                   </div>
                   <div class="ui-grid-col-6 ui-sm-6">
-                    <button pButton icon="fa fa-check" (click)="endVisit(visit.id)"
+					<button pButton icon="fa fa-check" (click)="endVisit(visit.id)"
+					class="ui-button-rounded"
                       label="{{ 'COMMON.END' | translate }}"></button>
                   </div>
                 </div>
@@ -134,11 +136,13 @@
                 </div>
                 <div class="ui-grid-row">
                   <div class="ui-grid-col-6 ui-sm-6">
-                    <button type="button" pButton icon="fa fa-close" (click)="cancel(event.id)"
+					<button type="button" pButton icon="fa fa-close" (click)="cancel(event.id)"
+					class="ui-button-rounded ui-button-warning"
                       label="{{ 'COMMON.CANCEL' | translate }}"></button>&nbsp;
                   </div>
                   <div class="ui-grid-col-6 ui-sm-6">
-                    <button pButton icon="fa fa-check" (click)="confirm(event.id)"
+					<button pButton icon="fa fa-check" (click)="confirm(event.id)"
+					class="ui-button-rounded"
                       label="{{ 'COMMON.CONFIRM' | translate }}"></button>
 
                   </div>

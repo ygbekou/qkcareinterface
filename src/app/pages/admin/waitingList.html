@@ -34,13 +34,13 @@
       </td>
       <td>
         <button pButton icon="fa fa-close" (click)="updateStatus(rowData.id, 3)"
-          label="{{ 'COMMON.CANCEL' | translate }}" class="ui-button-rounded ui-button-danger" ></button>
+          label="{{ 'COMMON.CANCEL' | translate }}" class="ui-button-rounded ui-button-warning" ></button>
         &nbsp;&nbsp;
         <button pButton icon="fa fa-check" (click)="updateStatus(rowData.id, 1)"
-          label="{{ 'COMMON.END' | translate }}" class="ui-button-rounded ui-button-info" ></button>
+          label="{{ 'COMMON.END' | translate }}" class="ui-button-rounded" ></button>
  &nbsp;&nbsp;
 		    <a [routerLink]="['/admin/visitDetails']" [queryParams]="{visitId:rowData.id}">
-              <button pButton type="button" label="{{ 'COMMON.EDIT' | translate }}" class="ui-button-rounded ui-button-success" icon="pi pi-search" > </button>
+              <button pButton type="button" label="{{ 'COMMON.EDIT' | translate }}" class="ui-button-rounded" icon="pi pi-search" > </button>
              </a>
       </td>
     </tr>
