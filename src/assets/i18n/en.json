@@ -320,7 +320,8 @@
 	"DASHBOARD": "Dashboard",
 	"SCHEDULE": "Schedule",
 	"INBOX": "Inbox",
-	"PATIENT":"Patient"
+	"PATIENT":"Patient",
+	"PERIOD":"Période"
   },
   "MESSAGE": {
   	"TRANFER_DOCTOR_FAILED": "The transfer doctor should be different from the current doctor.",

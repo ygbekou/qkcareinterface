@@ -26,8 +26,7 @@
           </div>
         </div>
         <div class="ui-grid-col-3 ui-sm-12">
-          <br />
-          <br />
+          <br /> 
           <button pButton icon="fa fa-search" label="{{ 'COMMON.SEARCH' | translate }}"></button>
         </div>
       </div>
@@ -60,14 +59,15 @@
         </td>
         <td align="justify">
           <button class="ui-button-rounded" type="button" pButton icon="fa fa-edit" (click)="edit(rowData.id)"
-            title="{{ 'COMMON.EDIT' | translate }}"></button>
+            title="{{ 'COMMON.EDIT' | translate }}" *ngIf="this.originalPage === undefined"></button>
           &nbsp;&nbsp;
-          <button class="ui-button-rounded" type="button" pButton icon="fa fa-edit"
+          <button class="ui-button-rounded" type="button" pButton icon="fa fa-check"
             (click)="redirectToOrigialPage(rowData)" title="{{ 'COMMON.SELECT' | translate }}"
             *ngIf="this.originalPage !== undefined"></button>
           &nbsp;&nbsp;
           <button class="ui-button-rounded ui-button-warning" type="button" pButton icon="fa fa-eraser"
-            (click)="delete(rowData.id)" title="{{ 'COMMON.DELETE' | translate }}"></button>
+			(click)="delete(rowData.id)" title="{{ 'COMMON.DELETE' | translate }}"
+			*ngIf="this.originalPage === undefined"></button>
         </td>
       </tr>
     </ng-template>
