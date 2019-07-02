@@ -2,13 +2,15 @@
 	<div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="doctorOrder">
 		<p-messages [(value)]="messages"></p-messages>
 		<div class="ui-grid-row">
-			<div class="ui-grid-col-6 ui-sm-12">
+			<div class="ui-grid-col-4 ui-sm-12">
 				<div class="form-group">
 					<label for="doctorOrderDatetime">{{ 'COMMON.DOCTOR_ORDER_DATETIME' | translate }}<font color="red">*</font></label> 
 					<p-calendar [(ngModel)]="doctorOrder.doctorOrderDatetime" [showTime]="true" required
 						name="doctorOrderDatetime"  #doctorOrderDatetime="ngModel"></p-calendar>
 					<p-message *ngIf="f.submitted && doctorOrderDatetime.invalid" severity="error" text="Field is required"></p-message>
 				</div>
+			</div>
+			<div class="ui-grid-col-4 ui-sm-12">
 				<div class="form-group">
 					<label for="doctorOrderPriority">{{ 'COMMON.DOCTOR_ORDER_PRIORITY' | translate }}</label>
 					<p-autoComplete [(ngModel)]="doctorOrder.doctorOrderPriority" required
@@ -19,6 +21,8 @@
 						[minLength]="1" name="doctorOrderPriority"  #doctorOrderPriority="ngModel"></p-autoComplete>
 					<p-message *ngIf="f.submitted && doctorOrderPriority.invalid" severity="error" text="Field is required"></p-message>
 				</div>
+			</div>
+			<div class="ui-grid-col-4 ui-sm-12">
 				<div class="form-group">
 					<label for="doctorOrderType">{{ 'COMMON.DOCTOR_ORDER_TYPE' | translate }}</label>
 					<p-autoComplete [(ngModel)]="doctorOrder.doctorOrderType" 
@@ -31,17 +35,16 @@
 					<p-message *ngIf="f.submitted && doctorOrderType.invalid" severity="error" text="Field is required"></p-message>
 				</div>
 			</div>
-			<div class="ui-grid-col-6 ui-sm-12">
+		</div>
+		<div class="ui-grid-row"></div>
+			<div class="ui-grid-col-4 ui-sm-12">
 				<div class="form-group">
 					<label for="description">{{ 'COMMON.DESCRIPTION' | translate }}</label> 
-					<p-editor [(ngModel)]="doctorOrder.description" [style]="{'height':'100px'}"
+					<p-editor [(ngModel)]="doctorOrder.description" [style]="{'height':'200px'}"
 						name="description"  #description="ngModel"></p-editor>
 				</div>
 			</div>
-		</div>
-		<br/>
-		<div class="ui-grid-row">
-			<div class="ui-grid-col-6 ui-sm-12" *ngIf="doctorOrder.doctorOrderType.id == 2">
+			<div class="ui-grid-col-4 ui-sm-12" *ngIf="doctorOrder.doctorOrderType.id == 2">
 				<div class="form-group">
 					<label for="labTest">{{ 'COMMON.LAB_TEST_GROUP' | translate }}<font color="red">*</font></label>
 					<p-pickList [source]="labTestDropdown.labTests" [target]="doctorOrder.labTests"
@@ -55,9 +58,9 @@
 					</p-pickList>
 				</div>
 			</div>
-			<div class="ui-grid-col-6 ui-sm-12" *ngIf="doctorOrder.doctorOrderType.id == 1">
+			<div class="ui-grid-col-4 ui-sm-12" *ngIf="doctorOrder.doctorOrderType.id == 1">
 				<div class="form-group">
-					<label for="medicine">{{ 'COMMON.MEDICINES' | translate }}<font color="red">*</font></label>
+					<label for="medicine">{{ 'COMMON.MEDICINE_LIST' | translate }}<font color="red">*</font></label>
 					<p-pickList [source]="productDropdown.products" [target]="doctorOrder.products"
 						sourceHeader="Available" targetHeader="Selected" [responsive]="true" filterBy="name" 
 						name="medicines">
@@ -69,9 +72,7 @@
 					</p-pickList>
 				</div>
 			</div>
-			<div class="ui-grid-col-6 ui-sm-12" *ngIf="doctorOrder.doctorOrderType.id != 1 && doctorOrder.doctorOrderType.id != 2">
-			</div>
-			<div class="ui-grid-col-6 ui-sm-12">
+			<div class="ui-grid-col-4 ui-sm-12">
 				<p-fieldset legend="{{ 'COMMON.FOR_NURSES_USE_ONLY' | translate }}">
 					<div class="form-group">
 						<label for="orderingDoctor">{{ 'COMMON.ORDERING_DOCTOR' | translate }}</label>
@@ -98,19 +99,16 @@
 				</p-fieldset>
 			</div>
 		</div>
-		<br/>
-	</div>
 
 	<br/>
 	<br/>
 	<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
 		<button type="button" pButton icon="fa fa-refresh" (click)="clear()" label="{{ 'COMMON.CLEAR' | translate }}"></button>&nbsp;&nbsp;
-		<button pButton icon="fa fa-save" label="{{ 'COMMON.SAVE' | translate }}"></button>&nbsp;&nbsp;
-		<button type="button" pButton icon="" (click)="changeStatus(STATUS_INPRORESS_ID, STATUS_INPROGRESS_NAME)" 
+		<button pButton icon="fa fa-save" label="{{ 'COMMON.SAVE' | translate }}" [disabled]="!f.form.valid"></button>&nbsp;&nbsp;
+		<button type="button" pButton icon="" (click)="changeStatus(STATUS_INPROGRESS_ID, STATUS_INPROGRESS_NAME)" 
 				label="{{ 'COMMON.REOPEN' | translate }}" *ngIf="doctorOrder.status.id == 4"></button>&nbsp;&nbsp;
 		<button type="button" pButton icon="" (click)="changeStatus(STATUS_CLOSED_ID, STATUS_CLOSED_NAME)" 
-				label="{{ 'COMMON.CLOSE' | translate }}" *ngIf="doctorOrder.status.id != 4"></button>&nbsp;&nbsp;
-		<button type="button" pButton icon="fa fa-remove" (click)="delete()" label="{{ 'COMMON.DELETE' | translate }}"></button>
+				label="{{ 'COMMON.CLOSE' | translate }}" *ngIf="doctorOrder.status.id != 4"></button>
 	</div>
 </form>
 		

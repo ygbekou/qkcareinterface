@@ -1,5 +1,5 @@
 <form name="form" (ngSubmit)="f.form.valid && validate() && save()" #f="ngForm" validate>
-	<div class="ui-grid ui-grid-responsive ui-fluid">
+	<div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="vitalSign">
 		<p-messages [(value)]="messages"></p-messages>
 		<div class="ui-grid-row">
 			<div class="ui-grid-col-2 ui-sm-12" *ngIf="admission">

@@ -1,13 +1,10 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Constants } from '../../app.constants';
 import { Admission, Bed, BedAssignment, Country, DoctorAssignment, Floor, Package, Patient, Reference, Room, User } from '../../models';
-import { EditorModule } from 'primeng/editor';
 import { DoctorDropdown, PackageDropdown, InsuranceDropdown, BuildingDropdown, FloorDropdown, RoomDropdown, 
       CategoryDropdown, BedDropdown } from '../dropdowns';
-import { Cookie } from 'ng2-cookies/ng2-cookies';
-import { InputTextareaModule, CheckboxModule, MultiSelectModule, CalendarModule } from 'primeng/primeng';
-import { GenericService, AppointmentService, GlobalEventsManager, AdmissionService } from '../../services';
+import { GenericService, GlobalEventsManager, AdmissionService } from '../../services';
 import { AdmissionDiagnoses } from './admissionDiagnoses';
 import { DoctorOrderDetails } from './doctorOrderDetails';
 import { PrescriptionDetails } from './prescriptionDetails';
@@ -15,6 +12,8 @@ import { PrescriptionList } from './prescriptionList';
 import { PatientSaleDetails } from '../stocks/patientSaleDetails';
 import { VitalSignDetails } from './vitalSignDetails';
 import { Message } from 'primeng/api';
+import { VitalSignList } from './vitalSignList';
+import { DoctorOrderList } from './doctorOrderList';
  
 @Component({
   selector: 'app-admission-details',
@@ -25,10 +24,12 @@ import { Message } from 'primeng/api';
 export class AdmissionDetails implements OnInit, OnDestroy {
   
   @ViewChild(DoctorOrderDetails) doctorOrderDetails: DoctorOrderDetails;
+  @ViewChild(DoctorOrderList) doctorOrderList: DoctorOrderList;
   @ViewChild(AdmissionDiagnoses) admissionDiagnoses: AdmissionDiagnoses;
   @ViewChild(PrescriptionDetails) prescriptionDetails: PrescriptionDetails;
   @ViewChild(PatientSaleDetails) patientSaleDetails: PatientSaleDetails;
   @ViewChild(VitalSignDetails) vitalSignDetails: VitalSignDetails;
+  @ViewChild(VitalSignList) vitalSignList: VitalSignList;
   @ViewChild(PrescriptionList) prescriptionList: PrescriptionList;
   
   admission: Admission = new Admission();
@@ -39,13 +40,6 @@ export class AdmissionDetails implements OnInit, OnDestroy {
   messages: Message[] = [];
   activeTab: number = 0;
   
-  DETAIL: string = Constants.DETAIL;
-  ADD_IMAGE: string = Constants.ADD_IMAGE;
-  ADD_LABEL: string = Constants.ADD_LABEL;  
-  DEPARTMENT: string = Constants.DEPARTMENT;
-  COUNTRY: string = Constants.COUNTRY;
-  ROLE: string = Constants.ROLE;
-  SELECT_OPTION: string = Constants.SELECT_OPTION;
   
   constructor
     (
@@ -60,9 +54,7 @@ export class AdmissionDetails implements OnInit, OnDestroy {
       public roomDropdown: RoomDropdown,
       public categoryDropdown: CategoryDropdown,
       public bedDropdown: BedDropdown,
-      private changeDetectorRef: ChangeDetectorRef,
-      private route: ActivatedRoute,
-      private router: Router
+      private route: ActivatedRoute
     ) {
     
     // Initialize data
@@ -188,13 +180,13 @@ export class AdmissionDetails implements OnInit, OnDestroy {
   
   onTabChange(evt) {
     this.activeTab = evt.index;
-    if (evt.index == 1) {
-   
+    if (evt.index === 1) {
+		this.vitalSignList.ngOnInit();
     } 
-    else if (evt.index == 2) {
+    else if (evt.index === 2) {
       this.admissionDiagnoses.getDiagnoses();
     } 
-    else if (evt.index == 3) {
+    else if (evt.index === 3) {
       this.prescriptionDetails.admission = this.admission;
       this.prescriptionList.admission = this.admission;
       this.prescriptionList.getPrescriptions();
@@ -207,17 +199,25 @@ export class AdmissionDetails implements OnInit, OnDestroy {
   }
   
   onVitalSignSelected($event) {
-    let vitalSignId = $event;
+    const vitalSignId = $event;
     this.vitalSignDetails.getVitalSign(vitalSignId);
   }
   
+  onVitalSignSaved($event) {
+	this.vitalSignList.updateTable($event);
+  }
+
   onDoctorOrderSelected($event) {
-    let doctorOrderId = $event;
+    const doctorOrderId = $event;
     this.doctorOrderDetails.getDoctorOrder(doctorOrderId);
+  }
+
+  onDoctorOrderSaved($event) {
+	this.doctorOrderList.updateTable($event);
   }
   
   onPatientSaleSelected($event) {
-    let patientSaleId = $event;
+    const patientSaleId = $event;
     this.patientSaleDetails.getPatientSale(patientSaleId);
   }
   

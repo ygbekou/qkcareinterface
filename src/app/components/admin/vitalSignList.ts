@@ -91,7 +91,25 @@ export class VitalSignList implements OnInit, OnDestroy {
 
     edit(prescriptionId: string) {
         this.vitalSignIdEvent.emit(prescriptionId);
-    }
+	}
+	
+		updateTable(vitalSign: VitalSign) {
+			let index = this.vitalSigns.findIndex(x => x.id === vitalSign.id);
+			
+			if (index === -1) {
+				this.vitalSigns.push(vitalSign);
+			} else {
+				this.vitalSigns[index] = vitalSign;
+			}
+			
+		}
+
+		removeItem(id: number) {
+
+			let index = this.vitalSigns.findIndex(x => x.id === id);
+			this.vitalSigns.splice(index, 1)
+
+		}
 
     delete(vitalSignId: string) {
         this.messages = [];
@@ -114,7 +132,7 @@ export class VitalSignList implements OnInit, OnDestroy {
                                     detail: res['MESSAGE.DELETE_SUCCESS']
                                 });
                             });
-                            this.ngOnInit();
+                            this.removeItem(+vitalSignId)
                         } else if ('FAILURE' === response.result) {
                             this.translate.get(['', 'MESSAGE.DELETE_UNSUCCESS']).subscribe(res => {
                                 this.messages.push({

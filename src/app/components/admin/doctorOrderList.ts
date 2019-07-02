@@ -1,21 +1,22 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild, Input, Output, EventEmitter } from '@angular/core';
-import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
+import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Constants } from '../../app.constants';
-import { Admission, User, Visit, DoctorOrder, VitalSign } from '../../models';
-import { Cookie } from 'ng2-cookies/ng2-cookies';
-import { } from 'primeng/primeng';
+import { Admission, Visit, DoctorOrder } from '../../models';
+import { ConfirmationService, Message } from 'primeng/api';
 import { GenericService } from '../../services';
 import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
+import { GenericResponse } from 'src/app/models/genericResponse';
 
 @Component({
   selector: 'app-doctorOrder-list',
   templateUrl: '../../pages/admin/doctorOrderList.html',
-  providers: [GenericService]
+  providers: [GenericService, ConfirmationService]
 })
 export class DoctorOrderList implements OnInit, OnDestroy {
   
   doctorOrders: DoctorOrder[] = [];
   cols: any[];
+  messages: Message[] = [];
   
   @Input() visit: Visit;
   @Input() admission: Admission;
@@ -25,9 +26,8 @@ export class DoctorOrderList implements OnInit, OnDestroy {
     (
     private genericService: GenericService,
     private translate: TranslateService,
-    private changeDetectorRef: ChangeDetectorRef,
-    private route: ActivatedRoute,
-    private router: Router,
+    private confirmationService: ConfirmationService,
+    private route: ActivatedRoute
     ) {
 
     
@@ -87,18 +87,61 @@ export class DoctorOrderList implements OnInit, OnDestroy {
     this.doctorOrderIdEvent.emit(doctorOrderId);
   }
 
-  delete(doctorOrderId : number) {
-    try {
-      let navigationExtras: NavigationExtras = {
-        queryParams: {
-          "doctorOrderId": doctorOrderId,
-        }
-      }
-      this.router.navigate(["/admin/doctorOrderDetails"], navigationExtras);
+  delete(doctorOrderId: string) {
+        this.messages = [];
+        let confirmMessage = '';
+        this.translate.get(['', 'MESSAGE.DELETE_CONFIRM']).subscribe(res => {
+            confirmMessage = res['MESSAGE.DELETE_CONFIRM'];
+        });
+
+        this.confirmationService.confirm({
+            message: confirmMessage,
+            header: 'Confirmation',
+            icon: 'pi pi-exclamation-triangle',
+            accept: () => {
+                this.genericService.delete(+doctorOrderId, 'DoctorOrder')
+                    .subscribe((response: GenericResponse) => {
+                        if ('SUCCESS' === response.result) {
+                            this.translate.get(['', 'MESSAGE.DELETE_SUCCESS']).subscribe(res => {
+                                this.messages.push({
+                                    severity: Constants.SUCCESS, summary: res['COMMON.DELETE'],
+                                    detail: res['MESSAGE.DELETE_SUCCESS']
+                                });
+                            });
+                            this.removeItem(+doctorOrderId)
+                        } else if ('FAILURE' === response.result) {
+                            this.translate.get(['', 'MESSAGE.DELETE_UNSUCCESS']).subscribe(res => {
+                                this.messages.push({
+                                    severity: Constants.ERROR, summary: res['COMMON.DELETE'],
+                                    detail: res['MESSAGE.DELETE_UNSUCCESS']
+                                });
+                            });
+                        }
+                    });
+            },
+            reject: () => {
+            }
+        });
+
     }
-    catch (e) {
-      console.log(e);
-    }
-  }
+
+  updateTable(doctorOrder: DoctorOrder) {
+		let index = this.doctorOrders.findIndex(x => x.id === doctorOrder.id);
+		
+		if (index === -1) {
+			this.doctorOrders.push(doctorOrder);
+		} else {
+			this.doctorOrders[index] = doctorOrder;
+		}
+		
+	}
+
+	removeItem(id: number) {
+
+		let index = this.doctorOrders.findIndex(x => x.id === id);
+		this.doctorOrders.splice(index, 1)
+
+	}
+
 
  }
