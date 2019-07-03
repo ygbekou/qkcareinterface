@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Constants } from '../../app.constants';
 import { Admission, Visit, DoctorOrder } from '../../models';
 import { ConfirmationService, Message } from 'primeng/api';
-import { GenericService } from '../../services';
+import { GenericService, GlobalEventsManager } from '../../services';
 import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
 import { GenericResponse } from 'src/app/models/genericResponse';
 
@@ -24,7 +24,8 @@ export class DoctorOrderList implements OnInit, OnDestroy {
   
   constructor
     (
-    private genericService: GenericService,
+	private genericService: GenericService,
+	public globalEventsManager: GlobalEventsManager,
     private translate: TranslateService,
     private confirmationService: ConfirmationService,
     private route: ActivatedRoute
@@ -35,10 +36,14 @@ export class DoctorOrderList implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.cols = [
-            { field: 'doctorOrderDatetime', header: 'Date Time', headerKey: 'COMMON.DOCTOR_ORDER_DATETIME', type:'date' },
-            { field: 'doctorOrderTypeName', header: 'Type', headerKey: 'COMMON.DOCTOR_ORDER_TYPE' },
-            { field: 'description', header: 'Description', headerKey: 'COMMON.DESCRIPTION' },
-            { field: 'doctorOrderStatusName', header: 'Status', headerKey: 'COMMON.STATUS' }
+            { field: 'doctorOrderDatetime', header: 'Date Time', headerKey: 'COMMON.DOCTOR_ORDER_DATETIME', type: 'date_time',
+                                        style: {width: '20%', 'text-align': 'center'} },
+            { field: 'doctorOrderTypeName', header: 'Type', headerKey: 'COMMON.DOCTOR_ORDER_TYPE', type: 'string',
+                                        style: {width: '20%', 'text-align': 'center'} },
+            { field: 'description', header: 'Description', headerKey: 'COMMON.DESCRIPTION', type: 'string',
+                                        style: {width: '40%', 'text-align': 'center'}  },
+            { field: 'doctorOrderStatusName', header: 'Status', headerKey: 'COMMON.STATUS', type: 'string',
+                                        style: {width: '10%', 'text-align': 'center'}  }
         ];
     
     this.route

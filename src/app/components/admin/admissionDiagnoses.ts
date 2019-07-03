@@ -9,6 +9,7 @@ import { DataTableModule, DialogModule, InputTextareaModule, CheckboxModule } fr
 import { GenericService, GlobalEventsManager, AdmissionService } from '../../services';
 import { Message } from 'primeng/api';
 import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
+import { BaseComponent } from './baseComponent';
 
 @Component({ 
   selector: 'app-admissionDiagnoses',
@@ -16,7 +17,7 @@ import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
   providers: [GenericService, AdmissionService, DiagnosisDropdown]
   
 }) 
-export class AdmissionDiagnoses implements OnInit, OnDestroy {
+export class AdmissionDiagnoses extends BaseComponent implements OnInit, OnDestroy {
   
   admissionDiagnosis: AdmissionDiagnosis = new AdmissionDiagnosis();
    
@@ -42,7 +43,8 @@ export class AdmissionDiagnoses implements OnInit, OnDestroy {
       private route: ActivatedRoute,
       private router: Router
     ) {
-      this.clear();
+		super(translate);
+      	this.clear();
   }
 
   
@@ -109,10 +111,10 @@ export class AdmissionDiagnoses implements OnInit, OnDestroy {
         .subscribe(result => {
           if (result.id > 0) {
             rowData = result;
-            this.messages.push({severity:Constants.SUCCESS, summary:Constants.SAVE_LABEL, detail:Constants.SAVE_SUCCESSFUL});
+            this.processResult(result, rowData, this.messages, null);
           }
           else {
-            this.messages.push({severity:Constants.ERROR, summary:Constants.SAVE_LABEL, detail:Constants.SAVE_UNSUCCESSFUL});
+            this.processResult(result, rowData, this.messages, null);
           }
         })
     }

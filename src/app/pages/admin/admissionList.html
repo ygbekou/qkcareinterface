@@ -62,7 +62,7 @@
 			<tr>
 				<th *ngFor="let col of columns" [pSortableColumn]="col.field" [ngStyle]="col.style">
 					{{col.header}}
-					<span *ngIf="col.type == 'date'">
+					<span *ngIf="col.type == 'date_time'">
 						({{globalEventsManager.DATE_TIME_FORMAT}})
 					</span>
 					<p-sortIcon [field]="col.field"></p-sortIcon>
