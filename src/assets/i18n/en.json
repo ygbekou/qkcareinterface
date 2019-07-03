@@ -321,7 +321,12 @@
 	"SCHEDULE": "Schedule",
 	"INBOX": "Inbox",
 	"PATIENT":"Patient",
-	"PERIOD":"Période"
+	"PERIOD":"Période",
+	"RESERVED":"Reserved",
+	"RESERVE":"Reserve",
+	"CONFIRMED":"Confirmed",
+	"AVAILABLE":"Available",
+	"LEGEND":"Legend"
   },
   "MESSAGE": {
   	"TRANFER_DOCTOR_FAILED": "The transfer doctor should be different from the current doctor.",

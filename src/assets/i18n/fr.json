@@ -321,10 +321,15 @@
 	"SHORTCUTS":"Raccourcis",
 	"DASHBOARD": "Dashboard",
 	"SCHEDULE": "Calendrier",
-	"INBOX": "Boite de reception",
+	"INBOX": "Boite de réception",
 	"END":"Terminer",
 	"PATIENT":"Patient",
-	"PERIOD":"Période"
+	"PERIOD":"Période",
+	"RESERVED":"Réservé",
+	"RESERVE":"Réserver",
+	"CONFIRMED":"Confirmé",
+	"AVAILABLE":"Disponible",
+	"LEGEND":"Légende"
   },
   "MESSAGE": {
     "TRANFER_DOCTOR_FAILED": "Le nouveau docteur assigné doit être différent de l'ancien.",

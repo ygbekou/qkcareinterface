@@ -11,7 +11,7 @@ import { Message } from 'primeng/api';
 	selector: 'app-appointment-scheduler',
 	templateUrl: '../../pages/admin/appointmentScheduler.html',
 	providers: [GenericService, AppointmentService, HospitalLocationDropdown,
-	DepartmentDropdown,DoctorDropdown]
+		DepartmentDropdown, DoctorDropdown]
 })
 // tslint:disable-next-line:component-class-suffix
 export class AppointmentScheduler implements OnInit, OnDestroy {
@@ -89,23 +89,58 @@ export class AppointmentScheduler implements OnInit, OnDestroy {
 			this.messages.push({ severity: Constants.ERROR, summary: Constants.SAVE_LABEL, detail: 'Please Select a location' });
 			return;
 		}
-		try {
-			// tslint:disable-next-line:no-console
-			console.info(this.appointment.appointmentDate);
-			this.genericService.save(this.appointment, 'Appointment')
-				.subscribe(result => {
-					if (result.id > 0) {
-						this.appointment = result;
-						this.messages.push({ severity: Constants.SUCCESS, summary: Constants.SAVE_LABEL, detail: Constants.SAVE_SUCCESSFUL });
-						this.displayEdit = false;
-						this.getAppointments();
-					} else {
-						this.messages.push({ severity: Constants.ERROR, summary: Constants.SAVE_LABEL, detail: Constants.SAVE_UNSUCCESSFUL });
-					}
-				});
-		} catch (e) {
-			console.log(e);
+		if (status === 3) {//cancel
+			this.cancel(this.appointment.id);
+		} else {
+			try {
+				// tslint:disable-next-line:no-console
+				console.info(this.appointment.appointmentDate);
+				this.genericService.save(this.appointment, 'Appointment')
+					.subscribe(result => {
+						if (result.id > 0) {
+							this.appointment = result;
+							if (status === 1) {//confirm
+								this.confirm(this.appointment.id);
+							} else {
+								this.messages.push({ severity: Constants.SUCCESS, summary: Constants.SAVE_LABEL, detail: Constants.SAVE_SUCCESSFUL });
+								this.displayEdit = false;
+								this.getAppointments();
+							}
+
+						} else {
+							this.messages.push({ severity: Constants.ERROR, summary: Constants.SAVE_LABEL, detail: Constants.SAVE_UNSUCCESSFUL });
+						}
+					});
+			} catch (e) {
+				console.log(e);
+			}
 		}
+	}
+
+	cancel(id: number) {
+		this.appointmentService.cancel(id)
+			.subscribe(result => {
+				if (result) {
+					this.messages.push({ severity: Constants.SUCCESS, summary: Constants.SAVE_LABEL, detail: Constants.SAVE_SUCCESSFUL });
+					this.displayEdit = false;
+					this.getAppointments();
+				} else {
+					this.messages.push({ severity: Constants.ERROR, summary: Constants.SAVE_LABEL, detail: Constants.SAVE_UNSUCCESSFUL });
+				}
+			});
+	}
+
+	confirm(id: number) {
+		this.appointmentService.confirm(id)
+			.subscribe(result => {
+				if (result) {
+					this.messages.push({ severity: Constants.SUCCESS, summary: Constants.SAVE_LABEL, detail: Constants.SAVE_SUCCESSFUL });
+					this.displayEdit = false;
+					this.getAppointments();
+				} else {
+					this.messages.push({ severity: Constants.ERROR, summary: Constants.SAVE_LABEL, detail: Constants.SAVE_UNSUCCESSFUL });
+				}
+			});
 	}
 
 	addEventClick(e) {
@@ -128,6 +163,7 @@ export class AppointmentScheduler implements OnInit, OnDestroy {
 		if (eventId != null && eventId > 0) {
 			this.genericService.getOne(eventId, 'Appointment')
 				.subscribe(result => {
+					console.log(result);
 					if (result.id > 0) {
 						this.appointment = result;
 						this.displayEdit = true;
@@ -135,7 +171,7 @@ export class AppointmentScheduler implements OnInit, OnDestroy {
 					}
 				});
 		} else {
-
+			console.log('apt id is null');
 			this.appointment.id = null;
 			this.appointment.problem = '';
 			this.appointment.appointmentDate = e.calEvent.start._i.split('T')[0];
