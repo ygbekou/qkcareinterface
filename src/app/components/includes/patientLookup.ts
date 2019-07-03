@@ -8,56 +8,7 @@ import { NavigationExtras, Router } from '@angular/router';
 
 @Component({
   selector: 'app-patient-lookup',
-  template: `<div class="ui-grid ui-grid-responsive ui-fluid">
-              <div class="ui-grid-row">
-                <div class="ui-grid-col-5 ui-sm-12">  
-                  <div class="ui-grid-row">
-                     <div class="ui-grid-row">
-                        <label i18n="@@patientId" for="patientId">Patient ID</label>
-                        <form #searchForm="ngForm">
-                          <input type="text" pInputText class="form-control" id="searchT"
-                            required [(ngModel)]="schText" (change)="lookUpPatient()"
-                            placeholder="{{SEARCH_TEXT}}" name="searchT"
-                            #searchT="ngModel">
-                        </form>
-                        <button type="button" pButton icon="fa fa-search" (click)="openPatientSearchPage()"></button>    
-                     </div>
-                  </div>
-                </div>
-                <div class="ui-grid-col-6 ui-sm-12">
-                  <div class="ui-grid-row">
-                    <div class="ui-grid-col-4 ui-sm-12">
-                      Patient ID:
-                    </div>
-                    <div class="ui-grid-col-4 ui-sm-12">
-                      {{patient.medicalRecordNumber}}
-                    </div>
-                    <div class="ui-grid-col-4 ui-sm-12">
-                      Gender:
-                    </div>
-                    <div class="ui-grid-col-4 ui-sm-12">
-                      {{patient.user.sex}}
-                    </div>      
-                  </div>
-                  <div class="ui-grid-row">
-                    <div class="ui-grid-col-4 ui-sm-12">
-                      Name:
-                    </div>
-                    <div class="ui-grid-col-4 ui-sm-12">
-                      {{patient.name}}
-                    </div>
-                  </div>
-                  <div class="ui-grid-row">
-                    <div class="ui-grid-col-4 ui-sm-12">
-                      DOB:
-                    </div>
-                    <div class="ui-grid-col-4 ui-sm-12">
-                      {{patient.user.birthDate | date:'dd/MM/yyyy'}}
-                    </div>
-                  </div>      
-                </div>
-              </div>
-             </div>`
+  templateUrl: '../../pages/admin/patientLookup.html' 
 })
   
   

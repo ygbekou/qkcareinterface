@@ -1,133 +1,94 @@
-<div class="ui-grid-row"> 
-	<p-messages [(value)]="messages"></p-messages>
-	<p-dialog header="Title" [(visible)]="displayEdit" [width]="400">
-		<div class="ui-g-12 ui-sm-12" style="padding: 15px;">
-			<div class="ui-grid ui-grid-responsive ui-fluid">
-				<div class="ui-grid-row">
-					<div class="ui-grid-col-6ui-sm-12">
-						<label for="appointmentDate">{{ 'COMMON.APPOINTMENT_DATE' | translate }}:</label> 
-					</div>
-					<div class="ui-grid-col-6ui-sm-12">
-						{{appointment.appointmentDate | date:'MM/dd/yyyy'}}
-					</div>
-				</div>
-				<div class="ui-grid-row">
-					<div class="ui-grid-col-6ui-sm-12">
-						<label for="department">{{ 'COMMON.DEPARTMENT' | translate }}:</label> 
-					</div>
-					<div class="ui-grid-col-6ui-sm-12">
-						{{appointment.department.name}}
-					</div>
-				</div>
-				<div class="ui-grid-row">
-					<div class="ui-grid-col-6ui-sm-12">
-						<label for="doctor">{{ 'COMMON.DOCTOR' | translate }}:</label> 
-					</div>
-					<div class="ui-grid-col-6ui-sm-12">
-						{{appointment.doctor.name}}
-					</div>
-				</div>
-				<div class="ui-grid-row">
-					<div class="ui-grid-col-6ui-sm-12">
-						{{ 'COMMON.PATIENT_NAME' | translate }}: 
-					</div>
-					<div class="ui-grid-col-6ui-sm-12">
-						{{appointment.patient.name}}
-					</div>
-				</div>
-				<div class="ui-grid-row">
-					<div class="ui-grid-col-6ui-sm-12">
-						<div class="form-group">
-							<label for="beginTime">{{ 'COMMON.START_TIME' | translate }}<font color="red">*</font></label> 
-							{{appointment.beginTime}}
-						</div>
-					</div>
-				</div>
-				<div class="ui-grid-row">
-					<div class="ui-grid-col-6ui-sm-12">
-						<div class="form-group">
-							<label for="endTime">{{ 'COMMON.END_TIME' | translate }}<font color="red">*</font></label> 
-							{{appointment.endTime}}
-						</div>
-					</div>
-				</div>
-				<div class="ui-grid-row">
-					<div class="ui-grid-col-6ui-sm-12">
-						<div class="form-group">
-							<label for="problem">{{ 'COMMON.PROBLEM' | translate }}<font color="red">*</font></label> 
-							<textarea pInputTextarea id="problem" [(ngModel)]="appointment.problem" #problem="ngModel"> </textarea>
-						</div>
-					</div>
-				</div>
-				<br />
-			</div>
-			<div>
-				<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
-					<button type="button" pButton icon="fa fa-close" (click)="save(0)" label="{{ 'COMMON.CANCEL' | translate }}"
-						[disabled]="appointment.id == null || appointment.id <= 0 || appointment.status == 0"></button>&nbsp;&nbsp;
-					<button type="button" pButton icon="fa fa-check" (click)="save(1)" label="{{ 'COMMON.SAVE' | translate }}"
-						[disabled]="!(appointment.status == 0 || appointment.status == 1) && appointment.id != null"></button>
-					
-					<button type="button" pButton icon="fa fa-check" (click)="save(2)" label="{{ 'COMMON.CONFIRM' | translate }}"
-						[disabled]="appointment.id == null || appointment.id <= 0 || appointment.status != 1"></button>
-				</div>
-			</div>
-		</div>
-	</p-dialog>
-	<div class="ui-g-12 ui-sm-12" style="padding: 15px;">
-		<div class="ui-grid-row">
-			<div class="ui-grid-col-6 ui-sm-12">
-				<app-patient-lookup (patientEmit)="lookUpPatient($event)" [originalPage]="'admin/appointmentScheduler'"
-					[patient]="appointment.patient"></app-patient-lookup>
-			</div>
-			<div class="ui-grid-col-6 ui-sm-12">
-				<div class="ui-grid-row">
-					<div class="ui-grid-col-4 ui-sm-12">		
-						<div class="form-group">
-							<label for="location">{{ 'COMMON.LOCATION' | translate }}</label>
-							<p-autoComplete [(ngModel)]="appointment.hospitalLocation"
-								(onDropdownClick)="hospitalLocationDropdown.handleDropdownClick($event)"
-								[suggestions]="hospitalLocationDropdown.filteredLocations" [dropdown]="true"
-								id="location" (completeMethod)="hospitalLocationDropdown.filter($event)"
-								name="location" field="name" [size]="30" placeholder=""
-								[minLength]="1"></p-autoComplete>
-						</div>
-					</div>
-					<div class="ui-grid-col-4 ui-sm-12">
-						<div class="form-group">
-							<label for="department">{{ 'COMMON.DEPARTMENT' | translate }}</label>
-							<p-autoComplete [(ngModel)]="appointment.department" 
-								(onDropdownClick)="departmentDropdown.handleDropdownClick($event)"
-								[suggestions]="departmentDropdown.filteredDepartments" [dropdown]="true"
-								id="department" (completeMethod)="departmentDropdown.filter($event)"
-								name="department" field="name" [size]="30" placeholder=""
-								[minLength]="1"></p-autoComplete>
-						</div>
-					</div>
-					<div class="ui-grid-col-4 ui-sm-12">
-						<div class="form-group">
-							<label for="doctor">{{ 'COMMON.DOCTOR' | translate }}<font color="red">*</font></label> 
-							<p-autoComplete [(ngModel)]="appointment.doctor" 
-								(onSelect)="appointment.department = appointment.doctor.department"
-								(onDropdownClick)="doctorDropdown.handleDropdownClick($event)"
-								[suggestions]="doctorDropdown.filteredDoctors" [dropdown]="true"
-								id="doctor" (completeMethod)="doctorDropdown.filter($event)"
-								name="doctor" field="name" [size]="30" placeholder=""
-								[minLength]="1"></p-autoComplete>
-						</div>
-					</div>
-				</div>
-				<div class="ui-grid-row">
-					<div class="ui-grid-col-4 ui-sm-12">
-						<button type="button" pButton icon="fa fa-search" (click)="getAppointments()" label="Go"></button>		
-					</div>
-				</div>
-				
-			</div>
-		</div>
-		<p-schedule [events]="events" [header]="headerConfig" (onDayClick)="addEventClick($event)" 
-			(onEventClick)="editEventClick($event)"></p-schedule>
-			
-	</div>
+<div class="ui-grid-row">
+  <p-messages [(value)]="messages"></p-messages>
+  <p-dialog header="{{ 'COMMON.APPOINTMENT' | translate }}" [(visible)]="displayEdit" [width]="400">
+    <div class="ui-g-12 ui-sm-12" style="padding: 15px;">
+      <div class="ui-grid ui-grid-responsive ui-fluid">
+        <div class="ui-grid-row">
+          {{ 'COMMON.DATE' | translate }}:&nbsp;&nbsp;
+          <strong>{{appointment.appointmentDate | date:'MM/dd/yyyy'}}</strong>
+        </div>
+        <div class="ui-grid-row"> {{ 'COMMON.PERIOD' | translate }}:&nbsp;&nbsp;
+          <strong>{{appointment.beginTime}} --> {{appointment.endTime}}</strong>
+        </div>
+        <div class="ui-grid-row"> {{ 'COMMON.DEPARTMENT' | translate }}:&nbsp;&nbsp;
+          <strong>{{appointment.department.name}}</strong>
+        </div>
+        <div class="ui-grid-row"> {{ 'COMMON.DOCTOR' | translate }}:&nbsp;&nbsp;
+          <strong>{{appointment.doctor.name}}</strong>
+        </div>
+        <div class="ui-grid-row">
+          {{ 'COMMON.PATIENT' | translate }}:&nbsp;&nbsp;
+          <strong>{{appointment.patient.name}}</strong>
+        </div>
+        <div class="ui-grid-row">
+            <div class="form-group">
+              <label for="problem">{{ 'COMMON.PROBLEM' | translate }}<font color="red">*</font></label>
+              <textarea pInputTextarea id="problem" [(ngModel)]="appointment.problem" #problem="ngModel"> </textarea>
+            </div>
+        </div>
+        <div class="ui-grid-row">
+          <button type="button" pButton icon="fa fa-close" (click)="save(0)" label="{{ 'COMMON.CANCEL' | translate }}"
+            [disabled]="appointment.id == null || appointment.id <= 0 || appointment.status == 0"></button>&nbsp;&nbsp;
+
+          <button type="button" pButton icon="fa fa-check" (click)="save(1)" label="{{ 'COMMON.SAVE' | translate }}"
+            [disabled]="!(appointment.status == 0 || appointment.status == 1) && appointment.id != null"></button>
+          &nbsp;&nbsp;
+          <button type="button" pButton icon="fa fa-check" (click)="save(2)" label="{{ 'COMMON.CONFIRM' | translate }}"
+            [disabled]="appointment.id == null || appointment.id <= 0 || appointment.status != 1"></button>
+
+        </div>
+      </div>
+
+    </div>
+  </p-dialog>
+  <div class="ui-g-12 ui-sm-12" style="padding: 10px;">
+    <div class="ui-grid-row">
+      <div class="ui-grid-col-4 ui-sm-12">
+        <app-patient-lookup (patientEmit)="lookUpPatient($event)" [originalPage]="'admin/appointmentScheduler'"
+          [patient]="appointment.patient"></app-patient-lookup>
+      </div>
+      <div class="ui-grid-col-8 ui-sm-12">
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-4 ui-sm-12">
+            <div class="form-group">
+              <label for="location">{{ 'COMMON.LOCATION' | translate }}</label>
+              <p-autoComplete [(ngModel)]="appointment.hospitalLocation"
+                (onDropdownClick)="hospitalLocationDropdown.handleDropdownClick($event)"
+                [suggestions]="hospitalLocationDropdown.filteredLocations" [dropdown]="true" id="location"
+                (completeMethod)="hospitalLocationDropdown.filter($event)" name="location" field="name" placeholder=""
+                [minLength]="1"></p-autoComplete>
+            </div>
+          </div>
+          <div class="ui-grid-col-4 ui-sm-12">
+            <div class="form-group">
+              <label for="department">{{ 'COMMON.DEPARTMENT' | translate }}</label>
+              <p-autoComplete [(ngModel)]="appointment.department"
+                (onDropdownClick)="departmentDropdown.handleDropdownClick($event)"
+                [suggestions]="departmentDropdown.filteredDepartments" [dropdown]="true" id="department"
+                (completeMethod)="departmentDropdown.filter($event)" name="department" field="name" placeholder=""
+                [minLength]="1"></p-autoComplete>
+            </div>
+          </div>
+          <div class="ui-grid-col-3 ui-sm-12">
+            <div class="form-group">
+              <label for="doctor">{{ 'COMMON.DOCTOR' | translate }}<font color="red">*</font></label>
+              <p-autoComplete [(ngModel)]="appointment.doctor"
+                (onSelect)="appointment.department = appointment.doctor.department"
+                (onDropdownClick)="doctorDropdown.handleDropdownClick($event)"
+                [suggestions]="doctorDropdown.filteredDoctors" [dropdown]="true" id="doctor" size="15"
+                (completeMethod)="doctorDropdown.filter($event)" name="doctor" field="name" placeholder=""
+                [minLength]="1"></p-autoComplete>
+            </div>
+
+          </div>
+          <div class="ui-grid-col-1 ui-sm-12">
+            <br />
+            <button type="button" pButton icon="fa fa-search" (click)="getAppointments()" label="Go"></button></div>
+        </div>
+      </div>
+    </div>
+    <p-schedule [events]="events" [header]="headerConfig" (onDayClick)="addEventClick($event)"
+      (onEventClick)="editEventClick($event)"></p-schedule>
+
+  </div>
 </div>
- 

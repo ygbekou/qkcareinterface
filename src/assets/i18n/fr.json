@@ -1,6 +1,6 @@
 {
   "COMMON": {
-    "SELECT": "Choisir une Langue",
+    "SELECT": "Sélectionner",
     "DEMOGRAPHIC_INFO": "Information démographique",
     "CONTACT_INFO": "Contact",
     "PAYER_INFO": "Contact Payeur",
@@ -323,7 +323,8 @@
 	"SCHEDULE": "Calendrier",
 	"INBOX": "Boite de reception",
 	"END":"Terminer",
-	"PATIENT":"Patient"
+	"PATIENT":"Patient",
+	"PERIOD":"Période"
   },
   "MESSAGE": {
     "TRANFER_DOCTOR_FAILED": "Le nouveau docteur assigné doit être différent de l'ancien.",
