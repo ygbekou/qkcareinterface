@@ -7,6 +7,8 @@ import { DoctorOrderTypeDropdown, DoctorOrderPriorityDropdown, DoctorOrderKindDr
 import { Cookie } from 'ng2-cookies/ng2-cookies';
 import { GenericService, VisitService } from '../../services';
 import { Message } from 'primeng/api';
+import { BaseComponent } from './baseComponent';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-doctorOrder-details',
@@ -14,7 +16,7 @@ import { Message } from 'primeng/api';
   providers: [GenericService, VisitService, DoctorDropdown, DoctorOrderTypeDropdown, ProductDropdown,
     DoctorOrderPriorityDropdown, DoctorOrderKindDropdown, LabTestDropdown]
 })
-export class DoctorOrderDetails implements OnInit, OnDestroy {
+export class DoctorOrderDetails extends BaseComponent implements OnInit, OnDestroy {
 
   doctorOrder: DoctorOrder = new DoctorOrder();
   user: User;
@@ -33,7 +35,8 @@ export class DoctorOrderDetails implements OnInit, OnDestroy {
   constructor
     (
       private genericService: GenericService,
-      private visitService: VisitService,
+	  private visitService: VisitService,
+	  private translate: TranslateService,
       private doctorOrderTypeDropdown: DoctorOrderTypeDropdown,
       private doctorOrderPriorityDropdown: DoctorOrderPriorityDropdown,
       private doctorOrderKindDropdown: DoctorOrderKindDropdown,
@@ -44,6 +47,7 @@ export class DoctorOrderDetails implements OnInit, OnDestroy {
       private route: ActivatedRoute,
       private router: Router
     ) {
+	super(translate);
     this.user = new User();
   }
 
@@ -85,12 +89,11 @@ export class DoctorOrderDetails implements OnInit, OnDestroy {
       this.visitService.saveDoctorOrder(this.doctorOrder)
         .subscribe(result => {
           if (result.id > 0) {
-            this.doctorOrder = result;
-			this.messages.push({severity:Constants.SUCCESS, summary:Constants.SAVE_LABEL, detail:Constants.SAVE_SUCCESSFUL});
-			this.doctorOrderSaveEvent.emit(this.doctorOrder);
+			  	this.processResult(result, this.doctorOrder, this.messages, null);
+		  		this.doctorOrderSaveEvent.emit(this.doctorOrder);
           }
           else {
-            this.messages.push({severity:Constants.ERROR, summary:Constants.SAVE_LABEL, detail:Constants.SAVE_UNSUCCESSFUL});
+            	this.processResult(result, this.doctorOrder, this.messages, null);
           }
         })
     }
