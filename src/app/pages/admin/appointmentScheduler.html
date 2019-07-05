@@ -1,8 +1,18 @@
 <div class="ui-grid-row">
   <p-messages [(value)]="messages"></p-messages>
   <p-dialog header="{{ 'COMMON.APPOINTMENT' | translate }}" [(visible)]="displayEdit" [width]="400">
-    <div class="ui-g-12 ui-sm-12" style="padding: 15px;">
+    <div class="ui-g-12 ui-sm-12" >
       <div class="ui-grid ui-grid-responsive ui-fluid">
+        <div class="ui-grid-row">
+          <button *ngIf="appointment.id != null&&appointment.status===0" pButton type="button"
+            label="{{'COMMON.RESERVED'|translate}}" class="ui-button-success"></button>
+          <button *ngIf="appointment.id != null&&appointment.status===1" pButton type="button"
+            label="{{'COMMON.CONFIRMED'|translate}}" class="ui-button-danger"></button>
+
+          <button *ngIf="appointment.id === null||appointment.status===3" pButton type="button"
+            label="{{'COMMON.AVAILABLE'|translate}}"></button>
+        </div>
+
         <div class="ui-grid-row">
           {{ 'COMMON.DATE' | translate }}:&nbsp;&nbsp;
           <strong>{{appointment.appointmentDate | date:'MM/dd/yyyy'}}</strong>
@@ -21,20 +31,19 @@
           <strong>{{appointment.patient.name}}</strong>
         </div>
         <div class="ui-grid-row">
-            <div class="form-group">
-              <label for="problem">{{ 'COMMON.PROBLEM' | translate }}<font color="red">*</font></label>
-              <textarea pInputTextarea id="problem" [(ngModel)]="appointment.problem" #problem="ngModel"> </textarea>
-            </div>
+          <div class="form-group">
+            <label for="problem">{{ 'COMMON.PROBLEM' | translate }}<font color="red">*</font></label>
+            <textarea pInputTextarea id="problem" [(ngModel)]="appointment.problem" #problem="ngModel"> </textarea>
+          </div>
         </div>
         <div class="ui-grid-row">
-          <button type="button" pButton icon="fa fa-close" (click)="save(0)" label="{{ 'COMMON.CANCEL' | translate }}"
-            [disabled]="appointment.id == null || appointment.id <= 0 || appointment.status == 0"></button>&nbsp;&nbsp;
+          <button type="button" pButton icon="fa fa-close" (click)="save(3)" label="{{ 'COMMON.CANCEL' | translate }}"
+            [disabled]="appointment.id == null || appointment.id <= 0 || appointment.status ===3"></button>&nbsp;&nbsp;
 
-          <button type="button" pButton icon="fa fa-check" (click)="save(1)" label="{{ 'COMMON.SAVE' | translate }}"
-            [disabled]="!(appointment.status == 0 || appointment.status == 1) && appointment.id != null"></button>
+          <button type="button" pButton icon="fa fa-check" (click)="save(0)" label="{{ 'COMMON.RESERVE' | translate }}"></button>
           &nbsp;&nbsp;
-          <button type="button" pButton icon="fa fa-check" (click)="save(2)" label="{{ 'COMMON.CONFIRM' | translate }}"
-            [disabled]="appointment.id == null || appointment.id <= 0 || appointment.status != 1"></button>
+          <button type="button" pButton icon="fa fa-check" (click)="save(1)" label="{{ 'COMMON.CONFIRM' | translate }}"
+            [disabled]="appointment.id != null && appointment.status === 1"></button>
 
         </div>
       </div>
@@ -71,7 +80,7 @@
           </div>
           <div class="ui-grid-col-3 ui-sm-12">
             <div class="form-group">
-              <label for="doctor">{{ 'COMMON.DOCTOR' | translate }}<font color="red">*</font></label>
+              <label for="doctor">{{'COMMON.DOCTOR'|translate}}<font color="red">*</font></label>
               <p-autoComplete [(ngModel)]="appointment.doctor"
                 (onSelect)="appointment.department = appointment.doctor.department"
                 (onDropdownClick)="doctorDropdown.handleDropdownClick($event)"
@@ -87,6 +96,12 @@
         </div>
       </div>
     </div>
+
+    {{'COMMON.LEGEND'|translate}}
+    <button pButton type="button" label="{{'COMMON.RESERVED'|translate}}" class="ui-button-success"></button>
+    <button pButton type="button" label="{{'COMMON.CONFIRMED'|translate}}" class="ui-button-danger"></button>
+    <button pButton type="button" label="{{'COMMON.AVAILABLE'|translate}}"></button>
+
     <p-schedule [events]="events" [header]="headerConfig" (onDayClick)="addEventClick($event)"
       (onEventClick)="editEventClick($event)"></p-schedule>
 
