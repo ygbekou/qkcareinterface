@@ -12,7 +12,7 @@
 			</ng-template>
 		    <ng-template pTemplate="header" let-columns>
 		        <tr>
-		            <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+		            <th *ngFor="let col of columns" [pSortableColumn]="col.field" [ngStyle]="col.style">
 		                {{col.header}}
 		                <p-sortIcon [field]="col.field"></p-sortIcon>
 		            </th>
@@ -31,7 +31,7 @@
 		            </td>
 		            <td>
 		            	<button type="button" pButton icon="fa fa-edit" (click)="edit(rowData.id)"></button>&nbsp;&nbsp;
-						<button type="button" pButton icon="fa fa-eraser" (click)="delete(rowData.id)"></button>
+						<button type="button" pButton icon="fa fa-eraser" (click)="deleteItem(vitalSigns, rowData.id, 'VitalSign')"></button>
 		            </td>
 		        </tr>
 		    </ng-template>

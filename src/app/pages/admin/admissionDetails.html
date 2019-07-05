@@ -157,7 +157,7 @@
 			<app-admissionDiagnoses [admission]="admission"></app-admissionDiagnoses>
 		</p-tabPanel>
 		<p-tabPanel header="PRESCRIPTIONS" *ngIf="admission && admission.id > 0">
-			<app-prescription-details></app-prescription-details><br /><br />
+			<app-prescription-details [admission]="admission"></app-prescription-details><br/>
 			<app-prescription-list [admission]="admission" (prescriptionIdEvent)="onPrescriptionSelected($event)">
 			</app-prescription-list>
 		</p-tabPanel>

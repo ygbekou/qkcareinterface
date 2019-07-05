@@ -4,7 +4,7 @@ import { Constants } from '../../app.constants';
 import { ReportView, Parameter, User, UserGroup, Patient } from '../../models';
 import { CountryDropdown, ReligionDropdown, OccupationDropdown, PayerTypeDropdown, InsuranceDropdown } from '../dropdowns';
 import { GenericService, UserService, ReportService, GlobalEventsManager } from '../../services';
-import { Message } from 'primeng/api';
+import { Message, ConfirmationService } from 'primeng/api';
 import { TranslateService } from '@ngx-translate/core';
 import { BaseComponent } from './baseComponent';
 
@@ -34,11 +34,12 @@ export class PatientDetails extends BaseComponent implements OnInit, OnDestroy {
 
 	constructor
 		(
-			private genericService: GenericService,
+			public genericService: GenericService,
 			private userService: UserService,
 			private reportService: ReportService,
 			public globalEventsManager: GlobalEventsManager,
-			private translate: TranslateService,
+			public translate: TranslateService,
+			public confirmationService: ConfirmationService,
 			private countryDropdown: CountryDropdown,
 			private religionDropdown: ReligionDropdown,
 			private occupationDropdown: OccupationDropdown,
@@ -48,7 +49,7 @@ export class PatientDetails extends BaseComponent implements OnInit, OnDestroy {
 			private route: ActivatedRoute,
 			private router: Router
 		) {
-		super(translate);
+		super(genericService, translate, confirmationService);
 		this.patient.user = new User();
 	}
 

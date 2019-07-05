@@ -97,7 +97,7 @@
 				<app-admissionDiagnoses [visit]="visit"></app-admissionDiagnoses> 
 			</p-tabPanel> 
 			<p-tabPanel header="PRESCRIPTIONS" *ngIf="visit.id > 0"> 
-				<app-prescription-details></app-prescription-details><br /><br />
+				<app-prescription-details [visit]="visit"></app-prescription-details><br /><br />
 				<app-prescription-list [visit]="visit" (prescriptionIdEvent)="onPrescriptionSelected($event)"></app-prescription-list>
 			</p-tabPanel> 
 			<p-tabPanel header="INVESTIGATIONS" *ngIf="visit.id > 0">

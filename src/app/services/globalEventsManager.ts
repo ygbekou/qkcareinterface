@@ -21,7 +21,7 @@ export class GlobalEventsManager {
 	selectedAdmissionId: number;
 
 	public DATE_FORMAT = 'MM/dd/yyyy';
-	public DATE_TIME_FORMAT = 'MM/dd/yyyy HH:mm:ss';
+	public DATE_TIME_FORMAT = 'MM/dd/yyyy HH:mm';
 	public CAL_DATE_FORMAT = 'mm/dd/yy';
 	public LOCALE = 'en-US';
 

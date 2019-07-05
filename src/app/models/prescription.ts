@@ -12,7 +12,7 @@ export class Prescription {
   prescriptionType: string;
   prescriptionDatetime: Date;
   notes: string;
-  isDischarge: boolean;
+  isDischarge: boolean = false;
   status: number;
   
   prescriptionMedicines: PrescriptionMedicine[] = [];

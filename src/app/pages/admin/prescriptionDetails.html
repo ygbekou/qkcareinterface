@@ -4,10 +4,11 @@
 		<div class="ui-grid-row">
 			<div class="ui-grid-col-2 ui-sm-12">
 				<div class="form-group">
-					<label for="prescriptionDatetime">{{ 'COMMON.PRESCRIPTION_DATETIME' | translate }}<font color="red">*</font></label> 
+					<label for="prescriptionDatetime">{{ 'COMMON.PRESCRIPTION_DATETIME' | translate }} {{globalEventsManager.DATE_TIME_FORMAT}}<font color="red">*</font></label> 
 					<p-calendar [(ngModel)]="prescription.prescriptionDatetime" [showTime]="true" required
 						name="prescriptionDatetime"  #prescriptionDatetime="ngModel"></p-calendar>
-					<p-message *ngIf="invalidDatetime" severity="error" text="Field is required"></p-message>
+					<p-message *ngIf="invalidDatetime" severity="error"
+                		text="{{ 'COMMON.PRESCRIPTION_DATETIME' | translate }} {{ 'VALIDATION.IS_REQUIRED' | translate }}"></p-message>
 				</div>
 			</div>
 			<div class="ui-grid-col-2 ui-sm-12">
@@ -19,7 +20,8 @@
 						<p-radioButton name="prescriptionType" value="OLD" label="Old" [(ngModel)]="prescription.prescriptionType"
 							name="prescriptionType"  #prescriptionType="ngModel" required></p-radioButton>
 					</div>
-					<p-message *ngIf="invalidType" severity="error" text="Field is required"></p-message>
+					<p-message *ngIf="invalidType" severity="error"
+                		text="{{ 'COMMON.PRESCRIPTION_TYPE' | translate }} {{ 'VALIDATION.IS_REQUIRED' | translate }}"></p-message>
 				</div>
 			</div>
 			<div class="ui-grid-col-2 ui-sm-12">
@@ -37,7 +39,6 @@
 				</div>
 			</div>
 		</div>
-		<br/>
 		<div class="ui-grid-row">
 			<div class="ui-grid-col-12 ui-sm-12">
 				<p-table [columns]="medicineCols" [value]="prescription.prescriptionMedicines">
@@ -46,7 +47,7 @@
 				    </ng-template>
 				    <ng-template pTemplate="header" let-medicineCols>
 				        <tr>
-				            <th *ngFor="let col of medicineCols" [pSortableColumn]="col.field">
+				            <th *ngFor="let col of medicineCols" [pSortableColumn]="col.field" [ngStyle]="col.style">
 				                {{col.header}}
 				                <p-sortIcon [field]="col.field"></p-sortIcon>
 				            </th>
@@ -66,7 +67,7 @@
 				                </p-cellEditor>
 				            	<p-cellEditor *ngIf="col.field == 'dosage' || col.field == 'frequency' ">
 				                    <ng-template pTemplate="input">
-				                        <input type="text" [(ngModel)]="rowData[col.field]" >
+				                        <input type="text" [(ngModel)]="rowData[col.field]">
 				                    </ng-template>
 				                    <ng-template pTemplate="output">
 				                        {{rowData[col.field]}}
@@ -104,8 +105,7 @@
 				</p-table>
 			</div>
 		</div>
-	
-		<br/>
+
 		<br />
 			
 		<div class="ui-grid-row">
@@ -116,7 +116,7 @@
 				    </ng-template>
 				    <ng-template pTemplate="header" let-diagnosisCols>
 				        <tr>
-				            <th *ngFor="let col of diagnosisCols" [pSortableColumn]="col.field">
+				            <th *ngFor="let col of diagnosisCols" [pSortableColumn]="col.field" [ngStyle]="col.style">
 				                {{col.header}}
 				                <p-sortIcon [field]="col.field"></p-sortIcon>
 				            </th>
@@ -146,10 +146,11 @@
 		</div>
 	</div>
 	<br/>
-	<br/>
 	<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
 		<button type="button" pButton icon="fa fa-refresh" (click)="addNew()" label="Effacer"></button>&nbsp;&nbsp;
-		<button pButton icon="fa fa-save" (click)="save()" label="Save"></button>&nbsp;&nbsp;
-		<button type="button" pButton icon="fa fa-remove" (click)="delete()" label="Delete"></button>
+		<button pButton icon="fa fa-save" label="{{ 'COMMON.SAVE' | translate }}" (click)="save()"
+			[disabled]="!prescription.prescriptionDatetime || !prescription.prescriptionType 
+			|| !prescription.prescriptionMedicines[0].medicine.name"></button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<button type="button" pButton icon="fa fa-remove" (click)="deleteItem()" label="Delete"></button>
 	</div>
 

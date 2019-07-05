@@ -116,6 +116,7 @@ import { ContactDetails } from '../components/admin/contactDetails';
 import { ContactList } from '../components/admin/contactList';
 import { Dashboard } from '../components/admin/dashboard';
 import { CurrencyMaskModule } from 'ng2-currency-mask';
+import { ConfirmationService } from 'primeng/api';
 
 const routes: Routes = [
   { path: 'adminMain', component: AdminMain },
@@ -234,7 +235,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     CompanyDetails, CompanyList, ContactDetails, ContactList, Dashboard],
 
   providers: [
-    CategoryDropdown, PackageDropdown, DoctorDropdown, TokenStorage, BillingService, VisitService, LoggedInGuard]
+    CategoryDropdown, PackageDropdown, DoctorDropdown, TokenStorage, BillingService, VisitService, LoggedInGuard, ConfirmationService]
 })
 
 export class AdminModule { }

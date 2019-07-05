@@ -1,19 +1,17 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild, Input, EventEmitter, Output } from '@angular/core';
-import { Employee, Visit, User, Admission, Prescription } from '../../models';
-import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
-import { Constants } from '../../app.constants';
-import { FileUploader } from './fileUploader';
-import { Cookie } from 'ng2-cookies/ng2-cookies';
-import { DataTableModule, DialogModule, InputTextareaModule, CheckboxModule } from 'primeng/primeng';
+import { Component, OnInit, OnDestroy, Input, EventEmitter, Output } from '@angular/core';
+import { Visit, Admission, Prescription } from '../../models';
+import { Router, NavigationExtras } from '@angular/router';
 import { GenericService, AdmissionService, GlobalEventsManager } from '../../services';
 import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
+import { ConfirmationService } from 'primeng/api';
+import { BaseComponent } from './baseComponent';
 
 @Component({
   selector: 'app-prescription-list',
   templateUrl: '../../pages/admin/prescriptionList.html',
   providers: [GenericService, AdmissionService]
 })
-export class PrescriptionList implements OnInit, OnDestroy {
+export class PrescriptionList extends BaseComponent implements OnInit, OnDestroy {
   
   prescriptions: Prescription[] = [];
   cols: any[];
@@ -24,23 +22,26 @@ export class PrescriptionList implements OnInit, OnDestroy {
   
   constructor
     (
-    private globalEventsManager: GlobalEventsManager,
-    private genericService: GenericService,
+    public globalEventsManager: GlobalEventsManager,
+    public genericService: GenericService,
     private admissionService: AdmissionService,
-    private translate: TranslateService,
-    private changeDetectorRef: ChangeDetectorRef,
-    private route: ActivatedRoute,
+	public translate: TranslateService,
+	public confirmationService: ConfirmationService,
     private router: Router,
     ) {
-
+		super(genericService, translate, confirmationService);
   }
 
   ngOnInit(): void {
     this.cols = [
-            { field: 'prescriptionDatetime', header: 'Date', headerKey: 'COMMON.PRESCRIPTION_DATETIME', type: 'Date' },
-            { field: 'prescriptionTypeName', header: 'Type', headerKey: 'COMMON.PRESCRIPTION_TYPE' },
-            { field: 'notes', header: 'Notes', headerKey: 'COMMON.NOTES' },
-            { field: 'isDischargeDesc', header: 'Is Discharge', headerKey: 'COMMON.IS_DISCHARGE'}
+            { field: 'prescriptionDatetime', header: 'Date', headerKey: 'COMMON.PRESCRIPTION_DATETIME', type: 'date_time',
+                                        style: {width: '15%', 'text-align': 'center'} },
+            { field: 'prescriptionTypeName', header: 'Type', headerKey: 'COMMON.PRESCRIPTION_TYPE', type: 'string',
+                                        style: {width: '20%', 'text-align': 'center'} },
+            { field: 'notes', header: 'Notes', headerKey: 'COMMON.NOTES', type: 'string',
+                                        style: {width: '45%', 'text-align': 'center'} },
+            { field: 'isDischargeDesc', header: 'Discharge', headerKey: 'COMMON.DISCHARGE', type: 'string',
+                                        style: {width: '10%', 'text-align': 'center'}}
         ];
     this.getPrescriptions();
   

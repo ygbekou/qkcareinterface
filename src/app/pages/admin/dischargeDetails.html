@@ -4,11 +4,12 @@
 		<div class="ui-grid-row">
 			<div class="ui-grid-col-6 ui-sm-12">
 				<div class="form-group">
-					<label for="admittanceReason">{{ 'COMMON.ADMITTANCE_REASON' | translate }}</label> 
+					<label for="admittanceReason">{{ 'COMMON.ADMITTANCE_REASON' | translate }}<font color="red">*</font></label> 
 					<textarea pInputTextarea id="admittanceReason" rows="4" cols="100" pInputTextarea maxlength="2000" 
 						[(ngModel)]="discharge.admittanceReason" name="admittanceReason" #admittanceReason="ngModel" required> 
 					</textarea>		
-					<p-message *ngIf="f.submitted && admittanceReason.invalid" severity="error" text="Field is required"></p-message>					
+					<p-message *ngIf="f.submitted && admittanceReason.invalid" severity="error" 
+						text="{{'COMMON.ADMITTANCE_REASON' | translate}} {{'VALIDATION.IS_REQUIRED' | translate}}"></p-message>					
 				</div>
 			</div>
 		</div>
@@ -20,7 +21,7 @@
 				</ng-template>
 			    <ng-template pTemplate="header" let-diagnosisCols>
 			        <tr>
-			            <th *ngFor="let col of diagnosisCols" [pSortableColumn]="col.field">
+			            <th *ngFor="let col of diagnosisCols" [pSortableColumn]="col.field" [ngStyle]="col.style">
 			                {{col.header}}
 			                <p-sortIcon [field]="col.field"></p-sortIcon>
 			            </th>
@@ -53,7 +54,8 @@
 					<textarea pInputTextarea id="treatmentSummary" rows="4" cols="100" pInputTextarea maxlength="2000" 
 						[(ngModel)]="discharge.treatmentSummary" name="treatmentSummary" #treatmentSummary="ngModel" required> 
 					</textarea>		
-					<p-message *ngIf="f.submitted && treatmentSummary.invalid" severity="error" text="Field is required"></p-message>					
+					<p-message *ngIf="f.submitted && treatmentSummary.invalid" severity="error" 
+						text="{{'COMMON.TREATMENT_SUMMARY' | translate}} {{'VALIDATION.IS_REQUIRED' | translate}}"></p-message>						
 				</div>
 			</div>
 		</div>
@@ -64,7 +66,8 @@
 					<label for="dischargeDatetime">{{ 'COMMON.DISCHARGE_DATETIME' | translate }}<font color="red">*</font></label> 
 					<p-calendar [(ngModel)]="discharge.dischargeDatetime" [showTime]="true" name="dischargeDatetime" 
 						#dischargeDatetime="ngModel" required></p-calendar>
-					<p-message *ngIf="f.submitted && dischargeDatetime.invalid" severity="error" text="Field is required"></p-message>
+					<p-message *ngIf="f.submitted && dischargeDatetime.invalid" severity="error" 
+						text="{{'COMMON.TREATMENT_SUMMARY' | translate}} {{'VALIDATION.IS_REQUIRED' | translate}}"></p-message>	
 				</div>
 			</div>
 			<div class="ui-grid-col-2 ui-sm-12">
@@ -138,7 +141,7 @@
 				</ng-template>
 			    <ng-template pTemplate="header" let-medicineCols>
 			        <tr>
-			            <th *ngFor="let col of medicineCols" [pSortableColumn]="col.field">
+			            <th *ngFor="let col of medicineCols" [pSortableColumn]="col.field" [ngStyle]="col.style">
 			                {{col.header}}
 			                <p-sortIcon [field]="col.field"></p-sortIcon>
 			            </th>
@@ -177,8 +180,8 @@
         <br/>
 	</div>
 	<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
-		<button pButton icon="fa fa-check" label="{{ 'COMMON.SAVE' | translate }}"></button>&nbsp;&nbsp;
-		<button type="button" pButton icon="fa fa-close" (click)="delete()" label="{{ 'COMMON.DELETE' | translate }}"></button>
+		<button pButton icon="fa fa-check" label="{{ 'COMMON.SAVE' | translate }}" [disabled]="!f.form.valid"></button>&nbsp;&nbsp;
+		<button type="button" pButton icon="fa fa-close" (click)="deleteItem([], discharge.id, 'Discharge')" label="{{ 'COMMON.DELETE' | translate }}"></button>
 	</div>
 
 </form>

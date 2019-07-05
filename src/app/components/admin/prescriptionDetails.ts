@@ -1,15 +1,13 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild, Input } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Constants } from '../../app.constants';
-import { Admission, Appointment, Diagnosis, Product, Patient, Prescription, PrescriptionDiagnosis, 
-        PrescriptionMedicine, User, Visit } from '../../models';
-import { EditorModule } from 'primeng/editor';
-import { DoctorDropdown, MedicineDropdown } from '../dropdowns';
-import { Cookie } from 'ng2-cookies/ng2-cookies';
-import { InputTextareaModule, CheckboxModule, CalendarModule } from 'primeng/primeng';
+import { Admission, Product, Prescription, PrescriptionDiagnosis,
+        PrescriptionMedicine, Visit } from '../../models';
+import { MedicineDropdown } from '../dropdowns';
 import { GenericService, AdmissionService, GlobalEventsManager } from '../../services';
 import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
-import { Message } from 'primeng/api';
+import { Message, ConfirmationService } from 'primeng/api';
+import { BaseComponent } from './baseComponent';
 
 
 @Component({
@@ -17,51 +15,59 @@ import { Message } from 'primeng/api';
   templateUrl: '../../pages/admin/prescriptionDetails.html',
   providers: [GenericService, AdmissionService, MedicineDropdown]
 })
-export class PrescriptionDetails implements OnInit, OnDestroy {
-  
+export class PrescriptionDetails extends BaseComponent implements OnInit, OnDestroy {
+
   prescription: Prescription = new Prescription();
   medicineCols: any[];
   diagnosisCols: any[];
-  
+
   messages: Message[] = [];
-  
+
   @Input() admission: Admission;
   @Input() visit: Visit;
-  
-  invalidDatetime: boolean = false;
-  invalidType: boolean = false;
-  
+
+  invalidDatetime = false;
+  invalidType = false;
+
   constructor
     (
-      private globalEventsManager: GlobalEventsManager,
+      public globalEventsManager: GlobalEventsManager,
       private genericService: GenericService,
       private admissionService: AdmissionService,
-      private translate: TranslateService,
+	  private translate: TranslateService,
+	  public confirmationService: ConfirmationService,
       private medicineDropdown: MedicineDropdown,
-      private changeDetectorRef: ChangeDetectorRef,
       private route: ActivatedRoute,
       private router: Router
     ) {
-    
+		super(genericService, translate, confirmationService);
   }
 
   ngOnInit(): void {
 
      this.medicineCols = [
-            { field: 'medicine', header: 'Medicine', headerKey: 'COMMON.MEDICINE' },
-            { field: 'medicineType', header: 'Medicine Type', headerKey: 'COMMON.MEDICINE_TYPE' },
-            { field: 'dosage', header: 'Dosage', headerKey: 'COMMON.DOSAGE' },
-            { field: 'quantity', header: 'Quantity', headerKey: 'COMMON.QUANTITY' },
-            { field: 'frequency', header: 'Frequency', headerKey: 'COMMON.FREQUENCY' },
-            { field: 'numberOfDays', header: 'Number Of Days', headerKey: 'COMMON.NUMBER_OD_DAYS' }
+            { field: 'medicine', header: 'Medicine', headerKey: 'COMMON.MEDICINE', type: 'string',
+                                        style: {width: '20%', 'text-align': 'center'} },
+            { field: 'medicineType', header: 'Medicine Type', headerKey: 'COMMON.MEDICINE_TYPE', type: 'string',
+                                        style: {width: '30%', 'text-align': 'center'} },
+            { field: 'dosage', header: 'Dosage', headerKey: 'COMMON.DOSAGE', type: 'string',
+                                        style: {width: '10%', 'text-align': 'center'} },
+            { field: 'quantity', header: 'Quantity', headerKey: 'COMMON.QUANTITY', type: 'int',
+                                        style: {width: '10%', 'text-align': 'center'} },
+            { field: 'frequency', header: 'Frequency', headerKey: 'COMMON.FREQUENCY', type: 'string',
+                                        style: {width: '10%', 'text-align': 'center'} },
+            { field: 'numberOfDays', header: 'Number Of Days', headerKey: 'COMMON.NUMBER_OF_DAYS', type: 'int',
+                                        style: {width: '10%', 'text-align': 'center'} }
         ];
-    
+
      this.diagnosisCols = [
-            { field: 'diagnosis', header: 'Diagnosis', headerKey: 'COMMON.DIAGNOSIS' },
-            { field: 'instructions', header: 'Instructions', headerKey: 'COMMON.INSTRUCTIONS'}
+            { field: 'diagnosis', header: 'Diagnosis', headerKey: 'COMMON.DIAGNOSIS', type: 'string',
+                                        style: {width: '30%', 'text-align': 'center'} },
+            { field: 'instructions', header: 'Instructions', headerKey: 'COMMON.INSTRUCTIONS', type: 'string',
+                                        style: {width: '60%', 'text-align': 'center'}}
         ];
-    
-    
+
+
      this.addNewDiagnosisRow();
      this.addNewMedicineRow();
 
@@ -70,78 +76,116 @@ export class PrescriptionDetails implements OnInit, OnDestroy {
       this.updateCols();
     });
   }
- 
-  
+
+
   updateCols() {
-    for (var index in this.medicineCols) {
-      let col = this.medicineCols[index];
+// tslint:disable-next-line: forin
+    for (const index in this.medicineCols) {
+      const col = this.medicineCols[index];
       this.translate.get(col.headerKey).subscribe((res: string) => {
         col.header = res;
       });
     }
-    
-    
-    for (var index in this.diagnosisCols) {
-      let col = this.diagnosisCols[index];
+
+
+// tslint:disable-next-line: forin
+    for (const index in this.diagnosisCols) {
+      const col = this.diagnosisCols[index];
       this.translate.get(col.headerKey).subscribe((res: string) => {
         col.header = res;
       });
     }
   }
-  
+
   addNewMedicineRow() {
-    let pm =  new PrescriptionMedicine();
+    const pm =  new PrescriptionMedicine();
     pm.medicine = new Product();
     this.prescription.prescriptionMedicines.push(pm);
   }
-  
+
   addNewDiagnosisRow() {
-    let pd =  new PrescriptionDiagnosis();
+    const pd =  new PrescriptionDiagnosis();
     this.prescription.prescriptionDiagnoses.push(pd);
   }
-  
+
   addNew() {
+	this.messages = [];
     this.prescription = new Prescription();
     this.addNewDiagnosisRow();
     this.addNewMedicineRow();
   }
-  
+
   ngOnDestroy() {
     this.prescription = null;
   }
-  
+
   validate() {
-    let noMedFound: boolean = true;
-    
+    let noMedFound = true;
+
     if (this.prescription.prescriptionDatetime == null) {
-      this.invalidDatetime = true;
-      this.messages.push({severity:Constants.ERROR, summary:Constants.SAVE_LABEL, detail:'Prescription Datetime is required.'});
+	  this.invalidDatetime = true;
+	  this.translate.get(['COMMON.SAVE', 'COMMON.PRESCRIPTION_DATETIME', 'VALIDATION.IS_REQUIRED']).subscribe(res => {
+            this.messages.push({
+                severity: Constants.ERROR, summary: res['COMMON.SAVE'],
+                detail: res['COMMON.PRESCRIPTION_DATETIME'] + ' ' + res['VALIDATION.IS_REQUIRED']
+            });
+        });
     }
     if (this.prescription.prescriptionType == null) {
       this.invalidType = true;
-      this.messages.push({severity:Constants.ERROR, summary:Constants.SAVE_LABEL, detail:'Prescription Type is required.'});
+      this.translate.get(['COMMON.SAVE', 'COMMON.PRESCRIPTION_TYPE', 'VALIDATION.IS_REQUIRED']).subscribe(res => {
+            this.messages.push({
+                severity: Constants.ERROR, summary: res['COMMON.SAVE'],
+                detail: res['COMMON.PRESCRIPTION_TYPE'] + ' ' + res['VALIDATION.IS_REQUIRED']
+            });
+        });
     }
 
-    for (let i in this.prescription.prescriptionMedicines) {
-      let pm = this.prescription.prescriptionMedicines[i];
+// tslint:disable-next-line: forin
+    for (const i in this.prescription.prescriptionMedicines) {
+      const pm = this.prescription.prescriptionMedicines[i];
       if (pm.medicine.id > 0) {
         noMedFound = false;
-        if (pm.dosage == null)
-          this.messages.push({severity:Constants.ERROR, summary:Constants.SAVE_LABEL, detail:'Dosage is required.'});
-        if (pm.quantity == null)
-          this.messages.push({severity:Constants.ERROR, summary:Constants.SAVE_LABEL, detail:'Quantity is required.'});
-        if (pm.frequency == null)
-          this.messages.push({severity:Constants.ERROR, summary:Constants.SAVE_LABEL, detail:'Frequency is required.'});
-        if (pm.numberOfDays == null)
-          this.messages.push({severity:Constants.ERROR, summary:Constants.SAVE_LABEL, detail:'Number of days is required.'});
+        if (pm.dosage == null) {
+          this.translate.get(['COMMON.SAVE', 'COMMON.DOSAGE', 'VALIDATION.IS_REQUIRED']).subscribe(res => {
+            this.messages.push({
+                severity: Constants.ERROR, summary: res['COMMON.SAVE'],
+                detail: res['COMMON.DOSAGE'] + ' ' + res['VALIDATION.IS_REQUIRED']
+            });
+        });
+        }
+        if (pm.quantity == null) {
+          this.translate.get(['COMMON.SAVE', 'COMMON.QUANTITY', 'VALIDATION.IS_REQUIRED']).subscribe(res => {
+            this.messages.push({
+                severity: Constants.ERROR, summary: res['COMMON.SAVE'],
+                detail: res['COMMON.QUANTITY'] + ' ' + res['VALIDATION.IS_REQUIRED']
+            });
+        });
+        }
+        if (pm.frequency == null) {
+          this.translate.get(['COMMON.SAVE', 'COMMON.FREQUENCY', 'VALIDATION.IS_REUIRED']).subscribe(res => {
+            this.messages.push({
+                severity: Constants.ERROR, summary: res['COMMON.SAVE'],
+                detail: res['COMMON.FREQUENCY'] + ' ' + res['VALIDATION.IS_REQUIRED']
+            });
+           });
+        }
+        if (pm.numberOfDays == null) {
+          this.translate.get(['COMMON.SAVE', 'COMMON.NUMBER_OF_DAYS', 'VALIDATION.IS_REUIRED']).subscribe(res => {
+            this.messages.push({
+                severity: Constants.ERROR, summary: res['COMMON.SAVE'],
+                detail: res['COMMON.NUMBER_OF_DAYS'] + ' ' + res['VALIDATION.IS_REQUIRED']
+            });
+        });
+        }
       }
     }
-    
+
     if (noMedFound) {
-      this.messages.push({severity:Constants.ERROR, summary:Constants.SAVE_LABEL, detail:'At least 1 medication is required.'});
+      this.messages.push({severity: Constants.ERROR, summary: Constants.SAVE_LABEL, detail: 'At least 1 medication is required.'});
     }
-    
-    return this.messages.length == 0;
+
+    return this.messages.length === 0;
   }
 
   save() {
@@ -149,28 +193,21 @@ export class PrescriptionDetails implements OnInit, OnDestroy {
     if (!this.validate()) {
       return;
     }
-    
+
     try {
       this.prescription.visit = this.visit;
-      this.prescription.admission = this.admission;
-      
+	  this.prescription.admission = this.admission;
+
       this.admissionService.savePrescription(this.prescription)
         .subscribe(result => {
-          if (result.id > 0) {
-            this.prescription = result;
-            this.messages.push({severity:Constants.SUCCESS, summary:Constants.SAVE_LABEL, detail:Constants.SAVE_SUCCESSFUL});
-          }
-          else {
-            this.messages.push({severity:Constants.ERROR, summary:Constants.SAVE_LABEL, detail:Constants.SAVE_UNSUCCESSFUL});
-          }
-        })
-    }
-    catch (e) {
+		this.processResult(result, this.prescription, this.messages, null);
+	});
+    } catch (e) {
       console.log(e);
     }
   }
-  
-  
+
+
   getPrescription(prescriptionId: number) {
     this.messages = [];
     this.invalidDatetime = false;
@@ -178,19 +215,16 @@ export class PrescriptionDetails implements OnInit, OnDestroy {
     this.admissionService.getPrescription(prescriptionId)
         .subscribe(result => {
       if (result.id > 0) {
-        this.prescription = result
+        this.prescription = result;
         this.prescription.prescriptionDatetime = new Date(this.prescription.prescriptionDatetime);
-        if (this.prescription.prescriptionMedicines.length == 0) {
+        if (this.prescription.prescriptionMedicines.length === 0) {
           this.addNewMedicineRow();
         }
-        if (this.prescription.prescriptionDiagnoses.length == 0) {
+        if (this.prescription.prescriptionDiagnoses.length === 0) {
           this.addNewDiagnosisRow();
         }
       }
-    })
+    });
   }
-  
-  delete() {
-    
-  }
+
 }

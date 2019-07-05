@@ -124,6 +124,7 @@ import { Services } from './components/website/services';
 import { CurrencyMaskModule } from 'ng2-currency-mask';
 import { MinDirective } from './components/directives/min-validator.directive'
 import { MaxDirective } from './components/directives/max-validator.directive'
+import { ConfirmationService } from 'primeng/api';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(httpClient: HttpClient) {
@@ -235,7 +236,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     CarService, CountryService, EventService, NodeService, BreadcrumbService,
 
     GenericService, AdmissionService, UserService, BillingService, Constants, GlobalEventsManager, TokenStorage,
-    AuthenticationService, LoggedInGuard, AppointmentService, VisitService
+    AuthenticationService, LoggedInGuard, AppointmentService, VisitService, ConfirmationService
   ],
   bootstrap: [AppComponent]
 })

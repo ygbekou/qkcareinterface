@@ -1,3 +1,4 @@
+<p-confirmDialog [style]="{width: '50vw'}"></p-confirmDialog>
 <div class="ui-grid-row">
 	<div class="ui-grid-col-12 ui-sm-12">
 		<button type="button" pButton icon="fa fa-plus" (click)="addNew()"></button>&nbsp;&nbsp;
@@ -13,8 +14,11 @@
 	    </ng-template>
 		    <ng-template pTemplate="header" let-diagnosisCols>
 		        <tr>
-		            <th *ngFor="let col of diagnosisCols" [pSortableColumn]="col.field">
-		                {{col.header}}
+		            <th *ngFor="let col of diagnosisCols" [pSortableColumn]="col.field" [ngStyle]="col.style">
+						{{col.header}}
+						<span *ngIf="col.type == 'date_time'">
+							({{globalEventsManager.DATE_TIME_FORMAT}})
+						</span>
 		                <p-sortIcon [field]="col.field"></p-sortIcon>
 		            </th>
 		            <th>Action</th>
@@ -55,8 +59,9 @@
 		                </p-cellEditor>
 		            </td>
 		            <td>
-		            	<button type="button" pButton icon="fa fa-save" (click)="saveDiagnosis(rowData)"></button>&nbsp;&nbsp;
-						<button type="button" pButton icon="fa fa-eraser" (click)="remove()"></button>
+						<button type="button" pButton icon="fa fa-save" (click)="saveDiagnosis(rowData)"></button>&nbsp;&nbsp;
+						<button type="button" pButton icon="fa fa-eraser" (click)="deleteItem(admissionDiagnoses, rowData.id, 'AdmissionDiagnosis')" 
+									[disabled]="!(rowData.id > 0)"></button>
 		            </td>
 		        </tr>
 		    </ng-template>

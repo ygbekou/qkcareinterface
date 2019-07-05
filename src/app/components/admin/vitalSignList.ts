@@ -4,9 +4,7 @@ import { Admission, VitalSign } from '../../models';
 import { GenericService } from '../../services';
 import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
 import { ConfirmationService, Message } from 'primeng/api';
-import { GenericResponse } from '../../models/genericResponse';
-import { Constants } from '../../app.constants';
-import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { BaseComponent } from './baseComponent';
 
 
 @Component({
@@ -14,7 +12,8 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
     templateUrl: '../../pages/admin/vitalSignList.html',
     providers: [GenericService, ConfirmationService]
 })
-export class VitalSignList implements OnInit, OnDestroy {
+// tslint:disable-next-line: component-class-suffix
+export class VitalSignList extends BaseComponent implements OnInit, OnDestroy {
 
     vitalSigns: VitalSign[] = [];
     cols: any[];
@@ -25,14 +24,13 @@ export class VitalSignList implements OnInit, OnDestroy {
 
     constructor
         (
-            private genericService: GenericService,
-            private translate: TranslateService,
-            private confirmationService: ConfirmationService,
-            private route: ActivatedRoute
+			private route: ActivatedRoute,
+			public genericService: GenericService,
+			public translate: TranslateService,
+			public confirmationService: ConfirmationService
         ) {
-
-
-    }
+		super(genericService, translate, confirmationService);
+	}
 
     ngOnInit(): void {
         this.cols = [
@@ -50,10 +48,10 @@ export class VitalSignList implements OnInit, OnDestroy {
             { field: 'bmi', header: 'BMI', headerKey: 'COMMON.BMI' }
         ];
 
-        let parameters: string[] = [];
+        const parameters: string[] = [];
 
         if (this.admission && this.admission.id > 0) {
-            parameters.push('e.admission.id = |admissionId|' + this.admission.id + '|Long')
+            parameters.push('e.admission.id = |admissionId|' + this.admission.id + '|Long');
         }
 
         this.route
@@ -62,8 +60,8 @@ export class VitalSignList implements OnInit, OnDestroy {
 
                 this.genericService.getAllByCriteria('VitalSign', parameters)
                     .subscribe((data: VitalSign[]) => {
-                        this.vitalSigns = data
-                        console.log(this.vitalSigns)
+                        this.vitalSigns = data;
+                        console.log(this.vitalSigns);
                     },
                         error => console.log(error),
                         () => console.log('Get all VitalSigns complete'));
@@ -77,8 +75,8 @@ export class VitalSignList implements OnInit, OnDestroy {
 
 
     updateCols() {
-        for (var index in this.cols) {
-            let col = this.cols[index];
+        for (let index in this.cols) {
+            const col = this.cols[index];
             this.translate.get(col.headerKey).subscribe((res: string) => {
                 col.header = res;
             });
@@ -92,62 +90,18 @@ export class VitalSignList implements OnInit, OnDestroy {
     edit(prescriptionId: string) {
         this.vitalSignIdEvent.emit(prescriptionId);
 	}
-	
-		updateTable(vitalSign: VitalSign) {
-			let index = this.vitalSigns.findIndex(x => x.id === vitalSign.id);
-			
-			if (index === -1) {
-				this.vitalSigns.push(vitalSign);
-			} else {
-				this.vitalSigns[index] = vitalSign;
-			}
-			
+
+	updateTable(vitalSign: VitalSign) {
+		const index = this.vitalSigns.findIndex(x => x.id === vitalSign.id);
+
+		if (index === -1) {
+			this.vitalSigns.push(vitalSign);
+		} else {
+			this.vitalSigns[index] = vitalSign;
 		}
 
-		removeItem(id: number) {
+	}
 
-			let index = this.vitalSigns.findIndex(x => x.id === id);
-			this.vitalSigns.splice(index, 1)
 
-		}
 
-    delete(vitalSignId: string) {
-        this.messages = [];
-        let confirmMessage = '';
-        this.translate.get(['', 'MESSAGE.DELETE_CONFIRM']).subscribe(res => {
-            confirmMessage = res['MESSAGE.DELETE_CONFIRM'];
-        });
-
-        this.confirmationService.confirm({
-            message: confirmMessage,
-            header: 'Confirmation',
-            icon: 'pi pi-exclamation-triangle',
-            accept: () => {
-                this.genericService.delete(+vitalSignId, 'VitalSign')
-                    .subscribe((response: GenericResponse) => {
-                        if ('SUCCESS' === response.result) {
-                            this.translate.get(['', 'MESSAGE.DELETE_SUCCESS']).subscribe(res => {
-                                this.messages.push({
-                                    severity: Constants.SUCCESS, summary: res['COMMON.DELETE'],
-                                    detail: res['MESSAGE.DELETE_SUCCESS']
-                                });
-                            });
-                            this.removeItem(+vitalSignId)
-                        } else if ('FAILURE' === response.result) {
-                            this.translate.get(['', 'MESSAGE.DELETE_UNSUCCESS']).subscribe(res => {
-                                this.messages.push({
-                                    severity: Constants.ERROR, summary: res['COMMON.DELETE'],
-                                    detail: res['MESSAGE.DELETE_UNSUCCESS']
-                                });
-                            });
-                        }
-                    });
-            },
-            reject: () => {
-            }
-        });
-
-    }
-
-    
 }

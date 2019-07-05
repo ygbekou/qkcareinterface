@@ -30,7 +30,7 @@
 					<td align="justify">
 						<button type="button" pButton icon="fa fa-edit"	(click)="edit(rowData.id)" title="{{ 'COMMON.EDIT' | translate }}"></button> 
 						&nbsp;&nbsp;
-						<button type="button" pButton icon="fa fa-eraser" (click)="delete(rowData.id)" title="{{ 'COMMON.DELETE' | translate }}"></button>
+						<button type="button" pButton icon="fa fa-eraser" (click)="deleteItem(doctorOrders, rowData.id, 'DoctorOrder')" title="{{ 'COMMON.DELETE' | translate }}"></button>
 					</td>
 				</tr>
 			</ng-template>

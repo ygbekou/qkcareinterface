@@ -7,7 +7,7 @@ import { UserGroupDropdown, CountryDropdown, DepartmentDropdown } from '../dropd
 import { User } from '../../models/user';
 import { GenericService, UserService, GlobalEventsManager } from '../../services';
 import { TranslateService } from '@ngx-translate/core';
-import { Message } from 'primeng/api';
+import { Message, ConfirmationService } from 'primeng/api';
 import { BaseComponent } from './baseComponent';
 
 @Component({
@@ -28,16 +28,17 @@ export class EmployeeDetails extends BaseComponent implements OnInit, OnDestroy 
   pictureUrl: any = '';
   constructor
     (
-      private genericService: GenericService,
+      public genericService: GenericService,
       private userService: UserService,
-      private translate: TranslateService,
+	  public translate: TranslateService,
+	  public confirmationService: ConfirmationService,
       public globalEventsManager: GlobalEventsManager,
       public countryDropdown: CountryDropdown,
       public departmentDropdown: DepartmentDropdown,
       public userGroupDropdown: UserGroupDropdown,
       private route: ActivatedRoute,
   ) {
-      super(translate);
+      super(genericService, translate, confirmationService);
       this.employee.user = new User();
   }
 

@@ -6,7 +6,7 @@ import { DoctorOrderTypeDropdown, DoctorOrderPriorityDropdown, DoctorOrderKindDr
 	LabTestDropdown, ProductDropdown} from '../dropdowns';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
 import { GenericService, VisitService } from '../../services';
-import { Message } from 'primeng/api';
+import { Message, ConfirmationService } from 'primeng/api';
 import { BaseComponent } from './baseComponent';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -34,9 +34,10 @@ export class DoctorOrderDetails extends BaseComponent implements OnInit, OnDestr
 
   constructor
     (
-      private genericService: GenericService,
+      public genericService: GenericService,
 	  private visitService: VisitService,
-	  private translate: TranslateService,
+	  public translate: TranslateService,
+	  public confirmationService: ConfirmationService,
       private doctorOrderTypeDropdown: DoctorOrderTypeDropdown,
       private doctorOrderPriorityDropdown: DoctorOrderPriorityDropdown,
       private doctorOrderKindDropdown: DoctorOrderKindDropdown,
@@ -47,7 +48,7 @@ export class DoctorOrderDetails extends BaseComponent implements OnInit, OnDestr
       private route: ActivatedRoute,
       private router: Router
     ) {
-	super(translate);
+	super(genericService, translate, confirmationService);
     this.user = new User();
   }
 
