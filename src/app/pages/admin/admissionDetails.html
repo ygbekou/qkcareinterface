@@ -5,7 +5,8 @@
 			<div class="ui-grid-col-5 ui-sm-12">
 				<app-patient-lookup (patientEmit)="lookUpPatient($event)" [originalPage]="'admin/admissionDetails'"
 					[patient]="patient"></app-patient-lookup>
-				<p-message *ngIf="f.submitted && !(patient.id > 0)" severity="error" text="Patient is required">
+				<p-message *ngIf="f.submitted && !(patient.id > 0)" severity="error" 
+					text="{{ 'COMMON.PATIENT_ID' | translate }} {{ 'VALIDATION.IS_REQUIRED' | translate }}">
 				</p-message>
 			</div>
 			<div class="ui-grid-col-7 ui-sm-12">

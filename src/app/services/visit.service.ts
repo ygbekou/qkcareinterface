@@ -68,6 +68,22 @@ export class VisitService {
 			.catch(this.handleError);
 	}
 
+	public getDoctorOrder = (id: number): Observable<any> => {
+
+		const actionUrl = Constants.apiServer + '/service/visit/doctororder/get/' + id;
+		return this.http.get(actionUrl, { headers: this.headers })
+			.map((response: Response) => {
+				if (response && response.json()) {
+					const error = response.json() && response.json().error;
+					if (error == null) {
+
+					}
+				}
+				return response.json();
+			})
+			.catch(this.handleError);
+	}
+
 	public saveDoctorOrder = (doctorOrder: DoctorOrder): Observable<DoctorOrder> => {
 
 		const toAdd = JSON.stringify(doctorOrder);

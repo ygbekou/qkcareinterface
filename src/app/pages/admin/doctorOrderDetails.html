@@ -5,7 +5,7 @@
 			<div class="ui-grid-col-4 ui-sm-12">
 				<div class="form-group">
 					<label for="doctorOrderDatetime">{{ 'COMMON.DOCTOR_ORDER_DATETIME' | translate }}<font color="red">*</font></label> 
-					<p-calendar [(ngModel)]="doctorOrder.doctorOrderDatetime" [showTime]="true" required
+					<p-calendar [(ngModel)]="doctorOrder.doctorOrderDatetime" [showTime]="true" disabled="true" required
 						name="doctorOrderDatetime"  #doctorOrderDatetime="ngModel"></p-calendar>
 					<p-message *ngIf="f.submitted && doctorOrderDatetime.invalid" severity="error" text="Field is required"></p-message>
 				</div>

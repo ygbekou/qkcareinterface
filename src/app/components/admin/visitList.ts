@@ -1,146 +1,134 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild } from '@angular/core';
-import { Employee, Visit, User, SearchCriteria } from '../../models';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Visit, SearchCriteria } from '../../models';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
-import { Constants } from '../../app.constants';
-import { FileUploader } from './fileUploader';
-import { Cookie } from 'ng2-cookies/ng2-cookies';
-import {  } from 'primeng/primeng';
-import { GenericService } from '../../services';
+import { ConfirmationService } from 'primeng/primeng';
+import { GenericService, GlobalEventsManager } from '../../services';
 import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
+import { BaseComponent } from './baseComponent';
 
 @Component({
   selector: 'app-visit-list',
   templateUrl: '../../pages/admin/visitList.html',
   providers: [GenericService]
 })
-export class VisitList implements OnInit, OnDestroy {
-  
+export class VisitList extends BaseComponent implements OnInit, OnDestroy {
+
   visits: Visit[] = [];
   cols: any[];
   searchCriteria: SearchCriteria = new SearchCriteria();
-  
+
   constructor
     (
-    private genericService: GenericService,
-    private translate: TranslateService,
-    private changeDetectorRef: ChangeDetectorRef,
+    public genericService: GenericService,
+	public translate: TranslateService,
+	public confirmationService: ConfirmationService,
+	public  globalEventsManager: GlobalEventsManager,
     private route: ActivatedRoute,
     private router: Router,
     ) {
-
-    
+		super(genericService, translate, confirmationService);
   }
 
   ngOnInit(): void {
     this.cols = [
-			{ field: 'id', header: 'Visit ID', headerKey: 'COMMON.VISIT_ID' },
-            { field: 'visitDatetime', header: 'Date', headerKey: 'COMMON.VISIT_DATETIME', type:'date' },
-            { field: 'patientId', header: 'Patient ID', headerKey: 'COMMON.PATIENT_ID' },
-            { field: 'patientName', header: 'Patient Name', headerKey: 'COMMON.PATIENT_NAME' },
-            { field: 'status', header: 'Status', type:'string', headerKey: 'COMMON.STATUS' }
+			{ field: 'id', header: 'Visit ID', headerKey: 'COMMON.VISIT_ID', type: 'string',
+                                        style: {width: '10%', 'text-align': 'center'} },
+            { field: 'visitDatetime', header: 'Date', headerKey: 'COMMON.VISIT_DATETIME', type: 'date_time',
+                                        style: {width: '15%', 'text-align': 'center'} },
+            { field: 'patientId', header: 'Patient ID', headerKey: 'COMMON.PATIENT_ID', type: 'string',
+                                        style: {width: '10%', 'text-align': 'center'} },
+            { field: 'patientName', header: 'Patient Name', headerKey: 'COMMON.PATIENT_NAME', type: 'string',
+                                        style: {width: '30%', 'text-align': 'center'} },
+            { field: 'statusDesc', header: 'Status', headerKey: 'COMMON.STATUS', type: 'string',
+                                        style: {width: '15%', 'text-align': 'center'}  }
         ];
-    
+
     this.route
         .queryParams
-        .subscribe(params => {          
-          
-            let parameters: string [] = []; 
-            
-            let endDate = new Date();
-            let startDate  = new Date(new Date().setDate(new Date().getDate() - 1));
-            parameters.push('e.visitDatetime >= |visitDateStart|' + startDate.toLocaleDateString() + ' ' + startDate.toLocaleTimeString() + '|Timestamp');
-            parameters.push('e.visitDatetime < |visitDateEnd|' + endDate.toLocaleDateString() + ' ' + endDate.toLocaleTimeString() + '|Timestamp');
-            
+        .subscribe(params => {
+
+            const parameters: string [] = [];
+
+            const endDate = new Date();
+            const startDate  = new Date(new Date().setDate(new Date().getDate() - 1));
+			parameters.push('e.visitDatetime >= |visitDateStart|' + startDate.toLocaleDateString()
+				+ ' ' + startDate.toLocaleTimeString() + '|Timestamp');
+			parameters.push('e.visitDatetime < |visitDateEnd|' + endDate.toLocaleDateString()
+				+ ' ' + endDate.toLocaleTimeString() + '|Timestamp');
+
             this.genericService.getAllByCriteria('Visit', parameters)
-              .subscribe((data: Visit[]) => 
-              { 
-                this.visits = data 
+              .subscribe((data: Visit[]) => {
+                this.visits = data;
               },
               error => console.log(error),
               () => console.log('Get all Admission complete'));
           });
-    
+
     this.updateCols();
     this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
       this.updateCols();
     });
   }
- 
+
  updateCols() {
-    for (var index in this.cols) {
-      let col = this.cols[index];
+    for (const index in this.cols) {
+      const col = this.cols[index];
       this.translate.get(col.headerKey).subscribe((res: string) => {
         col.header = res;
       });
     }
   }
-  
-  
+
+
   ngOnDestroy() {
     this.visits = null;
   }
-  
-  edit(visitId : number) {
-    try {
-      let navigationExtras: NavigationExtras = {
-        queryParams: {
-          "visitId": visitId,
-        }
-      }
-      this.router.navigate(["/admin/visitDetails"], navigationExtras);
-    }
-    catch (e) {
-      console.log(e);
-    }
-  }
 
-  delete(visitId : number) {
+  edit(visitId: number) {
     try {
-      let navigationExtras: NavigationExtras = {
+      const navigationExtras: NavigationExtras = {
         queryParams: {
-          "visitId": visitId,
+          'visitId': visitId,
         }
-      }
-      this.router.navigate(["/admin/visitDetails"], navigationExtras);
-    }
-    catch (e) {
+      };
+      this.router.navigate(['/admin/visitDetails'], navigationExtras);
+    } catch (e) {
       console.log(e);
     }
   }
 
   search() {
-   
-    let parameters: string [] = []; 
-        
-    parameters.push('e.status = |status|0|Integer')
+
+    const parameters: string [] = [];
+
+    parameters.push('e.status = |status|0|Integer');
      if (this.searchCriteria.medicalRecordNumber != null && this.searchCriteria.medicalRecordNumber.length > 0)  {
-      parameters.push('e.patient.medicalRecordNumber = |medicalRecordNumber|' + this.searchCriteria.medicalRecordNumber + '|String')
+      parameters.push('e.patient.id = |patientId|' + this.searchCriteria.id + '|Long');
     }
     if (this.searchCriteria.lastName != null && this.searchCriteria.lastName.length > 0)  {
-      parameters.push('e.patient.user.lastName like |lastName|' + '%' + this.searchCriteria.lastName + '%' + '|String')
+      parameters.push('e.patient.user.lastName like |lastName|' + '%' + this.searchCriteria.lastName + '%' + '|String');
     }
     if (this.searchCriteria.firstName != null && this.searchCriteria.firstName.length > 0)  {
-      parameters.push('e.patient.user.firstName like |firstName|' + '%' + this.searchCriteria.firstName + '%' + '|String')
-    } 
+      parameters.push('e.patient.user.firstName like |firstName|' + '%' + this.searchCriteria.firstName + '%' + '|String');
+    }
     if (this.searchCriteria.birthDate != null)  {
-      parameters.push('e.patient.user.birthDate = |birthDate|' + this.searchCriteria.birthDate.toLocaleDateString() + '|Date')
-    }  
+      parameters.push('e.patient.user.birthDate = |birthDate|' + this.searchCriteria.birthDate.toLocaleDateString() + '|Date');
+    }
     if (this.searchCriteria.visitId != null && this.searchCriteria.visitId > 0)  {
       parameters.push('e.id = |visitId|' + this.searchCriteria.visitId + '|Long');
     }
     if (this.searchCriteria.visitDate != null)  {
-      let startDate = new Date(new Date().setDate(this.searchCriteria.visitDate.getDate()));
-      let endDate  = new Date(new Date().setDate(this.searchCriteria.visitDate.getDate() + 1));
+      const startDate = new Date(new Date().setDate(this.searchCriteria.visitDate.getDate()));
+      const endDate  = new Date(new Date().setDate(this.searchCriteria.visitDate.getDate() + 1));
       parameters.push('e.visitDatetime >= |visitDateStart|' + startDate.toLocaleDateString() + '|Timestamp');
       parameters.push('e.visitDatetime < |visitDateEnd|' + endDate.toLocaleString() + '|Timestamp');
-    } 
-    
-    this.genericService.getAllByCriteria('Visit', parameters)
-      .subscribe((data: Visit[]) => 
-      { 
-        this.visits = data 
+    }
+
+    this.genericService.getAllByCriteria('Visit', parameters, ' ORDER BY e.visitDatetime DESC ')
+      .subscribe((data: Visit[]) => {
+        this.visits = data;
       },
       error => console.log(error),
-      () => console.log('Get all Visits complete'));
+      () => console.log('Get Visits complete'));
   }
  }

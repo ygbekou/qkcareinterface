@@ -1,10 +1,8 @@
 import { Admission } from './admission';
-import { Appointment } from './appointment';
 import { Employee } from './employee';
 import { LabTest } from './labTest';
 import { Product } from './product';
 import { Reference } from './reference';
-import { Service } from './service';
 import { Visit } from './visit';
 
 import { Constants } from '../app.constants';
@@ -17,7 +15,7 @@ export class DoctorOrder {
   doctorOrderPriority: Reference;
   doctorOrderKind: Reference;
   doctor: Employee;
-  doctorOrderDatetime: Date;
+  doctorOrderDatetime: Date = new Date();
   receivedDatetime: Date;
   description: string;
   status: Reference = new Reference();

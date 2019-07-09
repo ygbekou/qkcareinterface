@@ -4,6 +4,8 @@ import { SearchCriteria } from '../../models';
 import { Admission } from '../../models/admission';
 import { GenericService, GlobalEventsManager } from '../../services';
 import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
+import { BaseComponent } from './baseComponent';
+import { ConfirmationService } from 'primeng/api';
 
 @Component({
   selector: 'app-patientAdmission-list',
@@ -11,7 +13,7 @@ import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
   providers: [GenericService]
 })
 
-export class AdmissionList implements OnInit, OnDestroy {
+export class AdmissionList extends BaseComponent implements OnInit, OnDestroy {
 
   admissions: Admission[] = [];
   cols: any[];
@@ -19,19 +21,19 @@ export class AdmissionList implements OnInit, OnDestroy {
 
   constructor
     (
-    private genericService: GenericService,
-	private translate: TranslateService,
+    public genericService: GenericService,
+	public translate: TranslateService,
+	public confirmationService: ConfirmationService,
 	public globalEventsManager: GlobalEventsManager,
     private route: ActivatedRoute,
     private router: Router,
     ) {
-
-
+		super(genericService, translate, confirmationService);
   }
 
   ngOnInit(): void {
 	this.generateCols();
-    
+
     this.updateCols();
     this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
         this.updateCols();
@@ -102,20 +104,6 @@ export class AdmissionList implements OnInit, OnDestroy {
     }
   }
 
-  delete(admissionId: number) {
-    try {
-      const navigationExtras: NavigationExtras = {
-        queryParams: {
-          'admissionId': admissionId,
-        }
-      };
-      this.router.navigate(['/admin/admissionDetails'], navigationExtras);
-    } catch (e) {
-      console.log(e);
-    }
-  }
-
-
   search() {
 
     const parameters: string [] = [];
@@ -140,9 +128,11 @@ export class AdmissionList implements OnInit, OnDestroy {
       const endDate  = new Date(this.searchCriteria.admissionDate.setDate(this.searchCriteria.admissionDate.getDate() + 1));
       parameters.push('e.admissionDatetime >= |admissionDateStart|' + startDate.toLocaleDateString() + '|Timestamp');
       parameters.push('e.admissionDatetime < |admissionDateEnd|' + endDate.toLocaleString() + '|Timestamp');
-    }
+	}
+	
+	const orderBy = ' ORDER BY e.admissionDatetime ';
 
-    this.genericService.getAllByCriteria('Admission', parameters)
+    this.genericService.getAllByCriteria('Admission', parameters, orderBy)
       .subscribe((data: Admission[]) => {
         this.admissions = data;
       },

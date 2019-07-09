@@ -13,7 +13,7 @@ export class Visit {
   pckage: Package;
   doctor: Employee;
   visitDatetime: Date = new Date();
-  status: number;
+  status: number = 0;
   isHealthCheckupSel: number;
   appointment: Appointment;
   vitalSign: VitalSign;

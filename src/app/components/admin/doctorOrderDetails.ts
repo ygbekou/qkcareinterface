@@ -128,7 +128,7 @@ export class DoctorOrderDetails extends BaseComponent implements OnInit, OnDestr
 
   
   getDoctorOrder(doctorOrderId: number) {
-    this.genericService.getOne(doctorOrderId, 'DoctorOrder')
+    this.visitService.getDoctorOrder(doctorOrderId)
         .subscribe(result => {
       if (result.id > 0) {
         this.doctorOrder = result

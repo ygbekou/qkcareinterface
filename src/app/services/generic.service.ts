@@ -9,6 +9,7 @@ import { TokenStorage } from './token.storage';
 import {SelectItem} from 'primeng/api';
 import { ContactUsMessage } from '../models/website';
 import { GenericResponse } from '../models/genericResponse';
+import { SearchAttribute } from '../models';
 
 @Injectable()
 export class GenericService {
@@ -52,10 +53,14 @@ export class GenericService {
       .catch(this.handleError);
   }
 
-  public getAllByCriteria = (entityClass: string, parameters: string []): Observable<any[]> => {
-    const toAdd = JSON.stringify(parameters);
+  public getAllByCriteria = (entityClass: string, parameters: string [], orderBy = ''): Observable<any[]> => {
 
-    const actionUrl = Constants.apiServer + '/service/' + entityClass + '/allByCriteria';
+	const searchAttribute = new SearchAttribute();
+	searchAttribute.parameters = parameters;
+	searchAttribute.orderBy = orderBy
+	const toAdd = JSON.stringify(searchAttribute);
+	
+    const actionUrl = Constants.apiServer + '/service/' + entityClass + '/allByCriteriaAndOrderBy';
     return this.http.post(actionUrl, toAdd, {headers: this.headers})
       .map((response: Response) => <any[]>response.json())
       .catch(this.handleError);

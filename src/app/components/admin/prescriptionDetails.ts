@@ -32,9 +32,9 @@ export class PrescriptionDetails extends BaseComponent implements OnInit, OnDest
   constructor
     (
       public globalEventsManager: GlobalEventsManager,
-      private genericService: GenericService,
+      public genericService: GenericService,
       private admissionService: AdmissionService,
-	  private translate: TranslateService,
+	  public translate: TranslateService,
 	  public confirmationService: ConfirmationService,
       private medicineDropdown: MedicineDropdown,
       private route: ActivatedRoute,

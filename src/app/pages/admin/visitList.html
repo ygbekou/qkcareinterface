@@ -1,22 +1,23 @@
 <div class="ui-g-12 ui-sm-12" style="padding: 15px;">
-	<div class="ui-grid ui-grid-responsive ui-fluid">
+	<form name="form" (ngSubmit)="f.form.valid && search()" #f="ngForm" validate>
 		<p-fieldset legend="{{ 'COMMON.SEARCH_CRITERIA' | translate }}">
 			<div class="ui-grid-row">
-				<div class="ui-grid-col-1 ui-sm-12">
+				<div class="ui-grid-col-2 ui-sm-12">
 					<div class="form-group">
 						<label for="visitId">{{ 'COMMON.VISIT_ID' | translate }}:</label> 
 						<input type="text" pInputText class="form-control" id="visitId"
 							 [(ngModel)]="searchCriteria.visitId" name="visitId" >
 					</div>
 				</div>
-				<div class="ui-grid-col-1 ui-sm-12">
+				<div class="ui-grid-col-2 ui-sm-12">
 					<div class="form-group">
 						<label for="visitDate">{{ 'COMMON.VISIT_DATE' | translate }}:</label> 
+						<br/> 
 						<p-calendar [(ngModel)]="searchCriteria.visitDate" id="visitDate"
 									name="visitDate" #visitDate="ngModel"></p-calendar>
 					</div>
 				</div>
-				<div class="ui-grid-col-1 ui-sm-12">
+				<div class="ui-grid-col-2 ui-sm-12">
 					<div class="form-group">
 						<label for="patientId">{{ 'COMMON.PATIENT_ID' | translate }}:</label> 
 						<input type="text" pInputText class="form-control" id="medicalRecordNumber"
@@ -32,7 +33,7 @@
 				</div>
 				<div class="ui-grid-col-2 ui-sm-12">
 					<div class="form-group">
-						<label i18n="@@firstName" for="firstName">{{ 'COMMON.FIRST_NAME' | translate }}:</label> 
+						<label for="firstName">{{ 'COMMON.FIRST_NAME' | translate }}:</label> 
 						<input type="text" pInputText class="form-control" id="firstName"
 							 [(ngModel)]="searchCriteria.firstName" name="firstName">
 					</div>
@@ -40,6 +41,7 @@
 				<div class="ui-grid-col-2 ui-sm-12">
 					<div class="form-group">
 						<label for="birthDate">{{ 'COMMON.BIRTH_DATE' | translate }}:</label> 
+						<br/>
 						<p-calendar [(ngModel)]="searchCriteria.birthDate" id="birthDate"
 									name="birthDate" #birthDate="ngModel"></p-calendar>
 					</div>
@@ -47,11 +49,11 @@
 			</div>
 			<div class="ui-grid-row">
 				<div class="ui-grid-col-1 ui-sm-12">
-					<button pButton icon="fa fa-search" label="{{ 'COMMON.SEARCH' | translate }}" (click)="search()"></button>
+					<button pButton icon="fa fa-search" label="{{ 'COMMON.SEARCH' | translate }}" ></button>
 				</div>
 			</div>
 		</p-fieldset>
-	</div>
+	</form>
 	<br/>
 	<br/>
 	<p-table [columns]="cols" [value]="visits">
@@ -59,30 +61,44 @@
 			{{ 'COMMON.VISIT_LIST' | translate }}
 		</ng-template>
 	    <ng-template pTemplate="header" let-columns>
-	        <tr>
-	            <th *ngFor="let col of columns" [pSortableColumn]="col.field">
-	                {{col.header}}
-	                <p-sortIcon [field]="col.field"></p-sortIcon>
-	            </th>
-	            <th>Action</th>
-	        </tr>
-	    </ng-template>
+			<tr>
+				<th *ngFor="let col of columns" [pSortableColumn]="col.field" [ngStyle]="col.style">
+					{{col.header}}
+					<span *ngIf="col.type == 'date_time'">
+						({{globalEventsManager.DATE_TIME_FORMAT}})
+					</span>
+					<p-sortIcon [field]="col.field"></p-sortIcon>
+				</th>
+				<th>Action</th>
+			</tr>
+		</ng-template>
 	    <ng-template pTemplate="body" let-rowData let-columns="columns">
 	        <tr>			           
 	            <td *ngFor="let col of columns">
-	                <div *ngIf="col.type != 'date'">
-	                	{{rowData[col.field]}}
-	                </div>
-	                <div *ngIf="col.type == 'date'">
-	                	{{rowData[col.field]  | date:'dd/MM/yyyy hh:mm'}}
-	                </div>
-	            </td>
-	            <td>
-	            	<button type="button" pButton icon="fa fa-edit" (click)="edit(rowData.id)"></button>&nbsp;&nbsp;
-					<button type="button" pButton icon="fa fa-eraser" (click)="delete(rowData.id)"></button>
-	            </td>
+                    <div *ngIf="col.type != 'date_time'">
+                        {{rowData[col.field]}}
+                    </div>
+                    <div *ngIf="col.type == 'date_time'">
+                        {{rowData[col.field] | date: globalEventsManager.DATE_TIME_FORMAT}}
+                    </div>
+                </td>
+                <td align="justify">
+					<button type="button" pButton icon="fa fa-edit"	(click)="edit(rowData.id)" title="{{ 'COMMON.EDIT' | translate }}"></button> 
+					&nbsp;&nbsp;
+                    <button type="button" pButton icon="fa fa-eraser" (click)="deleteItem(visits, rowData.id, 'Visit')" title="{{ 'COMMON.DELETE' | translate }}"></button>
+                </td>
 	        </tr>
-	    </ng-template>
+		</ng-template>
+		<ng-template pTemplate="summary">
+			<tr>
+				<td width="10%">
+					Total
+				</td>
+				<td>
+					{{visits.length}}
+				</td>
+			</tr>
+		</ng-template>
 	</p-table>
 </div>
  

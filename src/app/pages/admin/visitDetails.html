@@ -6,7 +6,8 @@
 				<div class="ui-grid-col-5 ui-sm-12">
 					<app-patient-lookup (patientEmit)="lookUpPatient($event)" [originalPage]="'admin/visitDetails'"
 						[patient]="patient"></app-patient-lookup>
-					<p-message *ngIf="f.submitted && !(patient.id > 0)" severity="error" text="Patient is required"></p-message>
+					<p-message *ngIf="f.submitted && !(patient.id > 0)" severity="error" 
+						text="{{ 'COMMON.PATIENT_ID' | translate }} {{ 'VALIDATION.IS_REQUIRED' | translate }}"></p-message>
 				</div>
 				<div class="ui-grid-col-7 ui-sm-12">
 					<div class="ui-grid-col-1 ui-sm-12">
@@ -18,10 +19,10 @@
 					<div class="ui-grid-col-3 ui-sm-12">
 						<div class="form-group">
 							<label for="visitDatetime">{{ 'COMMON.VISIT_DATETIME' | translate }}<font color="red">*</font></label>
-							<p-calendar [(ngModel)]="visit.visitDatetime" [showTime]="true" 
-								name="visitDatetime" #visitDatetime="ngModel" required>
-							</p-calendar>
-							<p-message *ngIf="f.submitted && visitDatetime.invalid" severity="error" text="Field is required"></p-message>
+							<p-calendar [(ngModel)]="visit.visitDatetime" [showTime]="true" disabled="true"
+								name="visitDatetime" #visitDatetime="ngModel" required></p-calendar>
+							<p-message *ngIf="f.submitted && visitDatetime.invalid" severity="error" 
+								text="{{ 'COMMON.VISIT_DATETIME' | translate }} {{ 'VALIDATION.IS_REQUIRED' | translate }}"></p-message>
 						</div>
 					</div>
 					<div class="ui-grid-col-8 ui-sm-12">
@@ -29,7 +30,8 @@
 							<label for="chiefOfComplain">{{ 'COMMON.CHIEF_OF_COMPLAIN' | translate }}<font color="red">*</font></label>
 							<textarea pInputTextarea id="chiefOfComplain" rows="3" cols="40" pInputTextarea maxlength="1000"
 								[(ngModel)]="visit.chiefOfComplain" name="chiefOfComplain" #chiefOfComplain="ngModel" required> </textarea>
-							<p-message *ngIf="f.submitted && chiefOfComplain.invalid" severity="error" text="Field is required"></p-message>
+							<p-message *ngIf="f.submitted && chiefOfComplain.invalid" severity="error" 
+								text="{{ 'COMMON.CHIEF_OF_COMPLAIN' | translate }} {{ 'VALIDATION.IS_REQUIRED' | translate }}"></p-message>
 						</div>
 					</div>
 				</div>
@@ -45,7 +47,8 @@
 							(completeMethod)="packageDropdown.filter($event)"
 							name="name" field="name" [size]="30" placeholder="" [minLength]="1">
 						</p-autoComplete>
-						<p-message *ngIf="f.submitted && package.invalid" severity="error" text="Field is required"></p-message>
+						<p-message *ngIf="f.submitted && package.invalid" severity="error" 
+							text="{{ 'COMMON.PACKAGE' | translate }} {{ 'VALIDATION.IS_REQUIRED' | translate }}"></p-message>
 					</div>
 				</div>
 				<div class="ui-grid-col-3 ui-sm-12">
@@ -57,7 +60,8 @@
 							(completeMethod)="doctorDropdown.filter($event)"
 							name="name" field="name" [size]="30" placeholder="" [minLength]="1">
 						</p-autoComplete>
-						<p-message *ngIf="f.submitted && pdoctor.invalid" severity="error" text="Field is required"></p-message>
+						<p-message *ngIf="f.submitted && doctor.invalid" severity="error" 
+							text="{{ 'COMMON.DOCTOR' | translate }} {{ 'VALIDATION.IS_REQUIRED' | translate }}"></p-message>
 					</div>
 				</div>
 			</div>
@@ -66,7 +70,7 @@
 			<p-tabPanel header="{{ 'COMMON.VITAL_HISTORY' | translate }}"> 
 				<p-tabView> 
 					<p-tabPanel header="{{ 'COMMON.VITALSIGN_ALLERGIES' | translate }}"> 
-						<app-vitalSign-details [vitalSign]="visit.vitalSign"></app-vitalSign-details> <br /> <br />
+						<app-vitalSign-details [vitalSign]="visit.vitalSign"></app-vitalSign-details>
 						<app-allergy-details [visit]="visit"></app-allergy-details> <br /><br />
 						<app-vaccine-details [givenVaccines]="visit.givenVaccines"></app-vaccine-details>
 					</p-tabPanel> 
@@ -87,8 +91,7 @@
 				</div> 
 			</p-tabPanel> 
 			<p-tabPanel header="DOCTOR ORDERS" *ngIf="visit.id > 0"> 
-				<app-doctorOrder-details [visit]="visit"></app-doctorOrder-details> 
-				<br />
+				<app-doctorOrder-details [visit]="visit" (doctorOrderSaveEvent)="onDoctorOrderSaved($event)"></app-doctorOrder-details> 
 				<br />
 				<app-doctorOrder-list [visit]="visit" (doctorOrderIdEvent)="onDoctorOrderSelected($event)"></app-doctorOrder-list>
 				<br/>

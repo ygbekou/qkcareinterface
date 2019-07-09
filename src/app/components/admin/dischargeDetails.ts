@@ -33,9 +33,9 @@ export class DischargeDetails extends BaseComponent implements OnInit, OnDestroy
   constructor
     (
       private globalEventsManager: GlobalEventsManager,
-      private genericService: GenericService,
-	  private translate: TranslateService,
-	  private confirmationService: ConfirmationService,
+      public genericService: GenericService,
+	  public translate: TranslateService,
+	  public confirmationService: ConfirmationService,
       private doctorDropdown: DoctorDropdown,
       private changeDetectorRef: ChangeDetectorRef,
       private route: ActivatedRoute,

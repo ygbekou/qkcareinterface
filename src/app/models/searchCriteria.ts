@@ -21,3 +21,9 @@ export class SearchCriteria {
   topN:number;
   
 }
+
+
+export class SearchAttribute {
+	parameters: string[];
+	orderBy: string;
+}
