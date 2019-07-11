@@ -130,7 +130,7 @@
                   <br /><i class="material-icons  fa fa-user-md"></i>
                   <span class="calendar-event-location">
                     <a [routerLink]="['/admin/employeeDetails']" [queryParams]="{employeeId:event.employeeId}">
-                      {{event.docName}}
+                      {{event.designation +' '+event.docLastName}}
                     </a>
                   </span>
                 </div>

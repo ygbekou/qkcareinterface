@@ -70,6 +70,7 @@
     "APPOINTMENT_DATE": "Appointment Date",    
     "VISIT_NUMBER": "Visit No.",
     "VISIT_DATETIME": "Visit Date/Time",
+	"ARRIVAL_TIME": "Arrival time",
     "CHIEF_OF_COMPLAIN": "Chief Of Complain",
     "VITAL_HISTORY": "Vital/History",
     "VITALSIGN_ALLERGIES": "Vital Sign/Allergies",
@@ -321,13 +322,15 @@
 	"DASHBOARD": "Dashboard",
 	"SCHEDULE": "Schedule",
 	"INBOX": "Inbox",
+	"END":"End",
 	"PATIENT":"Patient",
 	"PERIOD":"Période",
 	"RESERVED":"Reserved",
 	"RESERVE":"Reserve",
 	"CONFIRMED":"Confirmed",
 	"AVAILABLE":"Available",
-	"LEGEND":"Legend"
+	"LEGEND":"Legend",
+	"ERROR":"Error"
   },
   "MESSAGE": {
   	"TRANFER_DOCTOR_FAILED": "The transfer doctor should be different from the current doctor.",
@@ -356,7 +359,9 @@
     "MESSAGE_SENT": "Message sent successfully",
     "MESSAGE_FAILED": "Error sending message",
     "FORM_HAS_ERRORS": "The form has some errors. Please verify and correct.",
-    "NO_CRITERIA_SET": "At least one search criteria is required"
+	"NO_CRITERIA_SET": "At least one search criteria is required",
+	"SELECT_PATIENT": "Select a patient",
+	"SELECT_LOCATION": "Sélectioner un emplacement"
   },
 "VALIDATION":{
     "IS_INVALID": "is invalid",

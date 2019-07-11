@@ -10,4 +10,7 @@ export class ScheduleEvent {
 	color: string;
 	phone: string;
 	docName: string;
+	docFirstName: string;
+	docLastName: string;
+	designation: string;
 }
