@@ -332,7 +332,9 @@
 	"CONFIRMED":"Confirmé",
 	"AVAILABLE":"Disponible",
 	"LEGEND":"Légende",
-	"ERROR":"Erreur",	"CREATED_BY":"Creaté Par"  },
+	"ERROR":"Erreur",	
+	"CREATED_BY":"Creaté Par"  
+	},
   "MESSAGE": {
     "TRANFER_DOCTOR_FAILED": "Le nouveau docteur assigné doit être différent de l'ancien.",
     "TRANFER_BED_FAILED": "Le noueau lit dit être différent de l'ancien.",
@@ -345,7 +347,8 @@
     "OVERLAP_SCHEDULE": "Deux horaires se chevauchent",
     "DELETE_CONFIRM": "Etes-vous sur de vouloir continuer?",
     "DELETE_SUCCESS": "La suppression a réussi",
-    "DEETE_UNSUCCESS": "La suppression a échoué. S'il vous plait contacter l'administrateur",
+	"DELETE_UNSUCCESS": "La suppression a échoué. S'il vous plait contacter l'administrateur",
+	"DELETE_UNSUCCESS_FOREIGN_KEY": "La suppression a échoué à cause des données dependantes dans le system. S'il vous plait contacter l'administrateur.",
     "FORGET_PASSWORD": "Vous avez oublié votre mot de passe? Cliquez sur le bouton pour recevoir un nouveau dans votre email",
     "SEND_PASSWORD": "Envoyer mot de passe",
     "INVALID_USER_PASS": "Nom d'utilisateur ou mot de passe invalide. Veuillez réessayer.",
