@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef, Input, Output, EventEmitter } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Constants } from '../../app.constants';
-import { Admission, DoctorOrder, User, Visit } from '../../models';
+import { Admission, DoctorOrder, User, Visit, Product } from '../../models';
 import { DoctorOrderTypeDropdown, DoctorOrderPriorityDropdown, DoctorOrderKindDropdown, DoctorDropdown,
 	LabTestDropdown, ProductDropdown} from '../dropdowns';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
@@ -44,9 +44,6 @@ export class DoctorOrderDetails extends BaseComponent implements OnInit, OnDestr
       private doctorDropdown: DoctorDropdown,
       private labTestDropdown: LabTestDropdown,
       private productDropdown: ProductDropdown,
-      private changeDetectorRef: ChangeDetectorRef,
-      private route: ActivatedRoute,
-      private router: Router
     ) {
 	super(genericService, translate, confirmationService);
     this.user = new User();
@@ -76,14 +73,14 @@ export class DoctorOrderDetails extends BaseComponent implements OnInit, OnDestr
 //        return;
 //      }
 
-      if (this.doctorOrder.doctorOrderType.id == Constants.DOCTOR_ORDER_TYPE_PHARM
-        && this.doctorOrder.products.length == 0) {
-        this.messages.push({severity:Constants.ERROR, summary:Constants.SAVE_LABEL, detail:Constants.DOCTOR_ORDER_MEDICINE_REQUIRED});
+      if (this.doctorOrder.doctorOrderType.id === Constants.DOCTOR_ORDER_TYPE_PHARM
+        && this.doctorOrder.products.length === 0) {
+        this.messages.push({severity: Constants.ERROR, summary: Constants.SAVE_LABEL, detail: Constants.DOCTOR_ORDER_MEDICINE_REQUIRED});
         return;
       }
-      if (this.doctorOrder.doctorOrderType.id == Constants.DOCTOR_ORDER_TYPE_LAB
-        && this.doctorOrder.products.length == 0) {
-        this.messages.push({severity:Constants.ERROR, summary:Constants.SAVE_LABEL, detail:Constants.DOCTOR_ORDER_LABORATORY_REQUIRED});
+      if (this.doctorOrder.doctorOrderType.id === Constants.DOCTOR_ORDER_TYPE_LAB
+        && this.doctorOrder.products.length === 0) {
+        this.messages.push({severity: Constants.ERROR, summary: Constants.SAVE_LABEL, detail: Constants.DOCTOR_ORDER_LABORATORY_REQUIRED});
         return;
       }
 
@@ -92,13 +89,11 @@ export class DoctorOrderDetails extends BaseComponent implements OnInit, OnDestr
           if (result.id > 0) {
 			  	this.processResult(result, this.doctorOrder, this.messages, null);
 		  		this.doctorOrderSaveEvent.emit(this.doctorOrder);
-          }
-          else {
+          } else {
             	this.processResult(result, this.doctorOrder, this.messages, null);
           }
-        })
-    }
-    catch (e) {
+        });
+    } catch (e) {
       console.log(e);
     }
   }
@@ -114,28 +109,34 @@ export class DoctorOrderDetails extends BaseComponent implements OnInit, OnDestr
         .subscribe(result => {
           if (result.id > 0) {
             this.doctorOrder = result;
-            this.messages.push({severity:Constants.SUCCESS, summary:Constants.SAVE_LABEL, detail:Constants.SAVE_SUCCESSFUL});
+            this.messages.push({severity: Constants.SUCCESS, summary: Constants.SAVE_LABEL, detail: Constants.SAVE_SUCCESSFUL});
+          } else {
+            this.messages.push({severity: Constants.ERROR, summary: Constants.SAVE_LABEL, detail: Constants.SAVE_UNSUCCESSFUL});
           }
-          else {
-            this.messages.push({severity:Constants.ERROR, summary:Constants.SAVE_LABEL, detail:Constants.SAVE_UNSUCCESSFUL});
-          }
-        })
-    }
-    catch (e) {
+        });
+    } catch (e) {
       console.log(e);
     }
   }
 
-  
+
   getDoctorOrder(doctorOrderId: number) {
     this.visitService.getDoctorOrder(doctorOrderId)
         .subscribe(result => {
       if (result.id > 0) {
-        this.doctorOrder = result
+        this.doctorOrder = result;
         this.doctorOrder.doctorOrderDatetime = new Date(this.doctorOrder.doctorOrderDatetime);
-        this.doctorOrder.receivedDatetime = new Date(this.doctorOrder.receivedDatetime);
+		this.doctorOrder.receivedDatetime = new Date(this.doctorOrder.receivedDatetime);
+
+		for (const index in this.doctorOrder.products) {
+
+			const product: Product = this.doctorOrder.products[index];
+			const ind = this.productDropdown.products.findIndex(x => x.id === product.id);
+			this.productDropdown.products.splice(ind);
+		}
+
       }
-    })
+    });
   }
 
 
@@ -144,7 +145,8 @@ export class DoctorOrderDetails extends BaseComponent implements OnInit, OnDestr
 //  }
 
   clear() {
-    this.doctorOrder = new DoctorOrder();
+	this.doctorOrder = new DoctorOrder();
+	this.productDropdown.getAllProducts();
   }
 
   delete() {

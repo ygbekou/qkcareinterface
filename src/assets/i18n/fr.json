@@ -240,7 +240,8 @@
     "PICTURE": "Image",
     "CLEAR": "Effacer",
     "DELETE": "Supprimer",
-    "SAVE": "Sauvegarder",
+	"SAVE": "Sauvegarder",
+	"SIGNE": "Signer",
     "PRINT_ID_CARD": "Imprimer fiche du patient",
     "DOWNLOAD_REPORT": "Telecharger l'état",
     "SEARCH": "Chercher",
@@ -330,7 +331,8 @@
 	"RESERVE":"Réserver",
 	"CONFIRMED":"Confirmé",
 	"AVAILABLE":"Disponible",
-	"LEGEND":"Légende"
+	"LEGEND":"Légende",
+	"CREATED_BY":"Creaté Par"
   },
   "MESSAGE": {
     "TRANFER_DOCTOR_FAILED": "Le nouveau docteur assigné doit être différent de l'ancien.",

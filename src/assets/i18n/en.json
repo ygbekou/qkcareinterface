@@ -239,7 +239,8 @@
 	"PICTURE": "Picture",	
     "CLEAR": "Clear",
     "DELETE": "Delete",
-    "SAVE": "Save",
+	"SAVE": "Save",
+	"SIGNE": "Signe",
     "PRINT_ID_CARD": "Print ID Card",
     "DOWNLOAD_REPORT": "Download Report",
     "SEARCH": "Search",
@@ -327,7 +328,8 @@
 	"RESERVE":"Reserve",
 	"CONFIRMED":"Confirmed",
 	"AVAILABLE":"Available",
-	"LEGEND":"Legend"
+	"LEGEND":"Legend",
+	"CREATED_BY":"Created By"
   },
   "MESSAGE": {
   	"TRANFER_DOCTOR_FAILED": "The transfer doctor should be different from the current doctor.",
@@ -341,7 +343,8 @@
     "OVERLAP_SCHEDULE": "Two schedules are overlaping",
     "DELETE_CONFIRM": "Are you sure that you want to proceed?",
     "DELETE_SUCCESS": "Delete was successful",
-    "DEETE_UNSUCCESS": "Delete was unsuccessful. Please contact the administrator.",
+	"DELETE_UNSUCCESS": "Delete was unsuccessful. Please contact the administrator.",
+	"DELETE_UNSUCCESS_FOREIGN_KEY": "Delete was unsuccessful with some dependents data in the system. Please contact the administrator.",
     "FORGET_PASSWORD": "Forgot your password? Click the bouton to receive a new one via E-mail",
     "SEND_PASSWORD": "Send Password",
     "INVALID_USER_PASS": "Invalid Username or password. Please try again.",
