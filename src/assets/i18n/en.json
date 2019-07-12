@@ -330,6 +330,7 @@
 	"RESERVE":"Reserve",
 	"CONFIRMED":"Confirmed",
 	"AVAILABLE":"Available",
+	"LEGEND":"Legend",
 	"ERROR":"Error",
 	"CREATED_BY":"Created By"  
 	},
