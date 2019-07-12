@@ -1,187 +1,121 @@
 <form name="form" (ngSubmit)="f.form.valid && save()" #f="ngForm" validate>
-	<div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="discharge">
-		<p-messages [(value)]="messages"></p-messages>
-		<div class="ui-grid-row">
-			<div class="ui-grid-col-6 ui-sm-12">
-				<div class="form-group">
-					<label for="admittanceReason">{{ 'COMMON.ADMITTANCE_REASON' | translate }}<font color="red">*</font></label> 
-					<textarea pInputTextarea id="admittanceReason" rows="4" cols="100" pInputTextarea maxlength="2000" 
-						[(ngModel)]="discharge.admittanceReason" name="admittanceReason" #admittanceReason="ngModel" required> 
-					</textarea>		
-					<p-message *ngIf="f.submitted && admittanceReason.invalid" severity="error" 
-						text="{{'COMMON.ADMITTANCE_REASON' | translate}} {{'VALIDATION.IS_REQUIRED' | translate}}"></p-message>					
-				</div>
-			</div>
-		</div>
-		<br/>
-		<div class="ui-grid-row">
-			<p-table [columns]="diagnosisCols" [value]="diagnoses">
-				<ng-template pTemplate="caption">
-					{{ 'COMMON.DIAGNOSIS_LIST' | translate }}
-				</ng-template>
-			    <ng-template pTemplate="header" let-diagnosisCols>
-			        <tr>
-			            <th *ngFor="let col of diagnosisCols" [pSortableColumn]="col.field" [ngStyle]="col.style">
-			                {{col.header}}
-			                <p-sortIcon [field]="col.field"></p-sortIcon>
-			            </th>
-			        </tr>
-			    </ng-template>
-			    <ng-template pTemplate="body" let-rowData let-columns="columns">
-			        <tr>			           
-			            <td *ngFor="let col of columns" pEditableColumn>
-			            	<p-cellEditor *ngIf="col.field != 'name' && col.field != 'description'">
-			            		<ng-template pTemplate="output">
-			                        {{rowData[col.field]}}
-			                    </ng-template>
-			                </p-cellEditor>
-			                <p-cellEditor *ngIf="col.field == 'name' || col.field == 'description'">
-			                    <ng-template pTemplate="output">
-			                        {{rowData[col.parent][col.field]}}
-			                    </ng-template>
-			                </p-cellEditor>
-			          
-			            </td>
-			        </tr>
-			    </ng-template>
-			</p-table>
-		</div>
-		<br/>
-		<div class="ui-grid-row">
-			<div class="ui-grid-col-12 ui-sm-12">
-				<div class="form-group">
-					<label for="treatmentSummary">{{ 'COMMON.TREATMENT_SUMMARY' | translate }}</label> 
-					<textarea pInputTextarea id="treatmentSummary" rows="4" cols="100" pInputTextarea maxlength="2000" 
-						[(ngModel)]="discharge.treatmentSummary" name="treatmentSummary" #treatmentSummary="ngModel" required> 
-					</textarea>		
-					<p-message *ngIf="f.submitted && treatmentSummary.invalid" severity="error" 
-						text="{{'COMMON.TREATMENT_SUMMARY' | translate}} {{'VALIDATION.IS_REQUIRED' | translate}}"></p-message>						
-				</div>
-			</div>
-		</div>
-		<br/>
-		<div class="ui-grid-row">
-			<div class="ui-grid-col-2 ui-sm-12">
-				<div class="form-group">
-					<label for="dischargeDatetime">{{ 'COMMON.DISCHARGE_DATETIME' | translate }}<font color="red">*</font></label> 
-					<p-calendar [(ngModel)]="discharge.dischargeDatetime" [showTime]="true" name="dischargeDatetime" 
-						#dischargeDatetime="ngModel" required></p-calendar>
-					<p-message *ngIf="f.submitted && dischargeDatetime.invalid" severity="error" 
-						text="{{'COMMON.TREATMENT_SUMMARY' | translate}} {{'VALIDATION.IS_REQUIRED' | translate}}"></p-message>	
-				</div>
-			</div>
-			<div class="ui-grid-col-2 ui-sm-12">
-				<div class="form-group">
-					<label for="physicianApproved">{{ 'COMMON.PHYSICIAN_APPROVED' | translate }}?</label>
-					<br/>
-					<p-radioButton name="physicianApproved" value="Y" label="Yes" [(ngModel)]="discharge.physicianApproved"
-						name="physicianApproved" #physicianApproved="ngModel" required></p-radioButton>
-					<p-radioButton name="physicianApproved" value="N" label="No" [(ngModel)]="discharge.physicianApproved"
-						name="physicianApproved" #physicianApproved="ngModel" required></p-radioButton>	
-					<p-message *ngIf="f.submitted && physicianApproved.invalid" severity="error" text="Field is required"></p-message>									
-				</div>
-			</div>
-			<div class="ui-grid-col-3 ui-sm-12">
-				<div class="form-group">
-					<label for="doctor">{{ 'COMMON.DISCHARGE_DOCTOR' | translate }}</label>
-					<p-autoComplete [(ngModel)]="discharge.doctor"
-						(onDropdownClick)="doctorDropdown.handleDropdownClick($event)"
-						[suggestions]="doctorDropdown.filteredDoctors" [dropdown]="true"
-						(completeMethod)="doctorDropdown.filter($event)"
-						field="name" [size]="30" placeholder="" [minLength]="1"
-						name="dischargeDoctor" #dischargeDoctor="ngModel" required>
-					</p-autoComplete>
-					<p-message *ngIf="f.submitted && dischargeDoctor.invalid" severity="error" text="Field is required"></p-message>
-				</div>
-			</div>
-			<div class="ui-grid-col-5 ui-sm-12">
-				<div class="form-group">
-					<label for="dischargeReason">{{ 'COMMON.DISCHARGE_REASON' | translate }}</label>
-					<br/>
-	                <p-radioButton name="dischargeReason" [(ngModel)]="discharge.dischargeReason.id" 
-	                  	[value]="dischargeReason.id" #dischargeReason1="ngModel"
-	                    label="{{dischargeReason.name}} " *ngFor="let dischargeReason of dischargeReasons"></p-radioButton>
-	                <p-message *ngIf="f.submitted && discharge.dischargeReason.id == null" severity="error" text="Field is required"></p-message>
-	           </div>
-	        </div>
-		</div>
-		<div class="ui-grid-row">
-			<div class="ui-grid-col-2 ui-sm-12">
-				<div class="form-group">
-					<label for="nextCheckupDate">{{ 'COMMON.NEXT_CHECKUP_DATE' | translate }}</label> 
-					<p-calendar [(ngModel)]="discharge.nextCheckupDate" name="nextCheckupDate" #nextCheckupDate="ngModel"></p-calendar>
-					<p-message *ngIf="f.submitted && nextCheckupDate.invalid" severity="error" text="Field is required"></p-message>
-				</div>
-			</div>
-			<div class="ui-grid-col-2 ui-sm-12">
-				<div class="form-group">
-					<label for="clientConsentApproval">{{ 'COMMON.CLIENT_CONSENT_APPROVAL' | translate }}?</label>
-					<br/>
-					<p-radioButton name="clientConsentApproval" value="Y" label="Yes" [(ngModel)]="discharge.clientConsentApproval"
-						name="clientConsentApproval" #clientConsentApproval="ngModel" required></p-radioButton>
-					<p-radioButton name="clientConsentApproval" value="N" label="No" [(ngModel)]="discharge.clientConsentApproval"
-						name="clientConsentApproval" #clientConsentApproval="ngModel" required></p-radioButton>			
-					<p-message *ngIf="f.submitted && clientConsentApproval.invalid" severity="error" text="Field is required"></p-message>							
-				</div>
-			</div>
-			<div class="ui-grid-col-8 ui-sm-12">
-				<div class="form-group">
-					<label for="furtherTreatmentPlan">{{ 'COMMON.FURTHER_TREATMENT_PLAN' | translate }}</label> 
-					<textarea pInputTextarea id="furtherTreatmentPlan" rows="4" cols="100" pInputTextarea maxlength="2000" 
-							[(ngModel)]="discharge.furtherTreatmentPlan" name="furtherTreatmentPlan" #furtherTreatmentPlan="ngModel"> </textarea>
-					<p-message *ngIf="f.submitted && furtherTreatmentPlan.invalid" severity="error" text="Field is required"></p-message>							
-				</div>
-			</div>
-		</div>
-		<br/>
-		<div class="ui-grid-row">
-			<p-table [columns]="medicineCols" [value]="prescriptionMedicines">
-				<ng-template pTemplate="caption">
-					{{ 'COMMON.MEDICINE_LIST' | translate }}
-				</ng-template>
-			    <ng-template pTemplate="header" let-medicineCols>
-			        <tr>
-			            <th *ngFor="let col of medicineCols" [pSortableColumn]="col.field" [ngStyle]="col.style">
-			                {{col.header}}
-			                <p-sortIcon [field]="col.field"></p-sortIcon>
-			            </th>
-			        </tr>
-			    </ng-template>
-			    <ng-template pTemplate="body" let-rowData let-columns="columns">
-			        <tr>			           
-			            <td *ngFor="let col of columns" pEditableColumn>
-			            	<p-cellEditor *ngIf="col.header != 'Name'">
-			                    <ng-template pTemplate="output">
-			                        {{rowData[col.field]}}
-			                    </ng-template>
-			                </p-cellEditor>
-			                <p-cellEditor *ngIf="col.header == 'Name'">
-			                    <ng-template pTemplate="output">
-			                        {{rowData[col.field].name}}
-			                    </ng-template>
-			                </p-cellEditor>
-			            </td>
-			        </tr>
-			    </ng-template>
-			</p-table>
-		</div>
-		<br/>
-		<div class="ui-grid-row">
-			<div class="ui-grid-col-12 ui-sm-12">
-				<div class="form-group">
-					<label for="notes">{{ 'COMMON.DISCHARGE_NOTES' | translate }}</label> 
-					<textarea pInputTextarea id="notes" rows="4" cols="100" pInputTextarea maxlength="2000" 
-							[(ngModel)]="discharge.notes" name="notes" #notes="ngModel" required> </textarea>
-					<p-message *ngIf="f.submitted && notes.invalid" severity="error" text="Field is required"></p-message>								
-				</div>
-			</div>
-		</div>
-        <br/>
-        <br/>
-	</div>
-	<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
-		<button pButton icon="fa fa-check" label="{{ 'COMMON.SAVE' | translate }}" [disabled]="!f.form.valid"></button>&nbsp;&nbsp;
-		<button type="button" pButton icon="fa fa-close" (click)="deleteItem([], discharge.id, 'Discharge')" label="{{ 'COMMON.DELETE' | translate }}"></button>
-	</div>
-
+  <div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="discharge">
+    <p-messages [(value)]="messages"></p-messages>
+    <div class="ui-grid-row">
+      <div class="ui-grid-col-6 ui-sm-12">
+        <div class="form-group">
+          <label for="admittanceReason">{{ 'COMMON.ADMITTANCE_REASON' | translate }}<font color="red">*</font></label>
+          <textarea pInputTextarea id="admittanceReason" rows="4" cols="100" pInputTextarea maxlength="2000"
+            [(ngModel)]="discharge.admittanceReason" name="admittanceReason" #admittanceReason="ngModel" required>
+					</textarea>
+          <p-message *ngIf="f.submitted && admittanceReason.invalid" severity="error"
+            text="{{'COMMON.ADMITTANCE_REASON' | translate}} {{'VALIDATION.IS_REQUIRED' | translate}}"></p-message>
+        </div>
+      </div>
+      <div class="ui-grid-col-6 ui-sm-12">
+        <div class="form-group">
+          <label for="treatmentSummary">{{ 'COMMON.TREATMENT_SUMMARY' | translate }}</label>
+          <textarea pInputTextarea id="treatmentSummary" rows="4" cols="100" pInputTextarea maxlength="2000"
+            [(ngModel)]="discharge.treatmentSummary" name="treatmentSummary" #treatmentSummary="ngModel" required>
+					</textarea>
+          <p-message *ngIf="f.submitted && treatmentSummary.invalid" severity="error"
+            text="{{'COMMON.TREATMENT_SUMMARY' | translate}} {{'VALIDATION.IS_REQUIRED' | translate}}"></p-message>
+        </div>
+      </div>
+    </div>
+    <div class="ui-grid-row">
+      <div class="ui-grid-col-2 ui-sm-12">
+        <div class="form-group">
+          <label for="dischargeDatetime">{{ 'COMMON.DISCHARGE_DATETIME' | translate }}<font color="red">*</font></label>
+          <p-calendar [(ngModel)]="discharge.dischargeDatetime" [showTime]="true" name="dischargeDatetime"
+            #dischargeDatetime="ngModel" required></p-calendar>
+          <p-message *ngIf="f.submitted && dischargeDatetime.invalid" severity="error"
+            text="{{'COMMON.TREATMENT_SUMMARY' | translate}} {{'VALIDATION.IS_REQUIRED' | translate}}"></p-message>
+        </div>
+      </div>
+      <div class="ui-grid-col-2 ui-sm-12">
+        <div class="form-group">
+          <label for="physicianApproved">{{ 'COMMON.PHYSICIAN_APPROVED' | translate }}?</label>
+          <br />
+          <p-radioButton name="physicianApproved" value="Y" label="Yes" [(ngModel)]="discharge.physicianApproved"
+            name="physicianApproved" #physicianApproved="ngModel" required></p-radioButton>
+          <p-radioButton name="physicianApproved" value="N" label="No" [(ngModel)]="discharge.physicianApproved"
+            name="physicianApproved" #physicianApproved="ngModel" required></p-radioButton>
+          <p-message *ngIf="f.submitted && physicianApproved.invalid" severity="error" text="Field is required">
+          </p-message>
+        </div>
+      </div>
+      <div class="ui-grid-col-3 ui-sm-12">
+        <div class="form-group">
+          <label for="doctor">{{ 'COMMON.DISCHARGE_DOCTOR' | translate }}</label>
+          <p-autoComplete [(ngModel)]="discharge.doctor" (onDropdownClick)="doctorDropdown.handleDropdownClick($event)"
+            [suggestions]="doctorDropdown.filteredDoctors" [dropdown]="true"
+            (completeMethod)="doctorDropdown.filter($event)" field="name" [size]="30" placeholder="" [minLength]="1"
+            name="dischargeDoctor" #dischargeDoctor="ngModel" required>
+          </p-autoComplete>
+          <p-message *ngIf="f.submitted && dischargeDoctor.invalid" severity="error" text="Field is required">
+          </p-message>
+        </div>
+      </div>
+      <div class="ui-grid-col-5 ui-sm-12">
+        <div class="form-group">
+          <label for="dischargeReason">{{ 'COMMON.DISCHARGE_REASON' | translate }}</label>
+          <br />
+          <p-radioButton name="dischargeReason" [(ngModel)]="discharge.dischargeReason.id" [value]="dischargeReason.id"
+            #dischargeReason1="ngModel" label="{{dischargeReason.name}} "
+            *ngFor="let dischargeReason of dischargeReasons"></p-radioButton>
+          <p-message *ngIf="f.submitted && discharge.dischargeReason.id == null" severity="error"
+            text="Field is required"></p-message>
+        </div>
+      </div>
+    </div>
+    <div class="ui-grid-row">
+      <div class="ui-grid-col-2 ui-sm-12">
+        <div class="form-group">
+          <label for="nextCheckupDate">{{ 'COMMON.NEXT_CHECKUP_DATE' | translate }}</label>
+          <p-calendar [(ngModel)]="discharge.nextCheckupDate" name="nextCheckupDate" #nextCheckupDate="ngModel">
+          </p-calendar>
+          <p-message *ngIf="f.submitted && nextCheckupDate.invalid" severity="error" text="Field is required">
+          </p-message>
+        </div>
+      </div>
+      <div class="ui-grid-col-2 ui-sm-12">
+        <div class="form-group">
+          <label for="clientConsentApproval">{{ 'COMMON.CLIENT_CONSENT_APPROVAL' | translate }}?</label>
+          <br />
+          <p-radioButton name="clientConsentApproval" value="Y" label="Yes"
+            [(ngModel)]="discharge.clientConsentApproval" name="clientConsentApproval" #clientConsentApproval="ngModel"
+            required></p-radioButton>
+          <p-radioButton name="clientConsentApproval" value="N" label="No" [(ngModel)]="discharge.clientConsentApproval"
+            name="clientConsentApproval" #clientConsentApproval="ngModel" required></p-radioButton>
+          <p-message *ngIf="f.submitted && clientConsentApproval.invalid" severity="error" text="Field is required">
+          </p-message>
+        </div>
+      </div>
+      <div class="ui-grid-col-8 ui-sm-12">
+        <div class="form-group">
+          <label for="furtherTreatmentPlan">{{ 'COMMON.FURTHER_TREATMENT_PLAN' | translate }}</label>
+          <textarea pInputTextarea id="furtherTreatmentPlan" rows="4" cols="100" pInputTextarea maxlength="2000"
+            [(ngModel)]="discharge.furtherTreatmentPlan" name="furtherTreatmentPlan"
+            #furtherTreatmentPlan="ngModel"> </textarea>
+          <p-message *ngIf="f.submitted && furtherTreatmentPlan.invalid" severity="error" text="Field is required">
+          </p-message>
+        </div>
+      </div>
+    </div>
+    <div class="ui-grid-row">
+      <div class="ui-grid-col-12 ui-sm-12">
+        <div class="form-group">
+          <label for="notes">{{ 'COMMON.DISCHARGE_NOTES' | translate }}</label>
+          <textarea pInputTextarea id="notes" rows="4" cols="100" pInputTextarea maxlength="2000"
+            [(ngModel)]="discharge.notes" name="notes" #notes="ngModel" required> </textarea>
+          <p-message *ngIf="f.submitted && notes.invalid" severity="error" text="Field is required"></p-message>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+    <button pButton icon="fa fa-check" label="{{ 'COMMON.SAVE' | translate }}"
+      [disabled]="!f.form.valid"></button>&nbsp;&nbsp;
+  </div>
 </form>

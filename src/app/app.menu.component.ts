@@ -69,8 +69,6 @@ export class AppMenuComponent implements OnInit {
       {
         label: this.lang === 'fr' ? 'Rendez-vous' : 'Appointment', icon: 'fa fa-calendar',
         items: [
-          { label: this.lang === 'fr' ? 'Ajouter une requête' : 'Add a request', icon: 'fa fa-plus', routerLink: ['/admin/enquiryDetails'], displayList: '1,2,3,20' },
-          { label: this.lang === 'fr' ? 'Liste des requêtes' : 'List requests', icon: 'fa fa-plus', routerLink: ['/admin/enquiryList'], displayList: '1,2,3,20' },
           { label: this.lang === 'fr' ? 'Ajouter un horaire' : 'Add schedule', icon: 'fa fa-plus', routerLink: ['/admin/scheduleDetails'], displayList: '1' },
           { label: this.lang === 'fr' ? 'Liste des horaires' : 'List schedules', icon: 'fa fa-search', routerLink: ['/admin/scheduleList'], displayList: '1' },
           { label: this.lang === 'fr' ? 'Les Rendez-vous' : 'Appointments', icon: 'fa fa-calendar-check-o', routerLink: ['/admin/appointmentScheduler'], displayList: '1,2' }
@@ -135,7 +133,10 @@ export class AppMenuComponent implements OnInit {
           { label: this.lang === 'fr' ? 'Liste des naissances' : 'List births', icon: 'fa fa-search', routerLink: ['/admin/birthReportList'] },
           { label: this.lang === 'fr' ? 'Declarer un décès' : 'Declare death', icon: 'fa fa-plus', routerLink: ['/admin/deathReportDetails'] },
           { label: this.lang === 'fr' ? 'Liste des décès' : 'List deaths', icon: 'fa fa-search', routerLink: ['/admin/deathReportList'] }
-        ]
+          { label: this.lang === 'fr' ? 'Ajouter une requête' : 'Add a request', icon: 'fa fa-plus', routerLink: ['/admin/enquiryDetails'], displayList: '1,2,3,20' },
+          { label: this.lang === 'fr' ? 'Liste des requêtes' : 'List requests', icon: 'fa fa-plus', routerLink: ['/admin/enquiryList'], displayList: '1,2,3,20' },
+
+		]
       },
       {
         label: this.lang === 'fr' ? 'Configuration' : 'Configuration', icon: 'fa fa-cogs',

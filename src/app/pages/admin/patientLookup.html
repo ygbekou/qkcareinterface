@@ -5,7 +5,7 @@
     <form #searchForm="ngForm">
       <div class="ui-inputgroup">
         <input type="text" pInputText class="form-control" id="searchT" required [(ngModel)]="schText"
-          (change)="lookUpPatient()" placeholder="{{'COMMON.PATIENT_ID' | translate }}" name="searchT"
+           placeholder="{{'COMMON.PATIENT_ID' | translate }}" name="searchT"
           #searchT="ngModel">
         <button pButton type="button" icon="fa fa-search" (click)="openPatientSearchPage()"></button>
       </div>

@@ -1,6 +1,6 @@
 <div class="ui-grid-row"> 
 		<div class="ui-g-12 ui-sm-12" style="padding: 15px;">
-			<p-table [columns]="cols" [value]="schedules" dataKey="doctorName">
+			<p-table [columns]="cols" [value]="schedules" dataKey="doctorName" responsive="true">
 			    <ng-template pTemplate="header" let-columns>
 			        <tr>
 			            <th *ngFor="let col of columns" [pSortableColumn]="col.field">
@@ -27,7 +27,7 @@
 			            </td>
 			            <td>
 			            	<button type="button" pButton icon="fa fa-edit" (click)="edit(rowData.id)"></button>&nbsp;&nbsp;
-							<button type="button" pButton icon="fa fa-eraser" (click)="delete(rowData.id)"></button>
+							<button type="button"  class="ui-button-rounded ui-button-warning" pButton icon="fa fa-eraser" (click)="delete(rowData.id)"></button>
 			            </td>
 			        </tr>
 			    </ng-template>

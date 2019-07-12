@@ -33,13 +33,12 @@ export class ScheduleList implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.cols = [
-            { field: 'departmentName', header: 'Department', headerKey: 'COMMON.DEPARTMENT' },
+            { field: 'departmentName', header: 'Department', headerKey: 'COMMON.DEPARTMENT'  },
             { field: 'locationName', header: 'Location', headerKey: 'COMMON.LOCATION' },
             { field: 'day', header: 'Available Day', headerKey: 'COMMON.AVAILABLE_DAYS' },
             { field: 'beginTime', header: 'Start Time', headerKey: 'COMMON.START_TIME' },
             { field: 'endTime', header: 'End Time', headerKey: 'COMMON.END_TIME' },
-            { field: 'perPatientTime', header: 'Per Patient Time', headerKey: 'COMMON.PER_PATIENT_TIME' },
-            { field: 'status', header: 'Status', type:'string', headerKey: 'COMMON.STATUS' }
+            { field: 'perPatientTime', header: 'Per Patient Time', headerKey: 'COMMON.PER_PATIENT_TIME' } 
         ];
     
     this.updateCols();

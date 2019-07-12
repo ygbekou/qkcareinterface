@@ -13,7 +13,7 @@ import { VaccineDropdown } from '../dropdowns';
  
 @Component({
   selector: 'app-vaccine-details',
-  template: `<p-fieldset legend="{{ 'COMMON.IMMUNIZATIONS' | translate }}" >
+  template: ` 
              <p-table [columns]="vaccineCols" [value]="givenVaccines">
                 <ng-template pTemplate="header" let-vaccineCols>
                     <tr>
@@ -56,8 +56,7 @@ import { VaccineDropdown } from '../dropdowns';
                         </td>
                     </tr>
                 </ng-template>
-            </p-table>
-            </p-fieldset>`,
+            </p-table> `,
   providers: [GenericService, VisitService, VaccineDropdown]
 })
 export class VaccineDetails implements OnInit, OnDestroy {

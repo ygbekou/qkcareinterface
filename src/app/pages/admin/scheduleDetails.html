@@ -1,6 +1,5 @@
 <form name="form" (ngSubmit)="f.form.valid && save()" #f="ngForm" validate>
-	<div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="schedule">
-		<p-messages [(value)]="messages"></p-messages>
+	<div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="schedule">		
 		<div class="ui-grid-row">
 			<div class="ui-grid-col-3 ui-sm-12">
 				<div class="form-group">
@@ -10,8 +9,7 @@
 						[suggestions]="doctorDropdown.filteredDoctors" [dropdown]="true"
 						id="doctor" (completeMethod)="doctorDropdown.filter($event)"
 						name="doctor" field="name" [size]="30" placeholder="{{SELECT_OPTION}}"
-						[minLength]="1" #doctor="ngModel"></p-autoComplete>
-						<p-message *ngIf="f.submitted && doctor.invalid" severity="error" text="Field is required"></p-message>
+						[minLength]="1" #doctor="ngModel"></p-autoComplete> 
 				</div>
 			</div>
 			<div class="ui-grid-col-3 ui-sm-12">
@@ -22,8 +20,7 @@
 						[suggestions]="hospitalLocationDropdown.filteredLocations" [dropdown]="true"
 						id="hospitalLocation" (completeMethod)="hospitalLocationDropdown.filter($event)"
 						name="hospitalLocation" field="name" [size]="30" placeholder="{{SELECT_OPTION}}"
-						[minLength]="1" #location="ngModel"></p-autoComplete>
-						<p-message *ngIf="f.submitted && location.invalid" severity="error" text="Field is required"></p-message>
+						[minLength]="1" #location="ngModel"></p-autoComplete> 
 				</div>
 			</div>
 			<div class="ui-grid-col-3 ui-sm-12">
@@ -34,8 +31,7 @@
 						[suggestions]="weekdayDropdown.filteredWeekdays" [dropdown]="true"
 						id="weekday" (completeMethod)="weekdayDropdown.filter($event)"
 						name="weekday" field="name" [size]="30" placeholder="{{SELECT_OPTION}}"
-						[minLength]="1" #availableDays="ngModel"></p-autoComplete>
-						<p-message *ngIf="f.submitted && availableDays.invalid" severity="error" text="Field is required"></p-message>
+						[minLength]="1" #availableDays="ngModel"></p-autoComplete> 
 				</div>
 			</div>
 		</div> 
@@ -44,32 +40,29 @@
 				<div class="form-group">
 					<label for="beginTime">{{ 'COMMON.START_TIME' | translate }}<font color="red">*</font></label> 
 					<p-calendar [(ngModel)]="schedule.beginTime" [stepMinute]="5" dataType="string" timeOnly="true" 
-					showTime="false" hourFormat="24" name="beginTime" #beginTime="ngModel" required></p-calendar>
-					<p-message *ngIf="f.submitted && availableDays.invalid" severity="error" text="Field is required"></p-message>
+					showTime="false" hourFormat="24" name="beginTime" #beginTime="ngModel" required></p-calendar> 
 				</div>
 			</div>
 			<div class="ui-grid-col-3 ui-sm-12">
 				<div class="form-group">
 					<label for="endTime">{{ 'COMMON.END_TIME' | translate }}<font color="red">*</font></label> 
 					<p-calendar [(ngModel)]="schedule.endTime" [stepMinute]="5" dataType="string" timeOnly="true" 
-					showTime="false" hourFormat="24" name="endTime" #endTime="ngModel" required></p-calendar>
-					<p-message *ngIf="f.submitted && availableDays.invalid" severity="error" text="Field is required"></p-message>
+					showTime="false" hourFormat="24" name="endTime" #endTime="ngModel" required></p-calendar> 
 				</div>
 			</div>
 			<div class="ui-grid-col-3 ui-sm-12">
 				<div class="form-group">
 					<label for="endTime">{{ 'COMMON.PER_PATIENT_TIME' | translate }}<font color="red">*</font></label>
 					<p-calendar [(ngModel)]="schedule.perPatientTime" [stepMinute]="5" dataType="string" timeOnly="true"
-					 showTime="false" hourFormat="24" name="perPatientTime" #perPatientTime="ngModel" required></p-calendar>
-					 <p-message *ngIf="f.submitted && availableDays.invalid" severity="error" text="Field is required"></p-message>
+					 showTime="false" hourFormat="24" name="perPatientTime" #perPatientTime="ngModel" required></p-calendar> 
 				</div>
 			</div>
 		</div>
 	</div>
 	<br />
+	<p-messages [(value)]="messages"></p-messages>
 	<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
 		<button type="button" pButton icon="fa fa-refresh" (click)="clear()" label="{{ 'COMMON.CLEAR' | translate }}"></button>&nbsp;&nbsp;
-		<button pButton icon="fa fa-save" label="{{ 'COMMON.SAVE' | translate }}"></button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		<button type="button" pButton icon="fa fa-remove" (click)="delete()" label="{{ 'COMMON.DELETE' | translate }}"></button>
+		<button pButton icon="fa fa-save" label="{{ 'COMMON.SAVE' | translate }}"></button>
 	</div>
 </form>

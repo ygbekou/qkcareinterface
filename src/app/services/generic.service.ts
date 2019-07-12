@@ -185,7 +185,6 @@ export class GenericService {
    }
 
    public delete = (id: number, entityClass: string): Observable<GenericResponse> => {
-
         const actionUrl = Constants.apiServer + '/service/' + entityClass + '/delete/' + id;
         return this.http.get(actionUrl, { headers: this.headers })
           .map((response: Response) => {

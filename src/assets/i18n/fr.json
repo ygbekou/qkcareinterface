@@ -98,7 +98,7 @@
     "LAB_TEST_FROM_GROUP": "Test de laboratoire du groupe sélectionné",
     "ACTION_DATETIME": "Date / Heure Action",
     "COMMENTS": "Commentaire",
-    "INVESTIGATION_LIST": "Liste des investigations",
+    "INVESTIGATION_LIST": "Investigations",
     "COLLECTION_DATE": "Date de Collection",
     "FINALIZED_DATE": "Date de Finalisation",
     "METHOD": "Méthode",
@@ -178,7 +178,7 @@
     "PRESCRIPTION_DATETIME": "Date / Heure de Prescription",
     "PRESCRIPTION_TYPE": "Type Prescription",
 	"IS_DISCHARGE": "Pour le Décharge",
-	"DISCHARGE": "Discharge",
+	"DISCHARGE": "Décharge",
     "MEDICINE": "Médicament",
     "MEDICINE_TYPE": "Type de médicament",
     "DOSAGE": "Dosage",
@@ -219,7 +219,7 @@
     "DISCHARGE_DOCTOR": "Médecin de décharge",
     "DISCHARGE_REASON": "Motif de décharge",
     "NEXT_CHECKUP_DATE": "Date de la prochaine vérification",
-    "CLIENT_CONSENT_APPROVAL": "Approbation du consentement du patient",
+    "CLIENT_CONSENT_APPROVAL": "Consentement du patient",
     "FURTHER_TREATMENT_PLAN": "Plan de traitement supplémentaire",
     "DISCHARGE_NOTES": "Notes de décharge",
     "READ": "Lu / Non lu",
@@ -331,7 +331,10 @@
 	"CONFIRMED":"Confirmé",
 	"AVAILABLE":"Disponible",
 	"LEGEND":"Légende",
-	"ERROR":"Erreur"
+	"ERROR":"Erreur",
+	"PHARMACY":"Pharmacie",
+	"NEW":"Nouveau",
+	"OLD":"Ancien"
   },
   "MESSAGE": {
     "TRANFER_DOCTOR_FAILED": "Le nouveau docteur assigné doit être différent de l'ancien.",

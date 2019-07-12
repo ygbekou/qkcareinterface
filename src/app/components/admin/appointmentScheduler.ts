@@ -208,6 +208,8 @@ export class AppointmentScheduler implements OnInit, OnDestroy {
 	}
 
 	lookUpPatient(event) {
+		console.log('lookup called');
+		console.log(event);
 		this.appointment.patient = event;
 	}
 }

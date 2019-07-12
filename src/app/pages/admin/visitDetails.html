@@ -1,124 +1,144 @@
 <form name="form" (ngSubmit)="f.form.valid && save()" #f="ngForm" validate>
-	<div class="ui-g-12 ui-sm-12" style="padding: 15px;">
-		<div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="visit">
-			<p-messages [(value)]="messages"></p-messages>
-			<div class="ui-grid-row">
-				<div class="ui-grid-col-5 ui-sm-12">
-					<app-patient-lookup (patientEmit)="lookUpPatient($event)" [originalPage]="'admin/visitDetails'"
-						[patient]="patient"></app-patient-lookup>
-					<p-message *ngIf="f.submitted && !(patient.id > 0)" severity="error" 
-						text="{{ 'COMMON.PATIENT_ID' | translate }} {{ 'VALIDATION.IS_REQUIRED' | translate }}"></p-message>
-				</div>
-				<div class="ui-grid-col-7 ui-sm-12">
-					<div class="ui-grid-col-1 ui-sm-12">
-						<div class="form-group">
-							<label for="visitId">{{ 'COMMON.VISIT_NUMBER' | translate }}</label>
-							<div class="ui-grid-col-8 ui-sm-12">{{visit.id}}</div>
-						</div>
-					</div>
-					<div class="ui-grid-col-3 ui-sm-12">
-						<div class="form-group">
-							<label for="visitDatetime">{{ 'COMMON.VISIT_DATETIME' | translate }}<font color="red">*</font></label>
-							<p-calendar [(ngModel)]="visit.visitDatetime" [showTime]="true" disabled="true"
-								name="visitDatetime" #visitDatetime="ngModel" required></p-calendar>
-							<p-message *ngIf="f.submitted && visitDatetime.invalid" severity="error" 
-								text="{{ 'COMMON.VISIT_DATETIME' | translate }} {{ 'VALIDATION.IS_REQUIRED' | translate }}"></p-message>
-						</div>
-					</div>
-					<div class="ui-grid-col-8 ui-sm-12">
-						<div class="form-group">
-							<label for="chiefOfComplain">{{ 'COMMON.CHIEF_OF_COMPLAIN' | translate }}<font color="red">*</font></label>
-							<textarea pInputTextarea id="chiefOfComplain" rows="3" cols="40" pInputTextarea maxlength="1000"
-								[(ngModel)]="visit.chiefOfComplain" name="chiefOfComplain" #chiefOfComplain="ngModel" required> </textarea>
-							<p-message *ngIf="f.submitted && chiefOfComplain.invalid" severity="error" 
-								text="{{ 'COMMON.CHIEF_OF_COMPLAIN' | translate }} {{ 'VALIDATION.IS_REQUIRED' | translate }}"></p-message>
-						</div>
-					</div>
-				</div>
-			</div>
-			
-			<div class="ui-grid-row">
-				<div class="ui-grid-col-3 ui-sm-12">
-					<div class="form-group">
-						<label for="package">{{ 'COMMON.PACKAGE' | translate }}<font color="red">*</font></label>
-						<p-autoComplete [(ngModel)]="visit.pckage" #package="ngModel" required
-							(onDropdownClick)="packageDropdown.handleDropdownClick($event)"
-							[suggestions]="packageDropdown.filteredPackages" [dropdown]="true"
-							(completeMethod)="packageDropdown.filter($event)"
-							name="name" field="name" [size]="30" placeholder="" [minLength]="1">
-						</p-autoComplete>
-						<p-message *ngIf="f.submitted && package.invalid" severity="error" 
-							text="{{ 'COMMON.PACKAGE' | translate }} {{ 'VALIDATION.IS_REQUIRED' | translate }}"></p-message>
-					</div>
-				</div>
-				<div class="ui-grid-col-3 ui-sm-12">
-					<div class="form-group">
-						<label for="doctor">{{ 'COMMON.DOCTOR' | translate }}<font color="red">*</font></label>
-						<p-autoComplete [(ngModel)]="visit.doctor" #doctor="ngModel" required
-							(onDropdownClick)="doctorDropdown.handleDropdownClick($event)"
-							[suggestions]="doctorDropdown.filteredDoctors" [dropdown]="true"
-							(completeMethod)="doctorDropdown.filter($event)"
-							name="name" field="name" [size]="30" placeholder="" [minLength]="1">
-						</p-autoComplete>
-						<p-message *ngIf="f.submitted && doctor.invalid" severity="error" 
-							text="{{ 'COMMON.DOCTOR' | translate }} {{ 'VALIDATION.IS_REQUIRED' | translate }}"></p-message>
-					</div>
-				</div>
-			</div>
-		</div>
-		<p-tabView (onChange)="onTabChange($event)"> 
-			<p-tabPanel header="{{ 'COMMON.VITAL_HISTORY' | translate }}"> 
-				<p-tabView> 
-					<p-tabPanel header="{{ 'COMMON.VITALSIGN_ALLERGIES' | translate }}"> 
-						<app-vitalSign-details [vitalSign]="visit.vitalSign"></app-vitalSign-details>
-						<app-allergy-details [visit]="visit"></app-allergy-details> <br /><br />
-						<app-vaccine-details [givenVaccines]="visit.givenVaccines"></app-vaccine-details>
-					</p-tabPanel> 
-					<p-tabPanel header="{{ 'COMMON.SYMPTOMS' | translate }}"> 
-						<app-symptom-details [visit]="visit"></app-symptom-details> 
-					</p-tabPanel> 
-					<p-tabPanel header="{{ 'COMMON.MEDICAL_HISTORY' | translate }}"> 
-						<app-medicalHistory-details [visit]="visit"></app-medicalHistory-details> 
-					</p-tabPanel> 
-					<p-tabPanel header="{{ 'COMMON.SOCIAL_HISTORY' | translate }}">
-						<app-socialHistory-details [visit]="visit"></app-socialHistory-details> 
-					</p-tabPanel> 
-					<p-tabPanel header="{{ 'COMMON.HOME_MEDICATIONS' | translate }}"> </p-tabPanel> 
-				</p-tabView>
-				<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
-					<button type="button" pButton icon="fa fa-close" (click)="delete()" label="{{ 'COMMON.DELETE' | translate }}"></button>&nbsp;&nbsp;
-					<button pButton icon="fa fa-check" label="{{ 'COMMON.SAVE' | translate }}"></button>
-				</div> 
-			</p-tabPanel> 
-			<p-tabPanel header="DOCTOR ORDERS" *ngIf="visit.id > 0"> 
-				<app-doctorOrder-details [visit]="visit" (doctorOrderSaveEvent)="onDoctorOrderSaved($event)"></app-doctorOrder-details> 
-				<br />
-				<app-doctorOrder-list [visit]="visit" (doctorOrderIdEvent)="onDoctorOrderSelected($event)"></app-doctorOrder-list>
-				<br/>
-			</p-tabPanel> 
-			<p-tabPanel header="DIAGNOSES" *ngIf="visit.id > 0">
-				<app-admissionDiagnoses [visit]="visit"></app-admissionDiagnoses> 
-			</p-tabPanel> 
-			<p-tabPanel header="PRESCRIPTIONS" *ngIf="visit.id > 0"> 
-				<app-prescription-details [visit]="visit"></app-prescription-details><br /><br />
-				<app-prescription-list [visit]="visit" (prescriptionIdEvent)="onPrescriptionSelected($event)"></app-prescription-list>
-			</p-tabPanel> 
-			<p-tabPanel header="INVESTIGATIONS" *ngIf="visit.id > 0">
-				<app-investigation-list [showActions]="false" [visit]="visit"></app-investigation-list> 
-			</p-tabPanel> 
-			<p-tabPanel header="PHARMACY" *ngIf="visit.id > 0">
-				<app-patientSale-details [visit]="visit"></app-patientSale-details> <br />
-				<br />
-				<app-patientSale-list (patientSaleIdEvent)="onPatientSaleSelected($event)" [visit]="visit"></app-patientSale-list> 
-			</p-tabPanel> 
-			<p-tabPanel header="DISCHARGE FORM" *ngIf="visit.id > 0">
-				<div>
-					<app-discharge-details [visit]="visit"></app-discharge-details>
-				</div>
-			</p-tabPanel> 
-		</p-tabView>
-	
-		<br /> <br />
-	</div>
-</form>
+  <div class="ui-g-12 ui-sm-12" style="padding: 15px;">
+    <div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="visit">
 
+      <div class="ui-grid-row">
+        <div class="ui-grid-col-5 ui-sm-12">
+          <app-patient-lookup (patientEmit)="lookUpPatient($event)" [originalPage]="'admin/visitDetails'"
+            [patient]="patient"></app-patient-lookup>
+          <p-message *ngIf="f.submitted && !(patient.id > 0)" severity="error"
+            text="{{ 'COMMON.PATIENT_ID' | translate }} {{ 'VALIDATION.IS_REQUIRED' | translate }}"></p-message>
+        </div>
+        <div class="ui-grid-col-7 ui-sm-12">
+          <div class="ui-grid-row">
+            <div class="ui-grid-col-5 ui-sm-12">
+              <div class="ui-grid-row">
+                {{ 'COMMON.VISIT_NUMBER' | translate }}: &nbsp;&nbsp; <strong>{{visit.id}}</strong>
+
+              </div>
+              <div class="ui-grid-row">
+                {{ 'COMMON.VISIT_DATETIME' | translate }}: &nbsp;&nbsp;
+                <strong>
+                  <p-calendar [(ngModel)]="visit.visitDatetime" [showTime]="true" disabled="true" name="visitDatetime"
+                    #visitDatetime="ngModel" required></p-calendar>
+                </strong>
+
+              </div>
+            </div>
+            <div class="ui-grid-col-7 ui-sm-12">
+              <div class="form-group">
+                <label for="chiefOfComplain">{{ 'COMMON.CHIEF_OF_COMPLAIN' | translate }}<font color="red">*</font>
+                </label>
+                <textarea pInputTextarea id="chiefOfComplain" rows="2" cols="40" pInputTextarea maxlength="1000"
+                  [(ngModel)]="visit.chiefOfComplain" name="chiefOfComplain" #chiefOfComplain="ngModel"
+                  required> </textarea>
+                <p-message *ngIf="f.submitted && chiefOfComplain.invalid" severity="error"
+                  text="{{ 'COMMON.CHIEF_OF_COMPLAIN' | translate }} {{ 'VALIDATION.IS_REQUIRED' | translate }}">
+                </p-message>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ui-grid-row">
+        <div class="ui-grid-col-3 ui-sm-12">
+          <div class="form-group">
+            <label for="package">{{ 'COMMON.PACKAGE' | translate }}<font color="red">*</font></label>
+            <p-autoComplete [(ngModel)]="visit.pckage" #package="ngModel" required
+              (onDropdownClick)="packageDropdown.handleDropdownClick($event)"
+              [suggestions]="packageDropdown.filteredPackages" [dropdown]="true"
+              (completeMethod)="packageDropdown.filter($event)" name="name" field="name" [size]="30" placeholder=""
+              [minLength]="1">
+            </p-autoComplete>
+            <p-message *ngIf="f.submitted && package.invalid" severity="error"
+              text="{{ 'COMMON.PACKAGE' | translate }} {{ 'VALIDATION.IS_REQUIRED' | translate }}"></p-message>
+          </div>
+        </div>
+        <div class="ui-grid-col-3 ui-sm-12">
+          <div class="form-group">
+            <label for="doctor">{{ 'COMMON.DOCTOR' | translate }}<font color="red">*</font></label>
+            <p-autoComplete [(ngModel)]="visit.doctor" #doctor="ngModel" required
+              (onDropdownClick)="doctorDropdown.handleDropdownClick($event)"
+              [suggestions]="doctorDropdown.filteredDoctors" [dropdown]="true"
+              (completeMethod)="doctorDropdown.filter($event)" name="name" field="name" [size]="30" placeholder=""
+              [minLength]="1">
+            </p-autoComplete>
+            <p-message *ngIf="f.submitted && doctor.invalid" severity="error"
+              text="{{ 'COMMON.DOCTOR' | translate }} {{ 'VALIDATION.IS_REQUIRED' | translate }}"></p-message>
+          </div>
+        </div>
+        <div class="ui-grid-col-6 ui-sm-12">
+          <p-messages [(value)]="messages"></p-messages>
+        </div>
+      </div>
+    </div>
+    <p-tabView (onChange)="onTabChange($event)">
+      <p-tabPanel header="{{ 'COMMON.VITAL_HISTORY' | translate }}">
+        <p-tabView>
+          <p-tabPanel header="{{ 'COMMON.VACCINE_LIST' | translate }}">
+            <app-vaccine-details [givenVaccines]="visit.givenVaccines"></app-vaccine-details>
+          </p-tabPanel>
+          <p-tabPanel header="{{ 'COMMON.ALLERGY_LIST' | translate }}">
+            <app-allergy-details [visit]="visit"></app-allergy-details>
+          </p-tabPanel>
+          <p-tabPanel header="{{ 'COMMON.VITAL_SIGN_LIST' | translate }}">
+            <app-vitalSign-details [vitalSign]="visit.vitalSign"></app-vitalSign-details>
+          </p-tabPanel>
+          <p-tabPanel header="{{ 'COMMON.SYMPTOMS' | translate }}">
+            <app-symptom-details [visit]="visit"></app-symptom-details>
+          </p-tabPanel>
+          <p-tabPanel header="{{ 'COMMON.MEDICAL_HISTORY' | translate }}">
+            <app-medicalHistory-details [visit]="visit"></app-medicalHistory-details>
+          </p-tabPanel>
+          <p-tabPanel header="{{ 'COMMON.SOCIAL_HISTORY' | translate }}">
+            <app-socialHistory-details [visit]="visit"></app-socialHistory-details>
+          </p-tabPanel>
+          <p-tabPanel header="{{ 'COMMON.HOME_MEDICATIONS' | translate }}"> </p-tabPanel>
+        </p-tabView>
+        <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+          <button type="button" pButton icon="fa fa-close" (click)="delete()"
+            label="{{ 'COMMON.DELETE' | translate }}"></button>&nbsp;&nbsp;
+          <button pButton icon="fa fa-check" label="{{ 'COMMON.SAVE' | translate }}"></button>
+        </div>
+      </p-tabPanel>
+
+      <p-tabPanel header="{{ 'COMMON.DOCTOR_ORDER_LIST' | translate }}" *ngIf="visit.id > 0">
+        <app-doctorOrder-details [visit]="visit" (doctorOrderSaveEvent)="onDoctorOrderSaved($event)">
+		</app-doctorOrder-details> 
+		<br/>
+        <app-doctorOrder-list [visit]="visit" (doctorOrderIdEvent)="onDoctorOrderSelected($event)">
+        </app-doctorOrder-list> 
+	  </p-tabPanel>
+	  
+      <p-tabPanel header="{{ 'COMMON.DIAGNOSIS_LIST' | translate }}" *ngIf="visit.id > 0">
+        <app-admissionDiagnoses [visit]="visit"></app-admissionDiagnoses>
+      </p-tabPanel>
+
+      <p-tabPanel header="{{ 'COMMON.PRESCRIPTION_LIST' | translate }}" *ngIf="visit.id > 0">
+		<app-prescription-details [visit]="visit"></app-prescription-details> 
+		<br/>
+        <app-prescription-list [visit]="visit" (prescriptionIdEvent)="onPrescriptionSelected($event)">
+        </app-prescription-list>
+      </p-tabPanel>
+
+      <p-tabPanel header="{{ 'COMMON.INVESTIGATION_LIST' | translate }}" *ngIf="visit.id > 0">
+        <app-investigation-list [showActions]="false" [visit]="visit"></app-investigation-list>
+      </p-tabPanel>
+      <p-tabPanel header="{{ 'COMMON.PHARMACY' | translate }}" *ngIf="visit.id > 0">
+        <app-patientSale-details [visit]="visit"></app-patientSale-details> <br />
+        <br />
+        <app-patientSale-list (patientSaleIdEvent)="onPatientSaleSelected($event)" [visit]="visit">
+        </app-patientSale-list>
+      </p-tabPanel>
+
+      <p-tabPanel header="{{ 'COMMON.DISCHARGE' | translate }}" *ngIf="visit.id > 0">
+     
+          <app-discharge-details [visit]="visit"></app-discharge-details>
+      
+      </p-tabPanel>
+    </p-tabView>
+
+    <br /> <br />
+  </div>
+</form>
