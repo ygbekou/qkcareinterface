@@ -24,7 +24,7 @@ export class ProductDropdown {
     }, 10)
   }
   
-  private getAllProducts(): void {
+  public getAllProducts(): void {
     this.genericService.getAll('Product')
       .subscribe((data: any[]) => {
         this.products = data

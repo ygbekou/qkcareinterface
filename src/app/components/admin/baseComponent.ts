@@ -65,19 +65,26 @@ export class BaseComponent {
                 this.genericService.delete(+id, entity)
                     .subscribe((response: GenericResponse) => {
                         if ('SUCCESS' === response.result) {
-                            this.translate.get(['', 'MESSAGE.DELETE_SUCCESS']).subscribe(res => {
+                            this.translate.get(['COMMON.DELETE', 'MESSAGE.DELETE_SUCCESS']).subscribe(res => {
                                 this.messages.push({
                                     severity: Constants.SUCCESS, summary: res['COMMON.DELETE'],
                                     detail: res['MESSAGE.DELETE_SUCCESS']
                                 });
                             });
                             this.removeItem(listItems, +id)
-                        } else if ('FAILURE' === response.result) {
-							alert('Here')
-                            this.translate.get(['', 'MESSAGE.DELETE_UNSUCCESS']).subscribe(res => {
+                        } else if ('FOREIGN_KEY_FAILURE' === response.result) {
+                            this.translate.get(['COMMON.DELETE', 'MESSAGE.DELETE_UNSUCCESS_FOREIGN_KEY']).subscribe(res => {
                                 this.messages.push({
                                     severity: Constants.ERROR, summary: res['COMMON.DELETE'],
-                                    detail: res['MESSAGE.DELETE_UNSUCCESS']
+                                    detail: res['MESSAGE.DELETE_UNSUCCESS_FOREIGN_KEY'] + '<br/>' + response.message
+                                });
+                            });
+						} else if ('GENERIC_FAILURE' === response.result) {
+							alert('Here')
+                            this.translate.get(['COMMON.DELETE', 'MESSAGE.DELETE_UNSUCCESS']).subscribe(res => {
+                                this.messages.push({
+                                    severity: Constants.ERROR, summary: res['COMMON.DELETE'],
+									detail: res['MESSAGE.DELETE_UNSUCCESS'] + '<br/>' + response.message
                                 });
                             });
                         }

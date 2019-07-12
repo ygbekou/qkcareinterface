@@ -1,3 +1,4 @@
+<p-confirmDialog [style]="{width: '50vw'}"></p-confirmDialog>
 <div class="ui-g-12 ui-sm-12" style="padding: 15px;">
 	<form name="form" (ngSubmit)="f.form.valid && search()" #f="ngForm" validate>
 		<p-fieldset legend="{{ 'COMMON.SEARCH_CRITERIA' | translate }}">
@@ -54,6 +55,7 @@
 			</div>
 		</p-fieldset>
 	</form>
+	<p-messages [(value)]="messages"></p-messages>
 	<br/>
 	<br/>
 	<p-table [columns]="cols" [value]="visits" responsive="true">

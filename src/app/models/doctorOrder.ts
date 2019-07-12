@@ -22,6 +22,8 @@ export class DoctorOrder {
   
   labTests: LabTest[] = [];
   products: Product[] = [];
+
+  modifiedByName: string;
   
   constructor() {
     this.doctorOrderType = new Reference();

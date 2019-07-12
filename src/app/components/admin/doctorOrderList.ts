@@ -57,7 +57,7 @@ export class DoctorOrderList extends BaseComponent implements OnInit, OnDestroy 
               parameters.push('e.admission.id = |admissionId|' + this.admission.id + '|Long');
             }
 
-            this.genericService.getAllByCriteria('DoctorOrder', parameters)
+            this.genericService.getAllByCriteria('DoctorOrder', parameters, ' ORDER BY e.doctorOrderDatetime DESC ')
               .subscribe((data: DoctorOrder[]) =>
               {
                 this.doctorOrders = data
