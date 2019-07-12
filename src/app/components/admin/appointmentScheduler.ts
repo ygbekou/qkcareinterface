@@ -12,17 +12,15 @@ import { Message } from 'primeng/api';
 	templateUrl: '../../pages/admin/appointmentScheduler.html',
 	providers: [GenericService, AppointmentService, HospitalLocationDropdown,
 		DepartmentDropdown, DoctorDropdown]
-})
-// tslint:disable-next-line:component-class-suffix
-export class AppointmentScheduler implements OnInit, OnDestroy {
+}) 
 
+export class AppointmentScheduler implements OnInit, OnDestroy {
 	events: any[];
 	headerConfig: any;
 	dateConfig: any;
 	displayEdit = false;
 	appointment: Appointment;
 	searchCriteria: SearchCriteria = new SearchCriteria();
-
 	messages: Message[] = [];
 
 	constructor
@@ -50,7 +48,6 @@ export class AppointmentScheduler implements OnInit, OnDestroy {
 		this.appointment.department = new Department();
 		this.appointment.doctor = new Employee();
 		this.appointment.patient = new Patient();
-
 		this.route
 			.queryParams
 			.subscribe(params => {
@@ -82,11 +79,25 @@ export class AppointmentScheduler implements OnInit, OnDestroy {
 		this.messages = [];
 		this.appointment.status = status;
 		if (this.appointment.patient.id === undefined) {
-			this.messages.push({ severity: Constants.ERROR, summary: Constants.SAVE_LABEL, detail: 'Please Select a patient' });
+			this.translate.get(['COMMON.ERROR', 'MESSAGE.SELECT_PATIENT']).subscribe(res => {
+				this.messages.push({
+					severity:
+						Constants.ERROR, summary:
+						res['COMMON.ERROR'], detail:
+						res['MESSAGE.SELECT_PATIENT']
+				});
+			});
 			return;
 		}
 		if (this.appointment.hospitalLocation.id === undefined) {
-			this.messages.push({ severity: Constants.ERROR, summary: Constants.SAVE_LABEL, detail: 'Please Select a location' });
+			this.translate.get(['COMMON.ERROR', 'MESSAGE.SELECT_LOCATION']).subscribe(res => {
+				this.messages.push({
+					severity:
+						Constants.ERROR, summary:
+						res['COMMON.ERROR'], detail:
+						res['MESSAGE.SELECT_LOCATION']
+				});
+			});
 			return;
 		}
 		if (status === 3) {//cancel
@@ -157,7 +168,6 @@ export class AppointmentScheduler implements OnInit, OnDestroy {
 	}
 
 	editEventClick(e) {
-
 		this.displayEdit = true;
 		const eventId = e.calEvent.id;
 		if (eventId != null && eventId > 0) {
@@ -177,9 +187,7 @@ export class AppointmentScheduler implements OnInit, OnDestroy {
 			this.appointment.appointmentDate = e.calEvent.start._i.split('T')[0];
 			this.appointment.beginTime = e.calEvent.start._i.split('T')[1];
 			this.appointment.endTime = e.calEvent.end._i.split('T')[1];
-
 		}
-
 	}
 
 	getAppointments() {
@@ -201,7 +209,5 @@ export class AppointmentScheduler implements OnInit, OnDestroy {
 
 	lookUpPatient(event) {
 		this.appointment.patient = event;
-
 	}
-
 }

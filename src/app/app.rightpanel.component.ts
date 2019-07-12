@@ -53,7 +53,7 @@ export class AppRightPanelComponent implements AfterViewInit {
 				this.getWaitList(5);
 			} else {
 				this.activeTab = 2;
-				this.getTopN(5);
+				this.getTopN(4);
 			}
 		}, 450);
 	}

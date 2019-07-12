@@ -332,8 +332,7 @@
 	"CONFIRMED":"Confirmé",
 	"AVAILABLE":"Disponible",
 	"LEGEND":"Légende",
-	"CREATED_BY":"Creaté Par"
-  },
+	"ERROR":"Erreur",	"CREATED_BY":"Creaté Par"  },
   "MESSAGE": {
     "TRANFER_DOCTOR_FAILED": "Le nouveau docteur assigné doit être différent de l'ancien.",
     "TRANFER_BED_FAILED": "Le noueau lit dit être différent de l'ancien.",
@@ -361,7 +360,9 @@
     "MESSAGE_SENT": "Message envoyé avec succès",
     "MESSAGE_FAILED": "L'envois du message a échoué",
     "FORM_HAS_ERRORS": "Le formulaire comporte des erreurs. S'il vous plait vérifier et corriger.",
-    "NO_CRITERIA_SET": "Au moins une critère de recherche est nécessaire"
+	"NO_CRITERIA_SET": "Au moins une critère de recherche est nécessaire",
+	"SELECT_PATIENT": "Sélectioner un patient",
+	"SELECT_LOCATION": "Sélectioner un emplacement"
   },
   "VALIDATION": {
     "IS_INVALID": "est invalide",
