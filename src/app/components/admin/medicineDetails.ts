@@ -1,13 +1,9 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Constants } from '../../app.constants';
 import { Product } from '../../models/product';
 import { Reference } from '../../models/reference';
-import { FileUploader } from './fileUploader';
-import { EditorModule } from 'primeng/editor';
 import { CategoryDropdown, ManufacturerDropdown } from '../dropdowns';
-import { Cookie } from 'ng2-cookies/ng2-cookies';
-import { DataTableModule, DialogModule, InputTextareaModule, CheckboxModule, MultiSelectModule, CalendarModule } from 'primeng/primeng';
 import { GenericService, GlobalEventsManager } from '../../services';
 
 @Component({
@@ -37,9 +33,7 @@ export class MedicineDetails implements OnInit, OnDestroy {
       private globalEventsManager: GlobalEventsManager,
       private ctgDropdown: CategoryDropdown,
       private mfctDropdown: ManufacturerDropdown,
-      private changeDetectorRef: ChangeDetectorRef,
-      private route: ActivatedRoute,
-      private router: Router
+      private route: ActivatedRoute
     ) {
       this.categoryDropdown = ctgDropdown;
       this.manufacturerDropdown = mfctDropdown;
@@ -80,7 +74,7 @@ export class MedicineDetails implements OnInit, OnDestroy {
   }
 
   getMedicine(medicineId: number) {
-    this.genericService.getOne(medicineId, 'Medicine')
+    this.genericService.getOne(medicineId, 'Product')
         .subscribe(result => {
       if (result.id > 0) {
         this.medicine = result
@@ -95,7 +89,7 @@ export class MedicineDetails implements OnInit, OnDestroy {
   save() {
     try {
       this.error = '';
-      this.genericService.save(this.medicine, "Medicine")
+      this.genericService.save(this.medicine, "Product")
         .subscribe(result => {
           if (result.id > 0) {
             this.medicine = result
@@ -111,8 +105,8 @@ export class MedicineDetails implements OnInit, OnDestroy {
     }
   }
   
-  delete() {
-    
+  addNew() {
+    this.medicine = new Product();
   }
 
  }

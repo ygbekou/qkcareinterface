@@ -1,4 +1,5 @@
 <p-confirmDialog [style]="{width: '50vw'}"></p-confirmDialog>
+<p-messages [(value)]="messages"></p-messages>
 <div class="ui-grid ui-grid-responsive ui-fluid">
   <p-table [columns]="cols" [value]="doctorOrders">
     <ng-template pTemplate="caption">
@@ -28,11 +29,9 @@
         </td>
         <td align="justify">
           <button type="button" pButton icon="fa fa-edit" (click)="edit(rowData.id)"
-            title="{{ 'COMMON.EDIT' | translate }}"></button>
-          &nbsp;&nbsp;
-          <button type="button" pButton icon="fa fa-eraser"
-            (click)="deleteItem(doctorOrders, rowData.id, 'DoctorOrder')"
-            title="{{ 'COMMON.DELETE' | translate }}"></button>
+            	title="{{ 'COMMON.EDIT' | translate }}"></button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <button type="button" pButton icon="fa fa-eraser" (click)="deleteItem(doctorOrders, rowData.id, 'DoctorOrder')"
+            	title="{{ 'COMMON.DELETE' | translate }}"></button>
         </td>
       </tr>
     </ng-template>

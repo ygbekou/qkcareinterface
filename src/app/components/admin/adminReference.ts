@@ -16,6 +16,7 @@ import { ReferenceWithCategoryDetails } from './referenceWithCategoryDetails';
 import { ReferenceWithCategoryList } from './referenceWithCategoryList';
 import { DepartmentDetails } from './departmentDetails';
 import { DepartmentList } from './departmentList';
+import { MedicineList } from './medicineList';
 
 @Component({
   selector: 'app-admin-reference',
@@ -33,6 +34,7 @@ export class AdminReference implements OnInit, OnDestroy {
   @ViewChild(ReferenceWithCategoryDetails) referenceWithCategoryDetails: ReferenceWithCategoryDetails;
   @ViewChild(ReferenceWithCategoryList) referenceWithCategoryList: ReferenceWithCategoryList;
   @ViewChild(MedicineDetails) medicineDetails: MedicineDetails;
+  @ViewChild(MedicineList) medicineList: MedicineList;
   @ViewChild(LabTestDetails) labTestDetails: LabTestDetails;
   @ViewChild(LabTestList) labTestList: LabTestList;
   @ViewChild(HospitalLocationDetails) hospitalLocationDetails: HospitalLocationDetails;
@@ -117,7 +119,6 @@ export class AdminReference implements OnInit, OnDestroy {
 
   onTabChange(evt) {
 	this.activeTab = evt.index;
-	alert(evt.index);
     setTimeout(() => {
         if (evt.index === 0) {
           this.globalEventsManager.selectedParentId = 3;
@@ -176,9 +177,8 @@ export class AdminReference implements OnInit, OnDestroy {
         } else if (evt.index === 14) {
           this.globalEventsManager.selectedParentId = Constants.CATEGORY_MEDICINE;
           this.globalEventsManager.selectedReferenceWithCategoryType = 'Product';
-          this.categoryDropdown.getAllCategories(Constants.CATEGORY_MEDICINE);
-          this.referenceWithCategoryList.updateCols('MEDICINE');
-          this.referenceWithCategoryList.getAll();
+		  this.categoryDropdown.getAllCategories(Constants.CATEGORY_MEDICINE);
+		  
         } else if (evt.index === 15) {
           this.globalEventsManager.selectedParentId = Constants.CATEGORY_SERVICE_TARIF;
           this.globalEventsManager.selectedReferenceType = 'Category';
