@@ -121,6 +121,7 @@ export class DoctorOrderDetails extends BaseComponent implements OnInit, OnDestr
 
 
   getDoctorOrder(doctorOrderId: number) {
+	  this.clear();
     this.visitService.getDoctorOrder(doctorOrderId)
         .subscribe(result => {
       if (result.id > 0) {
@@ -132,7 +133,7 @@ export class DoctorOrderDetails extends BaseComponent implements OnInit, OnDestr
 
 			const product: Product = this.doctorOrder.products[index];
 			const ind = this.productDropdown.products.findIndex(x => x.id === product.id);
-			this.productDropdown.products.splice(ind);
+			this.productDropdown.products.splice(ind, 1);
 		}
 
       }

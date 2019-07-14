@@ -15,7 +15,6 @@ export class DoctorOrderList extends BaseComponent implements OnInit, OnDestroy 
 
   doctorOrders: DoctorOrder[] = [];
   cols: any[];
-  messages: Message[] = [];
 
   @Input() visit: Visit;
   @Input() admission: Admission;

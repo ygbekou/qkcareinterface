@@ -1,41 +1,34 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild, Output, EventEmitter } from '@angular/core';
-import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
+import { Component, OnInit, OnDestroy, Output, EventEmitter } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Constants } from '../../app.constants';
 import { Product } from '../../models/product';
-import { FileUploader } from './fileUploader';
-import { Cookie } from 'ng2-cookies/ng2-cookies';
-import { DataTableModule, DialogModule, InputTextareaModule, CheckboxModule } from 'primeng/primeng';
 import { GenericService } from '../../services';
 import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
+import { BaseComponent } from './baseComponent';
+import { ConfirmationService } from 'primeng/api';
 
 @Component({
   selector: 'app-medicine-list',
   templateUrl: '../../pages/admin/medicineList.html',
   providers: [GenericService]
 })
-export class MedicineList implements OnInit, OnDestroy {
+export class MedicineList extends BaseComponent implements OnInit, OnDestroy {
   
   public error: String = '';
   displayDialog: boolean;
   medicines: Product[] = [];
   cols: any[];
   
-  DETAIL: string = Constants.DETAIL;
-  ADD_IMAGE: string = Constants.ADD_IMAGE;
-  ADD_LABEL: string = Constants.ADD_LABEL;  
-  
   @Output() medicineIdEvent = new EventEmitter<string>();
   
   constructor
     (
     private genericService: GenericService,
-    private translate: TranslateService,
-    private changeDetectorRef: ChangeDetectorRef,
-    private route: ActivatedRoute,
-    private router: Router,
+	private translate: TranslateService,
+	public confirmationService: ConfirmationService,
+    private route: ActivatedRoute
     ) {
-
-    
+		super(genericService, translate, confirmationService);
   }
 
   ngOnInit(): void {
@@ -55,8 +48,8 @@ export class MedicineList implements OnInit, OnDestroy {
             let parameters: string [] = [];
             
             parameters.push('e.status = |status|0|Integer')
-            parameters.push('e.category.id = |categoryId|' + Constants.CATEGORY_MEDICINE + '|Long')
-            this.genericService.getAllByCriteria('Product', parameters)
+            parameters.push('c.parent.id = |categoryId|' + Constants.CATEGORY_MEDICINE + '|Long')
+            this.genericService.getAllByCriteria('Product.Category', parameters)
               .subscribe((data: Product[]) => 
               {
                 this.medicines = data;
@@ -89,20 +82,6 @@ export class MedicineList implements OnInit, OnDestroy {
   
   edit(medicineId: number) {
       this.medicineIdEvent.emit(medicineId + '');
-  }
-
-  delete(medicineId : number) {
-    try {
-      let navigationExtras: NavigationExtras = {
-        queryParams: {
-          "medicineId": medicineId,
-        }
-      }
-      this.router.navigate(["/admin/medicineDetails"], navigationExtras);
-    }
-    catch (e) {
-      console.log(e);
-    }
   }
 
  }

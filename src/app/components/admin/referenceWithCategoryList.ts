@@ -78,12 +78,6 @@ export class ReferenceWithCategoryList implements OnInit, OnDestroy {
   
   edit(referenceWithCategoryId : number) {
     try {
-//      let navigationExtras: NavigationExtras = {
-//        queryParams: {
-//          "symmtomId": symmtomId,
-//        }
-//      }
-//      this.router.navigate(["/admin/symmtomDetails"], navigationExtras);
       this.referenceWithCategoryIdEvent.emit(referenceWithCategoryId + '');
     }
     catch (e) {
@@ -112,7 +106,8 @@ export class ReferenceWithCategoryList implements OnInit, OnDestroy {
           
             let parameters: string [] = []; 
             //parameters.push('e.status = |status|0|Integer')
-            
+			
+			alert(this.globalEventsManager.selectedReferenceWithCategoryType)
             this.genericService.getAllByCriteria(this.globalEventsManager.selectedReferenceWithCategoryType, parameters)
               .subscribe((data: ReferenceWithCategory[]) => 
               { 

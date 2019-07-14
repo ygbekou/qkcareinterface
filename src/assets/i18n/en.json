@@ -336,7 +336,8 @@
 	"PHARMACY":"Pharmacy",
 	"NEW":"New",
 	"OLD":"Old",
-	"CREATED_BY":"Created By"
+	"CREATED_BY":"Create By"
+  },
   },
   "MESSAGE": {
   	"TRANFER_DOCTOR_FAILED": "The transfer doctor should be different from the current doctor.",

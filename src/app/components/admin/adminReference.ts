@@ -16,6 +16,7 @@ import { ReferenceWithCategoryDetails } from './referenceWithCategoryDetails';
 import { ReferenceWithCategoryList } from './referenceWithCategoryList';
 import { DepartmentDetails } from './departmentDetails';
 import { DepartmentList } from './departmentList';
+import { MedicineList } from './medicineList';
 
 @Component({
   selector: 'app-admin-reference',
@@ -33,6 +34,7 @@ export class AdminReference implements OnInit, OnDestroy {
   @ViewChild(ReferenceWithCategoryDetails) referenceWithCategoryDetails: ReferenceWithCategoryDetails;
   @ViewChild(ReferenceWithCategoryList) referenceWithCategoryList: ReferenceWithCategoryList;
   @ViewChild(MedicineDetails) medicineDetails: MedicineDetails;
+  @ViewChild(MedicineList) medicineList: MedicineList;
   @ViewChild(LabTestDetails) labTestDetails: LabTestDetails;
   @ViewChild(LabTestList) labTestList: LabTestList;
   @ViewChild(HospitalLocationDetails) hospitalLocationDetails: HospitalLocationDetails;
@@ -116,7 +118,7 @@ export class AdminReference implements OnInit, OnDestroy {
   }
 
   onTabChange(evt) {
-    this.activeTab = evt.index;
+	this.activeTab = evt.index;
     setTimeout(() => {
         if (evt.index === 0) {
           this.globalEventsManager.selectedParentId = 3;
@@ -173,21 +175,26 @@ export class AdminReference implements OnInit, OnDestroy {
           this.categoryDropdown.getAllCategories(Constants.CATEGORY_MEDICINE);
           this.referenceList.updateCols('MEDICINE_TYPE');
         } else if (evt.index === 14) {
+          this.globalEventsManager.selectedParentId = Constants.CATEGORY_MEDICINE;
+          this.globalEventsManager.selectedReferenceWithCategoryType = 'Product';
+		  this.categoryDropdown.getAllCategories(Constants.CATEGORY_MEDICINE);
+		  
+        } else if (evt.index === 15) {
           this.globalEventsManager.selectedParentId = Constants.CATEGORY_SERVICE_TARIF;
           this.globalEventsManager.selectedReferenceType = 'Category';
-          this.referenceDetails.parentId = Constants.CATEGORY_SERVICE_TARIF;
+          this.referenceDetails.parentId = Constants.CATEGORY_MEDICINE;
           this.referenceList.updateCols('SERVICE');
-        } else if (evt.index === 15) {
+        } else if (evt.index === 16) {
           this.globalEventsManager.selectedReferenceType = 'LabTestMethod';
           this.referenceList.updateCols('LAB_TEST_METHOD');
-        } else if (evt.index === 16) {
+        } else if (evt.index === 17) {
           this.globalEventsManager.selectedReferenceType = 'LabTestUnit';
           this.referenceList.updateCols('LAB_TEST_UNIT');
-        } else if (evt.index === 17) {
-          this.labTestList.getAllLabTests();
         } else if (evt.index === 18) {
-          this.hospitalLocationtList.getAllHospitalLocations();
+          this.labTestList.getAllLabTests();
         } else if (evt.index === 19) {
+          this.hospitalLocationtList.getAllHospitalLocations();
+        } else if (evt.index === 20) {
         }
 
      }, 0);
