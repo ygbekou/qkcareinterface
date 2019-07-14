@@ -81,7 +81,7 @@
               (onDropdownClick)="doctorDropdown.handleDropdownClick($event)"
               [suggestions]="doctorDropdown.filteredDoctors" [dropdown]="true" id="orderingDoctor"
               (completeMethod)="doctorDropdown.filter($event)" name="orderingDoctor" field="name" [size]="30"
-              placeholder="{{SELECT_OPTION}}" [minLength]="1" name="doctor"></p-autoComplete>
+              placeholder="{{SELECT_OPTION}}" [minLength]="1"></p-autoComplete>
           </div>
           <div class="form-group">
             <label for="doctorOrderKind">{{ 'COMMON.DOCTOR_ORDER_METHOD' | translate }}</label>
@@ -89,7 +89,7 @@
               (onDropdownClick)="doctorOrderKindDropdown.handleDropdownClick($event)"
               [suggestions]="doctorOrderKindDropdown.filteredDoctorOrderKinds" [dropdown]="true" id="doctorOrderKind"
               (completeMethod)="doctorOrderKindDropdown.filter($event)" name="doctorOrderKind" field="name" [size]="30"
-              placeholder="{{SELECT_OPTION}}" [minLength]="1" name="doctorOrderKind"></p-autoComplete>
+              placeholder="{{SELECT_OPTION}}" [minLength]="1"></p-autoComplete>
           </div>
           <div class="form-group">
             <label for="receivedDatetime">{{ 'COMMON.ORDER_RECEIVED_DATETIME' | translate }}<font color="red">*</font>

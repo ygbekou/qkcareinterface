@@ -24,7 +24,7 @@ export class LabTestDropdown {
     }, 10)
   }
   
-  private getActiveLabTests(): void {
+  public getActiveLabTests(): void {
     this.genericService.getActiveElements('labTest')
       .subscribe((data: any[]) => this.labTests = data,
       error => console.log(error),
