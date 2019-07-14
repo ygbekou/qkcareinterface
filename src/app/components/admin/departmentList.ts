@@ -1,10 +1,7 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, OnDestroy, Output, EventEmitter } from '@angular/core';
 import { Department } from '../../models';
-import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
-import { Constants } from '../../app.constants';
-import { Cookie } from 'ng2-cookies/ng2-cookies';
-import { DataTableModule, DialogModule, InputTextareaModule, CheckboxModule } from 'primeng/primeng';
-import { GenericService, GlobalEventsManager } from '../../services';
+import { ActivatedRoute } from '@angular/router';
+import { GenericService } from '../../services';
 import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
 
 @Component({
@@ -43,7 +40,7 @@ export class DepartmentList implements OnInit, OnDestroy {
 
     this.route
         .queryParams
-        .subscribe(params => {
+        .subscribe(() => {
 
           const parameters: string [] = [];
 
@@ -56,7 +53,7 @@ export class DepartmentList implements OnInit, OnDestroy {
      });
 
     this.updateCols();
-    this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
+    this.translate.onLangChange.subscribe(() => {
       this.updateCols();
     });
   }
@@ -80,7 +77,7 @@ export class DepartmentList implements OnInit, OnDestroy {
       this.departmentIdEvent.emit(departmentId + '');
   }
 
-  delete(departmentId: number) {
+  delete() {
       
   }
 

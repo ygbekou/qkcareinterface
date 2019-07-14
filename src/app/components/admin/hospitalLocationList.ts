@@ -1,12 +1,8 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, OnDestroy, Output, EventEmitter } from '@angular/core';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
-import { Constants } from '../../app.constants';
-import { FileUploader } from './fileUploader';
-import { Cookie } from 'ng2-cookies/ng2-cookies';
-import { DataTableModule, DialogModule, InputTextareaModule, CheckboxModule } from 'primeng/primeng';
-import { User, Schedule, Employee, HospitalLocation } from '../../models';  
+import { HospitalLocation } from '../../models';  
 import { GenericService } from '../../services';
-import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
+import { TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-hospitalLocation-list',
@@ -24,7 +20,6 @@ export class HospitalLocationList implements OnInit, OnDestroy {
     (
     private genericService: GenericService,
     private translate: TranslateService,
-    private changeDetectorRef: ChangeDetectorRef,
     private route: ActivatedRoute,
     private router: Router,
     ) {
@@ -43,7 +38,7 @@ export class HospitalLocationList implements OnInit, OnDestroy {
     
     this.route
         .queryParams
-        .subscribe(params => {          
+        .subscribe(() => {          
           
             let parameters: string [] = []; 
             
@@ -61,7 +56,7 @@ export class HospitalLocationList implements OnInit, OnDestroy {
   
 
       this.updateCols();
-      this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
+      this.translate.onLangChange.subscribe(() => {
           this.updateCols();
       });
   }

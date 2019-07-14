@@ -1,12 +1,8 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild, Input, Output, EventEmitter } from '@angular/core';
-import { Reference, User } from '../../models';
+import { Component, OnInit, OnDestroy, Output, EventEmitter } from '@angular/core';
+import { Reference } from '../../models';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
-import { Constants } from '../../app.constants';
-import { FileUploader } from './fileUploader';
-import { Cookie } from 'ng2-cookies/ng2-cookies';
-import { DataTableModule, DialogModule, InputTextareaModule, CheckboxModule } from 'primeng/primeng';
 import { GenericService, GlobalEventsManager } from '../../services';
-import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
+import { TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-reference-list',
@@ -31,7 +27,6 @@ export class ReferenceList implements OnInit, OnDestroy {
     private genericService: GenericService,
     private translate: TranslateService,
     private globalEventsManager: GlobalEventsManager,
-    private changeDetectorRef: ChangeDetectorRef,
     private route: ActivatedRoute,
     private router: Router,
     ) {
@@ -78,7 +73,7 @@ export class ReferenceList implements OnInit, OnDestroy {
     
     
     this.updateCols(this.REFERENCE_LIST_LABEL);
-    this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
+    this.translate.onLangChange.subscribe(() => {
       this.updateCols(this.REFERENCE_LIST_LABEL);
     });
   }
@@ -97,7 +92,7 @@ export class ReferenceList implements OnInit, OnDestroy {
         this.REFERENCE_LIST = res;
     });
     
-    this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
+    this.translate.onLangChange.subscribe(() => {
       this.updateCols(category);
     });
   }

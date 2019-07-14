@@ -337,7 +337,10 @@
 	"NEW":"Nouveau",
 	"OLD":"Ancien",	
 	"CREATED_BY":"Créer Par",
-	"REOPEN" :"Rouvrir"
+	"REOPEN" :"Rouvrir",
+	"DOCTOR_ORDER_PRIORITY_LIST": "Priorités ordre de médecin",
+	"TARIF_LIST": "Tarifs",
+	"HOSPITAL": "Hopital"
   },
   "MESSAGE": {
     "TRANFER_DOCTOR_FAILED": "Le nouveau docteur assigné doit être différent de l'ancien.",
