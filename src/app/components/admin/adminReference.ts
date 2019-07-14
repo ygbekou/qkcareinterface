@@ -120,6 +120,7 @@ export class AdminReference implements OnInit, OnDestroy {
   onTabChange(evt) {
 	this.activeTab = evt.index;
     setTimeout(() => {
+		console.log(this.activeTab);
         if (evt.index === 0) {
           this.globalEventsManager.selectedParentId = 3;
           this.globalEventsManager.selectedReferenceType = 'Category';
