@@ -1,12 +1,8 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild, ElementRef } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-import { Department, Schedule, Employee, UserGroup, User, HospitalLocation, Country, Hospital } from '../../models';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
+import { Hospital } from '../../models';
 import { Constants } from '../../app.constants';
-import { EditorModule } from 'primeng/editor';
 import { CountryDropdown } from '../dropdowns';
-import { Cookie } from 'ng2-cookies/ng2-cookies';
-import { InputTextareaModule, CheckboxModule, MultiSelectModule, CalendarModule } from 'primeng/primeng';
-import { GenericService, UserService } from '../../services';
+import { GenericService } from '../../services';
 import { Message } from 'primeng/api';
 
 @Component({
@@ -27,13 +23,7 @@ export class HospitalDetails implements OnInit, OnDestroy {
   
   constructor
   (
-      private genericService: GenericService,
-      private userService: UserService,
-      private countryDropdown: CountryDropdown,
-      private changeDetectorRef: ChangeDetectorRef,
-      private route: ActivatedRoute,
-      private router: Router
-    ) {
+      private genericService: GenericService    ) {
 
   }
 

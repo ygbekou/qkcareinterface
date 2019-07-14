@@ -205,10 +205,10 @@
     "MEDICAL_HISTORY_LIST": "Historique médicale",
     "SOCIAL_HISTORY_LIST": "Historique sociale",
     "PAYER_TYPE_LIST": "Types de Payeur",
-    "DOCTOR_ORDER_TYPE_LIST": "Types d'ordonnances de médecin",
-    "DOCTOR_ORDER_KIND_LIST": "Catégorie d'ordonnances de médecin",
-    "DEPARTMENT_LIST": "Départment",
-    "MANUFACTURER_LIST": "Fabricant",
+    "DOCTOR_ORDER_TYPE_LIST": "Types d'ordre de médecin",
+    "DOCTOR_ORDER_KIND_LIST": "Catégorie d'ordre de médecin",
+    "DEPARTMENT_LIST": "Départments",
+    "MANUFACTURER_LIST": "Fabricants",
     "MEDICINE_TYPE_LIST": "Type de médicament",
     "ENQUIRY_LIST": "Requête",
     "WAITING_LIST": "Liste d'attente",
@@ -337,7 +337,10 @@
 	"NEW":"Nouveau",
 	"OLD":"Ancien",	
 	"CREATED_BY":"Créer Par",
-	"REOPEN" :"Rouvrir"
+	"REOPEN" :"Rouvrir",
+	"DOCTOR_ORDER_PRIORITY_LIST": "Priorités ordre de médecin",
+	"TARIF_LIST": "Tarifs",
+	"HOSPITAL": "Hopital"
   },
   "MESSAGE": {
     "TRANFER_DOCTOR_FAILED": "Le nouveau docteur assigné doit être différent de l'ancien.",

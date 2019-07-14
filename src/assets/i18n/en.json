@@ -336,7 +336,10 @@
 	"NEW":"New",
 	"OLD":"Old",
 	"CREATED_BY":"Create By",
-	"REOPEN" :"Reopen"
+	"REOPEN" :"Reopen",
+	"DOCTOR_ORDER_PRIORITY_LIST": "Doctor order priorities",
+	"TARIF_LIST": "Tarifs" ,
+	"HOSPITAL": "Hospital"
   },
   "MESSAGE": {
   	"TRANFER_DOCTOR_FAILED": "The transfer doctor should be different from the current doctor.",

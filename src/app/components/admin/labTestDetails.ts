@@ -1,14 +1,8 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Constants } from '../../app.constants';
 import { LabTest } from '../../models/labTest';
-import { Reference } from '../../models/reference';
-import { FileUploader } from './fileUploader';
-import { EditorModule } from 'primeng/editor';
 import { LabTestMethodDropdown, LabTestGroupDropdown, LabTestUnitDropdown } from '../dropdowns';
-import { Cookie } from 'ng2-cookies/ng2-cookies';
-import { DataTableModule, DialogModule, InputTextareaModule, CheckboxModule, MultiSelectModule, CalendarModule } from 'primeng/primeng';
-import { GenericService, GlobalEventsManager } from '../../services';
+import { GenericService } from '../../services';
 
 @Component({
   selector: 'app-labTest-details',
@@ -35,14 +29,9 @@ export class LabTestDetails implements OnInit, OnDestroy {
   constructor
     (
       private genericService: GenericService,
-      private globalEventsManager: GlobalEventsManager,
-      private ltMethodDropdown: LabTestMethodDropdown,
-      private ltGroupDropdown: LabTestGroupDropdown,
-      private ltUnitDropdown: LabTestUnitDropdown,
-      private changeDetectorRef: ChangeDetectorRef,
-      private route: ActivatedRoute,
-      private router: Router
-    ) {
+      ltMethodDropdown: LabTestMethodDropdown,
+      ltGroupDropdown: LabTestGroupDropdown,
+      ltUnitDropdown: LabTestUnitDropdown    ) {
       this.labTestMethodDropdown = ltMethodDropdown;
       this.labTestGroupDropdown = ltGroupDropdown;
       this.labTestUnitDropdown = ltUnitDropdown;

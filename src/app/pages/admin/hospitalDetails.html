@@ -1,207 +1,194 @@
 <form name="form" (ngSubmit)="f.form.valid && save()" #f="ngForm" validate>
-	<div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="hospital">
-		<div class="ui-grid-row">
-			<div class="ui-grid-col-3 ui-sm-12">
-				<div class="form-group">
-					<label i18n="@@name" for="name">Name<font color="red">*</font></label> 
-					<input type="text" pInputText class="form-control" id="name"
-						[(ngModel)]="hospital.name" name="name" #name="ngModel" required>
-						<p-message *ngIf="f.submitted && name.invalid" severity="error" text="Field is required"></p-message>
-				</div>
-			</div>
-			<div class="ui-grid-col-3 ui-sm-12">
-				<div class="form-group">
-					<label i18n="@@description" for="description">Description</label>
-					<textarea pInputTextarea id="description" name="description" 
-						[(ngModel)]="hospital.description" #description="ngModel"> </textarea>
-				</div>
-			</div>
-			<div class="ui-grid-col-3 ui-sm-12">
-				<div class="form-group">
-					<label i18n="@@address" for="address">Address<font color="red">*</font></label> 
-					<input type="text" pInputText class="form-control" id="address" [(ngModel)]="hospital.address" 
-						name="address" #address="ngModel" required>
-					<p-message *ngIf="f.submitted && address.invalid" severity="error" text="Field is required"></p-message>
-				</div>
-			</div>
-			<div class="ui-grid-col-3 ui-sm-12">
-				<div class="form-group">
-					<label i18n="@@email" for="email">Email <font color="red">*</font>
-					</label> <input type="text" pInputText class="form-control" id="email"
-						[(ngModel)]="hospital.email" name="email" #email="ngModel" required>
-					<p-message *ngIf="f.submitted && email.errors && email.errors.required" severity="error" 
-							text="Email is required"></p-message>
-				</div>
-			</div>
-		</div>
-		<div class="ui-grid-row">
-			<div class="ui-grid-col-12 ui-sm-12">
-				<div class="form-group">		
-					<label for="metaKeyword">{{ 'COMMON.META_KEYWORD' | translate }}</label>
-					<input pInputText id="metaKeyword" [(ngModel)]="hospital.metaKeyword" name="metaKeyword" #metaKeyword="ngModel" />
-				</div>
-			</div>
-			<div class="ui-grid-col-12 ui-sm-12">
-				<div class="form-group">		
-					<label for="metaDescription">{{ 'COMMON.META_DESCRIPTION' | translate }}</label>
-					<textarea pInputTextarea id="metaDescription"
-							[(ngModel)]="hospital.metaDescription" name="metaDescription" #metaDescription="ngModel"> </textarea>
-				</div>
-			</div>
-		</div>
-		<div class="ui-grid-row">
-			<div class="ui-grid-col-4 ui-sm-12">
-				<div class="ui-grid-col-2">
-					<label i18n="@@logo" for="logo">Logo <font color="red">*</font></label>
-					<img class="thumb" src="assets/docs/Hospital/{{hospital.logo}}" alt="" />
-				</div>
-				<div class="ui-grid-col-12 ui-sm-12">
-					<div class="form-group">
-						<input type="file" [attr.multiple]="multiple ? true : null" 
-							name="logo" #logo>
-					</div>
-				</div>
-			</div>
-			<div class="ui-grid-col-4 ui-sm-12">
-				<div class="ui-grid-col-2">
-					<label i18n="@@favicon" for="favicon">Favicon</label>
-					<img class="thumb" src="assets/docs/Hospital/{{hospital.favicon}}" alt="" />
-				</div>
-				<div class="ui-grid-col-12 ui-sm-12">
-					<div class="form-group">
-						<input type="file" [attr.multiple]="multiple ? true : null"
-							name="favicon" #favicon>
-					</div>
-				</div>
-			</div>
-			<div class="ui-grid-col-4 ui-sm-12">
-				<div class="ui-grid-col-2">
-					<label i18n="@@backgroundSlider" for="backgroundSlider">Background Slider</label>
-					<img class="thumb" src="assets/docs/Hospital/{{hospital.backgroundSlider}}" alt="" />
-				</div>
-				<div class="ui-grid-col-12 ui-sm-12">
-					<div class="form-group">
-						<input type="file" [attr.multiple]="multiple ? true : null"
-							name="backgroundSlider" #backgroundSlider>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="ui-grid-row">
-			<div class="ui-grid-col-4 ui-sm-12">
-				<div class="form-group">
-					<label i18n="@@phone" for="phone">Phone <font color="red">*</font>
-					</label> <input type="text" pInputText class="form-control" id="phone"
-						[(ngModel)]="hospital.phone" name="phone" #phone="ngModel" required>
-					<p-message *ngIf="f.submitted && phone.errors && phone.errors.required" severity="error" 
-							text="Phone is required"></p-message>
-				</div>
-			</div>
-			<div class="ui-grid-col-4 ui-sm-12">
-				<div class="form-group">
-					<label i18n="@@copyright" for="copyright">Copyright</label>
-					<p-editor [(ngModel)]="hospital.copyright" [style]="{'height':'100px'}" 
-						name="copyright" #copyright="ngModel"></p-editor>
-				</div>
-			</div>
-		</div>
-		<div class="ui-grid-row">
-			<div class="ui-grid-col-4 ui-sm-12">
-				<div class="form-group">
-					<label for="bannerContentHeader">Banner Content Header</label>
-					<textarea pInputTextarea [(ngModel)]="hospital.bannerContentHeader" 
-						name="bannerContentHeader" #bannerContentHeader="ngModel"></textarea>
-				</div>
-			</div>
-			<div class="ui-grid-col-4 ui-sm-12">
-				<div class="form-group">
-					<label for="bannerContentParagraph">Banner Content Paragraph</label>
-					<textarea pInputTextarea [(ngModel)]="hospital.bannerContentParagraph" 
-						name="bannerContentParagraph" #bannerContentParagraph="ngModel"></textarea>
-				</div>
-			</div>
-		</div>
-		<div class="ui-grid-row">
-			<div class="ui-grid-col-3 ui-sm-12">
-				<div class="form-group">
-					<label i18n="@@twitterApi" for="twitterApi">Twitter Api</label> 
-					<input type="text" pInputText class="form-control" id="twitterApi"
-						[(ngModel)]="hospital.twitterApi" name="twitterApi" #twitterApi="ngModel"
-						name="twitterApi" #twitterApi="ngModel">
-				</div>
-			</div>
-			<div class="ui-grid-col-3 ui-sm-12">
-				<div class="form-group">
-					<label i18n="@@googleMap" for="googleMap">Google Map</label> 
-					<input type="text" pInputText class="form-control" id="googleMap"
-						[(ngModel)]="hospital.googleMap" name="googleMap" #googleMap="ngModel"
-						name="googleMap" #googleMap="ngModel">
-				</div>
-			</div>
-			<div class="ui-grid-col-3 ui-sm-12">
-				<div class="form-group">
-					<label i18n="@@facebookUrl" for="facebookUrl">Facebook Url</label> 
-					<input type="text" pInputText class="form-control" id="facebookUrl"
-						[(ngModel)]="hospital.facebookUrl" name="facebookUrl" #facebookUrl="ngModel"
-						name="facebookUrl" #facebookUrl="ngModel">
-				</div>
-			</div>
-			<div class="ui-grid-col-3 ui-sm-12">
-				<div class="form-group">
-					<label i18n="@@twitterUrl" for="twitterUrl">Twitter Url</label> 
-					<input type="text" pInputText class="form-control" id="twitterUrl"
-						[(ngModel)]="hospital.twitterUrl" name="twitterUrl" #twitterUrl="ngModel"
-						name="twitterUrl" #twitterUrl="ngModel">
-				</div>
-			</div>
-		</div>
-		<div class="ui-grid-row">
-			<div class="ui-grid-col-3 ui-sm-12">
-				<div class="form-group">
-					<label i18n="@@instagramUrl" for="instagramUrl">Instagram Url</label> 
-					<input type="text" pInputText class="form-control" id="instagramUrl"
-						[(ngModel)]="hospital.instagramUrl" name="instagramUrl" #instagramUrl="ngModel"
-						name="instagramUrl" #instagramUrl="ngModel">
-				</div>
-			</div>
-			<div class="ui-grid-col-3 ui-sm-12">
-				<div class="form-group">
-					<label i18n="@@googlePlusUrl" for="googlePlusUrl">Google Plus Url</label> 
-					<input type="text" pInputText class="form-control" id="googlePlusUrl"
-						[(ngModel)]="hospital.googlePlusUrl" name="googlePlusUrl" #googlePlusUrl="ngModel"
-						name="googlePlusUrl" #googlePlusUrl="ngModel">
-				</div>
-			</div>
-			<div class="ui-grid-col-3 ui-sm-12">
-				<div class="form-group">
-					<label i18n="@@dribbbleUrl" for="dribbbleUrl">Dribbble Url</label> 
-					<input type="text" pInputText class="form-control" id="dribbbleUrl"
-						[(ngModel)]="hospital.dribbbleUrl" name="dribbbleUrl" #dribbbleUrl="ngModel"
-						name="dribbbleUrl" #dribbbleUrl="ngModel">
-				</div>
-			</div>
-			<div class="ui-grid-col-3 ui-sm-12">
-				<div class="form-group">
-					<label i18n="@@skypeUrl" for="skypeUrl">Skype Url</label> 
-					<input type="text" pInputText class="form-control" id="skypeUrl"
-						[(ngModel)]="hospital.skypeUrl" name="skypeUrl" #skypeUrl="ngModel"
-						name="skypeUrl" #skypeUrl="ngModel">
-				</div>
-			</div>
-			<div class="ui-grid-col-3 ui-sm-12">
-				<div class="form-group">
-					<label i18n="@@vimeoUrl" for="vimeoUrl">Vimeo Url</label> 
-					<input type="text" pInputText class="form-control" id="vimeoUrl"
-						[(ngModel)]="hospital.vimeoUrl" name="vimeoUrl" #vimeoUrl="ngModel"
-						name="vimeoUrl" #vimeoUrl="ngModel">
-				</div>
-			</div>
-		</div>
-	</div>
-	<br />
-	<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
-			<button pButton icon="fa fa-save" label="Save"></button>
-	</div>
+  <div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="hospital">
+    <div class="ui-grid-row">
+      <div class="ui-grid-col-3 ui-sm-12">
+        <div class="form-group">
+          <label i18n="@@name" for="name">Name<font color="red">*</font></label>
+          <input type="text" pInputText class="form-control" id="name" [(ngModel)]="hospital.name" name="name"
+            #name="ngModel" required>
+          <p-message *ngIf="f.submitted && name.invalid" severity="error" text="Field is required"></p-message>
+        </div>
+      </div>
+      <div class="ui-grid-col-3 ui-sm-12">
+        <div class="form-group">
+          <label i18n="@@description" for="description">Description</label>
+          <textarea pInputTextarea id="description" name="description" [(ngModel)]="hospital.description"
+            #description="ngModel"> </textarea>
+        </div>
+      </div>
+      <div class="ui-grid-col-3 ui-sm-12">
+        <div class="form-group">
+          <label i18n="@@address" for="address">Address<font color="red">*</font></label>
+          <input type="text" pInputText class="form-control" id="address" [(ngModel)]="hospital.address" name="address"
+            #address="ngModel" required>
+          <p-message *ngIf="f.submitted && address.invalid" severity="error" text="Field is required"></p-message>
+        </div>
+      </div>
+      <div class="ui-grid-col-3 ui-sm-12">
+        <div class="form-group">
+          <label i18n="@@email" for="email">Email <font color="red">*</font>
+          </label> <input type="text" pInputText class="form-control" id="email" [(ngModel)]="hospital.email"
+            name="email" #email="ngModel" required>
+          <p-message *ngIf="f.submitted && email.errors && email.errors.required" severity="error"
+            text="Email is required"></p-message>
+        </div>
+      </div>
+    </div>
+    <div class="ui-grid-row">
+      <div class="ui-grid-col-12 ui-sm-12">
+        <div class="form-group">
+          <label for="metaKeyword">{{ 'COMMON.META_KEYWORD' | translate }}</label>
+          <input pInputText id="metaKeyword" [(ngModel)]="hospital.metaKeyword" name="metaKeyword"
+            #metaKeyword="ngModel" />
+        </div>
+      </div>
+      <div class="ui-grid-col-12 ui-sm-12">
+        <div class="form-group">
+          <label for="metaDescription">{{ 'COMMON.META_DESCRIPTION' | translate }}</label>
+          <textarea pInputTextarea id="metaDescription" [(ngModel)]="hospital.metaDescription" name="metaDescription"
+            #metaDescription="ngModel"> </textarea>
+        </div>
+      </div>
+    </div>
+    <div class="ui-grid-row">
+      <div class="ui-grid-col-4 ui-sm-12">
+        <div class="ui-grid-col-2">
+          <label i18n="@@logo" for="logo">Logo <font color="red">*</font></label>
+          <img class="thumb" src="assets/docs/Hospital/{{hospital.logo}}" alt="" />
+        </div>
+        <div class="ui-grid-col-12 ui-sm-12">
+          <div class="form-group">
+            <input type="file" [attr.multiple]="multiple ? true : null" name="logo" #logo>
+          </div>
+        </div>
+      </div>
+      <div class="ui-grid-col-4 ui-sm-12">
+        <div class="ui-grid-col-2">
+          <label i18n="@@favicon" for="favicon">Favicon</label>
+          <img class="thumb" src="assets/docs/Hospital/{{hospital.favicon}}" alt="" />
+        </div>
+        <div class="ui-grid-col-12 ui-sm-12">
+          <div class="form-group">
+            <input type="file" [attr.multiple]="multiple ? true : null" name="favicon" #favicon>
+          </div>
+        </div>
+      </div>
+      <div class="ui-grid-col-4 ui-sm-12">
+        <div class="ui-grid-col-2">
+          <label i18n="@@backgroundSlider" for="backgroundSlider">Background Slider</label>
+          <img class="thumb" src="assets/docs/Hospital/{{hospital.backgroundSlider}}" alt="" />
+        </div>
+        <div class="ui-grid-col-12 ui-sm-12">
+          <div class="form-group">
+            <input type="file" [attr.multiple]="multiple ? true : null" name="backgroundSlider" #backgroundSlider>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="ui-grid-row">
+      <div class="ui-grid-col-4 ui-sm-12">
+        <div class="form-group">
+          <label i18n="@@phone" for="phone">Phone <font color="red">*</font>
+          </label> <input type="text" pInputText class="form-control" id="phone" [(ngModel)]="hospital.phone"
+            name="phone" #phone="ngModel" required>
+          <p-message *ngIf="f.submitted && phone.errors && phone.errors.required" severity="error"
+            text="Phone is required"></p-message>
+        </div>
+      </div>
+      <div class="ui-grid-col-4 ui-sm-12">
+        <div class="form-group">
+          <label i18n="@@copyright" for="copyright">Copyright</label>
+          <p-editor [(ngModel)]="hospital.copyright" [style]="{'height':'100px'}" name="copyright" #copyright="ngModel">
+          </p-editor>
+        </div>
+      </div>
+    </div>
+    <div class="ui-grid-row">
+      <div class="ui-grid-col-4 ui-sm-12">
+        <div class="form-group">
+          <label for="bannerContentHeader">Banner Content Header</label>
+          <textarea pInputTextarea [(ngModel)]="hospital.bannerContentHeader" name="bannerContentHeader"
+            #bannerContentHeader="ngModel"></textarea>
+        </div>
+      </div>
+      <div class="ui-grid-col-4 ui-sm-12">
+        <div class="form-group">
+          <label for="bannerContentParagraph">Banner Content Paragraph</label>
+          <textarea pInputTextarea [(ngModel)]="hospital.bannerContentParagraph" name="bannerContentParagraph"
+            #bannerContentParagraph="ngModel"></textarea>
+        </div>
+      </div>
+    </div>
+    <div class="ui-grid-row">
+      <div class="ui-grid-col-3 ui-sm-12">
+        <div class="form-group">
+          <label i18n="@@twitterApi" for="twitterApi">Twitter Api</label>
+          <input type="text" pInputText class="form-control" id="twitterApi" [(ngModel)]="hospital.twitterApi"
+            name="twitterApi" #twitterApi="ngModel" name="twitterApi" #twitterApi="ngModel">
+        </div>
+      </div>
+      <div class="ui-grid-col-3 ui-sm-12">
+        <div class="form-group">
+          <label i18n="@@googleMap" for="googleMap">Google Map</label>
+          <input type="text" pInputText class="form-control" id="googleMap" [(ngModel)]="hospital.googleMap"
+            name="googleMap" #googleMap="ngModel" name="googleMap" #googleMap="ngModel">
+        </div>
+      </div>
+      <div class="ui-grid-col-3 ui-sm-12">
+        <div class="form-group">
+          <label i18n="@@facebookUrl" for="facebookUrl">Facebook Url</label>
+          <input type="text" pInputText class="form-control" id="facebookUrl" [(ngModel)]="hospital.facebookUrl"
+            name="facebookUrl" #facebookUrl="ngModel" name="facebookUrl" #facebookUrl="ngModel">
+        </div>
+      </div>
+      <div class="ui-grid-col-3 ui-sm-12">
+        <div class="form-group">
+          <label i18n="@@twitterUrl" for="twitterUrl">Twitter Url</label>
+          <input type="text" pInputText class="form-control" id="twitterUrl" [(ngModel)]="hospital.twitterUrl"
+            name="twitterUrl" #twitterUrl="ngModel" name="twitterUrl" #twitterUrl="ngModel">
+        </div>
+      </div>
+    </div>
+    <div class="ui-grid-row">
+      <div class="ui-grid-col-3 ui-sm-12">
+        <div class="form-group">
+          <label i18n="@@instagramUrl" for="instagramUrl">Instagram Url</label>
+          <input type="text" pInputText class="form-control" id="instagramUrl" [(ngModel)]="hospital.instagramUrl"
+            name="instagramUrl" #instagramUrl="ngModel" name="instagramUrl" #instagramUrl="ngModel">
+        </div>
+      </div>
+      <div class="ui-grid-col-3 ui-sm-12">
+        <div class="form-group">
+          <label i18n="@@googlePlusUrl" for="googlePlusUrl">Google Plus Url</label>
+          <input type="text" pInputText class="form-control" id="googlePlusUrl" [(ngModel)]="hospital.googlePlusUrl"
+            name="googlePlusUrl" #googlePlusUrl="ngModel" name="googlePlusUrl" #googlePlusUrl="ngModel">
+        </div>
+      </div>
+      <div class="ui-grid-col-3 ui-sm-12">
+        <div class="form-group">
+          <label i18n="@@dribbbleUrl" for="dribbbleUrl">Dribbble Url</label>
+          <input type="text" pInputText class="form-control" id="dribbbleUrl" [(ngModel)]="hospital.dribbbleUrl"
+            name="dribbbleUrl" #dribbbleUrl="ngModel" name="dribbbleUrl" #dribbbleUrl="ngModel">
+        </div>
+      </div>
+      <div class="ui-grid-col-3 ui-sm-12">
+        <div class="form-group">
+          <label i18n="@@skypeUrl" for="skypeUrl">Skype Url</label>
+          <input type="text" pInputText class="form-control" id="skypeUrl" [(ngModel)]="hospital.skypeUrl"
+            name="skypeUrl" #skypeUrl="ngModel" name="skypeUrl" #skypeUrl="ngModel">
+        </div>
+      </div>
+      <div class="ui-grid-col-3 ui-sm-12">
+        <div class="form-group">
+          <label i18n="@@vimeoUrl" for="vimeoUrl">Vimeo Url</label>
+          <input type="text" pInputText class="form-control" id="vimeoUrl" [(ngModel)]="hospital.vimeoUrl"
+            name="vimeoUrl" #vimeoUrl="ngModel" name="vimeoUrl" #vimeoUrl="ngModel">
+        </div>
+      </div>
+    </div>
+  </div>
+  <br />
+  <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+    <button pButton icon="fa fa-save" label="Save"></button>
+  </div>
 </form>
-
- 

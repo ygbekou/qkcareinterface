@@ -1,36 +1,35 @@
 <form name="form" (ngSubmit)="f.form.valid && save()" #f="ngForm" validate>
-	<div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="reference">
-		<p-messages [(value)]="messages"></p-messages>
-		<div class="ui-grid-row">
-			<div class="ui-grid-col-3 ui-sm-12">
-				<div class="form-group">		
-					<label for="name">{{ 'COMMON.NAME' | translate }}</label>
-					<input pInputText id="name" [(ngModel)]="reference.name" name="name" #name="ngModel" required />
-					<p-message *ngIf="f.submitted && name.invalid" severity="error" text="Field is required"></p-message>
-				</div>
-			</div>
-			<div class="ui-grid-col-6 ui-sm-12">
-				<div class="form-group">		
-					<label for="description">{{ 'COMMON.DESCRIPTION' | translate }}</label>
-					<textarea pInputTextarea id="description"
-							[(ngModel)]="reference.description" name="description" #description="ngModel"> </textarea>
-				</div>
-			</div>
-			<div class="ui-grid-col-2 ui-sm-12">
-				<p-radioButton name="status" value="0" label="Actif" [(ngModel)]="reference.status"
-					name="status" #status="ngModel" required></p-radioButton>
-				<p-radioButton name="status" value="1" label="Inactif" [(ngModel)]="reference.status"
-					name="status" #status="ngModel" required ></p-radioButton>
-				<p-message *ngIf="f.submitted && status.invalid" severity="error" text="Field is required"></p-message>
-			</div>
-		</div>
-	</div>
-	<br />
-	<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
-		<div *ngIf="!viewOnly">
-			<button type="button" pButton icon="fa fa-close" (click)="clear()" label="{{ 'COMMON.CLEAR' | translate }}"></button>&nbsp;&nbsp;
-			<button type="button" pButton icon="fa fa-close" (click)="delete()" label="{{ 'COMMON.DELETE' | translate }}"></button>&nbsp;&nbsp;
-			<button pButton icon="fa fa-check"  label="{{ 'COMMON.SAVE' | translate }}"></button>
-		</div>
-	</div>
-</form>	
+  <div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="reference">
+    <p-messages [(value)]="messages"></p-messages>
+    <div class="ui-grid-row">
+      <div class="ui-grid-col-3 ui-sm-12">
+        <div class="form-group">
+          <label for="name">{{ 'COMMON.NAME' | translate }}</label>
+          <input pInputText id="name" [(ngModel)]="reference.name" name="name" #name="ngModel" required />
+          <p-message *ngIf="f.submitted && name.invalid" severity="error" text="Field is required"></p-message>
+        </div>
+      </div>
+      <div class="ui-grid-col-6 ui-sm-12">
+        <div class="form-group">
+          <label for="description">{{ 'COMMON.DESCRIPTION' | translate }}</label>
+          <textarea pInputTextarea id="description" [(ngModel)]="reference.description" name="description"
+            #description="ngModel"> </textarea>
+        </div>
+      </div>
+      <div class="ui-grid-col-2 ui-sm-12">
+        <p-radioButton name="status" value="0" label="Actif" [(ngModel)]="reference.status" name="status"
+          #status="ngModel" required></p-radioButton>
+        <p-radioButton name="status" value="1" label="Inactif" [(ngModel)]="reference.status" name="status"
+          #status="ngModel" required></p-radioButton>
+        <p-message *ngIf="f.submitted && status.invalid" severity="error" text="Field is required"></p-message>
+      </div>
+    </div>
+  </div>
+  <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+    <div *ngIf="!viewOnly">
+      <button type="button" pButton icon="fa fa-refresh" (click)="clear()"
+        label="{{ 'COMMON.CLEAR' | translate }}"></button>&nbsp;&nbsp;
+      <button pButton icon="fa fa-check" label="{{ 'COMMON.SAVE' | translate }}"></button>
+    </div>
+  </div>
+</form>

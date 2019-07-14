@@ -1,10 +1,6 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild, Output, EventEmitter, Input } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef, Output, EventEmitter } from '@angular/core';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
-import { Constants } from '../../app.constants';
 import { ReferenceWithCategory } from '../../models/referenceWithCategory';
-import { FileUploader } from './fileUploader';
-import { Cookie } from 'ng2-cookies/ng2-cookies';
-import { DataTableModule, DialogModule, InputTextareaModule, CheckboxModule } from 'primeng/primeng';
 import { GenericService, GlobalEventsManager } from '../../services';
 import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
 
@@ -29,7 +25,6 @@ export class ReferenceWithCategoryList implements OnInit, OnDestroy {
     private genericService: GenericService,
     private translate: TranslateService,
     private globalEventsManager: GlobalEventsManager,
-    private changeDetectorRef: ChangeDetectorRef,
     private route: ActivatedRoute,
     private router: Router,
     ) {
@@ -46,7 +41,7 @@ export class ReferenceWithCategoryList implements OnInit, OnDestroy {
         ];
 
     this.updateCols(this.category);
-    this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
+    this.translate.onLangChange.subscribe(() => {
       this.updateCols(this.category);
     });
   }
@@ -65,7 +60,7 @@ export class ReferenceWithCategoryList implements OnInit, OnDestroy {
         this.REFERENCE_WITH_CATEGORY_LIST = res;
     });
     
-    this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
+    this.translate.onLangChange.subscribe(() => {
       this.updateCols(category);
     });
   }
@@ -102,7 +97,7 @@ export class ReferenceWithCategoryList implements OnInit, OnDestroy {
   getAll() {
      this.route
         .queryParams
-        .subscribe(params => {          
+        .subscribe(() => {          
           
             let parameters: string [] = []; 
             //parameters.push('e.status = |status|0|Integer')
