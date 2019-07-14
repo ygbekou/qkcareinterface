@@ -338,6 +338,7 @@
 	"OLD":"Ancien",	
 	"CREATED_BY":"Créer Par"  
   },
+  },
   "MESSAGE": {
     "TRANFER_DOCTOR_FAILED": "Le nouveau docteur assigné doit être différent de l'ancien.",
     "TRANFER_BED_FAILED": "Le noueau lit dit être différent de l'ancien.",
