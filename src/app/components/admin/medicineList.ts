@@ -14,7 +14,7 @@ import { ConfirmationService } from 'primeng/api';
 })
 export class MedicineList extends BaseComponent implements OnInit, OnDestroy {
   
-  public error: String = '';
+  public error: String = ''; 
   displayDialog: boolean;
   medicines: Product[] = [];
   cols: any[];
@@ -23,8 +23,8 @@ export class MedicineList extends BaseComponent implements OnInit, OnDestroy {
   
   constructor
     (
-    private genericService: GenericService,
-	private translate: TranslateService,
+    public genericService: GenericService,
+	public translate: TranslateService,
 	public confirmationService: ConfirmationService,
     private route: ActivatedRoute
     ) {

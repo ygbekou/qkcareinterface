@@ -336,8 +336,8 @@
 	"PHARMACY":"Pharmacie",
 	"NEW":"Nouveau",
 	"OLD":"Ancien",	
-	"CREATED_BY":"Créer Par"  
-  },
+	"CREATED_BY":"Créer Par",
+	"REOPEN" :"Rouvrir"
   },
   "MESSAGE": {
     "TRANFER_DOCTOR_FAILED": "Le nouveau docteur assigné doit être différent de l'ancien.",

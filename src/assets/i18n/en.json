@@ -284,8 +284,7 @@
     "VIEW_ALL": "View All",
     "FROM_EMAIL": "From Email",
     "TO_EMAIL": "To Email",
-	"NEW_PASSWORD": "New Password",
-	
+	"NEW_PASSWORD": "New Password",	
     "CONFIRM_PASSWORD": "Confirm Password",
     "SLIDER": "Slider",
     "SLIDER_IMAGE": "Slider Image",
@@ -336,8 +335,8 @@
 	"PHARMACY":"Pharmacy",
 	"NEW":"New",
 	"OLD":"Old",
-	"CREATED_BY":"Create By"
-  },
+	"CREATED_BY":"Create By",
+	"REOPEN" :"Reopen"
   },
   "MESSAGE": {
   	"TRANFER_DOCTOR_FAILED": "The transfer doctor should be different from the current doctor.",

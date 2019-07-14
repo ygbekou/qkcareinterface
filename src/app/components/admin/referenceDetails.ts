@@ -1,13 +1,9 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild, Input } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Reference } from '../../models/reference';
 import { Constants } from '../../app.constants';
-import { FileUploader } from './fileUploader';
-import { Cookie } from 'ng2-cookies/ng2-cookies';
-import { DataTableModule, DialogModule, InputTextareaModule, CheckboxModule } from 'primeng/primeng';
-import { User } from '../../models/user';  
 import { GenericService, GlobalEventsManager } from '../../services';
-import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
+import { TranslateService} from '@ngx-translate/core';
 import { Message } from 'primeng/api';
 
 @Component({
@@ -33,10 +29,7 @@ export class ReferenceDetails implements OnInit, OnDestroy {
       private genericService: GenericService,
       private translate: TranslateService,
       private globalEventsManager: GlobalEventsManager,
-      private changeDetectorRef: ChangeDetectorRef,
-      private route: ActivatedRoute,
-      private router: Router
-    ) {
+      private route: ActivatedRoute    ) {
       this.reference = new Reference();
   }
 
