@@ -22,7 +22,7 @@ export class SearchCriteria {
   investigationDate: Date;
   investigationDateStart: string;
   investigationDateEnd: string;
-  
+
 }
 
 
