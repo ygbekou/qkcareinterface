@@ -45,7 +45,7 @@ export class EnquiryDetails implements OnInit, OnDestroy {
                   this.enquiry = result;
                 }
                 
-              })
+              });
           }
         });
     
@@ -61,47 +61,44 @@ export class EnquiryDetails implements OnInit, OnDestroy {
         .subscribe(result => {
       if (result.id > 0) {
         this.enquiry = result;
-      }
-      else {
+      } else {
         this.translate.get(['COMMON.READ', 'MESSAGE.READ_FAILED']).subscribe(res => {
-          this.messages.push({severity:Constants.ERROR, summary:res['COMMON.READ'], detail:res['MESSAGE.READ_FAILED']});
+          this.messages.push({severity: Constants.ERROR, summary: res['COMMON.READ'], detail: res['MESSAGE.READ_FAILED']});
         });
       }
-    })
+    });
   }
   
   clear() {
     this.enquiry = new Enquiry();
   }
   
-  save(saveType : number = 1) {
+  save(saveType: number = 1) {
     this.messages = [];
     try {
       
-      if (saveType == null || saveType == 1) {
+      if (saveType == null || saveType === 1) {
         this.enquiry.enquiryDatetime = new Date();
-      } else if (saveType == 2) {
+      } else if (saveType === 2) {
         this.enquiry.read = 'Y';
         this.enquiry.checkedBy = JSON.parse(Cookie.get('user'));
       }
 
-      console.info(this.enquiry)
+      console.info(this.enquiry);
       this.genericService.save(this.enquiry, 'Enquiry')
         .subscribe(result => {
           if (result.id > 0) {
             this.enquiry = result;
             this.translate.get(['COMMON.SAVE', 'MESSAGE.SAVE_SUCCESS']).subscribe(res => {
-              this.messages.push({severity:Constants.SUCCESS, summary:res['COMMON.SAVE'], detail:res['MESSAGE.SAVE_SUCCESS']});
+              this.messages.push({severity: Constants.SUCCESS, summary: res['COMMON.SAVE'], detail: res['MESSAGE.SAVE_SUCCESS']});
             });
-          }
-          else {
+          } else {
             this.translate.get(['COMMON.SAVE', 'MESSAGE.SAVE_UNSUCCESS']).subscribe(res => {
-              this.messages.push({severity:Constants.SUCCESS, summary:res['COMMON.SAVE'], detail:res['MESSAGE.SAVE_UNSUCCESS']});
+              this.messages.push({severity: Constants.SUCCESS, summary: res['COMMON.SAVE'], detail: res['MESSAGE.SAVE_UNSUCCESS']});
             });
           }
-        })
-    }
-    catch (e) {
+        });
+    } catch (e) {
       console.log(e);
     }
   }

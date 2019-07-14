@@ -1,12 +1,13 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild, Input, Output, EventEmitter } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Constants } from '../../app.constants';
-import { Admission, Visit, VitalSign, Patient, User } from '../../models';
+import { Admission, VitalSign, Patient, User } from '../../models';
 import { GenericService } from '../../services';
 import { TranslateService } from '@ngx-translate/core';
-import { Message } from 'primeng/api';
+import { Message, ConfirmationService } from 'primeng/api';
 import { CurrencyMaskModule } from "ng2-currency-mask";
 import { CurrencyMaskConfig, CURRENCY_MASK_CONFIG } from "ng2-currency-mask/src/currency-mask.config";
+import { BaseComponent } from './baseComponent';
 
 
 @Component({
@@ -14,7 +15,7 @@ import { CurrencyMaskConfig, CURRENCY_MASK_CONFIG } from "ng2-currency-mask/src/
   templateUrl: '../../pages/admin/vitalSignDetails.html',
   providers: [GenericService]
 })
-export class VitalSignDetails implements OnInit, OnDestroy {
+export class VitalSignDetails extends BaseComponent implements OnInit, OnDestroy {
 
   public error: String = '';
   displayDialog: boolean;
@@ -24,21 +25,18 @@ export class VitalSignDetails implements OnInit, OnDestroy {
 
   messages: Message[] = [];
 
-  DETAIL: string = Constants.DETAIL;
-  ADD_IMAGE: string = Constants.ADD_IMAGE;
-  ADD_LABEL: string = Constants.ADD_LABEL;
-  SELECT_OPTION: string = Constants.SELECT_OPTION;
-
   patient: Patient = new Patient();
 
 
   constructor
     (
-      private genericService: GenericService,
-      private translate: TranslateService,
+      public genericService: GenericService,
+	  public translate: TranslateService,
+	  public confirmationService: ConfirmationService,
       private route: ActivatedRoute
     ) {
-    this.patient.user = new User();
+		super(genericService, translate, confirmationService);
+    	this.patient.user = new User();
   }
 
   ngOnInit(): void {

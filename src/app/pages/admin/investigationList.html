@@ -2,7 +2,7 @@
 <p-dialog header="{{actionType}}" [(visible)]="display">
 	<div class="ui-grid-row">
 		<div class="ui-grid-col-4 ui-sm-12">
-	<		<div class="form-group">
+			<div class="form-group">
 				<label for="actionDatetime">{{ 'COMMON.ACTION_DATETIME' | translate }}<font color="red">*</font></label>
 				<p-calendar [(ngModel)]="actionDatetime" [showTime]="true"></p-calendar>
 			</div>
@@ -17,7 +17,50 @@
 	<button type="button" pButton icon="fa fa-check" (click)="saveAction()" label="Save"></button>
 </p-dialog>
 
+
 <div class="ui-grid-row">
+		<form name="form" (ngSubmit)="f.form.valid && search()" #f="ngForm" validate>
+		<p-fieldset legend="{{ 'COMMON.SEARCH_CRITERIA' | translate }}">
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-2 ui-sm-12">
+					<div class="form-group">
+						<label for="investigationDate">{{ 'COMMON.INVESTIGATION_DATETIME' | translate }}:</label> 
+						<br/>
+						<p-calendar [(ngModel)]="searchCriteria.investigationDate" id="investigationDate"
+									name="investigationDate" #investigationDate="ngModel"></p-calendar>
+					</div>
+				</div>
+				<div class="ui-grid-col-1 ui-sm-12">
+					<div class="form-group">
+						<label for="visitId">{{ 'COMMON.VISIT_ID' | translate }}:</label> 
+						<input type="text" pInputText class="form-control" id="visitId"
+							 [(ngModel)]="searchCriteria.visitId" name="visitId" >
+					</div>
+				</div>
+				<div class="ui-grid-col-1 ui-sm-12">
+					<div class="form-group">
+						<label for="visitId">{{ 'COMMON.ADMISSION_NUMBER' | translate }}:</label> 
+						<input type="text" pInputText class="form-control" id="admissionId"
+							 [(ngModel)]="searchCriteria.admissionId" name="admissionId" >
+					</div>
+				</div>
+				<div class="ui-grid-col-2 ui-sm-12">
+					<div class="form-group">
+						<label for="patientId">{{ 'COMMON.PATIENT_ID' | translate }}:</label> 
+						<input type="text" pInputText class="form-control" id="medicalRecordNumber"
+							 [(ngModel)]="searchCriteria.medicalRecordNumber" name="medicalRecordNumber" >
+					</div>
+				</div>
+			</div>
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-1 ui-sm-12">
+					<button pButton icon="fa fa-search" label="{{ 'COMMON.SEARCH' | translate }}" ></button>
+				</div>
+			</div>
+		</p-fieldset>
+	</form>
+	<p-messages [(value)]="messages"></p-messages>
+	<br/>
 	<div class="ui-g-12 ui-sm-12" style="padding: 15px;">
 		<p-table [columns]="cols" [value]="investigations" dataKey="id" [(selection)]="parentSelection"> 
 			<ng-template pTemplate="caption">

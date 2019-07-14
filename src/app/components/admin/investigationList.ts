@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, Input, EventEmitter, Output } from '@angular/core';
-import { Admission, Investigation, InvestigationTest, Visit } from '../../models';
+import { Admission, Investigation, InvestigationTest, Visit, SearchCriteria } from '../../models';
 import { Router, NavigationExtras } from '@angular/router';
 import { Constants } from '../../app.constants';
 import { ToolbarModule, ConfirmationService } from 'primeng/primeng';
@@ -20,7 +20,7 @@ export class InvestigationList extends BaseComponent implements OnInit, OnDestro
   cols: any[];
   iTCols: any[];
   
-  @Input() showActions: boolean = true;
+  @Input() showActions = true;
   @Input() admission: Admission;
   @Input() visit: Visit;
   @Output() investigationIdEvent = new EventEmitter<string>();
@@ -32,6 +32,7 @@ export class InvestigationList extends BaseComponent implements OnInit, OnDestro
   actionComments: string;
   display: boolean;
   
+  searchCriteria: SearchCriteria = new SearchCriteria();
   
   
   constructor
@@ -96,15 +97,15 @@ export class InvestigationList extends BaseComponent implements OnInit, OnDestro
   }
   
   updateCols() {
-    for (var index in this.cols) {
-      let col = this.cols[index];
+    for (let index in this.cols) {
+      const col = this.cols[index];
       this.translate.get(col.headerKey).subscribe((res: string) => {
         col.header = res;
       });
     }
     
-    for (var index in this.iTCols) {
-      let col = this.iTCols[index];
+    for (let index in this.iTCols) {
+      const col = this.iTCols[index];
       this.translate.get(col.headerKey).subscribe((res: string) => {
         col.header = res;
       });
@@ -113,7 +114,7 @@ export class InvestigationList extends BaseComponent implements OnInit, OnDestro
   
   getInvestigations() {
      
-      let parameters: string [] = []; 
+      const parameters: string [] = []; 
             
       if (this.visit && this.visit.id > 0)  {
          parameters.push('e.visit.id = |visitId|' + this.visit.id + '|Long');
@@ -121,29 +122,25 @@ export class InvestigationList extends BaseComponent implements OnInit, OnDestro
       } 
       if (this.admission && this.admission.id > 0)  {
          parameters.push('e.admission.id = |admissionId|' + this.admission.id + '|Long');
-         parameters.push('e.status = |status|4|Integer')
+         parameters.push('e.status = |status|4|Integer');
       } 
         
         
       this.genericService.getAllByCriteria('Investigation', parameters)
-         .subscribe((data: Investigation[]) => 
-          { 
-            this.investigations = data 
-            console.log(this.investigations)
+         .subscribe((data: Investigation[]) => { 
+            this.investigations = data; 
           },
           error => console.log(error),
           () => console.log('Get all Investigations complete'));
   }
   
    getInvestigationTests(investigation: Investigation) {
-     let parameters: string [] = []; 
-     parameters.push('e.investigation.id = |investigationId|' + investigation.id + '|Long')
+      const parameters: string [] = []; 
+      parameters.push('e.investigation.id = |investigationId|' + investigation.id + '|Long');
         
       this.genericService.getAllByCriteria('InvestigationTest', parameters)
-      .subscribe((data: any[]) => 
-      { 
+      .subscribe((data: any[]) => { 
           investigation.investigationTests = data;
-          console.log(data)
       },
       error => console.log(error),
       () => console.log('Get LabTest List complete'));
@@ -175,16 +172,9 @@ export class InvestigationList extends BaseComponent implements OnInit, OnDestro
       } 
       this.investigationService.saveInvestigaton(this.selectedInvestigation)
         .subscribe(result => {
-          if (result.id > 0) {
-            this.display = false;
-          }
-          else {
-            this.error = Constants.SAVE_UNSUCCESSFUL;
-            this.display = true;
-          }
-        })
-    }
-    catch (e) {
+            this.processResult(result, this.selectedInvestigation, this.messages, null);
+          });
+    } catch (e) {
       console.log(e);
     }
   }
@@ -210,14 +200,27 @@ export class InvestigationList extends BaseComponent implements OnInit, OnDestro
   
   saveResult(investigationTest: InvestigationTest) {
     this.genericService.save(investigationTest, 'InvestigationTest')
-        .subscribe(result => {
-          if (result.id > 0) {
-            this.message = Constants.SAVE_SUCCESSFUL;
-          }
-          else {
-            this.error = Constants.SAVE_UNSUCCESSFUL;
-          }
-        })
+	.subscribe(result => {
+		this.processResult(result, investigationTest, this.messages, null);
+		});
   }
+
+  search() {
+	    var options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+		if (this.searchCriteria.investigationDate != null) {
+			const startDate = new Date(new Date().setDate(this.searchCriteria.investigationDate.getDate()));
+			const endDate = new Date(new Date().setDate(this.searchCriteria.investigationDate.getDate() + 1));
+			this.searchCriteria.investigationDateStart = startDate.toLocaleDateString("en-US", options);
+			this.searchCriteria.investigationDateEnd = endDate.toLocaleDateString("en-US", options);
+		}
+
+
+		this.investigationService.searchInvestigations(this.searchCriteria)
+			.subscribe((data: Investigation[]) => {
+				this.investigations = data;
+			},
+			error => console.log(error),
+			() => console.log('Get Investigations complete'));
+	}
   
  }

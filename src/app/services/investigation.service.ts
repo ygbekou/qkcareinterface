@@ -6,6 +6,7 @@ import { Investigation, InvestigationTest } from '../models/investigation';
 import { Package } from '../models/package';
 import { TokenStorage } from './token.storage';
 import {Cookie} from 'ng2-cookies/ng2-cookies';
+import { SearchCriteria } from '../models';
 
 @Injectable()
 export class InvestigationService {
@@ -48,6 +49,19 @@ export class InvestigationService {
         .catch(this.handleError);
    }
   
+   public searchInvestigations = (searchCriteria: SearchCriteria): Observable<Investigation[]> => {
+
+		const toSend = JSON.stringify(searchCriteria);
+
+		const actionUrl = Constants.apiServer + '/service/laboratory/investigation/search';
+		return this.http.post(actionUrl, toSend, { headers: this.headers })
+			.map((response: Response) => {
+				return response.json();
+			})
+			.catch(this.handleError);
+	}
+
+
   private handleError(error: Response) {
     console.error(error);
     return Observable.throw(error.json().error || 'Server error');

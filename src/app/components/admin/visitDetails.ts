@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { Constants } from '../../app.constants';
 import { GivenVaccine, Patient, Visit, Reference, User } from '../../models';
 import { PackageDropdown, DoctorDropdown } from '../dropdowns';

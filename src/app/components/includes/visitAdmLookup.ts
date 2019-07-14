@@ -124,7 +124,7 @@ export class VisitAdmLookup implements OnInit {
         private billingService: BillingService,
         private router: Router
     ) {
-
+		
   }
   
   ngOnInit() {

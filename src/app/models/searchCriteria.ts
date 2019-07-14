@@ -18,7 +18,10 @@ export class SearchCriteria {
   requestor: Reference;
   shipTo: Reference;
   purchaseOrderDate: Date;
-  topN:number;
+  topN: number;
+  investigationDate: Date;
+  investigationDateStart: string;
+  investigationDateEnd: string;
   
 }
 

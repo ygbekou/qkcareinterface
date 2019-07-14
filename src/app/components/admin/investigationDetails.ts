@@ -1,41 +1,29 @@
-import {Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild, Input} from '@angular/core';
-import {Router, ActivatedRoute} from '@angular/router';
-import {Constants} from '../../app.constants';
-import {Admission, Visit, Patient, Prescription, Diagnosis, Investigation, LabTest, User} from '../../models';
-import {EditorModule} from 'primeng/editor';
-import {DoctorDropdown, MedicineDropdown, LabTestDropdown} from '../dropdowns';
-import {Cookie} from 'ng2-cookies/ng2-cookies';
-import {DataTableModule, DialogModule, InputTextareaModule, CheckboxModule, MultiSelectModule, CalendarModule} from 'primeng/primeng';
-import {GenericService, InvestigationService, GlobalEventsManager} from '../../services';
-import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
-import { Message } from 'primeng/api';
+import { Component, OnInit, OnDestroy, Input} from '@angular/core';
+import { ActivatedRoute} from '@angular/router';
+import { Admission, Visit, Investigation, LabTest} from '../../models';
+import { LabTestDropdown} from '../dropdowns';
+import { GenericService, InvestigationService, GlobalEventsManager} from '../../services';
+import { TranslateService} from '@ngx-translate/core';
+import { Message, ConfirmationService } from 'primeng/api';
+import { BaseComponent } from './baseComponent';
 
 @Component({
   selector: 'app-investigation-details',
   templateUrl: '../../pages/admin/investigationDetails.html',
   providers: [GenericService, InvestigationService, LabTestDropdown]
 })
-export class InvestigationDetails implements OnInit, OnDestroy {
+export class InvestigationDetails extends BaseComponent implements OnInit, OnDestroy {
 
   investigation: Investigation = new Investigation();
   labTestCols: any[];
   labTests: LabTest[] = [];
   labTestDropdown: LabTestDropdown;
 
-  DETAIL: string = Constants.DETAIL;
-  ADD_IMAGE: string = Constants.ADD_IMAGE;
-  ADD_LABEL: string = Constants.ADD_LABEL;
-  DEPARTMENT: string = Constants.DEPARTMENT;
-  COUNTRY: string = Constants.COUNTRY;
-  ROLE: string = Constants.ROLE;
-  SELECT_OPTION: string = Constants.SELECT_OPTION;
-
   @Input() admission: Admission;
   @Input() visit: Visit;
 
-  patient: Patient = new Patient();
   itemNumber: string;
-  itemNumberLabel: string = 'Visit';
+  itemNumberLabel: 'Visit';
   messages: Message[] = [];
 
   constructor
@@ -43,13 +31,13 @@ export class InvestigationDetails implements OnInit, OnDestroy {
     private globalEventsManager: GlobalEventsManager,
     private genericService: GenericService,
     private investigationService: InvestigationService,
-    private translate: TranslateService,
+	private translate: TranslateService,
+	public confirmationService: ConfirmationService,
     private lbTestDropdown: LabTestDropdown,
-    private changeDetectorRef: ChangeDetectorRef,
-    private route: ActivatedRoute,
-    private router: Router
+    private route: ActivatedRoute
     ) {
-    this.labTestDropdown = lbTestDropdown;
+		super(genericService, translate, confirmationService);
+    	this.labTestDropdown = lbTestDropdown;
 
   }
 
@@ -66,9 +54,11 @@ export class InvestigationDetails implements OnInit, OnDestroy {
           this.genericService.getOne(investigationId, 'Investigation')
             .subscribe(result => {
               if (result.id > 0) {
-                this.investigation = result
+				this.investigation = result;
+				this.investigation.investigationDatetime = new Date(this.investigation.investigationDatetime);
+				this.populateLabTests('');
               }
-            })
+            });
         } else {
 
         }
@@ -88,24 +78,17 @@ export class InvestigationDetails implements OnInit, OnDestroy {
 
       this.investigationService.saveInvestigaton(this.investigation)
         .subscribe(result => {
-          if (result.id > 0) {
-            this.investigation = result
-            this.messages.push({severity:Constants.ERROR, summary:Constants.SAVE_LABEL, detail:Constants.SAVE_SUCCESSFUL});
-          }
-          else {
-            this.messages.push({severity:Constants.ERROR, summary:Constants.SAVE_LABEL, detail:Constants.SAVE_UNSUCCESSFUL});
-          }
-        })
-    }
-    catch (e) {
+            this.processResult(result, this.investigation, this.messages, null);
+          });
+    } catch (e) {
       console.log(e);
     }
   }
 
   populateLabTests(event) {
-    let parameters: string[] = [];
+    const parameters: string[] = [];
 
-    parameters.push('e.parent.id = |parentId|' + this.investigation.labTest.id + '|Long')
+    parameters.push('e.parent.id = |parentId|' + this.investigation.labTest.id + '|Long');
 
     this.genericService.getAllByCriteria('LabTest', parameters)
       .subscribe((data: any[]) => {
@@ -115,11 +98,19 @@ export class InvestigationDetails implements OnInit, OnDestroy {
       () => console.log('Get LabTest List complete'));
   }
   
-  delete() {
-  
+  setSelectedVisit(event) {
+    this.visit = event;
   }
-  
+
+  setSelectedAdmissiont(event) {
+    this.admission = event;
+  }
+
   clear() {
-  
+	  this.messages = [];
+	  this.visit = new Visit();
+	  this.admission = new Admission();
+	  this.investigation = new Investigation();
+	  this.labTests = [];
   }
 }
