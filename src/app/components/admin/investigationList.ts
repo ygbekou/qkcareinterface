@@ -1,23 +1,19 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild, Input, EventEmitter, Output } from '@angular/core';
-import { Admission, Employee, Investigation, InvestigationTest, Prescription, User, Visit } from '../../models';
-import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
+import { Component, OnInit, OnDestroy, Input, EventEmitter, Output } from '@angular/core';
+import { Admission, Investigation, InvestigationTest, Visit } from '../../models';
+import { Router, NavigationExtras } from '@angular/router';
 import { Constants } from '../../app.constants';
-import { FileUploader } from './fileUploader';
-import { Cookie } from 'ng2-cookies/ng2-cookies';
-import { ToolbarModule, DialogModule, InputTextareaModule, CheckboxModule } from 'primeng/primeng';
+import { ToolbarModule, ConfirmationService } from 'primeng/primeng';
 import { GenericService, InvestigationService, GlobalEventsManager } from '../../services';
 import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
+import { BaseComponent } from './baseComponent';
 
 @Component({ 
   selector: 'app-investigation-list',
   templateUrl: '../../pages/admin/investigationList.html',
   providers: [GenericService, InvestigationService, ToolbarModule] 
 })
-export class InvestigationList implements OnInit, OnDestroy {
+export class InvestigationList extends BaseComponent implements OnInit, OnDestroy {
   
-  error: string = '';
-  message: string;
-  displayDialog: boolean;
   investigations: Investigation[] = [];
   selectedInvestigations: any[] = [];
   selectedInvestigation: Investigation;
@@ -41,14 +37,13 @@ export class InvestigationList implements OnInit, OnDestroy {
   constructor
     (
     private globalEventsManager: GlobalEventsManager,
-    private genericService: GenericService,
+    public genericService: GenericService,
     private investigationService: InvestigationService,
-    private translate: TranslateService,
-    private changeDetectorRef: ChangeDetectorRef,
-    private route: ActivatedRoute,
+	public translate: TranslateService,
+	public confirmationService: ConfirmationService,
     private router: Router,
     ) {
-
+		super(genericService, translate, confirmationService);
   }
 
   ngOnInit(): void {
@@ -87,11 +82,20 @@ export class InvestigationList implements OnInit, OnDestroy {
     this.investigations = null;
   }
   
-  edit(investigationId: string) {
-    this.investigationIdEvent.emit(investigationId);
+  edit(investigationId: number) {
+	try {
+		const navigationExtras: NavigationExtras = {
+			queryParams: {
+				'investigationId': investigationId,
+			}
+		};
+		this.router.navigate(['/admin/investigationDetails'], navigationExtras);
+	} catch (e) {
+		console.log(e);
+	}
   }
   
- updateCols() {
+  updateCols() {
     for (var index in this.cols) {
       let col = this.cols[index];
       this.translate.get(col.headerKey).subscribe((res: string) => {
@@ -129,7 +133,7 @@ export class InvestigationList implements OnInit, OnDestroy {
           },
           error => console.log(error),
           () => console.log('Get all Investigations complete'));
-      }
+  }
   
    getInvestigationTests(investigation: Investigation) {
      let parameters: string [] = []; 

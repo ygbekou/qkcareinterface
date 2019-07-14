@@ -121,9 +121,10 @@ export class AdminReference implements OnInit, OnDestroy {
 	this.activeTab = evt.index;
     setTimeout(() => {
         if (evt.index === 0) {
-          this.globalEventsManager.selectedParentId = 3;
+          this.globalEventsManager.selectedParentId = Constants.CATEGORY_SYMPTOM;
           this.globalEventsManager.selectedReferenceType = 'Category';
-          this.referenceList.updateCols('SYMPTOM_GROUP');
+		  this.referenceList.updateCols('SYMPTOM_GROUP');
+		  this.referenceList.ngOnInit();
         } else if (evt.index === 1) {
           this.globalEventsManager.selectedParentId = 3;
           this.globalEventsManager.selectedReferenceWithCategoryType = 'Symptom';

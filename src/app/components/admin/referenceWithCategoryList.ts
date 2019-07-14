@@ -107,7 +107,6 @@ export class ReferenceWithCategoryList implements OnInit, OnDestroy {
             let parameters: string [] = []; 
             //parameters.push('e.status = |status|0|Integer')
 			
-			alert(this.globalEventsManager.selectedReferenceWithCategoryType)
             this.genericService.getAllByCriteria(this.globalEventsManager.selectedReferenceWithCategoryType, parameters)
               .subscribe((data: ReferenceWithCategory[]) => 
               { 
