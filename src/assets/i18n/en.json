@@ -337,6 +337,7 @@
 	"NEW":"New",
 	"OLD":"Old",
 	"CREATED_BY":"Created By"
+  },
   "MESSAGE": {
   	"TRANFER_DOCTOR_FAILED": "The transfer doctor should be different from the current doctor.",
   	"TRANFER_BED_FAILED": "The transfer bed should be different from the current bed.",
