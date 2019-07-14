@@ -157,7 +157,8 @@ export class VisitDetails implements OnInit, OnDestroy {
   }
 
   onDoctorOrderSaved($event) {
-	this.doctorOrderList.updateTable($event);
+	//this.doctorOrderList.updateTable($event);
+	this.doctorOrderList.getList();
   }
 
   lookUpPatient(event) {

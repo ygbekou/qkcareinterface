@@ -27,7 +27,6 @@ export class DoctorOrder {
   
   constructor() {
 	this.doctorOrderType = new Reference();
-	this.doctorOrderKind = new Reference();
     this.status = new Reference();
     this.status.id = Constants.DOCTOR_ORDER_STATUS_PENDING;
     this.status.name = 'PENDING';

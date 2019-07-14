@@ -44,28 +44,8 @@ export class DoctorOrderList extends BaseComponent implements OnInit, OnDestroy 
                                         style: {width: '10%', 'text-align': 'center'}  }
         ];
 
-    this.route
-        .queryParams
-        .subscribe(params => {
-
-            const parameters: string [] = [];
-            if (this.visit)  {
-              parameters.push('e.visit.id = |visitId|' + this.visit.id + '|Long');
-            }
-            if (this.admission)  {
-              parameters.push('e.admission.id = |admissionId|' + this.admission.id + '|Long');
-            }
-
-            this.genericService.getAllByCriteria('DoctorOrder', parameters, ' ORDER BY e.doctorOrderDatetime DESC ')
-              .subscribe((data: DoctorOrder[]) =>
-              {
-                this.doctorOrders = data
-                console.info(this.doctorOrders);
-              },
-              error => console.log(error),
-              () => console.log('Get all DoctorOrders complete'));
-          });
-
+		this.getList();
+    
     this.updateCols();
     this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
       this.updateCols();
@@ -101,5 +81,28 @@ export class DoctorOrderList extends BaseComponent implements OnInit, OnDestroy 
 
 	}
 
+	getList()  {
+		this.route
+        .queryParams
+        .subscribe(params => {
+
+            const parameters: string [] = [];
+            if (this.visit)  {
+              parameters.push('e.visit.id = |visitId|' + this.visit.id + '|Long');
+            }
+            if (this.admission)  {
+              parameters.push('e.admission.id = |admissionId|' + this.admission.id + '|Long');
+            }
+
+            this.genericService.getAllByCriteria('DoctorOrder', parameters, ' ORDER BY e.doctorOrderDatetime DESC ')
+              .subscribe((data: DoctorOrder[]) =>
+              {
+                this.doctorOrders = data
+                console.info(this.doctorOrders);
+              },
+              error => console.log(error),
+              () => console.log('Get all DoctorOrders complete'));
+          });
+	}
 
  }
