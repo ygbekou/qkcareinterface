@@ -72,18 +72,16 @@ export class AdmissionList extends BaseComponent implements OnInit, OnDestroy {
     }
   }
 
-  generateCols() {
+  generateCols() { 
 	  this.cols = [
             { field: 'admissionNumber', header: 'Admission No', headerKey: 'COMMON.ADMISSION_NUMBER', type: 'string',
-                                        style: {width: '10%', 'text-align': 'center'} },
+                                        style: {width: '20%', 'text-align': 'center'} },
             { field: 'admissionDatetime', header: 'Date/Time', headerKey: 'COMMON.ADMISSION_DATETIME', type: 'date_time',
-                                        style: {width: '15%', 'text-align': 'center'}  },
-            { field: 'patientId', header: 'Patient ID', headerKey: 'COMMON.PATIENT_ID', type: 'string',
-                                        style: {width: '15%', 'text-align': 'center'}  },
-            { field: 'patientName', header: 'Patient Name', headerKey: 'COMMON.PATIENT_NAME', type: 'string',
                                         style: {width: '20%', 'text-align': 'center'}  },
-            { field: 'statusDesc', header: 'Status', headerKey: 'COMMON.STATUS', type: 'string',
-                                        style: {width: '15%', 'text-align': 'center'}  }
+            { field: 'patientId', header: 'Patient ID', headerKey: 'COMMON.PATIENT_ID', type: 'string',
+                                        style: {width: '20%', 'text-align': 'center'}  },
+            { field: 'patientName', header: 'Patient Name', headerKey: 'COMMON.PATIENT_NAME', type: 'string',
+										style: {width: '30%', 'text-align': 'center'}  }
         ];
   }
 
