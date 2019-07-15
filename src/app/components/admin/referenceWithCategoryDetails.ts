@@ -1,40 +1,41 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef, EventEmitter, Output } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Constants } from '../../app.constants';
 import { ReferenceWithCategory } from '../../models/referenceWithCategory';
 import { CategoryDropdown } from '../dropdowns';
 import { GenericService, GlobalEventsManager } from '../../services';
+import { Message, ConfirmationService } from 'primeng/api';
+import { BaseComponent } from './baseComponent';
+import { TranslateService } from '@ngx-translate/core';
+import { Reference } from 'src/app/models';
 
 @Component({
   selector: 'app-referenceWithCategory-details',
   templateUrl: '../../pages/admin/referenceWithCategoryDetails.html',
   providers: [GenericService]
 })
-export class ReferenceWithCategoryDetails implements OnInit, OnDestroy {
+export class ReferenceWithCategoryDetails extends BaseComponent implements OnInit, OnDestroy {
 
   public error: String = '';
   displayDialog: boolean;
   referenceWithCategory: ReferenceWithCategory = new ReferenceWithCategory();
   referenceWithCategoryType: string;
 
-  DETAIL: string = Constants.DETAIL;
-  ADD_IMAGE: string = Constants.ADD_IMAGE;
-  ADD_LABEL: string = Constants.ADD_LABEL;
-  DEPARTMENT: string = Constants.DEPARTMENT;
-  COUNTRY: string = Constants.COUNTRY;
-  ROLE: string = Constants.ROLE;
-  SELECT_OPTION: string = Constants.SELECT_OPTION;
+  messages: Message[] = [];
+
+  @Output() referenceWithCategorySaveEvent = new EventEmitter<ReferenceWithCategory>();
 
   constructor
     (
-      private genericService: GenericService,
+	  public genericService: GenericService,
+	  public translate: TranslateService,
+	  public confirmationService: ConfirmationService,
       private globalEventsManager: GlobalEventsManager,
       private categoryDropdown: CategoryDropdown,
       private changeDetectorRef: ChangeDetectorRef,
-      private route: ActivatedRoute,
-      private router: Router
+      private route: ActivatedRoute
     ) {
-
+		super(genericService, translate, confirmationService);
   }
 
   ngOnInit(): void {
@@ -74,10 +75,10 @@ export class ReferenceWithCategoryDetails implements OnInit, OnDestroy {
       this.genericService.save(this.referenceWithCategory, this.globalEventsManager.selectedReferenceWithCategoryType)
         .subscribe(result => {
           if (result.id > 0) {
-            this.referenceWithCategory = result;
+			this.processResult(result, this.referenceWithCategory, this.messages, null);
+			this.referenceWithCategorySaveEvent.emit(this.referenceWithCategory);
           } else {
-            this.error = Constants.SAVE_UNSUCCESSFUL;
-            this.displayDialog = true;
+            this.processResult(result, this.referenceWithCategory, this.messages, null);
           }
         });
     } catch (e) {
@@ -97,8 +98,9 @@ export class ReferenceWithCategoryDetails implements OnInit, OnDestroy {
     });
   }
 
-  delete() {
-
+  clear() {
+    this.referenceWithCategory = new ReferenceWithCategory();
+    this.referenceWithCategory.category = new Reference();
   }
 
  }

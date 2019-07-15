@@ -3,14 +3,14 @@
     <p-tabView (onChange)="onTabChange($event)">
       <p-tabPanel header="{{'COMMON.SYMPTOM_GROUP_LIST' |translate}}">
         <div *ngIf="activeTab == 0" class="ui-grid-row">
-		  <app-reference-details></app-reference-details>
+		  <app-reference-details (referenceSaveEvent)="onReferenceSaved($event)"></app-reference-details>
 		  <br/>
           <app-reference-list (referenceIdEvent)="onReferenceSelected($event, 'Category')"></app-reference-list>
         </div>
       </p-tabPanel>
       <p-tabPanel header="{{'COMMON.SYMPTOMS' |translate}}">
         <div *ngIf="activeTab == 1" class="ui-grid-row">
-		  <app-referenceWithCategory-details></app-referenceWithCategory-details>
+		  <app-referenceWithCategory-details (referenceWithCategorySaveEvent)="onReferenceWithCategorySaved($event)"></app-referenceWithCategory-details>
 		   <br/>
           <app-referenceWithCategory-list
             (referenceWithCategoryIdEvent)="onReferenceWithCategorySelected($event, 'Symptom')">

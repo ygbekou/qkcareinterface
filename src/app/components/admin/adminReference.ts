@@ -1,9 +1,8 @@
-import { Component, LOCALE_ID, OnInit, ChangeDetectorRef, ViewChild, OnDestroy } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, ViewChild, OnDestroy } from '@angular/core';
 import { Patient, User, UserGroup } from '../../models';
-import { PatientDetails } from './patientDetails';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
 import { Constants } from '../../app.constants';
-import { GenericService, UserService, GlobalEventsManager } from '../../services';
+import { GenericService, GlobalEventsManager } from '../../services';
 import { CategoryDropdown } from '../dropdowns';
 import { HospitalLocationDetails } from './hospitalLocationDetails';
 import { HospitalLocationList } from './hospitalLocationList';
@@ -97,9 +96,17 @@ export class AdminReference implements OnInit, OnDestroy {
     this.referenceDetails.getReference(referenceId, referenceType);
   }
 
+  onReferenceSaved($event) {
+	this.referenceList.updateTable($event);
+  }
+
    onReferenceWithCategorySelected($event, referenceWithCategoryType) {
     const referenceWithCategoryId = $event;
     this.referenceWithCategoryDetails.getReferenceWithCategory(referenceWithCategoryId, referenceWithCategoryType);
+  }
+
+  onReferenceWithCategorySaved($event) {
+	this.referenceWithCategoryList.updateTable($event);
   }
 
   onMedicineSelected($event) {

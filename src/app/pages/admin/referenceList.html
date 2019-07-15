@@ -1,10 +1,12 @@
+ <p-confirmDialog [style]="{width: '50vw'}"></p-confirmDialog>
+ <p-messages [(value)]="messages"></p-messages>
  <p-table [value]="references" [responsive]="true">
    <ng-template pTemplate="caption">
      {{ REFERENCE_LIST }}
    </ng-template>
    <ng-template pTemplate="header">
      <tr>
-       <th *ngFor="let col of cols" [pSortableColumn]="col.field">
+       <th *ngFor="let col of cols" [pSortableColumn]="col.field" [ngStyle]="col.style">
          {{col.header}} <p-sortIcon [field]="col.field"></p-sortIcon>
        </th>
        <th>Action</th>
@@ -14,9 +16,8 @@
      <tr>
        <td *ngFor="let col of cols">{{reference[col.field]}}</td>
        <td>
-         <button type="button" pButton icon="fa fa-edit"
-           (click)="edit(reference.id, referenceType)"></button>&nbsp;&nbsp;
-         <button type="button" pButton icon="fa fa-eraser" (click)="delete(reference.id, referenceType)"></button>
+         <button type="button" pButton icon="fa fa-edit" (click)="edit(reference.id, referenceType)"></button>&nbsp;&nbsp;
+         <button type="button" pButton icon="fa fa-eraser" (click)="deleteItem(references, reference.id, referenceType)"></button>
        </td>
      </tr>
    </ng-template>
