@@ -96,11 +96,11 @@
 					</td>
 					<td *ngIf="showActions">
 						<p-button label="Col" (click)="showInvestigationDialog('Collection', rowData)"
-							*ngIf="rowData.status != 0 && rowData.status != 2 "></p-button> &nbsp;
+							*ngIf="rowData.status === 0 "></p-button> &nbsp;
 						<p-button label="Rej" (click)="showInvestigationDialog('Rejection', rowData)"
-							*ngIf="rowData.status != 1"></p-button> &nbsp;
+							*ngIf="rowData.status === 0 || rowData.status === 1 || rowData.status === 3"></p-button> &nbsp;
 						<p-button label="Fin" (click)="showInvestigationDialog('Finalization', rowData)"
-							*ngIf="rowData.status != 3"></p-button> &nbsp;
+							*ngIf="rowData.status == 3"></p-button> &nbsp;
 						<button type="button" pButton icon="fa fa-edit" 
 							(click)="edit(rowData.id)"></button> &nbsp;
 						<button type="button" pButton icon="fa fa-eraser"

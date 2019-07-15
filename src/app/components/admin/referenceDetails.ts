@@ -1,10 +1,11 @@
-import { Component, OnInit, OnDestroy, Input } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, EventEmitter, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Reference } from '../../models/reference';
 import { Constants } from '../../app.constants';
 import { GenericService, GlobalEventsManager } from '../../services';
 import { TranslateService} from '@ngx-translate/core';
-import { Message } from 'primeng/api';
+import { Message, ConfirmationService } from 'primeng/api';
+import { BaseComponent } from './baseComponent';
 
 @Component({
   selector: 'app-reference-details',
@@ -12,26 +13,30 @@ import { Message } from 'primeng/api';
   providers: [GenericService]
   
 })
-export class ReferenceDetails implements OnInit, OnDestroy {
+
+export class ReferenceDetails extends BaseComponent implements OnInit, OnDestroy {
   
   reference: Reference = new Reference();
   category: Reference = new Reference();
   referenceType: string = null;
   parentId: number = null;
   
-  hiddenMenu: boolean = false;
+  hiddenMenu = false;
   messages: Message[] = [];
   
   @Input() viewOnly: boolean;
+  @Output() referenceSaveEvent = new EventEmitter<Reference>();
  
   constructor
     (
-      private genericService: GenericService,
-      private translate: TranslateService,
+      public genericService: GenericService,
+	  public translate: TranslateService,
+	  public confirmationService: ConfirmationService,
       private globalEventsManager: GlobalEventsManager,
       private route: ActivatedRoute    ) {
-      this.reference = new Reference();
-  }
+		super(genericService, translate, confirmationService);
+      	this.reference = new Reference();
+  	}
 
   
   
@@ -58,10 +63,10 @@ export class ReferenceDetails implements OnInit, OnDestroy {
               this.genericService.getOne(referenceId, this.referenceType)
                   .subscribe(result => {
                 if (result.id > 0) {
-                  this.reference = result
+                  this.reference = result;
                 }
                 
-              })
+              });
           }
         });
     
@@ -69,6 +74,10 @@ export class ReferenceDetails implements OnInit, OnDestroy {
   
   ngOnDestroy() {
     this.reference = null;
+  	this.category = null;
+  	this.referenceType = null;
+  	this.parentId = null;
+  	this.messages = null;
   }
 
   getReference(referenceId: number, referenceType: string) {
@@ -77,13 +86,12 @@ export class ReferenceDetails implements OnInit, OnDestroy {
         .subscribe(result => {
       if (result.id > 0) {
         this.reference = result;
-      }
-      else {
+      } else {
         this.translate.get(['COMMON.READ', 'MESSAGE.READ_FAILED']).subscribe(res => {
-          this.messages.push({severity:Constants.ERROR, summary:res['COMMON.READ'], detail:res['MESSAGE.READ_FAILED']});
+          this.messages.push({severity: Constants.ERROR, summary: res['COMMON.READ'], detail: res['MESSAGE.READ_FAILED']});
         });
       }
-    })
+    });
   }
   
   clear() {
@@ -105,19 +113,13 @@ export class ReferenceDetails implements OnInit, OnDestroy {
       this.genericService.save(this.reference, this.globalEventsManager.selectedReferenceType)
         .subscribe(result => {
           if (result.id > 0) {
-            this.reference = result;
-            this.translate.get(['COMMON.SAVE', 'MESSAGE.SAVE_SUCCESS']).subscribe(res => {
-              this.messages.push({severity:Constants.SUCCESS, summary:res['COMMON.SAVE'], detail:res['MESSAGE.SAVE_SUCCESS']});
-            });
+			this.processResult(result, this.reference, this.messages, null);
+			this.referenceSaveEvent.emit(this.reference);
+          } else {
+            this.processResult(result, this.reference, this.messages, null);
           }
-          else {
-            this.translate.get(['COMMON.SAVE', 'MESSAGE.SAVE_UNSUCCESS']).subscribe(res => {
-              this.messages.push({severity:Constants.SUCCESS, summary:res['COMMON.SAVE'], detail:res['MESSAGE.SAVE_UNSUCCESS']});
-            });
-          }
-        })
-    }
-    catch (e) {
+        });
+    } catch (e) {
       console.log(e);
     }
   }

@@ -1,16 +1,18 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef, Output, EventEmitter } from '@angular/core';
-import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
+import { Component, OnInit, OnDestroy, Output, EventEmitter } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 import { ReferenceWithCategory } from '../../models/referenceWithCategory';
 import { GenericService, GlobalEventsManager } from '../../services';
-import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
+import { TranslateService } from '@ngx-translate/core';
+import { BaseComponent } from './baseComponent';
+import { ConfirmationService } from 'primeng/api';
 
 
-@Component({ 
+@Component({
   selector: 'app-referenceWithCategory-list',
   templateUrl: '../../pages/admin/referenceWithCategoryList.html',
   providers: [GenericService]
 })
-export class ReferenceWithCategoryList implements OnInit, OnDestroy {
+export class ReferenceWithCategoryList extends BaseComponent implements OnInit, OnDestroy {
   
   referenceWithCategories: ReferenceWithCategory[] = [];
   cols: any[];
@@ -22,14 +24,13 @@ export class ReferenceWithCategoryList implements OnInit, OnDestroy {
   
   constructor
     (
-    private genericService: GenericService,
-    private translate: TranslateService,
+    public genericService: GenericService,
+	public translate: TranslateService,
+	public confirmationService: ConfirmationService,
     private globalEventsManager: GlobalEventsManager,
-    private route: ActivatedRoute,
-    private router: Router,
+    private route: ActivatedRoute
     ) {
-
-    
+		super(genericService, translate, confirmationService);
   }
 
   ngOnInit(): void {
@@ -80,20 +81,7 @@ export class ReferenceWithCategoryList implements OnInit, OnDestroy {
     }
   }
 
-  delete(symmtomId : number) {
-    try {
-      let navigationExtras: NavigationExtras = {
-        queryParams: {
-          "symmtomId": symmtomId,
-        }
-      }
-      this.router.navigate(["/admin/referenceWithCategoryDetails"], navigationExtras);
-    }
-    catch (e) {
-      console.log(e);
-    }
-  }
-  
+
   getAll() {
      this.route
         .queryParams
@@ -113,5 +101,17 @@ export class ReferenceWithCategoryList implements OnInit, OnDestroy {
           });
   
   }
+
+
+  	updateTable(referenceWithCategory: ReferenceWithCategory) {
+		const index = this.referenceWithCategories.findIndex(x => x.id === referenceWithCategory.id);
+
+		if (index === -1) {
+			this.referenceWithCategories.push(referenceWithCategory);
+		} else {
+			this.referenceWithCategories[index] = referenceWithCategory;
+		}
+
+	}
 
  }

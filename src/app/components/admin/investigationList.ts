@@ -48,13 +48,15 @@ export class InvestigationList extends BaseComponent implements OnInit, OnDestro
   }
 
   ngOnInit(): void {
-    this.cols = [
-            { field: 'investigationDatetime', header: 'Date', headerKey: 'COMMON.INVESTIGATION_DATETIME', type: 'Datetime',
-                                        style: {width: '12%', 'text-align': 'center'} },
+    	this.cols = [
+			{ field: 'investigationDatetime', header: 'Investigation Datetime', headerKey: 'COMMON.INVESTIGATION_DATETIME', 
+										type: 'Datetime', style: {width: '12%', 'text-align': 'center'} },
 			{ field: 'name', header: 'Name', headerKey: 'COMMON.NAME', type: 'string', 
 										style: {width: '15%', 'text-align': 'center'} },
             { field: 'labTestName', header: 'LabTest/Group', headerKey: 'COMMON.LAB_TEST_GROUP', type: 'string',
-                                        style: {width: '13%', 'text-align': 'center'} },
+										style: {width: '13%', 'text-align': 'center'} },
+			{ field: 'status', header: 'Status', headerKey: 'COMMON.STATUS', type: 'string',
+                                        style: {width: '7%', 'text-align': 'center'} },
             { field: 'statusDesc', header: 'Status', headerKey: 'COMMON.STATUS', type: 'string',
                                         style: {width: '7%', 'text-align': 'center'} },
             { field: 'collectionDatetime', header: 'Coll Date', headerKey: 'COMMON.COLLECTION_DATE', type: 'Datetime',
@@ -63,7 +65,7 @@ export class InvestigationList extends BaseComponent implements OnInit, OnDestro
                                         style: {width: '12%', 'text-align': 'center'} }
         ];
     
-    this.iTCols = [
+    	this.iTCols = [
             { field: 'name', header: 'Name', headerKey: 'COMMON.NAME' },
             { field: 'method', header: 'Method', headerKey: 'COMMON.METHOD' },
             { field: 'result', header: 'Result', headerKey: 'COMMON.RESULT' },
@@ -75,12 +77,12 @@ export class InvestigationList extends BaseComponent implements OnInit, OnDestro
             { field: 'dispatchDatetime', header: 'Dispatch Date', headerKey: 'COMMON.DISPATCH_DATE', type: 'Date' }
         ];
     
-    this.updateCols();
-    this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
-      this.updateCols();
-    });
-    
-    this.getInvestigations();
+		this.updateCols();
+		this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
+		this.updateCols();
+		});
+		
+		this.getInvestigations();
 
   }
  
@@ -187,7 +189,9 @@ export class InvestigationList extends BaseComponent implements OnInit, OnDestro
     } else if (investigation.status === 1) {
       statusDesc = 'Collected';
     } else if (investigation.status === 2) {
-      statusDesc = 'Rejected';
+	  statusDesc = 'Rejected';
+	} else if (investigation.status === 3) {
+      statusDesc = 'In Progress';
     } else if (investigation.status === 4) {
       statusDesc = 'Finalized';
     }
