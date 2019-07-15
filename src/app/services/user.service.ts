@@ -145,7 +145,7 @@ export class UserService {
     return this.http.post(actionUrl, toAdd, {headers: this.headers})
       .map((response: Response) => {
 
-        if (response && response.json() == 'Success') {
+        if (response && response.json().result === 'Success') {
           return true;
         } else {
           return false;
