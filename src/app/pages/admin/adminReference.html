@@ -35,7 +35,8 @@
       </p-tabPanel>
       <p-tabPanel header="{{'COMMON.VACCINE_LIST' |translate}}">
         <div *ngIf="activeTab == 4" class="ui-grid-row">
-          <app-reference-details></app-reference-details>
+		  <app-reference-details></app-reference-details>
+		  <br/>
           <app-reference-list (referenceIdEvent)="onReferenceSelected($event, 'Vaccine')"></app-reference-list>
         </div>
       </p-tabPanel>

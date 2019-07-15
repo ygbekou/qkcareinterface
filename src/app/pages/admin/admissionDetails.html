@@ -1,177 +1,165 @@
 <form name="form" (ngSubmit)="f.form.valid && save()" #f="ngForm" validate>
-	<div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="admission">
-		<p-messages [(value)]="messages"></p-messages>
-		<div class="ui-grid-row">
-			<div class="ui-grid-col-5 ui-sm-12">
-				<app-patient-lookup (patientEmit)="lookUpPatient($event)" [originalPage]="'admin/admissionDetails'"
-					[patient]="patient"></app-patient-lookup>
-				<p-message *ngIf="f.submitted && !(patient.id > 0)" severity="error" 
-					text="{{ 'COMMON.PATIENT_ID' | translate }} {{ 'VALIDATION.IS_REQUIRED' | translate }}">
-				</p-message>
-			</div>
-			<div class="ui-grid-col-7 ui-sm-12">
-				<div class="ui-grid-col-3 ui-sm-12">
-					<div class="form-group">
-						<label for="patientAdmissionDate">{{ 'COMMON.ADMISSION_DATETIME' | translate }}<font
-								color="red">*</font></label>
-						<br />
-						<p-calendar [(ngModel)]="admission.admissionDatetime" [showTime]="true" name="admissionDatetime"
-							#admissionDatetime="ngModel" required></p-calendar>
-						<p-message *ngIf="f.submitted && admissionDatetime.invalid" severity="error"
-							text="Field is required"></p-message>
-					</div>
-				</div>
-				<div class="ui-grid-col-8 ui-sm-12">
-					<div class="form-group">
-						<label for="reason">{{ 'COMMON.REASON' | translate }}</label>
-						<textarea pInputTextarea id="reason" rows="3" cols="40" pInputTextarea maxlength="1000"
-							[(ngModel)]="admission.admissionReason" name="admissionReason"
-							#reason="ngModel"> </textarea>
-					</div>
-				</div>
-				<div class="ui-grid-col-1 ui-sm-12">
-					<div class="form-group">
-						<label for="patientAdmissionId">{{ 'COMMON.ADMISSION_NUMBER' | translate }}</label>
-						<br />
-						{{admission.admissionNumber}}
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+  <div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="admission">
+    <p-messages [(value)]="messages"></p-messages>
+    <div class="ui-grid-row">
+      <div class="ui-grid-col-6 ui-sm-12">
+        <app-patient-lookup (patientEmit)="lookUpPatient($event)" [originalPage]="'admin/admissionDetails'"
+          [patient]="patient"></app-patient-lookup>
+        <p-message *ngIf="f.submitted && !(patient.id > 0)" severity="error"
+          text="{{ 'COMMON.PATIENT_ID' | translate }} {{ 'VALIDATION.IS_REQUIRED' | translate }}">
+        </p-message>
+      </div>
+      <div class="ui-grid-col-2 ui-sm-12">
+        <div class="form-group">
+          <label for="patientAdmissionDate">{{ 'COMMON.ADMISSION_DATETIME' | translate }}<font color="red">*</font>
+          </label>
+          <br />
+          <p-calendar [(ngModel)]="admission.admissionDatetime" [showTime]="true" name="admissionDatetime"
+            #admissionDatetime="ngModel" required></p-calendar>
+          <p-message *ngIf="f.submitted && admissionDatetime.invalid" severity="error" text="Field is required">
+          </p-message>
+        </div> 
+        <div class="form-group">
+          {{ 'COMMON.ADMISSION_NUMBER' | translate }} &nbsp;&nbsp;:&nbsp;&nbsp; {{admission.admissionNumber}}
+        </div>
+      </div>
+      <div class="ui-grid-col-4 ui-sm-12">
+        <div class="form-group">
+          <label for="reason">{{ 'COMMON.REASON' | translate }}</label>
+          <textarea pInputTextarea id="reason" rows="3" cols="40" pInputTextarea maxlength="1000"
+            [(ngModel)]="admission.admissionReason" name="admissionReason" #reason="ngModel"> </textarea>
+        </div>
+      </div>
+    </div>
+  </div> 
+  
+  <p-tabView (onChange)="onTabChange($event)">
+    <p-tabPanel header="{{'COMMON.LOCATION' | translate }}">
+      <div class="ui-grid ui-grid-responsive ui-fluid">
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-4 ui-sm-12">
+            <div class="form-group">
+              <label for="building">{{ 'COMMON.BUILDING' | translate }}<font color="red">*</font></label>
+              <p-autoComplete [(ngModel)]="admission.bedAssignment.bed.room.floor.building"
+                (ngModelChange)="populateFloorDropdown($event)"
+                (onDropdownClick)="buildingDropdown.handleDropdownClick($event)"
+                [suggestions]="buildingDropdown.filteredBuildings" [dropdown]="true"
+                (completeMethod)="buildingDropdown.filter($event)" name="name" field="name" [size]="30" placeholder=""
+                [minLength]="1" name="building" #building="ngModel" required>
+              </p-autoComplete>
+              <p-message *ngIf="f.submitted && building.invalid" severity="error" text="Field is required"></p-message>
+            </div>
+          </div>
+          <div class="ui-grid-col-4 ui-sm-12">
+            <div class="form-group">
+              <label for="floor">{{ 'COMMON.FLOOR' | translate }}<font color="red">*</font></label>
+              <p-autoComplete [(ngModel)]="admission.bedAssignment.bed.room.floor"
+                (ngModelChange)="populateRoomDropdown($event)"
+                (onDropdownClick)="floorDropdown.handleDropdownClick($event)"
+                [suggestions]="floorDropdown.filteredFloors" [dropdown]="true"
+                (completeMethod)="floorDropdown.filter($event)" name="name" field="name" [size]="30" placeholder=""
+                [minLength]="1" name="floor" #floor="ngModel" required>
+              </p-autoComplete>
+              <p-message *ngIf="f.submitted && (floor.invalid || !(admission.bedAssignment.bed.room.floor.id > 0))"
+                severity="error" text="Field is required"></p-message>
+            </div>
 
-	<br />
-	<p-tabView (onChange)="onTabChange($event)">
-		<p-tabPanel header="DETAILS">
-			<div class="ui-grid ui-grid-responsive ui-fluid">
-				<div class="ui-grid-row">
-					<div class="ui-grid-col-4 ui-sm-12">
-						<div class="form-group">
-							<label for="building">{{ 'COMMON.BUILDING' | translate }}<font color="red">*</font></label>
-							<p-autoComplete [(ngModel)]="admission.bedAssignment.bed.room.floor.building"
-								(ngModelChange)="populateFloorDropdown($event)"
-								(onDropdownClick)="buildingDropdown.handleDropdownClick($event)"
-								[suggestions]="buildingDropdown.filteredBuildings" [dropdown]="true"
-								(completeMethod)="buildingDropdown.filter($event)" name="name" field="name" [size]="30"
-								placeholder="" [minLength]="1" name="building" #building="ngModel" required>
-							</p-autoComplete>
-							<p-message *ngIf="f.submitted && building.invalid" severity="error"
-								text="Field is required"></p-message>
-						</div>
-					</div>
-					<div class="ui-grid-col-4 ui-sm-12">
-						<div class="form-group">
-							<label for="floor">{{ 'COMMON.FLOOR' | translate }}<font color="red">*</font></label>
-							<p-autoComplete [(ngModel)]="admission.bedAssignment.bed.room.floor"
-								(ngModelChange)="populateRoomDropdown($event)"
-								(onDropdownClick)="floorDropdown.handleDropdownClick($event)"
-								[suggestions]="floorDropdown.filteredFloors" [dropdown]="true"
-								(completeMethod)="floorDropdown.filter($event)" name="name" field="name" [size]="30"
-								placeholder="" [minLength]="1" name="floor" #floor="ngModel" required>
-							</p-autoComplete>
-							<p-message
-								*ngIf="f.submitted && (floor.invalid || !(admission.bedAssignment.bed.room.floor.id > 0))"
-								severity="error" text="Field is required"></p-message>
-						</div>
+          </div>
+          <div class="ui-grid-col-4 ui-sm-12">
+            <div class="form-group">
+              <label for="room">{{ 'COMMON.ROOM' | translate }}<font color="red">*</font></label>
+              <p-autoComplete [(ngModel)]="admission.bedAssignment.bed.room"
+                (ngModelChange)="populateBedDropdown($event)"
+                (onDropdownClick)="roomDropdown.handleDropdownClick($event)" [suggestions]="roomDropdown.filteredRooms"
+                [dropdown]="true" (completeMethod)="roomDropdown.filter($event)" name="name" field="name" [size]="30"
+                placeholder="" [minLength]="1" name="room" #room="ngModel" required>
+              </p-autoComplete>
+              <p-message *ngIf="f.submitted && (room.invalid || !(admission.bedAssignment.bed.room.id > 0))"
+                severity="error" text="Field is required"></p-message>
+            </div>
+          </div>
+        </div>
+        <br />
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-4 ui-sm-12">
+            <div class="form-group">
+              <label for="category">{{ 'COMMON.CATEGORY' | translate }}<font color="red">*</font></label>
+              <p-autoComplete [(ngModel)]="admission.bedAssignment.bed.category"
+                (ngModelChange)="populateBedDropdown($event)"
+                (onDropdownClick)="categoryDropdown.handleDropdownClick($event)"
+                [suggestions]="categoryDropdown.filteredCategories" [dropdown]="true" id="medicine"
+                (completeMethod)="categoryDropdown.filter($event)" name="medicine" field="name" [size]="30"
+                placeholder="" [minLength]="1" name="category" #category="ngModel" required>
+              </p-autoComplete>
+              <p-message *ngIf="f.submitted && (category.invalid || !(admission.bedAssignment.bed.category.id > 0))"
+                severity="error" text="Field is required"></p-message>
+            </div>
+          </div>
+          <div class="ui-grid-col-4 ui-sm-12">
+            <div class="form-group">
+              <label for="bed">{{ 'COMMON.BED' | translate }}<font color="red">*</font></label>
+              <p-autoComplete [(ngModel)]="admission.bedAssignment.bed"
+                (onDropdownClick)="bedDropdown.handleDropdownClick($event)" [suggestions]="bedDropdown.filteredBeds"
+                [dropdown]="true" (completeMethod)="bedDropdown.filter($event)" name="name" field="bedNumber"
+                [size]="30" placeholder="" [minLength]="1" name="bed" #bed="ngModel" required>
+              </p-autoComplete>
+              <p-message *ngIf="f.submitted && (bed.invalid || !(admission.bedAssignment.bed.id > 0))" severity="error"
+                text="Field is required"></p-message>
+            </div>
+          </div>
+          <div class="ui-grid-col-4 ui-sm-12">
+            <div class="form-group">
+              <label for="doctor">{{ 'COMMON.DOCTOR' | translate }}<font color="red">*</font></label>
+              <p-autoComplete [(ngModel)]="admission.doctorAssignment.doctor"
+                (onDropdownClick)="doctorDropdown.handleDropdownClick($event)"
+                [suggestions]="doctorDropdown.filteredDoctors" [dropdown]="true"
+                (completeMethod)="doctorDropdown.filter($event)" name="name" field="name" [size]="30" placeholder=""
+                [minLength]="1" name="doctor" #doctor="ngModel" required>
+              </p-autoComplete>
+              <p-message *ngIf="f.submitted && doctor.invalid" severity="error" text="Field is required">
+              </p-message>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br />
 
-					</div>
-					<div class="ui-grid-col-4 ui-sm-12">
-						<div class="form-group">
-							<label for="room">{{ 'COMMON.ROOM' | translate }}<font color="red">*</font></label>
-							<p-autoComplete [(ngModel)]="admission.bedAssignment.bed.room"
-								(ngModelChange)="populateBedDropdown($event)"
-								(onDropdownClick)="roomDropdown.handleDropdownClick($event)"
-								[suggestions]="roomDropdown.filteredRooms" [dropdown]="true"
-								(completeMethod)="roomDropdown.filter($event)" name="name" field="name" [size]="30"
-								placeholder="" [minLength]="1" name="room" #room="ngModel" required>
-							</p-autoComplete>
-							<p-message
-								*ngIf="f.submitted && (room.invalid || !(admission.bedAssignment.bed.room.id > 0))"
-								severity="error" text="Field is required"></p-message>
-						</div>
-					</div>
-				</div>
-				<br />
-				<div class="ui-grid-row">
-					<div class="ui-grid-col-4 ui-sm-12">
-						<div class="form-group">
-							<label for="category">{{ 'COMMON.CATEGORY' | translate }}<font color="red">*</font></label>
-							<p-autoComplete [(ngModel)]="admission.bedAssignment.bed.category"
-								(ngModelChange)="populateBedDropdown($event)"
-								(onDropdownClick)="categoryDropdown.handleDropdownClick($event)"
-								[suggestions]="categoryDropdown.filteredCategories" [dropdown]="true" id="medicine"
-								(completeMethod)="categoryDropdown.filter($event)" name="medicine" field="name"
-								[size]="30" placeholder="" [minLength]="1" name="category" #category="ngModel" required>
-							</p-autoComplete>
-							<p-message
-								*ngIf="f.submitted && (category.invalid || !(admission.bedAssignment.bed.category.id > 0))"
-								severity="error" text="Field is required"></p-message>
-						</div>
-					</div>
-					<div class="ui-grid-col-4 ui-sm-12">
-						<div class="form-group">
-							<label for="bed">{{ 'COMMON.BED' | translate }}<font color="red">*</font></label>
-							<p-autoComplete [(ngModel)]="admission.bedAssignment.bed"
-								(onDropdownClick)="bedDropdown.handleDropdownClick($event)"
-								[suggestions]="bedDropdown.filteredBeds" [dropdown]="true"
-								(completeMethod)="bedDropdown.filter($event)" name="name" field="bedNumber" [size]="30"
-								placeholder="" [minLength]="1" name="bed" #bed="ngModel" required>
-							</p-autoComplete>
-							<p-message *ngIf="f.submitted && (bed.invalid || !(admission.bedAssignment.bed.id > 0))"
-								severity="error" text="Field is required"></p-message>
-						</div>
-					</div>
-					<div class="ui-grid-col-4 ui-sm-12">
-						<div class="form-group">
-							<label for="doctor">{{ 'COMMON.DOCTOR' | translate }}<font color="red">*</font></label>
-							<p-autoComplete [(ngModel)]="admission.doctorAssignment.doctor"
-								(onDropdownClick)="doctorDropdown.handleDropdownClick($event)"
-								[suggestions]="doctorDropdown.filteredDoctors" [dropdown]="true"
-								(completeMethod)="doctorDropdown.filter($event)" name="name" field="name" [size]="30"
-								placeholder="" [minLength]="1" name="doctor" #doctor="ngModel" required>
-							</p-autoComplete>
-							<p-message *ngIf="f.submitted && doctor.invalid" severity="error" text="Field is required">
-							</p-message>
-						</div>
-					</div>
-				</div>
-			</div>
-			<br />
-
-			<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
-				<button type="button" pButton icon="fa fa-close" (click)="delete()"
-					label="{{ 'COMMON.DELETE' | translate }}"></button>&nbsp;
-				<button pButton icon="fa fa-check" label="{{ 'COMMON.SAVE' | translate }}"></button>
-			</div>
-		</p-tabPanel>
-		<p-tabPanel header="VITAL SIGNS" *ngIf="admission && admission.id > 0">
-			<app-vitalSign-details [admission]="admission" (vitalSignSaveEvent)="onVitalSignSaved($event)"></app-vitalSign-details> <br />
-			<app-vitalSign-list [admission]="admission" (vitalSignIdEvent)="onVitalSignSelected($event)">
-			</app-vitalSign-list><br />
-		</p-tabPanel>
-		<p-tabPanel header="DOCTOR ORDERS" *ngIf="admission && admission.id > 0">
-			<app-doctorOrder-details [admission]="admission" (doctorOrderSaveEvent)="onDoctorOrderSaved($event)"></app-doctorOrder-details> <br /> <br />
-			<app-doctorOrder-list [admission]="admission" (doctorOrderIdEvent)="onDoctorOrderSelected($event)">
-			</app-doctorOrder-list><br />
-		</p-tabPanel>
-		<p-tabPanel header="DIAGNOSES" *ngIf="admission && admission.id > 0">
-			<app-admissionDiagnoses [admission]="admission"></app-admissionDiagnoses>
-		</p-tabPanel>
-		<p-tabPanel header="PRESCRIPTIONS" *ngIf="admission && admission.id > 0">
-			<app-prescription-details [admission]="admission"></app-prescription-details><br/>
-			<app-prescription-list [admission]="admission" (prescriptionIdEvent)="onPrescriptionSelected($event)">
-			</app-prescription-list>
-		</p-tabPanel>
-		<p-tabPanel header="INVESTIGATIONS" *ngIf="admission && admission.id > 0">
-			<app-investigation-list [showActions]="false" [admission]="admission"></app-investigation-list>
-		</p-tabPanel>
-		<p-tabPanel header="PHARMACY" *ngIf="admission &&  admission.id > 0">
-			<app-patientSale-details [admission]="admission"></app-patientSale-details> <br /><br />
-			<app-patientSale-list (patientSaleIdEvent)="onPatientSaleSelected($event)" [admission]="admission">
-			</app-patientSale-list>
-		</p-tabPanel>
-		<p-tabPanel header="DISCHARGE FORM" *ngIf="admission && admission.id > 0">
-			<app-discharge-details [admission]="admission"></app-discharge-details>
-		</p-tabPanel>
-	</p-tabView>
+      <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+        <button type="button" pButton icon="fa fa-refresh" (click)="clear()"
+          label="{{ 'COMMON.CLEAR' | translate }}"></button>&nbsp;
+        <button pButton icon="fa fa-check" label="{{ 'COMMON.SAVE' | translate }}"></button>
+      </div>
+    </p-tabPanel>
+    <p-tabPanel header="{{'COMMON.VITAL_SIGN_LIST' | translate }}" *ngIf="admission && admission.id > 0">
+      <app-vitalSign-details [admission]="admission" (vitalSignSaveEvent)="onVitalSignSaved($event)">
+      </app-vitalSign-details> <br />
+      <app-vitalSign-list [admission]="admission" (vitalSignIdEvent)="onVitalSignSelected($event)">
+      </app-vitalSign-list> 
+    </p-tabPanel>
+    <p-tabPanel header="{{'COMMON.DOCTOR_ORDER_LIST' | translate }}" *ngIf="admission && admission.id > 0">
+      <app-doctorOrder-details [admission]="admission" (doctorOrderSaveEvent)="onDoctorOrderSaved($event)">
+      </app-doctorOrder-details> <br /> <br />
+      <app-doctorOrder-list [admission]="admission" (doctorOrderIdEvent)="onDoctorOrderSelected($event)">
+      </app-doctorOrder-list><br />
+    </p-tabPanel>
+    <p-tabPanel header="{{'COMMON.DIAGNOSIS_LIST' | translate }}" *ngIf="admission && admission.id > 0">
+      <app-admissionDiagnoses [admission]="admission"></app-admissionDiagnoses>
+    </p-tabPanel>
+    <p-tabPanel header="{{'COMMON.PRESCRIPTION_LIST' | translate }}" *ngIf="admission && admission.id > 0">
+      <app-prescription-details [admission]="admission"></app-prescription-details><br />
+      <app-prescription-list [admission]="admission" (prescriptionIdEvent)="onPrescriptionSelected($event)">
+      </app-prescription-list>
+    </p-tabPanel>
+    <p-tabPanel header="{{'COMMON.INVESTIGATION_LIST' | translate }}" *ngIf="admission && admission.id > 0">
+      <app-investigation-list [showActions]="false" [admission]="admission"></app-investigation-list>
+    </p-tabPanel>
+    <p-tabPanel header="{{'COMMON.PHARMACY' | translate }}" *ngIf="admission &&  admission.id > 0">
+      <app-patientSale-details [admission]="admission"></app-patientSale-details> <br /><br />
+      <app-patientSale-list (patientSaleIdEvent)="onPatientSaleSelected($event)" [admission]="admission">
+      </app-patientSale-list>
+    </p-tabPanel>
+    <p-tabPanel header="{{'COMMON.DISCHARGE' | translate }}" *ngIf="admission && admission.id > 0">
+      <app-discharge-details [admission]="admission"></app-discharge-details>
+    </p-tabPanel>
+  </p-tabView>
 </form>

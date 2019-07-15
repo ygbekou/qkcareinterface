@@ -1,107 +1,132 @@
 <form name="form" (ngSubmit)="f.form.valid && validate() && save()" #f="ngForm" validate>
-	<div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="vitalSign">
-		<p-messages [(value)]="messages"></p-messages>
-		<div class="ui-grid-row">
-			<div class="ui-grid-col-2 ui-sm-12" *ngIf="admission">
-				<div class="form-group">
-					<label for="vitalSignDatetime">{{ 'COMMON.VITAL_SIGN_DATE_TIME' | translate }}<font color="red">*</font></label> 
-					<p-calendar [(ngModel)]="vitalSign.vitalSignDatetime" [showTime]="true" name="vitalSignDatetime" 
-						#vitalSignDatetime="ngModel" required></p-calendar>
-					<p-message *ngIf="f.submitted && vitalSignDatetime.invalid" severity="error" text="Field is required"></p-message>
-				</div>
-			</div>
-			<div class="ui-grid-col-2 ui-sm-12">
-				<div class="form-group">
-					<label for="temperature">{{ 'COMMON.TEMPERATURE' | translate }}</label>
-					<input currencyMask class="form-control" id="temperature" [(ngModel)]="vitalSign.temperature"
-							name="temperature" [options]="{ prefix: '', thousands: '.', decimal: ',', allowNegative: false }" #temperature="ngModel"/>
-					<p-message *ngIf="(temperature.value || temperature.value == 0) && temperature.invalid && temperature.hasError('min')" severity="error" text="{{ 'VALIDATION.MINIMUM_VALUE' | translate }} 32"></p-message>
-					<p-message *ngIf="temperature.value && temperature.invalid && temperature.hasError('max')" severity="error" text="{{ 'VALIDATION.MAXIMUM_VALUE' | translate }} 110"></p-message>
-				</div>
-			</div>
-			<div class="ui-grid-col-2 ui-sm-12">
-				<div class="form-group">
-					<label for="pulse">{{ 'COMMON.PULSE' | translate }}</label>
-					<input currencyMask class="form-control" id="pulse" [(ngModel)]="vitalSign.pulse"
-							name="pulse" [options]="{ prefix: '', thousands: '.', decimal: ',', allowNegative: false }" #pulse="ngModel"/>
-					<p-message *ngIf="(pulse.value || pulse.value == 0) && pulse.invalid && pulse.hasError('min')" severity="error" text="{{ 'VALIDATION.MINIMUM_VALUE' | translate }} min"></p-message>
-					<p-message *ngIf="pulse.value && pulse.invalid && pulse.hasError('max')" severity="error" text="{{ 'VALIDATION.MAXIMUM_VALUE' | translate }} 110"></p-message>
-				</div>
-			</div>
-			<div class="ui-grid-col-2 ui-sm-12">
-				<div class="form-group">
-					<label for="respiration">{{ 'COMMON.RESPIRATION' | translate }}</label>
-					<input currencyMask class="form-control" id="respiration" [(ngModel)]="vitalSign.respiration"
-							name="respiration" [options]="{ prefix: '', thousands: '.', decimal: ',', allowNegative: false, precision: null }" 
-							#respiration="ngModel"/>
-					<p-message *ngIf="(respiration.value || respiration.value == 0) && respiration.invalid && respiration.hasError('min')" severity="error" text="{{ 'VALIDATION.MINIMUM_VALUE' | translate }} 32"></p-message>
-					<p-message *ngIf="respiration.value && respiration.invalid && respiration.hasError('max')" severity="error" text="{{ 'VALIDATION.MAXIMUM_VALUE' | translate }} 110"></p-message>
+  <div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="vitalSign">
+    <p-messages [(value)]="messages"></p-messages>
+    <div class="ui-grid-row">
+      <div class="ui-grid-col-2 ui-sm-12" *ngIf="admission">
+        <div class="form-group">
+          <label for="vitalSignDatetime">{{ 'COMMON.VITAL_SIGN_DATE_TIME' | translate }}<font color="red">*</font>
+            </label>
+          <p-calendar [(ngModel)]="vitalSign.vitalSignDatetime" [showTime]="true" name="vitalSignDatetime"
+            #vitalSignDatetime="ngModel" required></p-calendar>
+          <p-message *ngIf="f.submitted && vitalSignDatetime.invalid" severity="error" text="Field is required">
+          </p-message>
+        </div>
+      </div>
+      <div class="ui-grid-col-3 ui-sm-12">
+        <div class="form-group">
+          <label for="temperature">{{ 'COMMON.TEMPERATURE' | translate }}</label>
+          <input currencyMask class="form-control" id="temperature" [(ngModel)]="vitalSign.temperature"
+            name="temperature" [options]="{ prefix: '', thousands: '.', decimal: ',', allowNegative: false }"
+            #temperature="ngModel" />
+          <p-message
+            *ngIf="(temperature.value || temperature.value == 0) && temperature.invalid && temperature.hasError('min')"
+            severity="error" text="{{ 'VALIDATION.MINIMUM_VALUE' | translate }} 32"></p-message>
+          <p-message *ngIf="temperature.value && temperature.invalid && temperature.hasError('max')" severity="error"
+            text="{{ 'VALIDATION.MAXIMUM_VALUE' | translate }} 110"></p-message>
+        </div>
+      </div>
+      <div class="ui-grid-col-3 ui-sm-12">
+        <div class="form-group">
+          <label for="pulse">{{ 'COMMON.PULSE' | translate }}</label>
+          <input currencyMask class="form-control" id="pulse" [(ngModel)]="vitalSign.pulse" name="pulse"
+            [options]="{ prefix: '', thousands: '.', decimal: ',', allowNegative: false }" #pulse="ngModel" />
+          <p-message *ngIf="(pulse.value || pulse.value == 0) && pulse.invalid && pulse.hasError('min')"
+            severity="error" text="{{ 'VALIDATION.MINIMUM_VALUE' | translate }} min"></p-message>
+          <p-message *ngIf="pulse.value && pulse.invalid && pulse.hasError('max')" severity="error"
+            text="{{ 'VALIDATION.MAXIMUM_VALUE' | translate }} 110"></p-message>
+        </div>
+      </div>
+      <div class="ui-grid-col-2 ui-sm-12">
+        <div class="form-group">
+          <label for="respiration">{{ 'COMMON.RESPIRATION' | translate }}</label>
+          <input currencyMask class="form-control" id="respiration" [(ngModel)]="vitalSign.respiration"
+            name="respiration"
+            [options]="{ prefix: '', thousands: '.', decimal: ',', allowNegative: false, precision: null }"
+            #respiration="ngModel" />
+          <p-message
+            *ngIf="(respiration.value || respiration.value == 0) && respiration.invalid && respiration.hasError('min')"
+            severity="error" text="{{ 'VALIDATION.MINIMUM_VALUE' | translate }} 32"></p-message>
+          <p-message *ngIf="respiration.value && respiration.invalid && respiration.hasError('max')" severity="error"
+            text="{{ 'VALIDATION.MAXIMUM_VALUE' | translate }} 110"></p-message>
 
-				</div>
-			</div>
-			<div class="ui-grid-col-2 ui-sm-12">
-				<div class="form-group">
-					<label for="bloodPressure">{{ 'COMMON.BLOOD_PRESSURE' | translate }}</label>
-					<input type="text" pInputText class="form-control" id="bloodPressure" [(ngModel)]="vitalSign.bloodPressure" 
-							name="bloodPressure" #bloodPressure="ngModel">
-				</div>
-			</div>
-		</div>
-		<div class="ui-grid-row">
-			<div class="ui-grid-col-2 ui-sm-12">
-				<div class="form-group">
-					<label for="bloodSugar">{{ 'COMMON.BLOOD_SUGAR' | translate }}</label>
-					<input currencyMask class="form-control" id="bloodSugar" [(ngModel)]="vitalSign.bloodSugar"
-							name="bloodSugar" [options]="{ prefix: '', thousands: '.', decimal: ',', allowNegative: false }" #bloodSugar="ngModel"/>
-					<p-message *ngIf="(bloodSugar.value || bloodSugar.value == 0) && bloodSugar.invalid && bloodSugar.hasError('min')" severity="error" text="{{ 'VALIDATION.MINIMUM_VALUE' | translate }} 32"></p-message>
-					<p-message *ngIf="bloodSugar.value && bloodSugar.invalid && bloodSugar.hasError('max')" severity="error" text="{{ 'VALIDATION.MAXIMUM_VALUE' | translate }} 110"></p-message>
+        </div>
+      </div>
+      <div class="ui-grid-col-2 ui-sm-12">
+        <div class="form-group">
+          <label for="bloodPressure">{{ 'COMMON.BLOOD_PRESSURE' | translate }}</label>
+          <input type="text" pInputText class="form-control" id="bloodPressure" [(ngModel)]="vitalSign.bloodPressure"
+            name="bloodPressure" #bloodPressure="ngModel">
+        </div>
+      </div>
+    </div>
+    <div class="ui-grid-row">
+      <div class="ui-grid-col-3 ui-sm-12">
+        <div class="form-group">
+          <label for="bloodSugar">{{ 'COMMON.BLOOD_SUGAR' | translate }}</label>
+          <input currencyMask class="form-control" id="bloodSugar" [(ngModel)]="vitalSign.bloodSugar" name="bloodSugar"
+            [options]="{ prefix: '', thousands: '.', decimal: ',', allowNegative: false }" #bloodSugar="ngModel" />
+          <p-message
+            *ngIf="(bloodSugar.value || bloodSugar.value == 0) && bloodSugar.invalid && bloodSugar.hasError('min')"
+            severity="error" text="{{ 'VALIDATION.MINIMUM_VALUE' | translate }} 32"></p-message>
+          <p-message *ngIf="bloodSugar.value && bloodSugar.invalid && bloodSugar.hasError('max')" severity="error"
+            text="{{ 'VALIDATION.MAXIMUM_VALUE' | translate }} 110"></p-message>
 
-				</div>
-			</div>
-			<div class="ui-grid-col-2 ui-sm-12">
-				<div class="form-group">
-					<label for="pain">{{ 'COMMON.PAIN' | translate }}</label>
-					<input currencyMask class="form-control" id="pain" [(ngModel)]="vitalSign.pain"
-							name="pain" [options]="{ prefix: '', thousands: '.', decimal: ',', allowNegative: false, precision :0 }" #pain="ngModel"/>
-					<p-message *ngIf="(pain.value || pain.value == 0) && pain.invalid && pain.hasError('min')" severity="error" text="{{ 'VALIDATION.MINIMUM_VALUE' | translate }} 32"></p-message>
-					<p-message *ngIf="pain.value && pain.invalid && pain.hasError('max')" severity="error" text="{{ 'VALIDATION.MAXIMUM_VALUE' | translate }} 110"></p-message>
+        </div>
+      </div>
+      <div class="ui-grid-col-3 ui-sm-12">
+        <div class="form-group">
+          <label for="pain">{{ 'COMMON.PAIN' | translate }}</label>
+          <input currencyMask class="form-control" id="pain" [(ngModel)]="vitalSign.pain" name="pain"
+            [options]="{ prefix: '', thousands: '.', decimal: ',', allowNegative: false, precision :0 }"
+            #pain="ngModel" />
+          <p-message *ngIf="(pain.value || pain.value == 0) && pain.invalid && pain.hasError('min')" severity="error"
+            text="{{ 'VALIDATION.MINIMUM_VALUE' | translate }} 32"></p-message>
+          <p-message *ngIf="pain.value && pain.invalid && pain.hasError('max')" severity="error"
+            text="{{ 'VALIDATION.MAXIMUM_VALUE' | translate }} 110"></p-message>
 
-				</div>
-			</div>
-			<div class="ui-grid-col-2 ui-sm-12">
-				<div class="form-group">
-					<label for="weight">{{ 'COMMON.WEIGHT' | translate }} (kg)</label>
-					<input currencyMask class="form-control" id="weight" [(ngModel)]="vitalSign.weight"
-							name="weight" [options]="{ prefix: '', thousands: '.', decimal: ',', allowNegative: false }"
-							(ngModelChange)="calculateBMI()" #weight="ngModel"/>
-					<p-message *ngIf="(weight.value || weight.value == 0) && weight.invalid && weight.hasError('min')" severity="error" text="{{ 'VALIDATION.MINIMUM_VALUE' | translate }} 32"></p-message>
-					<p-message *ngIf="weight.value && weight.invalid && weight.hasError('max')" severity="error" text="{{ 'VALIDATION.MAXIMUM_VALUE' | translate }} 110"></p-message>
+        </div>
+      </div>
+      <div class="ui-grid-col-2 ui-sm-12">
+        <div class="form-group">
+          <label for="weight">{{ 'COMMON.WEIGHT' | translate }} (kg)</label>
+          <input currencyMask class="form-control" id="weight" [(ngModel)]="vitalSign.weight" name="weight"
+            [options]="{ prefix: '', thousands: '.', decimal: ',', allowNegative: false }"
+            (ngModelChange)="calculateBMI()" #weight="ngModel" />
+          <p-message *ngIf="(weight.value || weight.value == 0) && weight.invalid && weight.hasError('min')"
+            severity="error" text="{{ 'VALIDATION.MINIMUM_VALUE' | translate }} 32"></p-message>
+          <p-message *ngIf="weight.value && weight.invalid && weight.hasError('max')" severity="error"
+            text="{{ 'VALIDATION.MAXIMUM_VALUE' | translate }} 110"></p-message>
 
-				</div>
-			</div>
-			<div class="ui-grid-col-2 ui-sm-12">
-				<div class="form-group">
-					<label for="height">{{ 'COMMON.HEIGHT' | translate }} (metre)</label>
-					<input currencyMask class="form-control" id="height" [(ngModel)]="vitalSign.height"
-							name="height" [options]="{ prefix: '', thousands: '.', decimal: ',', allowNegative: false }"
-							(ngModelChange)="calculateBMI()" #height="ngModel"/>
-					<p-message *ngIf="(height.value || height.value == 0) && height.invalid && height.hasError('min')" severity="error" text="{{ 'VALIDATION.MINIMUM_VALUE' | translate }} 10"></p-message>
-					<p-message *ngIf="height.value && height.invalid && height.hasError('max')" severity="error" text="{{ 'VALIDATION.MAXIMUM_VALUE' | translate }} 700"></p-message>
+        </div>
+      </div>
+      <div class="ui-grid-col-2 ui-sm-12">
+        <div class="form-group">
+          <label for="height">{{ 'COMMON.HEIGHT' | translate }} (metre)</label>
+          <input currencyMask class="form-control" id="height" [(ngModel)]="vitalSign.height" name="height"
+            [options]="{ prefix: '', thousands: '.', decimal: ',', allowNegative: false }"
+            (ngModelChange)="calculateBMI()" #height="ngModel" />
+          <p-message *ngIf="(height.value || height.value == 0) && height.invalid && height.hasError('min')"
+            severity="error" text="{{ 'VALIDATION.MINIMUM_VALUE' | translate }} 10"></p-message>
+          <p-message *ngIf="height.value && height.invalid && height.hasError('max')" severity="error"
+            text="{{ 'VALIDATION.MAXIMUM_VALUE' | translate }} 700"></p-message>
 
-				</div>
-			</div>
-			<div class="ui-grid-col-2 ui-sm-12">
-				<div class="form-group">
-					<label for="bmi">{{ 'COMMON.BMI' | translate }}</label>
-					<br/>
-					{{vitalSign.bmi}}
-				</div>
-			</div>
-		</div>
-	</div>
-	<br/>
-	<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix" *ngIf="admission && admission.id > 0">
-		<button type="button" pButton icon="fa fa-refresh" (click)="addNew()" label="{{ 'COMMON.CLEAR' | translate }}"></button>&nbsp;&nbsp;&nbsp;&nbsp;
-		<button pButton icon="fa fa-save" label="{{ 'COMMON.SAVE' | translate }}" [disabled]="!f.form.valid"></button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	</div>
+        </div>
+      </div>
+      <div class="ui-grid-col-2 ui-sm-12">
+        <div class="form-group">
+          <button pButton type="button" class="ui-button-success" *ngIf="vitalSign.bmi>=18.5 && vitalSign.bmi<=25"
+            label="{{ 'COMMON.BMI' | translate }} : {{vitalSign.bmi}}"></button>
+          <button pButton type="button" class="ui-button-danger" *ngIf="vitalSign.bmi<18.5 || vitalSign.bmi>25"
+            label="{{ 'COMMON.BMI' | translate }} : {{vitalSign.bmi}}"></button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br />
+  <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix" *ngIf="admission && admission.id > 0">
+    <button type="button" pButton icon="fa fa-refresh" (click)="addNew()"
+      label="{{ 'COMMON.CLEAR' | translate }}"></button>&nbsp;&nbsp;&nbsp;&nbsp;
+    <button pButton icon="fa fa-save" label="{{ 'COMMON.SAVE' | translate }}"
+      [disabled]="!f.form.valid"></button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  </div>
 </form>

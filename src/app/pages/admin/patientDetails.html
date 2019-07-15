@@ -344,9 +344,7 @@
   </div>
    <br />
   <p-messages [(value)]="messages"></p-messages>
-  <p-message *ngIf="!f.form.valid &&f.submitted" severity="error" text="{{ 'MESSAGE.FORM_HAS_ERRORS' | translate }}">
-  </p-message>
-  <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+   <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
     <button type="button" pButton icon="fa fa-refresh" (click)="clear()"
       label="{{ 'COMMON.CLEAR' | translate }}"></button>&nbsp;&nbsp;
     <button pButton icon="fa fa-save" label="{{ 'COMMON.SAVE' | translate }}" [disabled]="!f.form.valid"></button>

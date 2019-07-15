@@ -71,7 +71,7 @@ export class VisitList extends BaseComponent implements OnInit, OnDestroy {
 						this.visits = data;
 					},
 						error => console.log(error),
-						() => console.log('Get all Admission complete'));
+						() => console.log('Get all Visits complete'));
 			});
 
 		this.updateCols();
@@ -91,6 +91,7 @@ export class VisitList extends BaseComponent implements OnInit, OnDestroy {
 
 
 	ngOnDestroy() {
+		console.log("Visit list destroyed");
 		this.visits = null;
 	}
 
