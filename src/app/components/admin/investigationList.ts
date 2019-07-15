@@ -49,12 +49,18 @@ export class InvestigationList extends BaseComponent implements OnInit, OnDestro
 
   ngOnInit(): void {
     this.cols = [
-            { field: 'investigationDatetime', header: 'Date', headerKey: 'COMMON.INVESTIGATION_DATETIME', type: 'Date' },
-            { field: 'name', header: 'Name', headerKey: 'COMMON.NAME' },
-            { field: 'labTestName', header: 'LabTest/Group', headerKey: 'COMMON.LAB_TEST_GROUP' },
-            { field: 'statusDesc', header: 'Status', headerKey: 'COMMON.STATUS' },
-            { field: 'collectionDatetime', header: 'Coll Date', headerKey: 'COMMON.COLLECTION_DATE', type: 'Date' },
-            { field: 'finalizationDatetime', header: 'Finalized Date', headerKey: 'COMMON.FINALIZED_DATE', type: 'Date' }
+            { field: 'investigationDatetime', header: 'Date', headerKey: 'COMMON.INVESTIGATION_DATETIME', type: 'Datetime',
+                                        style: {width: '12%', 'text-align': 'center'} },
+			{ field: 'name', header: 'Name', headerKey: 'COMMON.NAME', type: 'string', 
+										style: {width: '15%', 'text-align': 'center'} },
+            { field: 'labTestName', header: 'LabTest/Group', headerKey: 'COMMON.LAB_TEST_GROUP', type: 'string',
+                                        style: {width: '13%', 'text-align': 'center'} },
+            { field: 'statusDesc', header: 'Status', headerKey: 'COMMON.STATUS', type: 'string',
+                                        style: {width: '7%', 'text-align': 'center'} },
+            { field: 'collectionDatetime', header: 'Coll Date', headerKey: 'COMMON.COLLECTION_DATE', type: 'Datetime',
+                                        style: {width: '12%', 'text-align': 'center'} },
+            { field: 'finalizationDatetime', header: 'Finalized Date', headerKey: 'COMMON.FINALIZED_DATE', type: 'Datetime',
+                                        style: {width: '12%', 'text-align': 'center'} }
         ];
     
     this.iTCols = [
@@ -142,7 +148,8 @@ export class InvestigationList extends BaseComponent implements OnInit, OnDestro
   
   showInvestigationDialog(actionType: string, rowData: Investigation) {
     this.actionType = actionType;
-    this.selectedInvestigation = rowData;
+	this.selectedInvestigation = rowData;
+	this.actionDatetime = new Date();
     this.display = true;
   }
   

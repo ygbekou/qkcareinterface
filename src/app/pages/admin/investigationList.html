@@ -1,16 +1,17 @@
-
+<p-confirmDialog [style]="{width: '50vw'}"></p-confirmDialog>
 <p-dialog header="{{actionType}}" [(visible)]="display">
 	<div class="ui-grid-row">
 		<div class="ui-grid-col-4 ui-sm-12">
 			<div class="form-group">
 				<label for="actionDatetime">{{ 'COMMON.ACTION_DATETIME' | translate }}<font color="red">*</font></label>
-				<p-calendar [(ngModel)]="actionDatetime" [showTime]="true"></p-calendar>
+				<p-calendar [(ngModel)]="actionDatetime" [showTime]="true" disabled="true"></p-calendar>
 			</div>
 		</div>
 		<div class="ui-grid-col-4 ui-sm-12">
 			<div class="form-group">
 				<label for="actionComments">{{ 'COMMON.COMMENTS' | translate }}</label>
-				<input pInputText id="actionComments" [(ngModel)]="actionComments" />
+				<textarea pInputTextarea id="actionComments" rows="4" cols="40" maxlength="1000" 
+								[(ngModel)]="actionComments" name="actionComments"> </textarea>
 			</div>
 		</div>
 	</div>
@@ -19,7 +20,7 @@
 
 
 <div class="ui-grid-row">
-		<form name="form" (ngSubmit)="f.form.valid && search()" #f="ngForm" validate>
+	<form name="form" (ngSubmit)="f.form.valid && search()" #f="ngForm" validate>
 		<p-fieldset legend="{{ 'COMMON.SEARCH_CRITERIA' | translate }}">
 			<div class="ui-grid-row">
 				<div class="ui-grid-col-2 ui-sm-12">
@@ -69,10 +70,10 @@
 			<ng-template pTemplate="header" let-columns>
 				<tr>
 					<th style="width: 5%;"></th>
-					<th *ngFor="let col of columns" [pSortableColumn]="col.field">
+					<th *ngFor="let col of columns" [pSortableColumn]="col.field" [ngStyle]="col.style">
 						{{col.header}} <p-sortIcon [field]="col.field"></p-sortIcon>
 					</th>
-					<th style="width: 15%;" *ngIf="showActions">Action</th>
+					<th style="width: 15%; text-align: center" *ngIf="showActions">Action</th>
 				</tr>
 			</ng-template> 
 			<ng-template pTemplate="body" let-rowData let-expanded="expanded" let-j="rowIndex" let-columns="columns">
@@ -83,8 +84,10 @@
 						</a>
 					</td>
 					<td *ngFor="let col of columns">
-						<div *ngIf="col.type === 'Date'">{{rowData[col.field] | date:'dd/MM/yyyy'}}</div>
-						<div *ngIf="col.type !== 'Date'">
+						<div *ngIf="col.type === 'Datetime'">
+							{{rowData[col.field] | date: globalEventsManager.DATE_TIME_FORMAT}}
+						</div>
+						<div *ngIf="col.type !== 'Datetime'">
 							<div *ngIf="col.field == 'statusDesc'">
 								{{getStatusDesc(rowData)}}</div>
 							<div *ngIf="col.field !== 'statusDesc'">
@@ -101,7 +104,7 @@
 						<button type="button" pButton icon="fa fa-edit" 
 							(click)="edit(rowData.id)"></button> &nbsp;
 						<button type="button" pButton icon="fa fa-eraser"
-							(click)="delete(rowData.id)"></button>
+							(click)="deleteItem(investigations, rowData.id, 'Investigation')"></button>
 					</td>
 				</tr>
 			</ng-template> 

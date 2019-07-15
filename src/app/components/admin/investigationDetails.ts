@@ -29,9 +29,9 @@ export class InvestigationDetails extends BaseComponent implements OnInit, OnDes
   constructor
     (
     private globalEventsManager: GlobalEventsManager,
-    private genericService: GenericService,
+    public genericService: GenericService,
     private investigationService: InvestigationService,
-	private translate: TranslateService,
+	public translate: TranslateService,
 	public confirmationService: ConfirmationService,
     private lbTestDropdown: LabTestDropdown,
     private route: ActivatedRoute
@@ -102,7 +102,7 @@ export class InvestigationDetails extends BaseComponent implements OnInit, OnDes
     this.visit = event;
   }
 
-  setSelectedAdmissiont(event) {
+  setSelectedAdmission(event) {
     this.admission = event;
   }
 

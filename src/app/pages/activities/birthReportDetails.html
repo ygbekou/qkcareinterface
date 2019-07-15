@@ -15,7 +15,7 @@
 					<div class="form-group">
 						<label for="firstName">{{ 'COMMON.FIRST_NAME' | translate }}<font color="red">*</font></label>
 						<input type="text" pInputText class="form-control" id="firstName" required
-							[(ngModel)]="birthReport.firstName" name="firstName" #firstNameModel="ngModel">
+							[(ngModel)]="birthReport.firstName" name="firstName" #firstName="ngModel">
 						<p-message *ngIf="f.submitted && firstName.invalid" severity="error" text="Field is required"></p-message>
 					</div>
 				</div>
