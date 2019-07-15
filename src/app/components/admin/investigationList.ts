@@ -125,13 +125,6 @@ export class InvestigationList extends BaseComponent implements OnInit, OnDestro
          parameters.push('e.status = |status|4|Integer');
       } 
         
-        
-      this.genericService.getAllByCriteria('Investigation', parameters)
-         .subscribe((data: Investigation[]) => { 
-            this.investigations = data; 
-          },
-          error => console.log(error),
-          () => console.log('Get all Investigations complete'));
   }
   
    getInvestigationTests(investigation: Investigation) {
@@ -206,13 +199,25 @@ export class InvestigationList extends BaseComponent implements OnInit, OnDestro
   }
 
   search() {
-	    var options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+		this.searchCriteria.investigationDateEnd = null;
+		this.searchCriteria.investigationDateStart = null;
+
+		if ((this.searchCriteria.investigationDate === undefined || this.searchCriteria.investigationDate === null)
+			&& (this.searchCriteria.visitId === undefined || this.searchCriteria.visitId === null)
+			&& (this.searchCriteria.admissionId === undefined || this.searchCriteria.admissionId === null)
+			&& (this.searchCriteria.medicalRecordNumber === undefined || this.searchCriteria.medicalRecordNumber === '') ) {
+			return;
+		}
+
 		if (this.searchCriteria.investigationDate != null) {
 			const startDate = new Date(new Date().setDate(this.searchCriteria.investigationDate.getDate()));
 			const endDate = new Date(new Date().setDate(this.searchCriteria.investigationDate.getDate() + 1));
-			this.searchCriteria.investigationDateStart = startDate.toLocaleDateString("en-US", options);
-			this.searchCriteria.investigationDateEnd = endDate.toLocaleDateString("en-US", options);
+			this.searchCriteria.investigationDateStart = startDate.toLocaleDateString(this.globalEventsManager.LOCALE,
+                Constants.LOCAL_DATE_OPTIONS);
+			this.searchCriteria.investigationDateEnd = endDate.toLocaleDateString(this.globalEventsManager.LOCALE,
+                Constants.LOCAL_DATE_OPTIONS);
 		}
+
 
 
 		this.investigationService.searchInvestigations(this.searchCriteria)
