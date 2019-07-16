@@ -1,8 +1,8 @@
-import { Component, OnInit, OnDestroy, ViewChild, Input, ElementRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { Department } from '../../models';
 import { Constants } from '../../app.constants';
 import { GenericService } from '../../services';
-import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
+import { TranslateService } from '@ngx-translate/core';
 import { Message } from 'primeng/api';
 
 @Component({
@@ -19,7 +19,7 @@ export class DepartmentDetails implements OnInit, OnDestroy {
     messages: Message[] = [];
     @ViewChild('picture') picture: ElementRef;
     formData = new FormData();
-    multiple=false;
+    multiple = false;
 
     constructor
     (
@@ -55,7 +55,6 @@ export class DepartmentDetails implements OnInit, OnDestroy {
       }
     });
   }
-  // tslint:disable-next-line:no-trailing-whitespace
   
   clear() {
     this.department = new Department();

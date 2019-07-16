@@ -48,6 +48,8 @@ export class Constants {
 	public static CATEGORY_MEDICINE = 1;
 	public static CATEGORY_BED = 2;
 	public static CATEGORY_SYMPTOM = 3;
+	public static CATEGORY_ALLERGY = 4;
+	public static CATEGORY_VACCINE = 5;
 	public static CATEGORY_SERVICE_TARIF = 6;
 	public static USER_GROUP_PATIENT = 20;
 	public static DOCTOR_ORDER_TYPE_PHARM = 1;

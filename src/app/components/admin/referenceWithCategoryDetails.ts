@@ -32,7 +32,6 @@ export class ReferenceWithCategoryDetails extends BaseComponent implements OnIni
 	  public confirmationService: ConfirmationService,
       private globalEventsManager: GlobalEventsManager,
       private categoryDropdown: CategoryDropdown,
-      private changeDetectorRef: ChangeDetectorRef,
       private route: ActivatedRoute
     ) {
 		super(genericService, translate, confirmationService);
@@ -54,7 +53,6 @@ export class ReferenceWithCategoryDetails extends BaseComponent implements OnIni
                 if (result.id > 0) {
                   this.referenceWithCategory = result;
                 } else {
-                  this.error = Constants.SAVE_UNSUCCESSFUL;
                   this.displayDialog = true;
                 }
               });
@@ -75,6 +73,7 @@ export class ReferenceWithCategoryDetails extends BaseComponent implements OnIni
       this.genericService.save(this.referenceWithCategory, this.globalEventsManager.selectedReferenceWithCategoryType)
         .subscribe(result => {
           if (result.id > 0) {
+			this.referenceWithCategory = result;
 			this.processResult(result, this.referenceWithCategory, this.messages, null);
 			this.referenceWithCategorySaveEvent.emit(this.referenceWithCategory);
           } else {

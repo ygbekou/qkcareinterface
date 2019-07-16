@@ -128,49 +128,28 @@ export class AdminReference implements OnInit, OnDestroy {
 	this.activeTab = evt.index;
     setTimeout(() => {
 		console.log(this.activeTab);
-        if (evt.index === 0) {
-          this.globalEventsManager.selectedParentId = Constants.CATEGORY_SYMPTOM;
-          this.globalEventsManager.selectedReferenceType = 'Category';
-		  this.referenceList.updateCols('SYMPTOM_GROUP');
-		  this.referenceList.ngOnInit();
+        if (evt.index === 0) { 
+		  	this.processReference(Constants.CATEGORY_SYMPTOM, 'Category', 'SYMPTOM_GROUP');
         } else if (evt.index === 1) {
-          this.globalEventsManager.selectedParentId = 3;
-          this.globalEventsManager.selectedReferenceWithCategoryType = 'Symptom';
-          this.categoryDropdown.getAllCategories(3);
-          this.referenceWithCategoryList.updateCols('SYMPTOM');
-          this.referenceWithCategoryList.getAll();
+			this.processReferenceWithCategory(Constants.CATEGORY_SYMPTOM, 'Symptom', 'SYMPTOM');
         } else if (evt.index === 2) {
-          this.globalEventsManager.selectedParentId = 4;
-          this.globalEventsManager.selectedReferenceType = 'Category';
-          this.referenceDetails.parentId = 4;
-          this.referenceList.updateCols('ALLERGY_TYPE');
+			this.processReference(Constants.CATEGORY_ALLERGY, 'Category', 'ALLERGY_TYPE');
         } else if (evt.index === 3) {
-          this.globalEventsManager.selectedParentId = 4;
-          this.globalEventsManager.selectedReferenceWithCategoryType = 'Allergy';
-          this.categoryDropdown.getAllCategories(4);
-          this.referenceWithCategoryList.updateCols('ALLERGY');
-          this.referenceWithCategoryList.getAll();
+			this.processReferenceWithCategory(Constants.CATEGORY_ALLERGY, 'Allergy', 'ALLERGY');
         } else if (evt.index === 4) {
-          this.globalEventsManager.selectedReferenceType = 'Vaccine';
-          this.referenceList.updateCols('VACCINE');
+          	this.processReference(null, 'Vaccine', 'VACCINE');
         } else if (evt.index === 5) {
-          this.globalEventsManager.selectedReferenceType = 'MedicalHistory';
-          this.referenceList.updateCols('MEDICAL_HISTORY');
+			this.processReference(null, 'MedicalHistory', 'MEDICAL_HISTORY');
         }  else if (evt.index === 6) {
-          this.globalEventsManager.selectedReferenceType = 'SocialHistory';
-          this.referenceList.updateCols('SOCIAL_HISTORY');
+          	this.processReference(null, 'SocialHistory', 'SOCIAL_HISTORY');
         } else if (evt.index === 7) {
-          this.globalEventsManager.selectedReferenceType = 'PayerType';
-          this.referenceList.updateCols('PAYER_TYPE');
+			this.processReference(null, 'PayerType', 'PAYER_TYPE');
         } else if (evt.index === 8) {
-          this.globalEventsManager.selectedReferenceType = 'DoctorOrderType';
-          this.referenceList.updateCols('DOCTOR_ORDER_TYPE');
+			this.processReference(null, 'DoctorOrderType', 'DOCTOR_ORDER_TYPE');
         } else if (evt.index === 9) {
-          this.globalEventsManager.selectedReferenceType = 'DoctorOrderPriority';
-          this.referenceList.updateCols('DOCTOR_ORDER_PRIORITY');
+			this.processReference(null, 'DoctorOrderPriority', 'DOCTOR_ORDER_PRIORITY');
         } else if (evt.index === 10) {
-          this.globalEventsManager.selectedReferenceType = 'DoctorOrderKind';
-          this.referenceList.updateCols('DOCTOR_ORDER_KIND');
+			this.processReference(null, 'DoctorOrderKind', 'DOCTOR_ORDER_KIND');
         } else if (evt.index === 11) {
           // this.globalEventsManager.selectedReferenceType = 'Department';
           // this.referenceList.updateCols('DEPARTMENT');
@@ -208,4 +187,22 @@ export class AdminReference implements OnInit, OnDestroy {
 
      }, 0);
   }
+
+
+  processReference(categoryNumber: number, referenceType: string, listLabel: string) {
+	this.globalEventsManager.selectedParentId = categoryNumber;
+	this.globalEventsManager.selectedReferenceType = referenceType;
+	this.referenceList.updateCols(listLabel);
+	this.referenceList.ngOnInit();
+  }
+
+
+  processReferenceWithCategory(categoryNumber: number, referenceType: string, listLabel: string) {
+	this.globalEventsManager.selectedParentId = categoryNumber;
+	this.globalEventsManager.selectedReferenceWithCategoryType = referenceType;
+	this.categoryDropdown.getAllCategories(categoryNumber);
+	this.referenceWithCategoryList.updateCols(listLabel);
+	this.referenceWithCategoryList.getAll();
+  }
+
 }

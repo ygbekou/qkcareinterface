@@ -35,10 +35,14 @@ export class ReferenceWithCategoryList extends BaseComponent implements OnInit, 
 
   ngOnInit(): void {
     this.cols = [
-            { field: 'categoryName', header: 'Category', headerKey: 'COMMON.CATEGORY' },
-            { field: 'name', header: 'Name', headerKey: 'COMMON.NAME' },
-            { field: 'description', header: 'Description', headerKey: 'COMMON.DESCRIPTION' },
-            { field: 'statusDesc', header: 'Status', headerKey: 'COMMON.STATUS', type:'string' }
+            { field: 'categoryName', header: 'Category', headerKey: 'COMMON.CATEGORY', type: 'string',
+                                        style: {width: '20%', 'text-align': 'center'} },
+            { field: 'name', header: 'Name', headerKey: 'COMMON.NAME', type: 'string',
+                                        style: {width: '20%', 'text-align': 'center'} },
+            { field: 'description', header: 'Description', headerKey: 'COMMON.DESCRIPTION', type: 'string',
+                                        style: {width: '40%', 'text-align': 'center'} },
+            { field: 'statusDesc', header: 'Status', headerKey: 'COMMON.STATUS', type: 'string',
+                                        style: {width: '10%', 'text-align': 'center'} }
         ];
 
     this.updateCols(this.category);

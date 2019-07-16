@@ -1,10 +1,12 @@
- 	<p-table [columns]="cols" [value]="referenceWithCategories">
+  <p-confirmDialog [style]="{width: '50vw'}"></p-confirmDialog>
+   <p-messages [(value)]="messages"></p-messages>
+	<p-table [columns]="cols" [value]="referenceWithCategories">
  	  <ng-template pTemplate="caption">
  	    {{ REFERENCE_WITH_CATEGORY_LIST }}
  	  </ng-template>
  	  <ng-template pTemplate="header" let-columns>
  	    <tr>
- 	      <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+ 	      <th *ngFor="let col of columns" [pSortableColumn]="col.field"  [ngStyle]="col.style">
  	        {{col.header}} <p-sortIcon [field]="col.field"></p-sortIcon>
  	      </th>
  	      <th>Action</th>
@@ -15,7 +17,8 @@
  	      <td *ngFor="let col of columns">{{rowData[col.field]}}</td>
  	      <td>
  	        <button type="button" pButton icon="fa fa-edit" (click)="edit(rowData.id)"></button>&nbsp;&nbsp;
- 	        <button type="button" pButton icon="fa fa-eraser" (click)="delete(rowData.id)"></button>
+			<button type="button" pButton icon="fa fa-eraser" 
+			 	(click)="deleteItem(referenceWithCategories, rowData.id, globalEventsManager.selectedReferenceWithCategoryType)"></button>
  	      </td>
  	    </tr>
  	  </ng-template>

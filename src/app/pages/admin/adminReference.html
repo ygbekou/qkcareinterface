@@ -40,14 +40,14 @@
           <app-reference-list (referenceIdEvent)="onReferenceSelected($event, 'Vaccine')"></app-reference-list>
         </div>
       </p-tabPanel>
-      <p-tabPanel header="{{'COMMON.ALLERGY_TYPE_LIST' |translate}}">
+      <p-tabPanel header="{{'COMMON.MEDICAL_HISTORY_LIST' |translate}}">
         <div *ngIf="activeTab == 5" class="ui-grid-row">
 		  <app-reference-details></app-reference-details>
 		   <br/>
           <app-reference-list (referenceIdEvent)="onReferenceSelected($event, 'MedicalHistory')"></app-reference-list>
         </div>
       </p-tabPanel>
-      <p-tabPanel header="{{'COMMON.MEDICAL_HISTORY_LIST' |translate}}">
+      <p-tabPanel header="{{'COMMON.SOCIAL_HISTORY_LIST' |translate}}">
         <div *ngIf="activeTab == 6" class="ui-grid-row">
 		  <app-reference-details></app-reference-details>
 		   <br/>
