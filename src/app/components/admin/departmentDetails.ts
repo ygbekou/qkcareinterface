@@ -1,9 +1,10 @@
-import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef, EventEmitter, Output } from '@angular/core';
 import { Department } from '../../models';
 import { Constants } from '../../app.constants';
 import { GenericService } from '../../services';
 import { TranslateService } from '@ngx-translate/core';
-import { Message } from 'primeng/api';
+import { Message, ConfirmationService } from 'primeng/api';
+import { BaseComponent } from './baseComponent';
 
 @Component({
   selector: 'app-department-details',
@@ -13,20 +14,24 @@ import { Message } from 'primeng/api';
 })
 
 // tslint:disable-next-line:component-class-suffix
-export class DepartmentDetails implements OnInit, OnDestroy {
+export class DepartmentDetails extends BaseComponent implements OnInit, OnDestroy {
 
     department: Department = new Department();
     messages: Message[] = [];
     @ViewChild('picture') picture: ElementRef;
     formData = new FormData();
-    multiple = false;
+	multiple = false;
+	
+    @Output() departmentSaveEvent = new EventEmitter<Department>();
 
     constructor
     (
-      private genericService: GenericService,
-      private translate: TranslateService,
+      public genericService: GenericService,
+	  public translate: TranslateService,
+	  public confirmationService: ConfirmationService
     ) {
-      this.department = new Department();
+		super(genericService, translate, confirmationService);
+      	this.department = new Department();
   }
 
 
@@ -80,21 +85,23 @@ export class DepartmentDetails implements OnInit, OnDestroy {
         this.genericService.saveWithFile(this.department, 'Department', this.formData, 'saveWithFile')
           .subscribe(result => {
             if (result.id > 0) {
-              this.department = result;
-              this.messages.push({severity: Constants.SUCCESS, summary: Constants.SAVE_LABEL, detail: Constants.SAVE_SUCCESSFUL});
-            } else {
-              this.messages.push({severity: Constants.ERROR, summary: Constants.SAVE_LABEL, detail: Constants.SAVE_UNSUCCESSFUL});
-            }
+				this.processResult(result, this.department, this.messages, null);
+				this.department = result;
+				this.departmentSaveEvent.emit(this.department);
+			} else {
+				this.processResult(result, this.department, this.messages, null);
+			}
           });
       } else {
         this.genericService.save(this.department, 'Department')
           .subscribe(result => {
             if (result.id > 0) {
-              this.department = result;
-              this.messages.push({severity: Constants.SUCCESS, summary: Constants.SAVE_LABEL, detail: Constants.SAVE_SUCCESSFUL});
-            } else {
-              this.messages.push({severity: Constants.ERROR, summary: Constants.SAVE_LABEL, detail: Constants.SAVE_UNSUCCESSFUL});
-            }
+				this.processResult(result, this.department, this.messages, null);
+				this.department = result;
+				this.departmentSaveEvent.emit(this.department);
+			} else {
+				this.processResult(result, this.department, this.messages, null);
+			}
           });
       }
     } catch (e) {
@@ -102,7 +109,7 @@ export class DepartmentDetails implements OnInit, OnDestroy {
     }
   }
 
-  delete(){}
+  delete() {}
 
 
  }

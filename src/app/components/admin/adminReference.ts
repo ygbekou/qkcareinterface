@@ -91,6 +91,10 @@ export class AdminReference implements OnInit, OnDestroy {
     this.departmentDetails.getDepartment(departmentId);
   }
 
+  onDepartmentSaved($event) {
+	this.departmentList.updateTable($event);
+  }
+
   onReferenceSelected($event, referenceType) {
     const referenceId = $event;
     this.referenceDetails.getReference(referenceId, referenceType);

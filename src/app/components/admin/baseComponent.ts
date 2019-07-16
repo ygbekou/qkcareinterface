@@ -37,7 +37,7 @@ export class BaseComponent {
         }
         if (pictureUrl) {
             pictureUrl = '';
-        }
+		}
     } else {
         this.translate.get(['COMMON.SAVE', 'MESSAGE.SAVE_UNSUCCESS']).subscribe(res => {
             messages.push({

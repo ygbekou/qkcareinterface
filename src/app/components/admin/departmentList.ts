@@ -2,7 +2,9 @@ import { Component, OnInit, OnDestroy, Output, EventEmitter } from '@angular/cor
 import { Department } from '../../models';
 import { ActivatedRoute } from '@angular/router';
 import { GenericService } from '../../services';
-import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
+import { TranslateService} from '@ngx-translate/core';
+import { BaseComponent } from './baseComponent';
+import { ConfirmationService } from 'primeng/api';
 
 @Component({
   selector: 'app-department-list',
@@ -10,32 +12,36 @@ import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
   providers: [GenericService]
 })
 // tslint:disable-next-line:component-class-suffix
-export class DepartmentList implements OnInit, OnDestroy {
+export class DepartmentList extends BaseComponent implements OnInit, OnDestroy {
 
   departments: Department[] = [];
   cols: any[];
 
   @Output() departmentIdEvent = new EventEmitter<string>();
 
-  DEPARTMENT_LIST_LABEL: string;
-  DEPARTMENT_LIST: string;
-
   constructor
     (
-    private genericService: GenericService,
-    private translate: TranslateService,
+    public genericService: GenericService,
+	public translate: TranslateService,
+	public confirmationService: ConfirmationService,
     private route: ActivatedRoute
     ) {
+	  super(genericService, translate, confirmationService);
   }
 
   ngOnInit(): void {
 
     this.cols = [
-            { field: 'name', header: 'Name', headerKey: 'COMMON.NAME' },
-            { field: 'title', header: 'Title', headerKey: 'COMMON.TITLE' },
-            { field: 'description', header: 'Description', headerKey: 'COMMON.DESCRIPTION' },
-            { field: 'picture', header: 'Picture', headerKey: 'COMMON.PICTURE' },
-            { field: 'statusDesc', header: 'Status', headerKey: 'COMMON.STATUS' }
+            { field: 'name', header: 'Name', headerKey: 'COMMON.NAME', type: 'string',
+                                        style: {width: '20%', 'text-align': 'center'} },
+            { field: 'title', header: 'Title', headerKey: 'COMMON.TITLE', type: 'string',
+                                        style: {width: '15%', 'text-align': 'center'} },
+            { field: 'description', header: 'Description', headerKey: 'COMMON.DESCRIPTION', type: 'string',
+                                        style: {width: '30%', 'text-align': 'center'} },
+            { field: 'picture', header: 'Picture', headerKey: 'COMMON.PICTURE', type: 'string',
+                                        style: {width: '10%', 'text-align': 'center'} },
+            { field: 'statusDesc', header: 'Status', headerKey: 'COMMON.STATUS', type: 'string',
+                                        style: {width: '10%', 'text-align': 'center'} }
         ];
 
     this.route
@@ -77,8 +83,14 @@ export class DepartmentList implements OnInit, OnDestroy {
       this.departmentIdEvent.emit(departmentId + '');
   }
 
-  delete() {
-      
+  updateTable(department: Department) {
+		const index = this.departments.findIndex(x => x.id === department.id);
+
+		if (index === -1) {
+			this.departments.push(department);
+		} else {
+			this.departments[index] = department;
+		}
   }
 
  }

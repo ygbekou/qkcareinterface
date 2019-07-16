@@ -19,14 +19,14 @@
       </p-tabPanel>
       <p-tabPanel header="{{'COMMON.ALLERGY_TYPE_LIST' |translate}}">
         <div *ngIf="activeTab == 2" class="ui-grid-row">
-		  <app-reference-details></app-reference-details>
+		  <app-reference-details (referenceSaveEvent)="onReferenceSaved($event)"></app-reference-details>
 		   <br/>
           <app-reference-list (referenceIdEvent)="onReferenceSelected($event, 'Category')"></app-reference-list>
         </div>
       </p-tabPanel>
       <p-tabPanel header="{{'COMMON.ALLERGY_LIST' |translate}}">
         <div *ngIf="activeTab == 3" class="ui-grid-row">
-		  <app-referenceWithCategory-details></app-referenceWithCategory-details>
+		  <app-referenceWithCategory-details (referenceWithCategorySaveEvent)="onReferenceWithCategorySaved($event)"></app-referenceWithCategory-details>
 		   <br/>
           <app-referenceWithCategory-list
             (referenceWithCategoryIdEvent)="onReferenceWithCategorySelected($event, 'Allergy')">
@@ -35,42 +35,42 @@
       </p-tabPanel>
       <p-tabPanel header="{{'COMMON.VACCINE_LIST' |translate}}">
         <div *ngIf="activeTab == 4" class="ui-grid-row">
-		  <app-reference-details></app-reference-details>
+		  <app-reference-details (referenceSaveEvent)="onReferenceSaved($event)"></app-reference-details>
 		  <br/>
           <app-reference-list (referenceIdEvent)="onReferenceSelected($event, 'Vaccine')"></app-reference-list>
         </div>
       </p-tabPanel>
       <p-tabPanel header="{{'COMMON.MEDICAL_HISTORY_LIST' |translate}}">
         <div *ngIf="activeTab == 5" class="ui-grid-row">
-		  <app-reference-details></app-reference-details>
+		  <app-reference-details (referenceSaveEvent)="onReferenceSaved($event)"></app-reference-details>
 		   <br/>
           <app-reference-list (referenceIdEvent)="onReferenceSelected($event, 'MedicalHistory')"></app-reference-list>
         </div>
       </p-tabPanel>
       <p-tabPanel header="{{'COMMON.SOCIAL_HISTORY_LIST' |translate}}">
         <div *ngIf="activeTab == 6" class="ui-grid-row">
-		  <app-reference-details></app-reference-details>
+		  <app-reference-details (referenceSaveEvent)="onReferenceSaved($event)"></app-reference-details>
 		   <br/>
           <app-reference-list (referenceIdEvent)="onReferenceSelected($event, 'SocialHistory')"></app-reference-list>
         </div>
       </p-tabPanel>
       <p-tabPanel header="{{'COMMON.PAYER_TYPE_LIST' |translate}}">
         <div *ngIf="activeTab == 7" class="ui-grid-row">
-		  <app-reference-details></app-reference-details>
+		  <app-reference-details (referenceSaveEvent)="onReferenceSaved($event)"></app-reference-details>
 		   <br/>
           <app-reference-list (referenceIdEvent)="onReferenceSelected($event, 'PayerType')"></app-reference-list>
         </div>
       </p-tabPanel>
       <p-tabPanel header="{{'COMMON.DOCTOR_ORDER_TYPE_LIST' |translate}}">
         <div *ngIf="activeTab == 8" class="ui-grid-row">
-		  <app-reference-details [viewOnly]="true"></app-reference-details>
+		  <app-reference-details [viewOnly]="true" (referenceSaveEvent)="onReferenceSaved($event)"></app-reference-details>
 		   <br/>
           <app-reference-list (referenceIdEvent)="onReferenceSelected($event, 'DoctorOrderType')"></app-reference-list>
         </div>
       </p-tabPanel>
       <p-tabPanel header="{{'COMMON.DOCTOR_ORDER_PRIORITY' |translate}}">
         <div *ngIf="activeTab == 9" class="ui-grid-row">
-		  <app-reference-details></app-reference-details>
+		  <app-reference-details (referenceSaveEvent)="onReferenceSaved($event)"></app-reference-details>
 		   <br/>
           <app-reference-list (referenceIdEvent)="onReferenceSelected($event, 'DoctorOrderPriority')">
           </app-reference-list>
@@ -78,14 +78,14 @@
       </p-tabPanel>
       <p-tabPanel header="{{'COMMON.DOCTOR_ORDER_KIND_LIST' |translate}}">
         <div *ngIf="activeTab == 10" class="ui-grid-row">
-		  <app-reference-details></app-reference-details>
+		  <app-reference-details (referenceSaveEvent)="onReferenceSaved($event)"></app-reference-details>
 		   <br/>
           <app-reference-list (referenceIdEvent)="onReferenceSelected($event, 'DoctorOrderKind')"></app-reference-list>
         </div>
       </p-tabPanel>
       <p-tabPanel id="department" header="{{'COMMON.DEPARTMENT_LIST' |translate}}">
         <div *ngIf="activeTab == 11" class="ui-grid-row">
-		  <app-department-details></app-department-details>
+		  <app-department-details (departmentSaveEvent)="onDepartmentSaved($event)"></app-department-details>
 		   <br/>
           <app-department-list (departmentIdEvent)="onDepartmentSelected($event, 'Department')"></app-department-list>
         </div>

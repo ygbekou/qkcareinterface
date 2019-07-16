@@ -5,7 +5,7 @@
 	    </ng-template>
 		<ng-template pTemplate="header">
 			<tr>
-				<th *ngFor="let col of cols" [pSortableColumn]="col.field">
+				<th *ngFor="let col of cols" [pSortableColumn]="col.field" [ngStyle]="col.style">
 					{{col.header}} <p-sortIcon [field]="col.field"></p-sortIcon>
 				</th>
 				<th>Action</th>
@@ -15,10 +15,8 @@
 			<tr>
 				<td *ngFor="let col of cols">{{department[col.field]}}</td>
 				<td>
-					<button type="button" pButton icon="fa fa-edit" 
-						(click)="edit(department.id)"></button>&nbsp;&nbsp;
-					<button type="button" pButton icon="fa fa-eraser" 
-						(click)="delete(department.id)"></button>
+					<button type="button" pButton icon="fa fa-edit" (click)="edit(department.id)"></button>&nbsp;&nbsp;
+					<button type="button" pButton icon="fa fa-eraser" (click)="deleteItem(departments, department.id, 'Department')"></button>
 				</td>
 			</tr>
 		</ng-template> 
