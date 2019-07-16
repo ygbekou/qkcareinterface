@@ -35,8 +35,6 @@ export class VitalSignList extends BaseComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         this.cols = [
             { field: 'vitalSignDatetime', header: 'Date', headerKey: 'COMMON.VITAL_SIGN_DATE_TIME', type: 'date' },
-            { field: 'patientMRN', header: 'Patient ID', headerKey: 'COMMON.PATIENT_ID' },
-            { field: 'patientName', header: 'Patient Name', headerKey: 'COMMON.PATIENT_NAME' },
             { field: 'temperature', header: 'Temperature', headerKey: 'COMMON.TEMPERATURE' },
             { field: 'pulse', header: 'Pulse', headerKey: 'COMMON.PULSE' },
             { field: 'respiration', header: 'Respiration', headerKey: 'COMMON.RESPIRATION' },

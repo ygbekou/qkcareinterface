@@ -77,6 +77,7 @@ export class VitalSignDetails extends BaseComponent implements OnInit, OnDestroy
         .subscribe(result => {
           if (result.id > 0) {
 			  this.vitalSign = result;
+			  this.vitalSign.vitalSignDatetime = new Date(this.vitalSign.vitalSignDatetime);
 			  this.vitalSignSaveEvent.emit(this.vitalSign);
           } else {
             this.error = Constants.SAVE_UNSUCCESSFUL;
