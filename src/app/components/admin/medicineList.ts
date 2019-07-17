@@ -33,25 +33,30 @@ export class MedicineList extends BaseComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.cols = [
-            { field: 'categoryName', header: 'Category', headerKey: 'COMMON.CATEGORY' },
-            { field: 'manufacturerName', header: 'Manufacturer', headerKey: 'COMMON.MANUFACTURER' },
-            { field: 'name', header: 'Name', headerKey: 'COMMON.NAME' },
-            { field: 'description', header: 'Description', headerKey: 'COMMON.DESCRIPTION'},
-            { field: 'price', header: 'Price', headerKey: 'COMMON.PRICE' },
-            { field: 'status', header: 'Status', headerKey: 'COMMON.STATUS', type:'string' }
+            { field: 'categoryName', header: 'Category', headerKey: 'COMMON.CATEGORY', type: 'string',
+                                        style: {width: '12%', 'text-align': 'center'} },
+            { field: 'manufacturerName', header: 'Manufacturer', headerKey: 'COMMON.MANUFACTURER', type: 'string',
+                                        style: {width: '12%', 'text-align': 'center'} },
+            { field: 'name', header: 'Name', headerKey: 'COMMON.NAME', type: 'string',
+                                        style: {width: '15%', 'text-align': 'center'} },
+            { field: 'description', header: 'Description', headerKey: 'COMMON.DESCRIPTION', type: 'string',
+                                        style: {width: '30%', 'text-align': 'center'} },
+            { field: 'price', header: 'Price', headerKey: 'COMMON.PRICE', type: 'string',
+                                        style: {width: '10%', 'text-align': 'center'} },
+            { field: 'statusDesc', header: 'Status', headerKey: 'COMMON.STATUS' , type: 'string',
+                                        style: {width: '10%', 'text-align': 'center'} }
         ];
     
     this.route
         .queryParams
         .subscribe(params => {
           
-            let parameters: string [] = [];
+            const parameters: string [] = [];
             
-            parameters.push('e.status = |status|0|Integer')
-            parameters.push('c.parent.id = |categoryId|' + Constants.CATEGORY_MEDICINE + '|Long')
-            this.genericService.getAllByCriteria('Product.Category', parameters)
-              .subscribe((data: Product[]) => 
-              {
+            parameters.push('e.status = |status|0|Integer');
+            parameters.push('c.parent.id = |categoryId|' + Constants.CATEGORY_MEDICINE + '|Long');
+            this.genericService.getAllByCriteria('Product.Category', parameters, ' ORDER BY e.name ')
+              .subscribe((data: Product[]) => {
                 this.medicines = data;
               },
               error => console.log(error),
@@ -66,8 +71,8 @@ export class MedicineList extends BaseComponent implements OnInit, OnDestroy {
  
   
   updateCols() {
-    for (var index in this.cols) {
-      let col = this.cols[index];
+    for (let index in this.cols) {
+      const col = this.cols[index];
       this.translate.get(col.headerKey).subscribe((res: string) => {
         col.header = res;
       });
@@ -83,5 +88,16 @@ export class MedicineList extends BaseComponent implements OnInit, OnDestroy {
   edit(medicineId: number) {
       this.medicineIdEvent.emit(medicineId + '');
   }
+
+  updateTable(medicine: Product) {
+		const index = this.medicines.findIndex(x => x.id === medicine.id);
+
+		if (index === -1) {
+			this.medicines.push(medicine);
+		} else {
+			this.medicines[index] = medicine;
+		}
+
+	}
 
  }

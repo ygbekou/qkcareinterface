@@ -38,7 +38,7 @@ export class ReferenceList extends BaseComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     
-    this.cols = [
+    	this.cols = [
             { field: 'name', header: 'Name', headerKey: 'COMMON.NAME', type: 'string',
                                         style: {width: '25%', 'text-align': 'center'} },
             { field: 'description', header: 'Description', headerKey: 'COMMON.DESCRIPTION', type: 'string',
@@ -46,8 +46,18 @@ export class ReferenceList extends BaseComponent implements OnInit, OnDestroy {
             { field: 'statusDesc', header: 'Status', headerKey: 'COMMON.STATUS', type: 'string',
                                         style: {width: '10%', 'text-align': 'center'} }
         ];
-    
-    this.route
+	
+		this.getAll();
+	 
+		this.updateCols(this.REFERENCE_LIST_LABEL);
+    	this.translate.onLangChange.subscribe(() => {
+      		this.updateCols(this.REFERENCE_LIST_LABEL);
+    	});
+  }
+ 
+  
+  getAll() {
+	   this.route
         .queryParams
         .subscribe(params => {
           this.referenceType = params['referenceType'];
@@ -76,15 +86,9 @@ export class ReferenceList extends BaseComponent implements OnInit, OnDestroy {
             error => console.log(error),
             () => console.log('Get all Reference complete'));
      });
-    
-    
-    this.updateCols(this.REFERENCE_LIST_LABEL);
-    this.translate.onLangChange.subscribe(() => {
-      this.updateCols(this.REFERENCE_LIST_LABEL);
-    });
   }
- 
-  
+
+
   updateCols(category: string) {
     for (let index in this.cols) {
       const col = this.cols[index];

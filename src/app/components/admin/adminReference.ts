@@ -118,6 +118,10 @@ export class AdminReference implements OnInit, OnDestroy {
     this.medicineDetails.getMedicine(medicineId);
   }
 
+  onMedicineSaved($event) {
+	this.medicineList.updateTable($event);
+  }
+
   onLabTestSelected($event) {
     const labTestId = $event;
     this.labTestDetails.getLabTest(labTestId);
@@ -155,33 +159,19 @@ export class AdminReference implements OnInit, OnDestroy {
         } else if (evt.index === 10) {
 			this.processReference(null, 'DoctorOrderKind', 'DOCTOR_ORDER_KIND');
         } else if (evt.index === 11) {
-          // this.globalEventsManager.selectedReferenceType = 'Department';
-          // this.referenceList.updateCols('DEPARTMENT');
+          //  Do Nothing
         } else if (evt.index === 12) {
-          this.globalEventsManager.selectedParentId = Constants.CATEGORY_MEDICINE;
-          this.globalEventsManager.selectedReferenceType = 'Category';
-          this.referenceDetails.parentId = Constants.CATEGORY_MEDICINE;
-          this.referenceList.updateCols('MANUFACTURER');
+			this.processReference(null, 'Manufacturer', 'MANUFACTURER');
         } else if (evt.index === 13) {
-          this.globalEventsManager.selectedParentId = Constants.CATEGORY_MEDICINE;
-          this.categoryDropdown.getAllCategories(Constants.CATEGORY_MEDICINE);
-          this.referenceList.updateCols('MEDICINE_TYPE');
+          	this.processReference(Constants.CATEGORY_MEDICINE, 'Category', 'MEDICINE_TYPE');
         } else if (evt.index === 14) {
-          this.globalEventsManager.selectedParentId = Constants.CATEGORY_MEDICINE;
-          this.globalEventsManager.selectedReferenceWithCategoryType = 'Product';
-		  this.categoryDropdown.getAllCategories(Constants.CATEGORY_MEDICINE);
-		  
+			this.processReferenceWithCategory(Constants.CATEGORY_MEDICINE, 'Product', 'MEDICINE');
         } else if (evt.index === 15) {
-          this.globalEventsManager.selectedParentId = Constants.CATEGORY_SERVICE_TARIF;
-          this.globalEventsManager.selectedReferenceType = 'Category';
-          this.referenceDetails.parentId = Constants.CATEGORY_MEDICINE;
-          this.referenceList.updateCols('SERVICE');
+			this.processReference(Constants.CATEGORY_SERVICE_TARIF, 'Category', 'TARIF');
         } else if (evt.index === 16) {
-          this.globalEventsManager.selectedReferenceType = 'LabTestMethod';
-          this.referenceList.updateCols('LAB_TEST_METHOD');
+			this.processReference(null, 'LabTestMethod', 'LAB_TEST_METHOD');
         } else if (evt.index === 17) {
-          this.globalEventsManager.selectedReferenceType = 'LabTestUnit';
-          this.referenceList.updateCols('LAB_TEST_UNIT');
+			this.processReference(null, 'LabTestUnit', 'LAB_TEST_UNIT');
         } else if (evt.index === 18) {
           this.labTestList.getAllLabTests();
         } else if (evt.index === 19) {
@@ -196,8 +186,10 @@ export class AdminReference implements OnInit, OnDestroy {
   processReference(categoryNumber: number, referenceType: string, listLabel: string) {
 	this.globalEventsManager.selectedParentId = categoryNumber;
 	this.globalEventsManager.selectedReferenceType = referenceType;
-	this.referenceList.updateCols(listLabel);
-	this.referenceList.ngOnInit();
+	setTimeout(() => {
+		this.referenceList.updateCols(listLabel);
+	}, 0);
+	this.referenceList.getAll();
   }
 
 

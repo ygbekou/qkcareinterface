@@ -1,66 +1,73 @@
-<div class="ui-g-12 ui-sm-12" style="padding: 15px;">
-	<div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="medicine">
-		<div class="ui-grid-row">
-			<div class="ui-grid-col-4 ui-sm-12">
-				<div class="form-group">
-					<label for="name">{{ 'COMMON.NAME' | translate }}<font color="red">*</font></label>
-					<input pInputText id="name" [(ngModel)]="medicine.name" required />
+<form name="form" (ngSubmit)="f.form.valid && save()" #f="ngForm" validate>
+	<div class="ui-g-12 ui-sm-12" style="padding: 15px;">
+		<div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="medicine">
+			<p-messages [(value)]="messages"></p-messages>
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-4 ui-sm-12">
+					<div class="form-group">
+						<label for="name">{{ 'COMMON.NAME' | translate }}<font color="red">*</font></label>
+						<input pInputText id="name" name="name" [(ngModel)]="medicine.name" #name="ngModel" required />
+						<p-message *ngIf="f.submitted && name.invalid" severity="error" text="Field is required"></p-message>
+					</div>
+				</div>
+				<div class="ui-grid-col-4 ui-sm-12">
+					<div class="form-group">
+						<label for="category">{{ 'COMMON.CATEGORY' | translate }}<font
+							color="red">*</font></label>
+						<p-autoComplete [(ngModel)]="medicine.category"
+							(onDropdownClick)="categoryDropdown.handleDropdownClick($event)"
+							[suggestions]="categoryDropdown.filteredCategories"
+							[dropdown]="true" id="medicine"
+							(completeMethod)="categoryDropdown.filter($event)" name="medicine"
+							field="name" [size]="30" placeholder="{{SELECT_OPTION}}"
+							[minLength]="1" #category="ngModel" required></p-autoComplete>
+							<p-message *ngIf="f.submitted && category.invalid" severity="error" text="Field is required"></p-message>
+					</div>
+				</div>
+				<div class="ui-grid-col-4 ui-sm-12">
+					<div class="form-group">
+						<label for="manufacturer">{{ 'COMMON.MANUFACTURER' | translate }}<font
+							color="red">*</font></label>
+						<p-autoComplete [(ngModel)]="medicine.manufacturer"
+							(onDropdownClick)="manufacturerDropdown.handleDropdownClick($event)"
+							[suggestions]="manufacturerDropdown.filteredManufacturers"
+							[dropdown]="true" id="manufacturer"
+							(completeMethod)="manufacturerDropdown.filter($event)"
+							name="manufacturer" field="name" [size]="30" required
+							placeholder="{{SELECT_OPTION}}" #manufacturer="ngModel" [minLength]="1"></p-autoComplete>
+							<p-message *ngIf="f.submitted && manufacturer.invalid" severity="error" text="Field is required"></p-message>
+					</div>
 				</div>
 			</div>
-			<div class="ui-grid-col-4 ui-sm-12">
-				<div class="form-group">
-					<label for="category">{{ 'COMMON.CATEGORY' | translate }}<font
-						color="red">*</font></label>
-					<p-autoComplete [(ngModel)]="medicine.category"
-						(onDropdownClick)="categoryDropdown.handleDropdownClick($event)"
-						[suggestions]="categoryDropdown.filteredCategories"
-						[dropdown]="true" id="medicine"
-						(completeMethod)="categoryDropdown.filter($event)" name="medicine"
-						field="name" [size]="30" placeholder="{{SELECT_OPTION}}"
-						[minLength]="1"></p-autoComplete>
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-4 ui-sm-12">
+					<div class="form-group">
+						<label for="description">{{ 'COMMON.DESCRIPTION' | translate }}</label>
+						<textarea pInputTextarea id="description" name="description" [(ngModel)]="medicine.description"> </textarea>
+					</div>
 				</div>
-			</div>
-			<div class="ui-grid-col-4 ui-sm-12">
-				<div class="form-group">
-					<label for="manufacturer">{{ 'COMMON.MANUFACTURER' | translate }}<font
-						color="red">*</font></label>
-					<p-autoComplete [(ngModel)]="medicine.manufacturer"
-						(onDropdownClick)="manufacturerDropdown.handleDropdownClick($event)"
-						[suggestions]="manufacturerDropdown.filteredManufacturers"
-						[dropdown]="true" id="manufacturer"
-						(completeMethod)="manufacturerDropdown.filter($event)"
-						name="manufacturer" field="name" [size]="30"
-						placeholder="{{SELECT_OPTION}}" [minLength]="1"></p-autoComplete>
+				<div class="ui-grid-col-4 ui-sm-12">
+					<div class="form-group">
+						<label for="price">{{ 'COMMON.PRICE' | translate }}</label> 
+						<input pInputText id="price" [(ngModel)]="medicine.price" name="price" #price="ngModel" required />
+						<p-message *ngIf="f.submitted && manufacturer.invalid" severity="error" text="Field is required"></p-message>
+					</div>
+				</div>
+				<div class="ui-grid-col-4 ui-sm-12">
+					<div class="form-group">	
+						<br/>		
+						<p-radioButton name="status" value="0" label="Actif" [(ngModel)]="medicine.status"></p-radioButton>
+						<p-radioButton name="status" value="1" label="Inactif" [(ngModel)]="medicine.status"></p-radioButton>
+					</div>
 				</div>
 			</div>
 		</div>
-		<div class="ui-grid-row">
-			<div class="ui-grid-col-4 ui-sm-12">
-				<div class="form-group">
-					<label for="description">{{ 'COMMON.DESCRIPTION' | translate }}</label>
-					<textarea pInputTextarea id="description" [(ngModel)]="medicine.description"> </textarea>
-				</div>
-			</div>
-			<div class="ui-grid-col-4 ui-sm-12">
-				<div class="form-group">
-					<label for="price">{{ 'COMMON.PRICE' | translate }}</label> 
-					<input pInputText id="price" [(ngModel)]="medicine.price" required />
-				</div>
-			</div>
-			<div class="ui-grid-col-4 ui-sm-12">
-				<div class="form-group">	
-					<br/>		
-					<p-radioButton name="status" value="0" label="Actif" [(ngModel)]="medicine.status"></p-radioButton>
-					<p-radioButton name="status" value="1" label="Inactif" [(ngModel)]="medicine.status"></p-radioButton>
-				</div>
+		<br />
+		<div>
+			<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+				<button type="button" pButton icon="fa fa-close" (click)="addNew()" label="{{ 'COMMON.NEW' | translate }}"></button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<button pButton icon="fa fa-check" label="{{ 'COMMON.SAVE' | translate }}"></button>
 			</div>
 		</div>
 	</div>
-	<br />
-	<div>
-		<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
-			<button type="button" pButton icon="fa fa-close" (click)="addNew()" label="{{ 'COMMON.NEW' | translate }}"></button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			<button type="button" pButton icon="fa fa-check" (click)="save()" label="{{ 'COMMON.SAVE' | translate }}"></button>
-		</div>
-	</div>
-</div>
+</form>

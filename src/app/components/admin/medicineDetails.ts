@@ -1,43 +1,42 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Output, EventEmitter } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Constants } from '../../app.constants';
 import { Product } from '../../models/product';
 import { Reference } from '../../models/reference';
 import { CategoryDropdown, ManufacturerDropdown } from '../dropdowns';
 import { GenericService, GlobalEventsManager } from '../../services';
+import { TranslateService } from '@ngx-translate/core';
+import { ConfirmationService } from 'primeng/api';
+import { BaseComponent } from './baseComponent';
 
 @Component({
   selector: 'app-medicine-details',
   templateUrl: '../../pages/admin/medicineDetails.html',
   providers: [GenericService, CategoryDropdown, ManufacturerDropdown]
 })
-export class MedicineDetails implements OnInit, OnDestroy {
+export class MedicineDetails extends BaseComponent implements OnInit, OnDestroy {
   
-  public error: String = '';
-  displayDialog: boolean;
-  medicine: Product = new Product();
-  categoryDropdown: CategoryDropdown;
-  manufacturerDropdown: ManufacturerDropdown;
+  	medicine: Product = new Product();
+  	categoryDropdown: CategoryDropdown;
+  	manufacturerDropdown: ManufacturerDropdown;
+
+	@Output() medicineSaveEvent = new EventEmitter<Product>();
   
-  DETAIL: string = Constants.DETAIL;
-  ADD_IMAGE: string = Constants.ADD_IMAGE;
-  ADD_LABEL: string = Constants.ADD_LABEL;  
-  DEPARTMENT: string = Constants.DEPARTMENT;
-  COUNTRY: string = Constants.COUNTRY;
-  ROLE: string = Constants.ROLE;
-  SELECT_OPTION: string = Constants.SELECT_OPTION;
   
   constructor
     (
-      private genericService: GenericService,
+	  public genericService: GenericService,
+	  public translate: TranslateService,
+	  public confirmationService: ConfirmationService,
       private globalEventsManager: GlobalEventsManager,
       private ctgDropdown: CategoryDropdown,
       private mfctDropdown: ManufacturerDropdown,
       private route: ActivatedRoute
     ) {
-      this.categoryDropdown = ctgDropdown;
-      this.manufacturerDropdown = mfctDropdown;
-      this.categoryDropdown.getAllCategories(Constants.CATEGORY_MEDICINE);
+		super(genericService, translate, confirmationService);
+     	this.categoryDropdown = ctgDropdown;
+      	this.manufacturerDropdown = mfctDropdown;
+      	this.categoryDropdown.getAllCategories(Constants.CATEGORY_MEDICINE);
   }
 
   ngOnInit(): void {
@@ -57,10 +56,6 @@ export class MedicineDetails implements OnInit, OnDestroy {
                 if (result.id > 0) {
                   this.medicine = result
                 }
-                else {
-                  this.error = Constants.SAVE_UNSUCCESSFUL;
-                  this.displayDialog = true;
-                }
               })
           } else {
               
@@ -79,24 +74,19 @@ export class MedicineDetails implements OnInit, OnDestroy {
       if (result.id > 0) {
         this.medicine = result
       }
-      else {
-        this.error = Constants.SAVE_UNSUCCESSFUL;
-        this.displayDialog = true;
-      }
     })
   }
   
   save() {
     try {
-      this.error = '';
       this.genericService.save(this.medicine, "Product")
         .subscribe(result => {
           if (result.id > 0) {
-            this.medicine = result
-          }
-          else {
-            this.error = Constants.SAVE_UNSUCCESSFUL;
-            this.displayDialog = true;
+			this.processResult(result, this.medicine, this.messages, null);
+			this.medicine = result;
+			this.medicineSaveEvent.emit(this.medicine);
+          } else {
+            this.processResult(result, this.medicine, this.messages, null);
           }
         })
     }
@@ -106,6 +96,7 @@ export class MedicineDetails implements OnInit, OnDestroy {
   }
   
   addNew() {
+  	this.messages = [];
     this.medicine = new Product();
   }
 
