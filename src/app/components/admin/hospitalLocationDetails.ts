@@ -1,32 +1,32 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Output, EventEmitter } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HospitalLocation, Country } from '../../models';
-import { Constants } from '../../app.constants';
 import { CountryDropdown } from '../dropdowns';
 import { GenericService } from '../../services';
+import { BaseComponent } from './baseComponent';
+import { ConfirmationService } from 'primeng/api';
+import { TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-hospitalLocation-details',
   templateUrl: '../../pages/admin/hospitalLocationDetails.html',
   providers: [GenericService, CountryDropdown]
 })
-export class HospitalLocationDetails implements OnInit, OnDestroy {
+export class HospitalLocationDetails extends BaseComponent implements OnInit, OnDestroy {
   
   hospitalLocation: HospitalLocation = new HospitalLocation();
   
-  DETAIL: string = Constants.DETAIL;
-  ADD_IMAGE: string = Constants.ADD_IMAGE;
-  ADD_LABEL: string = Constants.ADD_LABEL;  
-  DEPARTMENT: string = Constants.DEPARTMENT;
-  COUNTRY: string = Constants.COUNTRY;
-  ROLE: string = Constants.ROLE;
-  SELECT_OPTION: string = Constants.SELECT_OPTION;
+  @Output() hospitalLocationSaveEvent = new EventEmitter<HospitalLocation>();
   
   constructor
     (
-      private genericService: GenericService,
-      private route: ActivatedRoute    ) {
+	  public genericService: GenericService,
+	  public translate: TranslateService,
+	  public confirmationService: ConfirmationService,
+	  private countryDropdown: CountryDropdown,
+	  private route: ActivatedRoute    ) {
 
+		super(genericService, translate, confirmationService);
   }
 
   ngOnInit(): void {
@@ -44,12 +44,9 @@ export class HospitalLocationDetails implements OnInit, OnDestroy {
               this.genericService.getOne(hospitalLocationId, 'HospitalLocation')
                   .subscribe(result => {
                 if (result.id > 0) {
-                  this.hospitalLocation = result
-                }
-                else {
-                  
-                }
-              })
+                  this.hospitalLocation = result;
+				}
+              });
           } else {
               
           }
@@ -67,17 +64,16 @@ export class HospitalLocationDetails implements OnInit, OnDestroy {
   
   save() {
     try {
-      this.genericService.save(this.hospitalLocation, "HospitalLocation")
+      this.genericService.save(this.hospitalLocation, 'HospitalLocation')
         .subscribe(result => {
           if (result.id > 0) {
-            this.hospitalLocation = result
+			this.processResult(result, this.hospitalLocation, this.messages, null);
+			this.hospitalLocationSaveEvent.emit(this.hospitalLocation);
+          } else {
+            this.processResult(result, this.hospitalLocation, this.messages, null);
           }
-          else {
-
-          }
-        })
-    }
-    catch (e) {
+        });
+    } catch (e) {
       console.log(e);
     }
   }
@@ -86,14 +82,11 @@ export class HospitalLocationDetails implements OnInit, OnDestroy {
     this.genericService.getOne(hospitalLocationId, 'HospitalLocation')
         .subscribe(result => {
       if (result.id > 0) {
-        this.hospitalLocation = result
+        this.hospitalLocation = result;
       }
       
-    })
+    });
   }
-  
-  delete() {
-    
-  }
+
   
  }

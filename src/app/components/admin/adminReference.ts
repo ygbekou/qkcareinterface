@@ -127,9 +127,17 @@ export class AdminReference implements OnInit, OnDestroy {
     this.labTestDetails.getLabTest(labTestId);
   }
 
+  onLabTestSaved($event) {
+	this.labTestList.updateTable($event);
+  }
+
   onHospitalLocationSelected($event) {
     const hospitalLocationId = $event;
     this.hospitalLocationDetails.getHospitalLocation(hospitalLocationId);
+  }
+
+  onHospitalLocationSaved($event) {
+	this.hospitalLocationtList.updateTable($event);
   }
 
   onTabChange(evt) {

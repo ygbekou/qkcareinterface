@@ -134,31 +134,16 @@
       </p-tabPanel>
       <p-tabPanel id="labTest" header="{{'COMMON.LAB_TEST_LIST' |translate}}">
         <div *ngIf="activeTab == 18" class="ui-grid-row">
-		  <app-labTest-details></app-labTest-details>
+		  <app-labTest-details (labTestSaveEvent)="onLabTestSaved($event)"></app-labTest-details>
 		   <br/>
           <app-labTest-list (labTestIdEvent)="onLabTestSelected($event)"></app-labTest-list>
         </div>
       </p-tabPanel>
       <p-tabPanel id="hospitalLocation" header="{{'COMMON.LOCATION' |translate}}">
         <div *ngIf="activeTab == 19" class="ui-grid-row">
-		  <app-hospitalLocation-details></app-hospitalLocation-details>
+		  <app-hospitalLocation-details (hospitalLocationSaveEvent)="onHospitalLocationSaved($event)"></app-hospitalLocation-details>
 		   <br/>
-          <app-hospitalLocation-list (hospitalLocationIdEvent)="onHospitalLocationSelected($event)">
-          </app-hospitalLocation-list>
-        </div>
-      </p-tabPanel>
-      <p-tabPanel id="hospital" header="{{'COMMON.HOSPITAL' |translate}}">
-        <div *ngIf="activeTab == 20" class="ui-grid-row">
-          <app-hospital-details></app-hospital-details>
-        </div>
-      </p-tabPanel>
-      <p-tabPanel header="{{'COMMON.VITAL_SIGN_LIST' |translate}}">
-        <div *ngIf="activeTab == 21" class="ui-grid-row">
-		  <app-referenceWithCategory-details></app-referenceWithCategory-details>
-		   <br/>
-          <app-referenceWithCategory-list
-            (referenceWithCategoryIdEvent)="onReferenceWithCategorySelected($event, 'VitalSign')">
-          </app-referenceWithCategory-list>
+          <app-hospitalLocation-list (hospitalLocationIdEvent)="onHospitalLocationSelected($event)"></app-hospitalLocation-list>
         </div>
       </p-tabPanel>
     </p-tabView>

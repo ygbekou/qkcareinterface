@@ -1,43 +1,44 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Constants } from '../../app.constants';
+import { Component, OnInit, OnDestroy, EventEmitter, Output } from '@angular/core';
 import { LabTest } from '../../models/labTest';
 import { LabTestMethodDropdown, LabTestGroupDropdown, LabTestUnitDropdown } from '../dropdowns';
 import { GenericService } from '../../services';
+import { TranslateService } from '@ngx-translate/core';
+import { ConfirmationService, Message } from 'primeng/api';
+import { BaseComponent } from './baseComponent';
 
 @Component({
   selector: 'app-labTest-details',
   templateUrl: '../../pages/admin/labTestDetails.html',
   providers: [GenericService, LabTestMethodDropdown, LabTestGroupDropdown, LabTestUnitDropdown]
 })
-export class LabTestDetails implements OnInit, OnDestroy {
+export class LabTestDetails extends BaseComponent implements OnInit, OnDestroy {
   
-  public error: String = '';
-  displayDialog: boolean;
   labTest: LabTest = new LabTest();
   labTestMethodDropdown: LabTestMethodDropdown;
   labTestGroupDropdown: LabTestGroupDropdown;
   labTestUnitDropdown: LabTestUnitDropdown;
-  
-  DETAIL: string = Constants.DETAIL;
-  ADD_IMAGE: string = Constants.ADD_IMAGE;
-  ADD_LABEL: string = Constants.ADD_LABEL;  
-  DEPARTMENT: string = Constants.DEPARTMENT;
-  COUNTRY: string = Constants.COUNTRY;
-  ROLE: string = Constants.ROLE;
-  SELECT_OPTION: string = Constants.SELECT_OPTION;
+
+  messages: Message[] = [];
+
+  @Output() labTestSaveEvent = new EventEmitter<LabTest>();
   
   constructor
     (
-      private genericService: GenericService,
+	  public genericService: GenericService,
+	  public translate: TranslateService,
+	  public confirmationService: ConfirmationService,
       ltMethodDropdown: LabTestMethodDropdown,
       ltGroupDropdown: LabTestGroupDropdown,
       ltUnitDropdown: LabTestUnitDropdown    ) {
-      this.labTestMethodDropdown = ltMethodDropdown;
-      this.labTestGroupDropdown = ltGroupDropdown;
-      this.labTestUnitDropdown = ltUnitDropdown;
+
+		super(genericService, translate, confirmationService);
+      	this.labTestMethodDropdown = ltMethodDropdown;
+      	this.labTestGroupDropdown = ltGroupDropdown;
+      	this.labTestUnitDropdown = ltUnitDropdown;
   }
 
   ngOnInit(): void {
+
   }
   
   ngOnDestroy() {
@@ -50,24 +51,19 @@ export class LabTestDetails implements OnInit, OnDestroy {
       if (result.id > 0) {
         this.labTest = result
       }
-      else {
-        this.error = Constants.SAVE_UNSUCCESSFUL;
-        this.displayDialog = true;
-      }
     })
   }
   
   save() {
     try {
-      this.error = '';
+      this.messages = [];
       this.genericService.save(this.labTest, "LabTest")
         .subscribe(result => {
           if (result.id > 0) {
-            this.labTest = result
-          }
-          else {
-            this.error = Constants.SAVE_UNSUCCESSFUL;
-            this.displayDialog = true;
+			this.processResult(result, this.labTest, this.messages, null);
+			this.labTestSaveEvent.emit(this.labTest);
+          } else {
+            this.processResult(result, this.labTest, this.messages, null);
           }
         })
     }
@@ -76,8 +72,9 @@ export class LabTestDetails implements OnInit, OnDestroy {
     }
   }
   
-  delete() {
-  
+  clear() {
+	this.messages = [];
+	this.labTest = new LabTest();
   }
 
  }

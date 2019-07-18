@@ -3,13 +3,15 @@ import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { HospitalLocation } from '../../models';  
 import { GenericService } from '../../services';
 import { TranslateService} from '@ngx-translate/core';
+import { BaseComponent } from './baseComponent';
+import { ConfirmationService } from 'primeng/api';
 
 @Component({
   selector: 'app-hospitalLocation-list',
   templateUrl: '../../pages/admin/hospitalLocationList.html',
   providers: [GenericService]
 })
-export class HospitalLocationList implements OnInit, OnDestroy {
+export class HospitalLocationList extends BaseComponent implements OnInit, OnDestroy {
   
   hospitalLocations: HospitalLocation[] = [];
   cols: any[];
@@ -18,12 +20,12 @@ export class HospitalLocationList implements OnInit, OnDestroy {
   
   constructor
     (
-    private genericService: GenericService,
-    private translate: TranslateService,
-    private route: ActivatedRoute,
-    private router: Router,
+    public genericService: GenericService,
+	public translate: TranslateService,
+	public confirmationService: ConfirmationService,
+    private route: ActivatedRoute
     ) {
-
+		super(genericService, translate, confirmationService);
     
   }
 
@@ -40,15 +42,13 @@ export class HospitalLocationList implements OnInit, OnDestroy {
         .queryParams
         .subscribe(() => {          
           
-            let parameters: string [] = []; 
+            const parameters: string [] = []; 
             
-            parameters.push('e.status = |status|0|Integer')
+            parameters.push('e.status = |status|0|Integer');
             
             this.genericService.getAllByCriteria('HospitalLocation', parameters)
-              .subscribe((data: HospitalLocation[]) => 
-              { 
-                this.hospitalLocations = data 
-                console.info(this.hospitalLocations)
+              .subscribe((data: HospitalLocation[]) => { 
+                this.hospitalLocations = data; 
               },
               error => console.log(error),
               () => console.log('Get all hospitalLocations complete'));
@@ -63,8 +63,8 @@ export class HospitalLocationList implements OnInit, OnDestroy {
  
   
   updateCols() {
-    for (var index in this.cols) {
-      let col = this.cols[index];
+    for (let index in this.cols) {
+      const col = this.cols[index];
       this.translate.get(col.headerKey).subscribe((res: string) => {
         col.header = res;
       });
@@ -81,26 +81,21 @@ export class HospitalLocationList implements OnInit, OnDestroy {
       this.hospitalLocationIdEvent.emit(labTestId + '');
   }
 
-  delete(hospitalLocationId : number) {
-    try {
-      let navigationExtras: NavigationExtras = {
-        queryParams: {
-          "hospitalLocationId": hospitalLocationId,
-        }
-      }
-      this.router.navigate(["/admin/hospitalLocationDetails"], navigationExtras);
-    }
-    catch (e) {
-      console.log(e);
-    }
+  updateTable(hospitalLocation: HospitalLocation) {
+		const index = this.hospitalLocations.findIndex(x => x.id === hospitalLocation.id);
+
+		if (index === -1) {
+			this.hospitalLocations.push(hospitalLocation);
+		} else {
+			this.hospitalLocations[index] = hospitalLocation;
+		}
+
   }
 
   getAllHospitalLocations() {
     this.genericService.getAll('HospitalLocation')
-      .subscribe((data: HospitalLocation[]) => 
-      { 
-        this.hospitalLocations = data 
-        console.info(this.hospitalLocations)
+      .subscribe((data: HospitalLocation[]) => { 
+        this.hospitalLocations = data; 
       },
       error => console.log(error),
       () => console.log('Get all HL complete'));

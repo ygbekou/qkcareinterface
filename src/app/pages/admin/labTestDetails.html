@@ -1,95 +1,98 @@
-<div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="labTest">
-  <div class="ui-grid-row">
-    <div class="ui-grid-col-4 ui-sm-12">
-      <div class="form-group">
-        <label for="labTestMethod">{{ 'COMMON.METHOD' | translate }}<font color="red">*</font></label>
-        <p-autoComplete [(ngModel)]="labTest.labTestMethod"
-          (onDropdownClick)="labTestMethodDropdown.handleDropdownClick($event)"
-          [suggestions]="labTestMethodDropdown.filteredLabTestMethods" [dropdown]="true" id="labTestMethod"
-          (completeMethod)="labTestMethodDropdown.filter($event)" name="labTestMethod" field="name" [size]="30"
-          placeholder="{{SELECT_OPTION}}" [minLength]="1">
-        </p-autoComplete>
-      </div>
-    </div>
-    <div class="ui-grid-col-4 ui-sm-12">
-      <div class="form-group">
-        <label for="labTestGroup">{{ 'COMMON.GROUP' | translate }}<font color="red">*</font></label>
-        <p-autoComplete [(ngModel)]="labTest.parent"
-          (onDropdownClick)="labTestGroupDropdown.handleDropdownClick($event)"
-          [suggestions]="labTestGroupDropdown.filteredLabTestGroups" [dropdown]="true" id="labTestGroup"
-          (completeMethod)="labTestGroupDropdown.filter($event)" name="labTestGroup" field="name" [size]="30"
-          placeholder="{{SELECT_OPTION}}" [minLength]="1">
-        </p-autoComplete>
-      </div>
-    </div>
-    <div class="ui-grid-col-3 ui-sm-12">
-      <div class="form-group">
-        <label for="labTestUnit">{{ 'COMMON.UNIT' | translate }}<font color="red">*</font></label>
-        <p-autoComplete [(ngModel)]="labTest.unit" (onDropdownClick)="labTestUnitDropdown.handleDropdownClick($event)"
-          [suggestions]="labTestUnitDropdown.filteredLabTestUnits" [dropdown]="true" id="labTestUnit"
-          (completeMethod)="labTestUnitDropdown.filter($event)" name="labTestUnit" field="name" [size]="30"
-          placeholder="{{SELECT_OPTION}}" [minLength]="1">
-        </p-autoComplete>
-      </div>
-    </div>
-  </div>
-  <br />
-  <div class="ui-grid-row">
-    <div class="ui-grid-col-4 ui-sm-12">
-      <div class="form-group">
-        <label for="name">{{ 'COMMON.NAME' | translate }}</label>
-        <input pInputText id="name" [(ngModel)]="labTest.name" required />
-      </div>
-    </div>
-    <div class="ui-grid-col-4 ui-sm-12">
-      <div class="form-group">
-        <label for="description">{{ 'COMMON.DESCRIPTION' | translate }}</label>
-        <textarea pInputTextarea id="description" [(ngModel)]="labTest.description"> </textarea>
-      </div>
-    </div>
-    <div class="ui-grid-col-4 ui-sm-12">
-      <div class="form-group">
-        <label for="rank">{{ 'COMMON.STATUS' | translate }}</label>
-        <br />
-        <p-radioButton name="status" value="0" label="Actif" [(ngModel)]="labTest.status"></p-radioButton>
-        <p-radioButton name="status" value="1" label="Inactif" [(ngModel)]="labTest.status"></p-radioButton>
-      </div>
-    </div>
-  </div>
-  <div class="ui-grid-row">
-    <div class="ui-grid-col-4 ui-sm-12">
-      <div class="form-group">
-        <label for="normalRangeMinimum">{{ 'COMMON.NORMAL_RANGE_MINIMUM' | translate }}</label>
-        <input pInputText id="normalRangeMinimum" [(ngModel)]="labTest.normalRangeMinimum" />
-      </div>
-    </div>
-    <div class="ui-grid-col-4 ui-sm-12">
-      <div class="form-group">
-        <label for="normalRangeMaximum">{{ 'COMMON.NORMAL_RANGE_MAXIMUM' | translate }}</label>
-        <input pInputText id="normalRangeMaximum" [(ngModel)]="labTest.normalRangeMaximum" />
-      </div>
-    </div>
-  </div>
-  <div class="ui-grid-row">
-    <div class="ui-grid-col-4 ui-sm-12">
-      <div class="form-group">
-        <label for="criticalLow">{{ 'COMMON.CRITICAL_LOW' | translate }}</label>
-        <input pInputText id="criticalLow" [(ngModel)]="labTest.criticalLow" />
-      </div>
-    </div>
-    <div class="ui-grid-col-4 ui-sm-12">
-      <div class="form-group">
-        <label for="criticalHigh">{{ 'COMMON.CRITICAL_HIGH' | translate }}</label>
-        <input pInputText id="criticalHigh" [(ngModel)]="labTest.criticalHigh" />
-      </div>
-    </div>
-  </div>
-</div>
-<br />
-<div>
-  <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
-    <button type="button" pButton icon="fa fa-close" (click)="delete()"
-      label="{{ 'COMMON.DELETE' | translate }}"></button>&nbsp;&nbsp;
-    <button type="button" pButton icon="fa fa-check" (click)="save()" label="{{ 'COMMON.SAVE' | translate }}"></button>
-  </div>
-</div>
+<form name="form" (ngSubmit)="f.form.valid && save()" #f="ngForm" validate>
+  <div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="labTest">
+	<div class="ui-grid-row">
+		<div class="ui-grid-col-4 ui-sm-12">
+		<div class="form-group">
+			<label for="labTestMethod">{{ 'COMMON.METHOD' | translate }}</label>
+			<p-autoComplete [(ngModel)]="labTest.labTestMethod"
+			(onDropdownClick)="labTestMethodDropdown.handleDropdownClick($event)"
+			[suggestions]="labTestMethodDropdown.filteredLabTestMethods" [dropdown]="true" id="labTestMethod"
+			(completeMethod)="labTestMethodDropdown.filter($event)" name="labTestMethod" field="name" [size]="30"
+			placeholder="{{SELECT_OPTION}}" [minLength]="1" #labTestMethod="ngModel">
+			</p-autoComplete>
+		</div>
+		</div>
+		<div class="ui-grid-col-4 ui-sm-12">
+		<div class="form-group">
+			<label for="labTestGroup">{{ 'COMMON.GROUP' | translate }}</label>
+			<p-autoComplete [(ngModel)]="labTest.parent"
+			(onDropdownClick)="labTestGroupDropdown.handleDropdownClick($event)"
+			[suggestions]="labTestGroupDropdown.filteredLabTestGroups" [dropdown]="true" id="labTestGroup"
+			(completeMethod)="labTestGroupDropdown.filter($event)" name="labTestGroup" field="name" [size]="30"
+			placeholder="{{SELECT_OPTION}}" [minLength]="1" #labTestGroup="ngModel">
+			</p-autoComplete>
+		</div>
+		</div>
+		<div class="ui-grid-col-3 ui-sm-12">
+			<div class="form-group">
+				<label for="labTestUnit">{{ 'COMMON.UNIT' | translate }}<font color="red">*</font></label>
+				<p-autoComplete [(ngModel)]="labTest.unit" (onDropdownClick)="labTestUnitDropdown.handleDropdownClick($event)"
+				[suggestions]="labTestUnitDropdown.filteredLabTestUnits" [dropdown]="true" id="labTestUnit"
+				(completeMethod)="labTestUnitDropdown.filter($event)" name="labTestUnit" field="name" [size]="30"
+				placeholder="{{SELECT_OPTION}}" [minLength]="1" #labTestUnit="ngModel" required>
+				</p-autoComplete>
+				<p-message *ngIf="f.submitted && labTestUnit.invalid" severity="error" text="Field is required"></p-message>
+			</div>
+		</div>
+	</div>
+	<br />
+	<div class="ui-grid-row">
+		<div class="ui-grid-col-4 ui-sm-12">
+		<div class="form-group">
+			<label for="name">{{ 'COMMON.NAME' | translate }}</label>
+			<input pInputText id="name" [(ngModel)]="labTest.name" name="name" #name="ngModel" required />
+			<p-message *ngIf="f.submitted && name.invalid" severity="error" text="Field is required"></p-message>
+		</div>
+		</div>
+		<div class="ui-grid-col-4 ui-sm-12">
+		<div class="form-group">
+			<label for="description">{{ 'COMMON.DESCRIPTION' | translate }}</label>
+			<textarea pInputTextarea id="description" name="description" [(ngModel)]="labTest.description"> </textarea>
+		</div>
+		</div>
+		<div class="ui-grid-col-4 ui-sm-12">
+		<div class="form-group">
+			<label for="rank">{{ 'COMMON.STATUS' | translate }}</label>
+			<br />
+			<p-radioButton name="status" value="0" label="Actif" [(ngModel)]="labTest.status"></p-radioButton>
+			<p-radioButton name="status" value="1" label="Inactif" [(ngModel)]="labTest.status"></p-radioButton>
+		</div>
+		</div>
+	</div>
+	<div class="ui-grid-row">
+		<div class="ui-grid-col-4 ui-sm-12">
+		<div class="form-group">
+			<label for="normalRangeMinimum">{{ 'COMMON.NORMAL_RANGE_MINIMUM' | translate }}</label>
+			<input pInputText id="normalRangeMinimum" name="normalRangeMinimum" [(ngModel)]="labTest.normalRangeMinimum" />
+		</div>
+		</div>
+		<div class="ui-grid-col-4 ui-sm-12">
+		<div class="form-group">
+			<label for="normalRangeMaximum">{{ 'COMMON.NORMAL_RANGE_MAXIMUM' | translate }}</label>
+			<input pInputText id="normalRangeMaximum" name="normalRangeMaximum" [(ngModel)]="labTest.normalRangeMaximum" />
+		</div>
+		</div>
+	</div>
+	<div class="ui-grid-row">
+		<div class="ui-grid-col-4 ui-sm-12">
+		<div class="form-group">
+			<label for="criticalLow">{{ 'COMMON.CRITICAL_LOW' | translate }}</label>
+			<input pInputText id="criticalLow" name="criticalLow" [(ngModel)]="labTest.criticalLow" />
+		</div>
+		</div>
+		<div class="ui-grid-col-4 ui-sm-12">
+		<div class="form-group">
+			<label for="criticalHigh">{{ 'COMMON.CRITICAL_HIGH' | translate }}</label>
+			<input pInputText id="criticalHigh" name="criticalHigh" [(ngModel)]="labTest.criticalHigh" />
+		</div>
+		</div>
+	</div>
+	</div>
+	<br />
+	<div>
+	<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+		<button type="button" pButton icon="fa fa-close" (click)="clear()" label="{{ 'COMMON.DELETE' | translate }}"></button>&nbsp;&nbsp;
+		<button pButton icon="fa fa-check" label="{{ 'COMMON.SAVE' | translate }}"></button>
+	</div>
+	</div>
+</form>
