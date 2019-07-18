@@ -21,7 +21,7 @@
 
 <div class="ui-grid-row">
 	<form name="form" (ngSubmit)="f.form.valid && search()" #f="ngForm" validate>
-		<p-fieldset legend="{{ 'COMMON.SEARCH_CRITERIA' | translate }}">
+		<p-fieldset legend="{{ 'COMMON.SEARCH_CRITERIA' | translate }}" *ngIf="showActions">
 			<div class="ui-grid-row">
 				<div class="ui-grid-col-2 ui-sm-12">
 					<div class="form-group">
@@ -100,11 +100,10 @@
 						<p-button label="Rej" (click)="showInvestigationDialog('Rejection', rowData)"
 							*ngIf="rowData.status === 0 || rowData.status === 1 || rowData.status === 3"></p-button> &nbsp;
 						<p-button label="Fin" (click)="showInvestigationDialog('Finalization', rowData)"
-							*ngIf="rowData.status == 3"></p-button> &nbsp;
-						<button type="button" pButton icon="fa fa-edit" 
-							(click)="edit(rowData.id)"></button> &nbsp;
-						<button type="button" pButton icon="fa fa-eraser"
-							(click)="deleteItem(investigations, rowData.id, 'Investigation')"></button>
+							*ngIf="rowData.status === 1 || rowData.status == 3"></p-button> &nbsp;
+						<button type="button" pButton icon="fa fa-edit" (click)="edit(rowData.id)"></button> &nbsp;
+						<button type="button" pButton icon="fa fa-eraser" *ngIf="rowData.status === 0 || rowData.status === 1"
+							 (click)="deleteItem(investigations, rowData.id, 'Investigation')"></button>
 					</td>
 				</tr>
 			</ng-template> 
@@ -141,7 +140,7 @@
 								</div>
 								<div
 									*ngIf="getResult(childRowData) >= childRowData.labTest.normalRangeMinimum
-										                    		&& getResult(childRowData) <= childRowData.labTest.normalRangeMinimum">
+										                    		&& getResult(childRowData) <= childRowData.labTest.normalRangeMaximum">
 									{{childRowData[col.field]}}</div>
 								<div
 									*ngIf="getResult(childRowData) <= childRowData.labTest.criticalHigh 

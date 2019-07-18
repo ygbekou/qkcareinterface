@@ -54,11 +54,9 @@ export class InvestigationList extends BaseComponent implements OnInit, OnDestro
 			{ field: 'name', header: 'Name', headerKey: 'COMMON.NAME', type: 'string', 
 										style: {width: '15%', 'text-align': 'center'} },
             { field: 'labTestName', header: 'LabTest/Group', headerKey: 'COMMON.LAB_TEST_GROUP', type: 'string',
-										style: {width: '13%', 'text-align': 'center'} },
-			{ field: 'status', header: 'Status', headerKey: 'COMMON.STATUS', type: 'string',
-                                        style: {width: '7%', 'text-align': 'center'} },
+										style: {width: '15%', 'text-align': 'center'} },
             { field: 'statusDesc', header: 'Status', headerKey: 'COMMON.STATUS', type: 'string',
-                                        style: {width: '7%', 'text-align': 'center'} },
+                                        style: {width: '15%', 'text-align': 'center'} },
             { field: 'collectionDatetime', header: 'Coll Date', headerKey: 'COMMON.COLLECTION_DATE', type: 'Datetime',
                                         style: {width: '12%', 'text-align': 'center'} },
             { field: 'finalizationDatetime', header: 'Finalized Date', headerKey: 'COMMON.FINALIZED_DATE', type: 'Datetime',
@@ -82,8 +80,6 @@ export class InvestigationList extends BaseComponent implements OnInit, OnDestro
 		this.updateCols();
 		});
 		
-		this.getInvestigations();
-
   }
  
   
@@ -131,7 +127,16 @@ export class InvestigationList extends BaseComponent implements OnInit, OnDestro
       if (this.admission && this.admission.id > 0)  {
          parameters.push('e.admission.id = |admissionId|' + this.admission.id + '|Long');
          parameters.push('e.status = |status|4|Integer');
-      } 
+	  } 
+	  
+	  if (parameters.length > 0) {
+		this.genericService.getAllByCriteria('Investigation', parameters, ' ORDER BY e.investigationDatetime DESC ')
+			.subscribe((data: Investigation[]) => {
+				this.investigations = data;
+			},
+			error => console.log(error),
+			() => console.log('Get Investigations complete'));
+		}
         
   }
   

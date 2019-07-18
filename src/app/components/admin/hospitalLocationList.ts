@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, Output, EventEmitter } from '@angular/core';
-import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { HospitalLocation } from '../../models';  
 import { GenericService } from '../../services';
 import { TranslateService} from '@ngx-translate/core';
@@ -31,11 +31,16 @@ export class HospitalLocationList extends BaseComponent implements OnInit, OnDes
 
   ngOnInit(): void {
     this.cols = [
-            { field: 'name', header: 'Name', headerKey: 'COMMON.NAME' },
-            { field: 'address', header: 'Address', headerKey: 'COMMON.ADDRESS' },
-            { field: 'city', header: 'City', headerKey: 'COMMON.CITY' },
-            { field: 'countryName', header: 'Country', headerKey: 'COMMON.COUNTRY' },
-            { field: 'status', header: 'Status', headerKey: 'COMMON.STATUS' }
+			{ field: 'name', header: 'Name', headerKey: 'COMMON.NAME', 
+					type: 'string', style: {width: '20%', 'text-align': 'center'} },
+			{ field: 'address', header: 'Address', headerKey: 'COMMON.ADDRESS', 
+					type: 'string', style: {width: '25%', 'text-align': 'center'} },
+			{ field: 'city', header: 'City', headerKey: 'COMMON.CITY', 
+					type: 'string', style: {width: '25%', 'text-align': 'center'} },
+			{ field: 'countryName', header: 'Country', headerKey: 'COMMON.COUNTRY',
+					type: 'string', style: {width: '10%', 'text-align': 'center'} },
+			{ field: 'status', header: 'Status', headerKey: 'COMMON.STATUS',
+			 		type: 'string', style: {width: '10%', 'text-align': 'center'}  }
         ];
     
     this.route
@@ -46,7 +51,7 @@ export class HospitalLocationList extends BaseComponent implements OnInit, OnDes
             
             parameters.push('e.status = |status|0|Integer');
             
-            this.genericService.getAllByCriteria('HospitalLocation', parameters)
+            this.genericService.getAllByCriteria('HospitalLocation', parameters, " ORDER BY name DESC ")
               .subscribe((data: HospitalLocation[]) => { 
                 this.hospitalLocations = data; 
               },

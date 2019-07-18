@@ -12,6 +12,7 @@ import { PatientSaleDetails } from '../stocks/patientSaleDetails';
 import { TranslateService} from '@ngx-translate/core';
 import { Message } from 'primeng/api';
 import { DoctorOrderList } from './doctorOrderList';
+import { InvestigationList } from './investigationList';
 
 @Component({
   selector: 'app-visit-details',
@@ -36,6 +37,7 @@ export class VisitDetails implements OnInit, OnDestroy {
   @ViewChild(PrescriptionDetails) prescriptionDetails: PrescriptionDetails;
   @ViewChild(PatientSaleDetails) patientSaleDetails: PatientSaleDetails;
   @ViewChild(PrescriptionList) prescriptionList: PrescriptionList;
+  @ViewChild(InvestigationList) investigationList: InvestigationList;
 
   messages: Message[] = [];
 
@@ -138,7 +140,9 @@ export class VisitDetails implements OnInit, OnDestroy {
       this.prescriptionDetails.visit = this.visit;
       this.prescriptionList.visit = this.visit;
       this.prescriptionList.getPrescriptions();
-    }
+	} else if (evt.index === 4) {
+      this.investigationList.getInvestigations();
+    } 
   }
 
   onDoctorOrderSelected($event) {
