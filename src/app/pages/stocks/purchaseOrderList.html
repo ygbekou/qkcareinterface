@@ -1,55 +1,57 @@
+<p-confirmDialog [style]="{width: '50vw'}"></p-confirmDialog>
 <div class="ui-g-12 ui-sm-12" style="padding: 15px;">
-	<p-fieldset legend="{{ 'COMMON.SEARCH_CRITERIA' | translate }}">
-		<div class="ui-grid-row">
-			<div class="ui-grid-col-3 ui-sm-12">
-				<div class="form-group">
-					<label for="requestor">{{ 'COMMON.REQUESTOR' | translate }}:</label>
-					<p-autoComplete [(ngModel)]="searchCriteria.requestor"
-						(onDropdownClick)="employeeDropdown.handleDropdownClick($event)"
-						[suggestions]="employeeDropdown.filteredEmployees" [dropdown]="true"
-						(completeMethod)="employeeDropdown.filter($event)"
-						name="name" field="name" [size]="30" placeholder=""
-						[minLength]="1" name="requestor"  #requestor="ngModel">
-					</p-autoComplete>
+	<form name="form" (ngSubmit)="validatePerformSearch() && search()" #f="ngForm" validate>
+		<p-fieldset legend="{{ 'COMMON.SEARCH_CRITERIA' | translate }}">
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-3 ui-sm-12">
+					<div class="form-group">
+						<label for="requestor">{{ 'COMMON.REQUESTOR' | translate }}:</label>
+						<p-autoComplete [(ngModel)]="searchCriteria.requestor"
+							(onDropdownClick)="employeeDropdown.handleDropdownClick($event)"
+							[suggestions]="employeeDropdown.filteredEmployees" [dropdown]="true"
+							(completeMethod)="employeeDropdown.filter($event)"
+							field="name" [size]="30" placeholder=""
+							[minLength]="1" name="requestor"  #requestor="ngModel">
+						</p-autoComplete>
+					</div>
+				</div>
+				<div class="ui-grid-col-3 ui-sm-12">
+					<div class="form-group">
+						<label for="shipTo">{{ 'COMMON.SHIP_TO' | translate }}:</label>
+						<p-autoComplete [(ngModel)]="searchCriteria.shipTo"
+							(onDropdownClick)="employeeDropdown.handleDropdownClick($event)"
+							[suggestions]="employeeDropdown.filteredEmployees" [dropdown]="true"
+							(completeMethod)="employeeDropdown.filter($event)"
+							field="name" [size]="30" placeholder=""
+							[minLength]="1" name="shipTo"  #shipTo="ngModel">
+						</p-autoComplete>
+					</div>
+				</div>
+				<div class="ui-grid-col-3 ui-sm-12">
+					<div class="form-group">
+						<label for="supplier">{{ 'COMMON.SUPPLIER' | translate }}:</label>
+						<p-autoComplete [(ngModel)]="searchCriteria.supplier"
+							(onDropdownClick)="supplierDropdown.handleDropdownClick($event)"
+							[suggestions]="supplierDropdown.filteredSuppliers" [dropdown]="true"
+							(completeMethod)="supplierDropdown.filter($event)"
+							field="name" [size]="30" placeholder=""
+							[minLength]="1" name="supplier"  #supplier="ngModel">
+						</p-autoComplete>
+					</div>
+				</div>
+				<div class="ui-grid-col-3 ui-sm-12">
+					<div class="form-group">
+						<label for="purchaseOrderDate">{{ 'COMMON.ORDER_DATE' | translate }}:</label> 
+						<p-calendar [(ngModel)]="searchCriteria.purchaseOrderDate" id="purchaseOrderDate"
+									name="purchaseOrderDate" #purchaseOrderDate="ngModel"></p-calendar>
+					</div>
+				</div>
+				<div>
+					<button pButton icon="fa fa-search" label="{{ 'COMMON.SEARCH' | translate }}"></button>
 				</div>
 			</div>
-			<div class="ui-grid-col-3 ui-sm-12">
-				<div class="form-group">
-					<label for="shipTo">{{ 'COMMON.SHIP_TO' | translate }}:</label>
-					<p-autoComplete [(ngModel)]="searchCriteria.shipTo"
-						(onDropdownClick)="employeeDropdown.handleDropdownClick($event)"
-						[suggestions]="employeeDropdown.filteredEmployees" [dropdown]="true"
-						(completeMethod)="employeeDropdown.filter($event)"
-						name="name" field="name" [size]="30" placeholder=""
-						[minLength]="1" name="shipTo"  #shipTo="ngModel">
-					</p-autoComplete>
-				</div>
-			</div>
-			<div class="ui-grid-col-3 ui-sm-12">
-				<div class="form-group">
-					<label for="supplier">{{ 'COMMON.SUPPLIER' | translate }}:</label>
-					<p-autoComplete [(ngModel)]="searchCriteria.requestor"
-						(onDropdownClick)="supplierDropdown.handleDropdownClick($event)"
-						[suggestions]="supplierDropdown.filteredSuppliers" [dropdown]="true"
-						(completeMethod)="supplierDropdown.filter($event)"
-						name="name" field="name" [size]="30" placeholder=""
-						[minLength]="1" name="supplier"  #supplier="ngModel">
-					</p-autoComplete>
-				</div>
-			</div>
-			<div class="ui-grid-col-3 ui-sm-12">
-				<div class="form-group">
-					<label for="purchaseOrderDate">{{ 'COMMON.ORDER_DATE' | translate }}:</label> 
-					<p-calendar [(ngModel)]="searchCriteria.purchaseOrderDate" id="purchaseOrderDate"
-								name="purchaseOrderDate" #purchaseOrderDate="ngModel"></p-calendar>
-				</div>
-			</div>
-			<div>
-				<button pButton icon="fa fa-search" label="{{ 'COMMON.SEARCH' | translate }}" (click)="search()"></button>
-			</div>
-		</div>
-	</p-fieldset>
-	<br/>
+		</p-fieldset>
+	</form>
 	<br/>
 	<p-table [columns]="cols" [value]="purchaseOrders">
 		<ng-template pTemplate="caption">
@@ -57,7 +59,7 @@
 	    </ng-template>
 	    <ng-template pTemplate="header" let-columns>
 	        <tr>
-	            <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+	            <th *ngFor="let col of columns" [pSortableColumn]="col.field" [ngStyle]="col.style">
 	                {{col.header}}
 	                <p-sortIcon [field]="col.field"></p-sortIcon>
 	            </th>
@@ -76,7 +78,7 @@
 	            </td>
 	            <td>
 	            	<button type="button" pButton icon="fa fa-edit" (click)="edit(rowData.id)"></button>&nbsp;&nbsp;
-					<button type="button" pButton icon="fa fa-eraser" (click)="delete(rowData.id)"></button>
+					<button type="button" pButton icon="fa fa-eraser" (click)="deleteItem(purchaseOrders, rowData.id, 'PurchaseOrder')"></button>
 	            </td>
 	        </tr>
 	    </ng-template>

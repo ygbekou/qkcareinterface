@@ -5,16 +5,17 @@ import { SearchCriteria, User } from '../../models';
 import { PurchaseOrder, PurchaseOrderProduct } from '../../models/stocks/purchaseOrder';
 import { EmployeeDropdown, SupplierDropdown, ProductDropdown } from '../dropdowns';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
-import { DataTableModule, DialogModule, InputTextareaModule, CheckboxModule } from 'primeng/primeng';
+import { DataTableModule, DialogModule, InputTextareaModule, CheckboxModule, ConfirmationService } from 'primeng/primeng';
 import { GenericService, PurchasingService } from '../../services';
 import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
+import { BaseComponent } from '../admin/baseComponent';
 
 @Component({
   selector: 'app-purchaseOrder-list',
   templateUrl: '../../pages/stocks/purchaseOrderList.html',
   providers: [GenericService, PurchasingService, EmployeeDropdown, SupplierDropdown, ProductDropdown]
 })
-export class PurchaseOrderList implements OnInit, OnDestroy {
+export class PurchaseOrderList extends BaseComponent implements OnInit, OnDestroy {
   
   purchaseOrders: PurchaseOrder[] = [];
   cols: any[];
@@ -23,50 +24,59 @@ export class PurchaseOrderList implements OnInit, OnDestroy {
   
   constructor
     (
-    private genericService: GenericService,
+    public genericService: GenericService,
     private purchasingService: PurchasingService,
-    private translate: TranslateService,
+	public translate: TranslateService,
+	public confirmationService: ConfirmationService,
     public supplierDropdown: SupplierDropdown,
     public productDropdown: ProductDropdown,
     public employeeDropdown: EmployeeDropdown,
-    private changeDetectorRef: ChangeDetectorRef,
-    private route: ActivatedRoute,
     private router: Router,
     ) {
-
+		super(genericService, translate, confirmationService);
     
   }
 
   ngOnInit(): void {
     this.cols = [
-            { field: 'purchaseOrderDate', header: 'Date', headerKey: 'COMMON.DATE', type:'date' },
-            { field: 'supplierName', header: 'Supplier', headerKey: 'COMMON.SUPPLIER' },
-            { field: 'requestorName', header: 'Requestor', headerKey: 'COMMON.REQUESTOR' },
-            { field: 'receiverName', header: 'Receiver', headerKey: 'COMMON.RECEIVER' },
-            { field: 'subTotal', header: 'Sub Total', headerKey: 'COMMON.SUBTOTAL' },
-            { field: 'taxes', header: 'Taxes', headerKey: 'COMMON.TAXES' },
-            { field: 'discount', header: 'Discount', headerKey: 'COMMON.DISCOUNT' },
-            { field: 'grandTotal', header: 'Grand Total', headerKey: 'COMMON.GRANDTOTAL' },
-            { field: 'due', header: 'Due', headerKey: 'COMMON.AMOUNT_DUE' },
-            { field: 'status', header: 'Status', headerKey: 'COMMON.STATUS', type:'string' }
+            { field: 'purchaseOrderDate', header: 'Date', headerKey: 'COMMON.DATE', 
+					type: 'date', style: {width: '10%', 'text-align': 'center'} },
+            { field: 'supplierName', header: 'Supplier', headerKey: 'COMMON.SUPPLIER', 
+					type: 'string', style: {width: '10%', 'text-align': 'center'} },
+            { field: 'requestorName', header: 'Requestor', headerKey: 'COMMON.REQUESTOR', 
+					type: 'string', style: {width: '12%', 'text-align': 'center'} },
+            { field: 'receiverName', header: 'Receiver', headerKey: 'COMMON.RECEIVER', 
+					type: 'string', style: {width: '12%', 'text-align': 'center'} },
+            { field: 'subTotal', header: 'Sub Total', headerKey: 'COMMON.SUBTOTAL', 
+					type: 'string', style: {width: '10%', 'text-align': 'center'} },
+            { field: 'taxes', header: 'Taxes', headerKey: 'COMMON.TAXES', 
+					type: 'string', style: {width: '8%', 'text-align': 'center'} },
+            { field: 'discount', header: 'Discount', headerKey: 'COMMON.DISCOUNT', 
+					type: 'string', style: {width: '8%', 'text-align': 'center'} },
+            { field: 'grandTotal', header: 'Grand Total', headerKey: 'COMMON.GRANDTOTAL', 
+					type: 'string', style: {width: '8%', 'text-align': 'center'} },
+            { field: 'due', header: 'Due', headerKey: 'COMMON.AMOUNT_DUE', 
+					type: 'string', style: {width: '8%', 'text-align': 'center'} },
+            { field: 'statusDesc', header: 'Status', headerKey: 'COMMON.STATUS', 
+					type: 'string', style: {width: '6%', 'text-align': 'center'} }
         ];
     
-    this.route
-        .queryParams
-        .subscribe(params => {          
+    // this.route
+    //     .queryParams
+    //     .subscribe(params => {          
           
-            let parameters: string [] = []; 
+    //         let parameters: string [] = []; 
             
-            parameters.push('e.status = |status|0|Integer')
+    //         parameters.push('e.status = |status|0|Integer')
             
-            this.genericService.getAllByCriteria('com.qkcare.model.stocks.PurchaseOrder', parameters)
-              .subscribe((data: PurchaseOrder[]) => 
-              { 
-                this.purchaseOrders = data 
-              },
-              error => console.log(error),
-              () => console.log('Get all PurchaseOrders complete'));
-          });
+    //         this.genericService.getAllByCriteria('com.qkcare.model.stocks.PurchaseOrder', parameters)
+    //           .subscribe((data: PurchaseOrder[]) => 
+    //           { 
+    //             this.purchaseOrders = data 
+    //           },
+    //           error => console.log(error),
+    //           () => console.log('Get all PurchaseOrders complete'));
+    //       });
     
     this.updateCols();
     this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
@@ -90,20 +100,6 @@ export class PurchaseOrderList implements OnInit, OnDestroy {
   }
   
   edit(purchaseOrderId : number) {
-    try {
-      let navigationExtras: NavigationExtras = {
-        queryParams: {
-          "purchaseOrderId": purchaseOrderId,
-        }
-      }
-      this.router.navigate(["/admin/purchaseOrderDetails"], navigationExtras);
-    }
-    catch (e) {
-      console.log(e);
-    }
-  }
-
-  delete(purchaseOrderId : number) {
     try {
       let navigationExtras: NavigationExtras = {
         queryParams: {
@@ -141,6 +137,21 @@ export class PurchaseOrderList implements OnInit, OnDestroy {
       },
       error => console.log(error),
       () => console.log('Get all Purchase Orders complete'));
-    }
+	}
+	
+
+	validatePerformSearch(): boolean {
+		this.purchaseOrders = [];
+
+		if ((this.searchCriteria.requestor === undefined || this.searchCriteria.requestor === null 
+					|| this.searchCriteria.requestor.id  === undefined)
+			&& (this.searchCriteria.shipTo === undefined || this.searchCriteria.shipTo === null || this.searchCriteria.shipTo.id === undefined)
+			&& (this.searchCriteria.supplier === undefined || this.searchCriteria.supplier === null || this.searchCriteria.supplier.id === undefined)
+			&& (this.searchCriteria.purchaseOrderDate === undefined || this.searchCriteria.purchaseOrderDate === null) ) {
+			return false;
+		}
+		return true;
+
+	}
   
  }

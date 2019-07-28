@@ -1,3 +1,4 @@
+<p-confirmDialog [style]="{width: '50vw'}"></p-confirmDialog>
 <form name="form" (ngSubmit)="f.form.valid && save()" #f="ngForm" validate>
 	<div class="ui-g-12 ui-sm-12" style="padding: 15px;">
 		<div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="purchaseOrder">
@@ -9,9 +10,8 @@
 						<p-autoComplete [(ngModel)]="purchaseOrder.supplier"
 							(onDropdownClick)="supplierDropdown.handleDropdownClick($event)"
 							[suggestions]="supplierDropdown.filteredSuppliers" [dropdown]="true"
-							(completeMethod)="supplierDropdown.filter($event)"
-							name="name" field="name" [size]="30" placeholder=""
-							[minLength]="1" name="supplier"  #supplier="ngModel" required>
+							(completeMethod)="supplierDropdown.filter($event)" field="name" [size]="30" 
+							placeholder="" [minLength]="1" name="supplier"  #supplier="ngModel" required>
 						</p-autoComplete>
 						<p-message *ngIf="f.submitted && supplier.invalid" severity="error" text="Field is required"></p-message>
 					</div>
@@ -19,7 +19,7 @@
 				<div class="ui-grid-col-2 ui-sm-12">
 					<div class="form-group">
 						<label i18n="@@purchaseOrderDate" for="purchaseOrderDate">{{ 'COMMON.ORDER_DATE' | translate }}<font color="red">*</font></label> 
-						<p-calendar [(ngModel)]="purchaseOrder.purchaseOrderDate" 
+						<p-calendar [(ngModel)]="purchaseOrder.purchaseOrderDate" disabled="true"
 							name="purchaseOrderDate"  #purchaseOrderDate="ngModel" required></p-calendar>
 						<p-message *ngIf="f.submitted && purchaseOrderDate.invalid" severity="error" text="Field is required"></p-message>
 					</div>
@@ -30,8 +30,7 @@
 						<p-autoComplete [(ngModel)]="purchaseOrder.requestor"
 							(onDropdownClick)="employeeDropdown.handleDropdownClick($event)"
 							[suggestions]="employeeDropdown.filteredEmployees" [dropdown]="true"
-							(completeMethod)="employeeDropdown.filter($event)"
-							name="name" field="name" [size]="30" placeholder=""
+							(completeMethod)="employeeDropdown.filter($event)" field="name" [size]="30" placeholder=""
 							[minLength]="1" name="requestor"  #requestor="ngModel" required>
 						</p-autoComplete>
 						<p-message *ngIf="f.submitted && requestor.invalid" severity="error" text="Field is required"></p-message>
@@ -43,8 +42,7 @@
 						<p-autoComplete [(ngModel)]="purchaseOrder.shipTo"
 							(onDropdownClick)="employeeDropdown.handleDropdownClick($event)"
 							[suggestions]="employeeDropdown.filteredEmployees" [dropdown]="true"
-							(completeMethod)="employeeDropdown.filter($event)"
-							name="name" field="name" [size]="30" placeholder=""
+							(completeMethod)="employeeDropdown.filter($event)" field="name" [size]="30" placeholder=""
 							[minLength]="1" name="shipTo"  #shipTo="ngModel" required>
 						</p-autoComplete>
 						<p-message *ngIf="f.submitted && shipTo.invalid" severity="error" text="Field is required"></p-message>
@@ -64,24 +62,42 @@
 		<br/>
 		
 		<div class="ui-grid-row">
-			<div class="ui-grid-col-9 ui-sm-12">					
-				<p-table [columns]="orderProductCols" [value]="purchaseOrder.purchaseOrderProducts" (change)="calculateTotal()">
+			<div class="ui-grid-col-6 ui-sm-12">					
+				<p-table [columns]="orderProductCols" [value]="purchaseOrder.purchaseOrderProducts" (onEditComplete)="calculateTotal($event)">
 					<ng-template pTemplate="caption">
 				        {{ 'COMMON.PRODUCT_LIST' | translate }}
 				    </ng-template>
 				    <ng-template pTemplate="header" let-orderProductCols>
 				        <tr>
-				            <th *ngFor="let col of orderProductCols" [pSortableColumn]="col.field">
+				            <th *ngFor="let col of orderProductCols" [pSortableColumn]="col.field" [ngStyle]="col.style">
 				                {{col.header}}
 				                <p-sortIcon [field]="col.field"></p-sortIcon>
 				            </th>
 				            <th>Action</th>
 				        </tr>
 				    </ng-template>
-				    <ng-template pTemplate="body" let-rowData let-columns="columns">
+				    <ng-template pTemplate="body" let-rowData let-i = "rowIndex" let-columns="columns">
 				        <tr>			           
 				            <td *ngFor="let col of columns" [pEditableColumn]="rowData" [pEditableColumnField]="rowData[col.field]">
-				                <p-cellEditor *ngIf="col.type == 'amount'">
+				                <p-cellEditor *ngIf="col.field === 'quantity'">
+				                    <ng-template pTemplate="input">
+				                        <input type="text" [(ngModel)]="rowData[col.field]" [disabled]="col.isDisabled"
+				                         name="{{col.field}}">
+				                    </ng-template>
+				                    <ng-template pTemplate="output">
+				                        {{rowData[col.field]}}
+				                    </ng-template>
+								</p-cellEditor>
+								<p-cellEditor *ngIf="col.field === 'unitPrice'">
+				                    <ng-template pTemplate="input">
+				                        <input type="text" [(ngModel)]="rowData[col.field]" [disabled]="col.isDisabled"
+				                         name="{{col.field}}">
+				                    </ng-template>
+				                    <ng-template pTemplate="output">
+				                        {{rowData[col.field]}}
+				                    </ng-template>
+								</p-cellEditor>
+								<p-cellEditor *ngIf="col.field === 'totalAmount'">
 				                    <ng-template pTemplate="input">
 				                        <input type="text" [(ngModel)]="rowData[col.field]" [disabled]="col.isDisabled"
 				                         name="{{col.field}}">
@@ -105,8 +121,7 @@
 											[suggestions]="productDropdown.filteredProducts" [dropdown]="true"
 											(completeMethod)="productDropdown.filter($event)"
 											(ngModelChange)="populateDefaultProductValues(rowData)"
-											name="name" field="name" [size]="30" placeholder=""
-											[minLength]="1" name="{{col.field}}">
+											field="name" [size]="30" placeholder="" [minLength]="1" name="{{col.field}}">
 										</p-autoComplete>
 				                    </ng-template>
 				                    <ng-template pTemplate="output">
@@ -116,13 +131,14 @@
 				            </td>
 				            <td>
 				            	<button type="button" pButton icon="fa fa-plus" (click)="addRow()"></button>
-				            	&nbsp;&nbsp;
-								<button type="button" pButton icon="fa fa-eraser"></button>
+				            	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								<button type="button" pButton icon="fa fa-eraser" (click)="deleteRow(i)"></button>
 				            </td>
 				        </tr>
 				    </ng-template>
 				</p-table>
 			</div>
+			<div class="ui-grid-col-1 ui-sm-12"></div>
 			<div class="ui-grid-col-3 ui-sm-12">
 				<div class="ui-grid-row">
 					<div class="ui-grid-col-4 ui-sm-12">
@@ -160,12 +176,15 @@
 							[(ngModel)]="purchaseOrder.grandTotal" name="grandTotal" #grandTotal="ngModel">
 					</div>
 				</div>
+				<br/>
+				<br/>
+				<br/>
 				<div class="ui-grid-row">
 					<div class="ui-grid-col-4 ui-sm-12">
 						<label i18n="@@paid" for="paid">{{ 'COMMON.AMOUNT_PAID' | translate }} </label> 
 					</div>
 					<div class="ui-grid-col-6 ui-sm-12">
-						<input type="text" pInputText id="paid" (change)="calculateDue()"
+						<input type="text" pInputText id="paid" [disabled]="true"
 							[(ngModel)]="purchaseOrder.paid" name="paid" #paid="ngModel">
 					</div>
 				</div>
@@ -184,9 +203,9 @@
 		<br/>
 		<br />
 		<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
-			<button type="button" pButton icon="fa fa-refresh" (click)="clear()" label="{{ 'COMMON.CLEAR' | translate }}"></button>&nbsp;&nbsp;
-			<button pButton icon="fa fa-save" label="{{ 'COMMON.SAVE' | translate }}"></button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			<button type="button" pButton icon="fa fa-remove" (click)="delete()" label="{{ 'COMMON.DELETE' | translate }}"></button>
+			<button type="button" pButton icon="fa fa-refresh" (click)="clear()" label="{{ 'COMMON.CLEAR' | translate }}"></button>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<button pButton icon="fa fa-save" label="{{ 'COMMON.SAVE' | translate }}"></button>
 		</div>
 	
 	</div>

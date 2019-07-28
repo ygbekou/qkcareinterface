@@ -1,80 +1,86 @@
-<div class="ui-g-12 ui-sm-12" style="padding: 15px;">
-	<div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="receiveOrder">
-		<div class="ui-grid-row">
-			<div class="ui-grid-col-5 ui-sm-12">
-				<app-purchase_order-lookup (purchaseOrderEmit)="lookUpPurchaseOrder($event)" 
-					[originalPage]="'admin/receiveOrderDetails'" [purchaseOrder]="purchaseOrder"></app-purchase_order-lookup>
-			</div>
-			<div class="ui-grid-col-7 ui-sm-12">
-				<div class="ui-grid-col-3 ui-sm-12">
-					<div class="form-group">
-						<label for="deliveryDate">{{ 'COMMON.DELIVERY_DATE' | translate }}<font color="red">*</font></label>
-						<p-calendar [(ngModel)]="receiveOrder.deliveryDate"></p-calendar>
-					</div>
+<form name="form" (ngSubmit)="f.form.valid && save()" #f="ngForm" validate>
+	<div class="ui-g-12 ui-sm-12" style="padding: 15px;">
+		<div class="ui-grid ui-grid-responsive ui-fluid" >
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-5 ui-sm-12">
+					<app-purchase_order-lookup (purchaseOrderEmit)="lookUpPurchaseOrder($event)" 
+						[originalPage]="'admin/receiveOrderDetails'" [purchaseOrder]="purchaseOrder"></app-purchase_order-lookup>
 				</div>
-				<div class="ui-grid-col-9 ui-sm-12">
-					<div class="form-group">
-						<label for="deliveryNotes"> {{ 'COMMON.NOTES' | translate }}</label> 
-						<textarea pInputTextarea id="deliveryNotes" rows="4" cols="40" pInputTextarea maxlength="1000" 
-							[(ngModel)]="receiveOrder.deliveryNote" #notes="ngModel"> </textarea>						
+			    <div class="ui-grid-col-7 ui-sm-12" *ngIf="receiveOrders[0]">
+					<div class="ui-grid-col-3 ui-sm-12">
+						<div class="form-group">
+							<label for="deliveryDate">{{ 'COMMON.DELIVERY_DATE' | translate }}<font color="red">*</font></label>
+							<p-calendar [(ngModel)]="receiveOrders[0].deliveryDate" name="deliveryDate" #receivingDate="ngModel" required></p-calendar>
+							<p-message *ngIf="f.submitted && receivingDate.invalid" severity="error" text="Field is required"></p-message>
+						</div>
 					</div>
+					<div class="ui-grid-col-9 ui-sm-12">
+						<div class="form-group">
+							<label for="deliveryNotes"> {{ 'COMMON.NOTES' | translate }}<font color="red">*</font></label> 
+							<textarea pInputTextarea id="deliveryNotes" name="deliveryNotes" rows="4" cols="40" pInputTextarea maxlength="1000" 
+								[(ngModel)]="receiveOrders[0].deliveryNote" #deliveryNotes="ngModel" required> </textarea>
+							<p-message *ngIf="f.submitted && deliveryNotes.invalid" severity="error" text="Field is required"></p-message>					
+						</div>
+					</div> 
 				</div>
 			</div>
 		</div>
-	</div>
+				
+		<br/>
 			
-	<br/>
-		
-	<div class="ui-grid-row">
-		<div class="ui-grid-col-9 ui-sm-12">					
-			<p-table [columns]="orderProductCols" [value]="receiveOrder.receiveOrderProducts">
-				<ng-template pTemplate="caption">
-			         {{ 'COMMON.PRODUCT_LIST' | translate }}
-			    </ng-template>
-			    <ng-template pTemplate="header" let-orderProductCols>
-			        <tr>
-			            <th *ngFor="let col of orderProductCols" [pSortableColumn]="col.field">
-			                {{col.header}}
-			                <p-sortIcon [field]="col.field"></p-sortIcon>
-			            </th>
-			        </tr>
-			    </ng-template>
-			    <ng-template pTemplate="body" let-rowData let-columns="columns">
-			        <tr>			           
-			            <td *ngFor="let col of columns" [pEditableColumn]="rowData" [pEditableColumnField]="rowData[col.field]">
-			                <p-cellEditor *ngIf="col.field != 'quantity'">
-			                    <ng-template pTemplate="input">
-			                        {{rowData[col.field]}}
-			                    </ng-template>
-			                    <ng-template pTemplate="output">
-			                        {{rowData[col.field]}}
-			                    </ng-template>
-			                </p-cellEditor>
-			      			<p-cellEditor *ngIf="col.field == 'quantity'">
-			                    <ng-template pTemplate="input">
-			                        <input type="text" [(ngModel)]="rowData[col.field]" [disabled]="col.isDisabled">
-			                    </ng-template>
-			                    <ng-template pTemplate="output">
-			                        {{rowData[col.field]}}
-			                    </ng-template>
-			                </p-cellEditor>
-			            </td>
-			        </tr>
-			    </ng-template>
-			</p-table>
+		<div class="ui-grid-row">
+			<div class="ui-grid-col-9 ui-sm-12">					
+				<p-table [columns]="orderProductCols" [value]="receiveOrders[0].receiveOrderProducts" *ngIf="receiveOrders[0]">
+					<ng-template pTemplate="caption">
+						{{ 'COMMON.PRODUCT_LIST' | translate }}
+					</ng-template>
+					<ng-template pTemplate="header" let-orderProductCols>
+						<tr>
+							<th *ngFor="let col of orderProductCols" [pSortableColumn]="col.field">
+								{{col.header}}
+								<p-sortIcon [field]="col.field"></p-sortIcon>
+							</th>
+						</tr>
+					</ng-template>
+					<ng-template pTemplate="body" let-rowData let-columns="columns">
+						<tr>			           
+							<td *ngFor="let col of columns" [pEditableColumn]="rowData" [pEditableColumnField]="rowData[col.field]">
+								<p-cellEditor *ngIf="col.field != 'quantity'">
+									<ng-template pTemplate="input">
+										{{rowData[col.field]}}
+									</ng-template>
+									<ng-template pTemplate="output">
+										{{rowData[col.field]}}
+									</ng-template>
+								</p-cellEditor>
+								<p-cellEditor *ngIf="col.field == 'quantity'">
+									<ng-template pTemplate="input" *ngIf="rowData['id'] !== null">
+										{{rowData[col.field]}}
+									</ng-template>
+									<ng-template pTemplate="input" *ngIf="rowData['id'] === null">
+										<input type="text" [(ngModel)]="rowData[col.field]">
+									</ng-template>
+									<ng-template pTemplate="output">
+										{{rowData[col.field]}}
+									</ng-template>
+								</p-cellEditor>
+							</td>
+						</tr>
+					</ng-template>
+				</p-table>
+			</div>
+			
+			<br/>
 		</div>
 		
 		<br/>
-	</div>
-	
-	<br/>
-	<br />
-	<div>
-		<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
-			<button type="button" pButton icon="fa fa-close" (click)="delete()" label=" {{ 'COMMON.DELETE' | translate }}"></button>&nbsp;&nbsp;
-			<button type="button" pButton icon="fa fa-check" (click)="save(1)" label=" {{ 'COMMON.SAVE' | translate }}"></button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			<button type="button" pButton icon="fa fa-check" (click)="save(2)" label=" {{ 'COMMON.DONE' | translate }}"></button>
+		<br />
+		<div>
+			<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+				<button type="button" pButton icon="fa fa-close" (click)="delete()" label=" {{ 'COMMON.DELETE' | translate }}"></button>&nbsp;&nbsp;
+				<button pButton icon="fa fa-check" label=" {{ 'COMMON.SAVE' | translate }}"></button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<button type="button" pButton icon="fa fa-check" (click)="save(2)" label=" {{ 'COMMON.DONE' | translate }}"></button>
+			</div>
 		</div>
 	</div>
-</div>
-
+</form>

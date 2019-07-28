@@ -16,6 +16,7 @@ export class PurchaseOrder {
   paid: number;
   due: number;
   status: number;
+  error: string;
   
   purchaseOrderProducts: PurchaseOrderProduct[] = [];
   
@@ -36,4 +37,5 @@ export class PurchaseOrderProduct {
   totalAmount: number;
   discountPercentage: number;
   discountAmount: number;
+  status: number;
 }

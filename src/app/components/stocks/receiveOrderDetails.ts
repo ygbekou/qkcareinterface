@@ -1,25 +1,22 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild, Input } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Constants } from '../../app.constants';
-import { Product, Supplier, User } from '../../models';
 import { PurchaseOrder, PurchaseOrderProduct } from '../../models/stocks/purchaseOrder';
 import { ReceiveOrder } from '../../models/stocks/receiveOrder';
-import { EditorModule } from 'primeng/editor';
 import { EmployeeDropdown, SupplierDropdown, ProductDropdown } from '../dropdowns';
-import { Cookie } from 'ng2-cookies/ng2-cookies';
-import { InputTextareaModule, CheckboxModule, MultiSelectModule, CalendarModule } from 'primeng/primeng';
 import { GenericService, PurchasingService } from '../../services';
 import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
-import { Message } from 'primeng/api';
+import { Message, ConfirmationService } from 'primeng/api';
+import { BaseComponent } from '../admin/baseComponent';
  
 @Component({  
   selector: 'app-receiveOrder-details',
   templateUrl: '../../pages/stocks/receiveOrderDetails.html',
   providers: [GenericService, PurchasingService, EmployeeDropdown, SupplierDropdown, ProductDropdown]
 })
-export class ReceiveOrderDetails implements OnInit, OnDestroy {
+export class ReceiveOrderDetails extends BaseComponent implements OnInit, OnDestroy {
   
-  receiveOrder: ReceiveOrder = new ReceiveOrder();
+  receiveOrders: ReceiveOrder[] = [];
   orderProductCols: any[];
   messages: Message[] = [];
   supplierDropdown: SupplierDropdown;
@@ -28,20 +25,21 @@ export class ReceiveOrderDetails implements OnInit, OnDestroy {
   purchaseOrder: PurchaseOrder = new PurchaseOrder();
   
   constructor
-    (
-      private genericService: GenericService,
+  (
+      public genericService: GenericService,
       private purchasingService: PurchasingService,
-      private translate: TranslateService,
+	  public translate: TranslateService,
+	  public confirmationService: ConfirmationService,
       private splDropdown: SupplierDropdown,
       private pdtDropdown: ProductDropdown,
       private employeeDropdown: EmployeeDropdown,
-      private changeDetectorRef: ChangeDetectorRef,
-      private route: ActivatedRoute,
-      private router: Router
-    ) {
-    this.supplierDropdown = splDropdown;
-    this.productDropdown = pdtDropdown;
+      private route: ActivatedRoute
+  ) {
+		super(genericService, translate, confirmationService);
+    	this.supplierDropdown = splDropdown;
+    	this.productDropdown = pdtDropdown;	
   }
+
 
   ngOnInit(): void {
 
@@ -60,13 +58,13 @@ export class ReceiveOrderDetails implements OnInit, OnDestroy {
           
           receiveOrderId = params['receiveOrderId'];
           
-          if (receiveOrderId != null) {
+          if (receiveOrderId !== undefined && receiveOrderId !== null) {
               this.genericService.getNewObject('/service/purchasing/receiveOrder/', receiveOrderId)
                   .subscribe(result => {
                 if (result.id > 0) {
-                  this.receiveOrder = result
+                  this.receiveOrders = result;
                 }
-              })
+              });
           } else {
               
           }
@@ -80,54 +78,54 @@ export class ReceiveOrderDetails implements OnInit, OnDestroy {
  
   
   updateCols() {
-    for (var index in this.orderProductCols) {
-      let col = this.orderProductCols[index];
+    for (let index in this.orderProductCols) {
+      const col = this.orderProductCols[index];
       this.translate.get(col.headerKey).subscribe((res: string) => {
         col.header = res;
       });
     }
   }
   
+
   ngOnDestroy() {
-    this.receiveOrder = null;
+    this.receiveOrders = null;
   }
  
   
   private getNumber(value: number): number {
-    return value != undefined ? value : 0;
+    return value !== undefined ? value : 0;
   } 
   
+
   save(status: number) {
-    this.receiveOrder.status = status;
+    this.receiveOrders[0].status = status;
     
     try {
       this.messages = [];
-      this.purchasingService.saveReceiveOrder(this.receiveOrder)
+      this.purchasingService.saveReceiveOrder(this.receiveOrders[0])
         .subscribe(result => {
           if (result.id > 0) {
-            this.receiveOrder = result
-            this.messages.push({severity:Constants.SUCCESS, summary:Constants.SAVE_LABEL, detail:Constants.SAVE_SUCCESSFUL});
+            this.receiveOrders[0] = result;
+            this.messages.push({severity: Constants.SUCCESS, summary: Constants.SAVE_LABEL, detail: Constants.SAVE_SUCCESSFUL});
+          } else {
+             this.messages.push({severity: Constants.ERROR, summary: Constants.SAVE_LABEL, detail: Constants.SAVE_UNSUCCESSFUL});
           }
-          else {
-             this.messages.push({severity:Constants.ERROR, summary:Constants.SAVE_LABEL, detail:Constants.SAVE_UNSUCCESSFUL});
-          }
-        }) 
-    }
-    catch (e) {
+        }); 
+    } catch (e) {
       console.log(e);
     }
   }
   
+
   lookUpPurchaseOrder(event) {
     this.purchaseOrder = event;
     
     if (this.purchaseOrder && this.purchaseOrder.id > 0) {
       this.purchasingService.getNewReceiveOrder(this.purchaseOrder.id)
-      .subscribe((data: ReceiveOrder) => 
-      { 
+      .subscribe((data: ReceiveOrder[]) => { 
   
-        this.receiveOrder = data;
-        console.info(this.receiveOrder)
+        this.receiveOrders = data;
+        console.info(this.receiveOrders);
         
       },
       error => console.log(error),
@@ -135,7 +133,4 @@ export class ReceiveOrderDetails implements OnInit, OnDestroy {
     }
   }
 
-  delete() {
-    
-  }
  }

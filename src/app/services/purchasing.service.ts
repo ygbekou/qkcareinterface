@@ -68,7 +68,7 @@ export class PurchasingService {
         .catch(this.handleError);
    }
   
-  public getNewReceiveOrder = (id: number): Observable<any> => {
+  public getNewReceiveOrder = (id: number): Observable<any[]> => {
    
       let actionUrl = Constants.apiServer + '/service/purchasing/purchaseOrder/newReceiveOrder/' + id;
       return this.http.get(actionUrl, { headers: this.headers })
