@@ -2,51 +2,46 @@
 		<div class="ui-g-12 ui-sm-12" style="padding: 15px;">
 			
 			<p-tabView (onChange)="onTabChange($event)"> 
-			 	<p-tabPanel header="Ward">
+			 	<p-tabPanel header="{{'COMMON.WARD_LIST' |translate}}">
 			    	<div *ngIf="activeTab == 0" class="ui-grid-row">
-				        <app-reference-details></app-reference-details>
+				        <app-reference-details (referenceSaveEvent)="onReferenceSaved($event)"></app-reference-details>
 				        <br/> 
-				        <br/>
 				        <app-reference-list (referenceIdEvent)="onReferenceSelected($event, 'Ward')"></app-reference-list>
 				    </div>
 			    </p-tabPanel>
-			    <p-tabPanel header="Bed Category" class="ui-grid-row">
+			    <p-tabPanel header="{{'COMMON.BED_CATEGORY_LIST' |translate}}" class="ui-grid-row">
 			    	<div *ngIf="activeTab == 1">
-				        <app-reference-details></app-reference-details>
+				        <app-reference-details (referenceSaveEvent)="onReferenceSaved($event)"></app-reference-details>
 				        <br/> 
-				        <br/>
 				        <app-reference-list (referenceIdEvent)="onReferenceSelected($event, 'Category')"></app-reference-list>
 				    </div>
 			    </p-tabPanel>
-			    <p-tabPanel header="Building" class="ui-grid-row">
+			    <p-tabPanel header="{{'COMMON.BUILDING_LIST' |translate}}" class="ui-grid-row">
 			    	<div *ngIf="activeTab == 2">
-				        <app-reference-details></app-reference-details>
+				        <app-reference-details (referenceSaveEvent)="onReferenceSaved($event)"></app-reference-details>
 				        <br/> 
 				        <br/>
 				        <app-reference-list (referenceIdEvent)="onReferenceSelected($event, 'Building')"></app-reference-list>
 				    </div>
 			    </p-tabPanel>
-			    <p-tabPanel header="Floor">
+			    <p-tabPanel header="{{'COMMON.FLOOR_LIST' |translate}}">
 			    	<div *ngIf="activeTab == 3" class="ui-grid-row">
-				        <app-floor-details></app-floor-details>
+				        <app-floor-details (floorSaveEvent)="onFloorSaved($event)"></app-floor-details>
 				        <br/> 
-				        <br/>
 				        <app-floor-list (floorIdEvent)="onFloorSelected($event)"></app-floor-list>
 				    </div>
 			    </p-tabPanel>
-			     <p-tabPanel header="Room">
+			     <p-tabPanel header="{{'COMMON.ROOM_LIST' |translate}}">
 			    	<div *ngIf="activeTab == 4" class="ui-grid-row">
-				        <app-room-details></app-room-details>
+				        <app-room-details (roomSaveEvent)="onRoomSaved($event)"></app-room-details>
 				        <br/> 
-				        <br/>
 				        <app-room-list (roomIdEvent)="onRoomSelected($event)"></app-room-list>
 				    </div>
 			    </p-tabPanel>
-			    <p-tabPanel header="Bed">
+			    <p-tabPanel header="{{'COMMON.BED_LIST' |translate}}">
 			    	<div *ngIf="activeTab == 5" class="ui-grid-row">
-				        <app-bed-details></app-bed-details>
+				        <app-bed-details (bedSaveEvent)="onBedSaved($event)"></app-bed-details>
 				        <br/> 
-				        <br/>
 				        <app-bed-list (bedIdEvent)="onBedSelected($event)"></app-bed-list>
 				    </div>
 			    </p-tabPanel>

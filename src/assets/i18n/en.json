@@ -190,6 +190,7 @@
 	"MANUFACTURER": "Manufacturer",	
 	"WARD_LIST": "Wards",
 	"CATEGORY_LIST": "Categories",
+	"BED_CATEGORY_LIST": "Bed Categories",
 	"BUILDING_LIST": "Buildings",
 	"FLOOR_LIST": "Floors",
 	"ROOM_LIST": "Rooms",
@@ -339,6 +340,7 @@
 	"REOPEN" :"Reopen",
 	"DOCTOR_ORDER_PRIORITY_LIST": "Doctor order priorities",
 	"TARIF_LIST": "Tarifs" ,
+	"TARIF_TYPE_LIST": "Type of Tarifs" ,
 	"HOSPITAL": "Hospital"
   },
   "MESSAGE": {

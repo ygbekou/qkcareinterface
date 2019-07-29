@@ -1,79 +1,81 @@
-<div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="bed">
-	<p-messages [(value)]="messages"></p-messages>
-	<div class="ui-grid-row">
-		<div class="ui-grid-col-4 ui-sm-12">
-			<div class="form-group">		
-				<label for="name">{{ 'COMMON.NAME' | translate }}</label>
-				<input pInputText id="name" [(ngModel)]="bed.bedNumber" required />
+<form name="form" (ngSubmit)="f.form.valid && save()" #f="ngForm" validate>
+	<div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="bed">
+		<p-messages [(value)]="messages"></p-messages>
+		<div class="ui-grid-row">
+			<div class="ui-grid-col-4 ui-sm-12">
+				<div class="form-group">		
+					<label for="name">{{ 'COMMON.NAME' | translate }}</label>
+					<input pInputText id="name" name="name" [(ngModel)]="bed.bedNumber" required />
+				</div>
+			</div>
+			<div class="ui-grid-col-4 ui-sm-12">
+				<div class="form-group">		
+					<label for="description">{{ 'COMMON.DESCRIPTION' | translate }}</label>
+					<textarea pInputTextarea id="description" name="description" [(ngModel)]="bed.description"> </textarea>
+				</div>
+			</div>
+			<div class="ui-grid-col-4 ui-sm-12">
+				<div class="form-group">								
+					<label for="building">{{ 'COMMON.BUILDING' | translate }}</label>
+					<p-autoComplete [(ngModel)]="bed.room.floor.building"
+						(ngModelChange)="populateFloorDropdown($event)"
+						(onDropdownClick)="buildingDropdown.handleDropdownClick($event)"
+						[suggestions]="buildingDropdown.filteredBuildings"
+						[dropdown]="true"
+						(completeMethod)="buildingDropdown.filter($event)" name="building"
+						field="name" [size]="30" placeholder="" [minLength]="1">
+					</p-autoComplete>
+				</div>
 			</div>
 		</div>
-		<div class="ui-grid-col-4 ui-sm-12">
-			<div class="form-group">		
-				<label for="description">{{ 'COMMON.DESCRIPTION' | translate }}</label>
-				<textarea pInputTextarea id="description" [(ngModel)]="bed.description"> </textarea>
+		<div class="ui-grid-row">
+			<div class="ui-grid-col-4 ui-sm-12">
+				<div class="form-group">			
+					<label for="floor">{{ 'COMMON.FLOOR' | translate }}</label>
+					<p-autoComplete [(ngModel)]="bed.room.floor"
+						(ngModelChange)="populateRoomDropdown($event)"
+						(onDropdownClick)="floorDropdown.handleDropdownClick($event)"
+						[suggestions]="floorDropdown.filteredFloors" [dropdown]="true"
+						(completeMethod)="floorDropdown.filter($event)" name="floor"
+						field="name" [size]="30" placeholder="" [minLength]="1">
+					</p-autoComplete>
+				</div>
 			</div>
-		</div>
-		<div class="ui-grid-col-4 ui-sm-12">
-			<div class="form-group">								
-				<label for="building">{{ 'COMMON.BUILDING' | translate }}</label>
-				<p-autoComplete [(ngModel)]="bed.room.floor.building"
-					(ngModelChange)="populateFloorDropdown($event)"
-					(onDropdownClick)="buildingDropdown.handleDropdownClick($event)"
-					[suggestions]="buildingDropdown.filteredBuildings"
-					[dropdown]="true"
-					(completeMethod)="buildingDropdown.filter($event)" name="name"
-					field="name" [size]="30" placeholder="" [minLength]="1">
-				</p-autoComplete>
+			<div class="ui-grid-col-4 ui-sm-12">
+				<div class="form-group">			
+					<label for="room">{{ 'COMMON.ROOM' | translate }}</label>
+					<p-autoComplete [(ngModel)]="bed.room"
+						(onDropdownClick)="roomDropdown.handleDropdownClick($event)"
+						[suggestions]="roomDropdown.filteredRooms" [dropdown]="true"
+						(completeMethod)="roomDropdown.filter($event)" name="room"
+						field="name" [size]="30" placeholder="" [minLength]="1">
+					</p-autoComplete>
+				</div>
+			</div>
+			<div class="ui-grid-col-4 ui-sm-12">
+				<div class="form-group">			
+					<label for="category">{{ 'COMMON.CATEGORY' | translate }}<font color="red">*</font></label>
+					<p-autoComplete [(ngModel)]="bed.category"
+						(onDropdownClick)="categoryDropdown.handleDropdownClick($event)"
+						[suggestions]="categoryDropdown.filteredCategories"
+						[dropdown]="true" id="medicine"
+						(completeMethod)="categoryDropdown.filter($event)"
+						name="bedCategory" field="name" [size]="30" placeholder=""
+						[minLength]="1">
+					</p-autoComplete>
+				</div>
+			</div>
+			<div class="ui-grid-col-4 ui-sm-12">
+				<label for="status">{{ 'COMMON.STATUS' | translate }}<font color="red">*</font></label>
+				<br/>
+				<p-radioButton name="status" value="0" label="Actif" [(ngModel)]="bed.status"></p-radioButton>
+				<p-radioButton name="status" value="1" label="Inactif" [(ngModel)]="bed.status"></p-radioButton>
 			</div>
 		</div>
 	</div>
-	<div class="ui-grid-row">
-		<div class="ui-grid-col-4 ui-sm-12">
-			<div class="form-group">			
-				<label for="floor">{{ 'COMMON.FLOOR' | translate }}</label>
-				<p-autoComplete [(ngModel)]="bed.room.floor"
-					(ngModelChange)="populateRoomDropdown($event)"
-					(onDropdownClick)="floorDropdown.handleDropdownClick($event)"
-					[suggestions]="floorDropdown.filteredFloors" [dropdown]="true"
-					(completeMethod)="floorDropdown.filter($event)" name="name"
-					field="name" [size]="30" placeholder="" [minLength]="1">
-				</p-autoComplete>
-			</div>
-		</div>
-		<div class="ui-grid-col-4 ui-sm-12">
-			<div class="form-group">			
-				<label for="room">{{ 'COMMON.ROOM' | translate }}</label>
-				<p-autoComplete [(ngModel)]="bed.room"
-					(onDropdownClick)="roomDropdown.handleDropdownClick($event)"
-					[suggestions]="roomDropdown.filteredRooms" [dropdown]="true"
-					(completeMethod)="roomDropdown.filter($event)" name="name"
-					field="name" [size]="30" placeholder="" [minLength]="1">
-				</p-autoComplete>
-			</div>
-		</div>
-		<div class="ui-grid-col-4 ui-sm-12">
-			<div class="form-group">			
-				<label i18n="@@category" for="category">{{ 'COMMON.CATEGORY' | translate }}<font color="red">*</font></label>
-				<p-autoComplete [(ngModel)]="bed.category"
-					(onDropdownClick)="categoryDropdown.handleDropdownClick($event)"
-					[suggestions]="categoryDropdown.filteredCategories"
-					[dropdown]="true" id="medicine"
-					(completeMethod)="categoryDropdown.filter($event)"
-					name="medicine" field="name" [size]="30" placeholder=""
-					[minLength]="1">
-				</p-autoComplete>
-			</div>
-		</div>
-		<div class="ui-grid-col-4 ui-sm-12">
-			<p-radioButton name="status" value="0" label="Actif" [(ngModel)]="bed.status"></p-radioButton>
-			<p-radioButton name="status" value="1" label="Inactif" [(ngModel)]="bed.status"></p-radioButton>
-		</div>
+	<br />
+	<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+		<button type="button" pButton icon="fa fa-close" (click)="clear()" label="{{ 'COMMON.CLEAR' | translate }}"></button> &nbsp;&nbsp;
+		<button pButton icon="fa fa-check" label="{{ 'COMMON.SAVE' | translate }}"></button>
 	</div>
-</div>
-<br />
-<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
-	<button type="button" pButton icon="fa fa-close" (click)="clear()" label="{{ 'COMMON.CLEAR' | translate }}"></button> &nbsp;&nbsp;
-	<button type="button" pButton icon="fa fa-close" (click)="delete()" label="{{ 'COMMON.DELETE' | translate }}"></button> &nbsp;&nbsp;
-	<button type="button" pButton icon="fa fa-check" (click)="save()" label="{{ 'COMMON.SAVE' | translate }}"></button>
-</div>
-
+</form>

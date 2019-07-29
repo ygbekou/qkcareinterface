@@ -18,10 +18,6 @@ export class DepartmentDetails extends BaseComponent implements OnInit, OnDestro
 
     department: Department = new Department();
     messages: Message[] = [];
-    @ViewChild('picture') picture: ElementRef;
-    formData = new FormData();
-	multiple = false;
-	
     @Output() departmentSaveEvent = new EventEmitter<Department>();
 
     constructor
@@ -67,32 +63,7 @@ export class DepartmentDetails extends BaseComponent implements OnInit, OnDestro
 
 
   save() {
-    this.formData = new FormData();
-
-    const pictureEl = this.picture.nativeElement;
-    if (pictureEl && pictureEl.files && (pictureEl.files.length > 0)) {
-      const files: FileList = pictureEl.files;
-      for (let i = 0; i < files.length; i++) {
-          this.formData.append('file', files[i], files[i].name);
-      }
-    } else {
-       this.formData.append('file', null, null);
-    }
-
-    try {
-      if (pictureEl && pictureEl.files && pictureEl.files.length > 0) {
-        this.department.fileLocation = '';
-        this.genericService.saveWithFile(this.department, 'Department', this.formData, 'saveWithFile')
-          .subscribe(result => {
-            if (result.id > 0) {
-				this.processResult(result, this.department, this.messages, null);
-				this.department = result;
-				this.departmentSaveEvent.emit(this.department);
-			} else {
-				this.processResult(result, this.department, this.messages, null);
-			}
-          });
-      } else {
+     try {
         this.genericService.save(this.department, 'Department')
           .subscribe(result => {
             if (result.id > 0) {
@@ -103,7 +74,6 @@ export class DepartmentDetails extends BaseComponent implements OnInit, OnDestro
 				this.processResult(result, this.department, this.messages, null);
 			}
           });
-      }
     } catch (e) {
       console.log(e);
     }

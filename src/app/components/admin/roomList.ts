@@ -4,16 +4,17 @@ import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { Constants } from '../../app.constants';
 import { FileUploader } from './fileUploader';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
-import { DataTableModule, DialogModule, InputTextareaModule, CheckboxModule } from 'primeng/primeng';
+import { DataTableModule, DialogModule, InputTextareaModule, CheckboxModule, ConfirmationService } from 'primeng/primeng';
 import { GenericService, GlobalEventsManager } from '../../services';
 import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
+import { BaseComponent } from './baseComponent';
 
 @Component({
   selector: 'app-room-list',
   templateUrl: '../../pages/admin/roomList.html',
   providers: [GenericService]
 })
-export class RoomList implements OnInit, OnDestroy {
+export class RoomList extends BaseComponent implements OnInit, OnDestroy {
 
   rooms: Room[] = [];
   cols: any[];
@@ -23,20 +24,23 @@ export class RoomList implements OnInit, OnDestroy {
   
   constructor
     (
-    private genericService: GenericService,
-    private translate: TranslateService,
-    private globalEventsManager: GlobalEventsManager,
-    private changeDetectorRef: ChangeDetectorRef,
+    public genericService: GenericService,
+	public translate: TranslateService,
+	public confirmationService: ConfirmationService,
     private route: ActivatedRoute,
     private router: Router,
     ) {
+		super(genericService, translate, confirmationService);
   }
 
   ngOnInit(): void {
     this.cols = [
-            { field: 'name', header: 'Name', headerKey: 'COMMON.NAME' },
-            { field: 'description', header: 'Description', headerKey: 'COMMON.DESCRIPTION' },
-            { field: 'status', header: 'Status', headerKey: 'COMMON.STATUS' }
+			{ field: 'buildingName', header: 'Building', headerKey: 'COMMON.BUILDING', style: {width: '15%', 'text-align': 'center'} },
+			{ field: 'floorName', header: 'Floor', headerKey: 'COMMON.FLOOR', style: {width: '15%', 'text-align': 'center'} },
+            { field: 'name', header: 'Name', headerKey: 'COMMON.NAME', style: {width: '20%', 'text-align': 'center'} },
+			{ field: 'description', header: 'Description', headerKey: 'COMMON.DESCRIPTION',
+			 		style: {width: '30%', 'text-align': 'center'}  },
+            { field: 'statusDesc', header: 'Status', headerKey: 'COMMON.STATUS', style: {width: '10%', 'text-align': 'center'}  }
         ];
     
     this.route
@@ -95,18 +99,15 @@ export class RoomList implements OnInit, OnDestroy {
     
   }
 
-  delete(roomId : number) {
-    try {
-      let navigationExtras: NavigationExtras = {
-        queryParams: {
-          "roomId": roomId,
-        }
-      }
-      this.router.navigate(["/admin/roomDetails"], navigationExtras);
-    }
-    catch (e) {
-      console.log(e);
-    }
-  }
+  updateTable(room: Room) {
+		const index = this.rooms.findIndex(x => x.id === room.id);
+		
+		if (index === -1) {
+			this.rooms.push(room);
+		} else {
+			this.rooms[index] = room;
+		}
+
+	}
 
  }

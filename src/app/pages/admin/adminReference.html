@@ -111,7 +111,7 @@
           <app-medicine-list (medicineIdEvent)="onMedicineSelected($event)"></app-medicine-list>
         </div>
       </p-tabPanel>
-      <p-tabPanel id="serviceTarifType" header="{{'COMMON.TARIF_LIST'|translate}}">
+      <p-tabPanel id="serviceTarifType" header="{{'COMMON.TARIF_TYPE_LIST'|translate}}">
         <div *ngIf="activeTab == 15" class="ui-grid-row">
 		  <app-reference-details (referenceSaveEvent)="onReferenceSaved($event)"></app-reference-details>
 		   <br/>

@@ -1,58 +1,55 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild, Input, Output, EventEmitter } from '@angular/core';
-import { Reference } from '../../models/reference';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef, Output, EventEmitter } from '@angular/core';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
-import { Constants } from '../../app.constants';
 import { Bed } from '../../models/bed';
-import { Floor } from '../../models/floor';
-import { Room } from '../../models/room';
-import { FileUploader } from './fileUploader';
-import { Cookie } from 'ng2-cookies/ng2-cookies';
-import { DataTableModule, DialogModule, InputTextareaModule, CheckboxModule } from 'primeng/primeng';
-import { User } from '../../models/user';  
 import { GenericService, GlobalEventsManager } from '../../services';
 import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
+import { BaseComponent } from './baseComponent';
+import { ConfirmationService } from 'primeng/api';
 
 @Component({
   selector: 'app-bed-list',
   templateUrl: '../../pages/admin/bedList.html',
   providers: [GenericService]
 })
-export class BedList implements OnInit, OnDestroy {
+export class BedList extends BaseComponent implements OnInit, OnDestroy {
   
   beds: Bed[] = [];
   cols: any[];
   
-  hiddenMenu: boolean = true;
+  hiddenMenu = true;
   @Output() bedIdEvent = new EventEmitter<string>();
   
   constructor
     (
-    private genericService: GenericService,
-    private translate: TranslateService,
+    public genericService: GenericService,
+	public translate: TranslateService,
+	public confirmationService: ConfirmationService,
     private globalEventsManager: GlobalEventsManager,
-    private changeDetectorRef: ChangeDetectorRef,
     private route: ActivatedRoute,
     private router: Router,
     ) {
+		super(genericService, translate, confirmationService);
   }
 
   ngOnInit(): void {
     this.cols = [
-            { field: 'bedNumber', header: 'Number', headerKey: 'COMMON.BED_NUMBER' },
-            { field: 'description', header: 'Description', headerKey: 'COMMON.DESCRIPTION' },
-            { field: 'status', header: 'Status', headerKey: 'COMMON.STATUS' }
+		 	{ field: 'buildingName', header: 'Building', headerKey: 'COMMON.BUILDING', style: {width: '15%', 'text-align': 'center'} },
+		  	{ field: 'floorName', header: 'Floor', headerKey: 'COMMON.FLOOR', style: {width: '15%', 'text-align': 'center'} },
+		   	{ field: 'roomName', header: 'Room', headerKey: 'COMMON.ROOM', style: {width: '15%', 'text-align': 'center'} },
+		    { field: 'bedCategoryName', header: 'Category', headerKey: 'COMMON.CATEGORY', style: {width: '15%', 'text-align': 'center'} },
+            { field: 'bedNumber', header: 'Number', headerKey: 'COMMON.BED_NUMBER', style: {width: '20%', 'text-align': 'center'} },
+            { field: 'statusDesc', header: 'Status', headerKey: 'COMMON.STATUS', style: {width: '10%', 'text-align': 'center'} }
         ];
     
     this.route
         .queryParams
         .subscribe(params => {
           
-          let parameters: string [] = []; 
+          const parameters: string [] = []; 
             
           this.genericService.getAll('Bed')
-            .subscribe((data: Bed[]) => 
-            { 
-              this.beds = data 
+            .subscribe((data: Bed[]) => { 
+              this.beds = data; 
             },
             error => console.log(error),
             () => console.log('Get all Beds complete'));
@@ -67,8 +64,8 @@ export class BedList implements OnInit, OnDestroy {
  
   
   updateCols() {
-    for (var index in this.cols) {
-      let col = this.cols[index];
+    for (let index in this.cols) {
+      const col = this.cols[index];
       this.translate.get(col.headerKey).subscribe((res: string) => {
         col.header = res;
       });
@@ -79,37 +76,33 @@ export class BedList implements OnInit, OnDestroy {
     this.beds = null;
   }
   
-  edit(bedId : number) {
+  edit(bedId: number) {
     try {
       if (this.hiddenMenu) {
         this.bedIdEvent.emit(bedId + '');
       } else {
-        let navigationExtras: NavigationExtras = {
+        const navigationExtras: NavigationExtras = {
           queryParams: {
-            "bedId": bedId
+            'bedId': bedId
           }
-        }
-        this.router.navigate(["/admin/bedDetails"], navigationExtras);
+        };
+        this.router.navigate(['/admin/bedDetails'], navigationExtras);
       }
-    }
-    catch (e) {
+    } catch (e) {
       console.log(e);
     }
     
   }
 
-  delete(bedId: number) {
-    try {
-      let navigationExtras: NavigationExtras = {
-        queryParams: {
-          "bedId": bedId,
-        }
-      }
-      this.router.navigate(["/admin/bedDetails"], navigationExtras);
-    }
-    catch (e) {
-      console.log(e);
-    }
-  }
+  updateTable(bed: Bed) {
+		const index = this.beds.findIndex(x => x.id === bed.id);
+		
+		if (index === -1) {
+			this.beds.push(bed);
+		} else {
+			this.beds[index] = bed;
+		}
+
+	}
 
  }

@@ -1,14 +1,12 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-import { Reference, Bed, Floor, Room, User  } from '../../models';
+import { Component, OnInit, OnDestroy, EventEmitter, Output } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Bed, Floor, Room } from '../../models';
 import { Constants } from '../../app.constants';
-import { FileUploader } from './fileUploader';
-import { Cookie } from 'ng2-cookies/ng2-cookies';
 import { BuildingDropdown, FloorDropdown, RoomDropdown, CategoryDropdown } from '../dropdowns';
-import { DataTableModule, DialogModule, InputTextareaModule, CheckboxModule } from 'primeng/primeng';
 import { GenericService, GlobalEventsManager } from '../../services';
-import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
-import { Message } from 'primeng/api';
+import { TranslateService} from '@ngx-translate/core';
+import { Message, ConfirmationService } from 'primeng/api';
+import { BaseComponent } from './baseComponent';
 
 @Component({
   selector: 'app-bed-details',
@@ -16,27 +14,28 @@ import { Message } from 'primeng/api';
   providers: [GenericService, BuildingDropdown, FloorDropdown, RoomDropdown, CategoryDropdown]
   
 }) 
-export class BedDetails implements OnInit, OnDestroy {
+export class BedDetails extends BaseComponent implements OnInit, OnDestroy {
   
   bed: Bed = new Bed();
   hiddenMenu: boolean = true;
   
   messages: Message[] = [];
+  @Output() bedSaveEvent = new EventEmitter<Bed>();
  
   constructor
     (
-      private genericService: GenericService,
-      private translate: TranslateService,
+      public genericService: GenericService,
+	  public translate: TranslateService,
+	  public confirmationService: ConfirmationService,
       private globalEventsManager: GlobalEventsManager,
       private buildingDropdown: BuildingDropdown,
       private floorDropdown: FloorDropdown,
       private roomDropdown: RoomDropdown,
       private categoryDropdown: CategoryDropdown,
-      private changeDetectorRef: ChangeDetectorRef,
-      private route: ActivatedRoute,
-      private router: Router
+      private route: ActivatedRoute
     ) {
-      this.clear();
+		super(genericService, translate, confirmationService);
+      	this.clear();
   }
 
   
@@ -53,9 +52,9 @@ export class BedDetails implements OnInit, OnDestroy {
               this.genericService.getOne(bedId, 'Bed')
                   .subscribe(result => {
                 if (result.id > 0) {
-                  this.bed = result
+                  this.bed = result;
                 }
-              })
+              });
           }
         });
     
@@ -71,7 +70,7 @@ export class BedDetails implements OnInit, OnDestroy {
       if (result.id > 0) {
         this.bed = result;
       }
-    })
+    });
   }
   
   clear() {
@@ -87,24 +86,17 @@ export class BedDetails implements OnInit, OnDestroy {
       this.genericService.save(this.bed, 'Bed')
         .subscribe(result => {
           if (result.id > 0) {
-            this.bed = result;
-            this.translate.get(['COMMON.SAVE', 'MESSAGE.SAVE_SUCCESS']).subscribe(res => {
-              this.messages.push({severity:Constants.SUCCESS, summary:res['COMMON.SAVE'], detail:res['MESSAGE.SAVE_SUCCESS']});
-            });
-            
+			this.processResult(result, this.bed, this.messages, null);
+			this.bed = result;
+			this.bedSaveEvent.emit(this.bed);
+          } else {
+            this.processResult(result, this.bed, this.messages, null);
           }
-          else {
-            this.translate.get(['COMMON.SAVE', 'MESSAGE.SAVE_SUCCESS']).subscribe((res: string) => {
-              this.messages.push({severity:Constants.SUCCESS, summary:res['COMMON.SAVE'], detail:res['MESSAGE.SAVE_SUCCESS']});
-            });
-          }
-        })
-    }
-    catch (e) {
+        });
+    } catch (e) {
       console.log(e);
     }
   }
-
   
   populateFloorDropdown(event) {
     this.floorDropdown.buildingId = this.bed.room.floor.building.id;
@@ -116,5 +108,4 @@ export class BedDetails implements OnInit, OnDestroy {
     this.roomDropdown.getAllRooms();
   }
   
-  delete() {}
 }

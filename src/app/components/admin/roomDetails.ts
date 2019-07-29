@@ -1,15 +1,12 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-import { Reference } from '../../models/reference';
-import { Constants } from '../../app.constants';
+import { Component, OnInit, OnDestroy, EventEmitter, Output } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Floor } from '../../models/floor';
 import { Room } from '../../models/room';
-import { FileUploader } from './fileUploader';
-import { Cookie } from 'ng2-cookies/ng2-cookies';
 import { BuildingDropdown, FloorDropdown } from '../dropdowns';
-import { DataTableModule, DialogModule, InputTextareaModule, CheckboxModule } from 'primeng/primeng';
-import { User } from '../../models/user';  
+import { ConfirmationService, Message } from 'primeng/primeng';
 import { GenericService, GlobalEventsManager } from '../../services';
+import { BaseComponent } from './baseComponent';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-room-details',
@@ -17,34 +14,31 @@ import { GenericService, GlobalEventsManager } from '../../services';
   providers: [GenericService, BuildingDropdown, FloorDropdown]
   
 }) 
-export class RoomDetails implements OnInit, OnDestroy {
+export class RoomDetails extends BaseComponent implements OnInit, OnDestroy {
   
-  public error: String = '';
-  displayDialog: boolean;
   room: Room = new Room();
+  messages: Message[] = [];
   
   hiddenMenu: boolean = true;
   
   buildingDropdown: BuildingDropdown;
   floorDropdown: FloorDropdown;
-  
-  DETAIL: string = Constants.DETAIL;
-  ADD_IMAGE: string = Constants.ADD_IMAGE;
-  ADD_LABEL: string = Constants.ADD_LABEL;  
+  @Output() roomSaveEvent = new EventEmitter<Room>();
   
   constructor
     (
-      private genericService: GenericService,
+	  public genericService: GenericService,
+	  public translate: TranslateService,
+	  public confirmationService: ConfirmationService,
       private globalEventsManager: GlobalEventsManager,
       private bdgDropdown: BuildingDropdown,
       private flrDropdown: FloorDropdown,
-      private changeDetectorRef: ChangeDetectorRef,
-      private route: ActivatedRoute,
-      private router: Router
+      private route: ActivatedRoute
     ) {
-      this.buildingDropdown = bdgDropdown;
-      this.floorDropdown = flrDropdown;
-      this.clear();
+		super(genericService, translate, confirmationService);
+      	this.buildingDropdown = bdgDropdown;
+      	this.floorDropdown = flrDropdown;
+      	this.clear();
   }
 
   
@@ -63,10 +57,6 @@ export class RoomDetails implements OnInit, OnDestroy {
                 if (result.id > 0) {
                   this.room = result
                 }
-                else {
-                  this.error = Constants.SAVE_UNSUCCESSFUL;
-                  this.displayDialog = true;
-                }
               })
           }
         });
@@ -83,10 +73,6 @@ export class RoomDetails implements OnInit, OnDestroy {
       if (result.id > 0) {
         this.room = result
       }
-      else {
-        this.error = Constants.SAVE_UNSUCCESSFUL;
-        this.displayDialog = true;
-      }
     })
   }
   
@@ -97,16 +83,17 @@ export class RoomDetails implements OnInit, OnDestroy {
   
   save() {
     try {
-      this.error = '';
+      this.messages = [];
       
       this.genericService.save(this.room, 'Room')
         .subscribe(result => {
           if (result.id > 0) {
-            this.room = result
+			this.processResult(result, this.room, this.messages, null);
+			this.room = result;
+            this.roomSaveEvent.emit(this.room);
           }
           else {
-            this.error = Constants.SAVE_UNSUCCESSFUL;
-            this.displayDialog = true;
+            this.processResult(result, this.room, this.messages, null);
           }
         })
     }
@@ -121,5 +108,4 @@ export class RoomDetails implements OnInit, OnDestroy {
     this.floorDropdown.getAllFloors();
   }
   
-  delete() {}
 }

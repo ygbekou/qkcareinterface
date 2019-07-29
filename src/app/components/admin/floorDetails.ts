@@ -1,15 +1,11 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-import { Reference } from '../../models/reference';
-import { DepartmentDropdown } from '../dropdowns/dropdown.department';
-import { Constants } from '../../app.constants';
+import { Component, OnInit, OnDestroy, EventEmitter, Output } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Floor } from '../../models/floor';
-import { FileUploader } from './fileUploader';
-import { Cookie } from 'ng2-cookies/ng2-cookies';
 import { BuildingDropdown } from '../dropdowns';
-import { DataTableModule, DialogModule, InputTextareaModule, CheckboxModule } from 'primeng/primeng';
-import { User } from '../../models/user';  
-import { GenericService, GlobalEventsManager } from '../../services';
+import { Message, ConfirmationService } from 'primeng/primeng';
+import { GenericService } from '../../services';
+import { BaseComponent } from './baseComponent';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-floor-details',
@@ -17,30 +13,27 @@ import { GenericService, GlobalEventsManager } from '../../services';
   providers: [GenericService, BuildingDropdown]
   
 })
-export class FloorDetails implements OnInit, OnDestroy {
+export class FloorDetails extends BaseComponent implements OnInit, OnDestroy {
   
-  public error: String = '';
-  displayDialog: boolean;
+  messages: Message[] = [];
   floor: Floor = new Floor();
   
   hiddenMenu: boolean = true;
-  
   buildingDropdown: BuildingDropdown;
-  
-  DETAIL: string = Constants.DETAIL;
-  ADD_IMAGE: string = Constants.ADD_IMAGE;
-  ADD_LABEL: string = Constants.ADD_LABEL;  
+
+  @Output() floorSaveEvent = new EventEmitter<Floor>();
   
   constructor
     (
-      private genericService: GenericService,
-      private globalEventsManager: GlobalEventsManager,
+	  public genericService: GenericService,
+	  public translate: TranslateService,
+	  public confirmationService: ConfirmationService,
       private bdgDropdown: BuildingDropdown,
-      private changeDetectorRef: ChangeDetectorRef,
-      private route: ActivatedRoute,
-      private router: Router
-    ) {this.buildingDropdown = bdgDropdown;
-      this.floor = new Floor();
+      private route: ActivatedRoute
+    ) {
+		super(genericService, translate, confirmationService);
+		this.buildingDropdown = bdgDropdown;
+      	this.floor = new Floor();
   }
 
   
@@ -57,16 +50,11 @@ export class FloorDetails implements OnInit, OnDestroy {
               this.genericService.getOne(floorId, 'Floor')
                   .subscribe(result => {
                 if (result.id > 0) {
-                  this.floor = result
-                }
-                else {
-                  this.error = Constants.SAVE_UNSUCCESSFUL;
-                  this.displayDialog = true;
-                }
-              })
+                  this.floor = result;
+				}
+              });
           }
         });
-    
   }
   
   ngOnDestroy() {
@@ -77,13 +65,9 @@ export class FloorDetails implements OnInit, OnDestroy {
     this.genericService.getOne(floorId, 'Floor')
         .subscribe(result => {
       if (result.id > 0) {
-        this.floor = result
+        this.floor = result;
       }
-      else {
-        this.error = Constants.SAVE_UNSUCCESSFUL;
-        this.displayDialog = true;
-      }
-    })
+    });
   }
   
   clear() {
@@ -92,24 +76,21 @@ export class FloorDetails implements OnInit, OnDestroy {
   
   save() {
     try {
-      this.error = '';
+      this.messages = [];
       
       this.genericService.save(this.floor, 'Floor')
         .subscribe(result => {
           if (result.id > 0) {
-            this.floor = result
+			this.processResult(result, this.floor, this.messages, null);
+			this.floor = result;
+            this.floorSaveEvent.emit(this.floor);
+          } else {
+            this.processResult(result, this.floor, this.messages, null);
           }
-          else {
-            this.error = Constants.SAVE_UNSUCCESSFUL;
-            this.displayDialog = true;
-          }
-        })
-    }
-    catch (e) {
+        });
+    } catch (e) {
       console.log(e);
     }
   }
-
-  delete() {}
   
  }

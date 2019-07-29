@@ -189,7 +189,8 @@
     "BED_NUMBER": "Numéro de Lit",
     "MANUFACTURER": "Fabricant",
     "WARD_LIST": "Quartiers",
-    "CATEGORY_LIST": "Catégories",
+	"CATEGORY_LIST": "Catégories",
+	"BED_CATEGORY_LIST": "Catégories des Lits",
     "BUILDING_LIST": "Immeubles",
     "FLOOR_LIST": "Etages",
     "ROOM_LIST": "Chambres",
@@ -340,6 +341,7 @@
 	"REOPEN" :"Rouvrir",
 	"DOCTOR_ORDER_PRIORITY_LIST": "Priorités ordre de médecin",
 	"TARIF_LIST": "Tarifs",
+	"TARIF_TYPE_LIST": "Type de Tarifs",
 	"HOSPITAL": "Hopital"
   },
   "MESSAGE": {

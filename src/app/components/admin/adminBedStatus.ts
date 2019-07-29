@@ -1,15 +1,16 @@
-import { Component,LOCALE_ID,OnInit, ChangeDetectorRef, ViewChild } from '@angular/core';
-import { User, Patient, UserGroup,  } from '../../models';
-import { PatientDetails } from './patientDetails';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { User, Patient,  } from '../../models';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
-import { GenericService, UserService, GlobalEventsManager } from '../../services';
-import { AppointmentDetails } from './appointmentDetails';
+import { GenericService, GlobalEventsManager } from '../../services';
 import { BedDetails } from './bedDetails';
 import { FloorDetails } from './floorDetails';
 import { ReferenceDetails } from './referenceDetails';
 import { ReferenceList } from './referenceList';
 import { RoomDetails } from './roomDetails';
 import { Constants } from '../../app.constants';
+import { FloorList } from './floorList';
+import { RoomList } from './roomList';
+import { BedList } from './bedList';
 
 @Component({
   selector: 'app-admin-bedStatus',
@@ -20,9 +21,13 @@ export class AdminBedStatus implements OnInit {
   [x: string]: any;
 
   @ViewChild(ReferenceDetails) referenceDetails: ReferenceDetails;
+  @ViewChild(ReferenceList) referenceList: ReferenceList;
   @ViewChild(FloorDetails) floorDetails: FloorDetails;
+  @ViewChild(FloorList) floorList: FloorList;
   @ViewChild(RoomDetails) roomDetails: RoomDetails;
+  @ViewChild(RoomList) roomList: RoomList;
   @ViewChild(BedDetails) bedDetails: BedDetails;
+  @ViewChild(BedList) bedList: BedList;
   public user: User;
   public patient: Patient;
   public activeTab = 0;
@@ -31,8 +36,7 @@ export class AdminBedStatus implements OnInit {
   ABSENCES: string = Constants.ABSENCES;
   constructor (
     private genericService: GenericService,
-    private globalEventsManager: GlobalEventsManager,
-    private changeDetectorRef: ChangeDetectorRef
+    private globalEventsManager: GlobalEventsManager
   ) {
     
     this.user = new User();
@@ -47,7 +51,7 @@ export class AdminBedStatus implements OnInit {
     if (this.currentUser == null) {
       this.currentUser = new User();
     }
-    this.globalEventsManager.selectedReferenceType = "Ward";
+    this.processReference(null, 'Ward', 'WARD');
     
   }
 
@@ -55,39 +59,58 @@ export class AdminBedStatus implements OnInit {
     let referenceId = $event;
     this.referenceDetails.getReference(referenceId, referenceType);
   }
+  onReferenceSaved($event) {
+	this.referenceList.updateTable($event);
+  }
+
   onFloorSelected($event) {
     let floorId = $event;
     this.floorDetails.getFloor(floorId);
   }
+  onFloorSaved($event) {
+	this.floorList.updateTable($event);
+  }
+
   onRoomSelected($event) {
     let roomId = $event;
     this.roomDetails.getRoom(roomId);
   }
+  onRoomSaved($event) {
+	this.roomList.updateTable($event);
+  }
+
   onBedSelected($event) {
     let bedId = $event;
     this.bedDetails.getBed(bedId);
   }
+  onBedSaved($event) {
+	this.bedList.updateTable($event);
+  }
   
   onTabChange(evt) {
     this.activeTab = evt.index;
-    if (evt.index == 0) {
-      this.activeTab = 0
-      this.globalEventsManager.selectedReferenceType = "Ward";
-    } else if (evt.index == 1) {
-      this.activeTab = 1
-      this.globalEventsManager.selectedReferenceType = "Category";
-      this.globalEventsManager.selectedParentId = Constants.CATEGORY_BED;
-    } else if (evt.index == 2) {
-      this.activeTab = 2
-      this.globalEventsManager.selectedReferenceType = "Building";
-    } else if (evt.index == 3) {
+    if (evt.index === 0) {
+      this.processReference(null, 'Ward', 'WARD');
+    } else if (evt.index === 1) {
+      this.processReference(Constants.CATEGORY_BED, 'Category', 'BED_CATEGORY');
+    } else if (evt.index === 2) {
+      this.processReference(null, 'Building', 'BUILDING');
+    } else if (evt.index === 3) {
       this.activeTab = 3
-    } else if (evt.index == 4) {
+    } else if (evt.index === 4) {
       this.activeTab = 4
-    } else if (evt.index == 5) {
+    } else if (evt.index === 5) {
       this.activeTab = 5
     } 
   }
 
+  processReference(categoryNumber: number, referenceType: string, listLabel: string) {
+	this.globalEventsManager.selectedParentId = categoryNumber;
+	this.globalEventsManager.selectedReferenceType = referenceType;
+	setTimeout(() => {
+		this.referenceList.updateCols(listLabel);
+	}, 0);
+	this.referenceList.getAll();
+  }
 
 }

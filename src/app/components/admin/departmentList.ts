@@ -33,13 +33,9 @@ export class DepartmentList extends BaseComponent implements OnInit, OnDestroy {
 
     this.cols = [
             { field: 'name', header: 'Name', headerKey: 'COMMON.NAME', type: 'string',
-                                        style: {width: '20%', 'text-align': 'center'} },
-            { field: 'title', header: 'Title', headerKey: 'COMMON.TITLE', type: 'string',
-                                        style: {width: '15%', 'text-align': 'center'} },
-            { field: 'description', header: 'Description', headerKey: 'COMMON.DESCRIPTION', type: 'string',
                                         style: {width: '30%', 'text-align': 'center'} },
-            { field: 'picture', header: 'Picture', headerKey: 'COMMON.PICTURE', type: 'string',
-                                        style: {width: '10%', 'text-align': 'center'} },
+            { field: 'description', header: 'Description', headerKey: 'COMMON.DESCRIPTION', type: 'string',
+                                        style: {width: '50%', 'text-align': 'center'} },
             { field: 'statusDesc', header: 'Status', headerKey: 'COMMON.STATUS', type: 'string',
                                         style: {width: '10%', 'text-align': 'center'} }
         ];

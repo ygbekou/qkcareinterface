@@ -1,16 +1,17 @@
 import { Component, OnInit, OnDestroy, Output, EventEmitter } from '@angular/core';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { Floor } from '../../models';
-import { } from 'primeng/primeng';
+import { ConfirmationService } from 'primeng/primeng';
 import { GenericService } from '../../services';
 import { TranslateService } from '@ngx-translate/core';
+import { BaseComponent } from './baseComponent';
 
 @Component({
   selector: 'app-floor-list',
   templateUrl: '../../pages/admin/floorList.html',
   providers: [GenericService]
 })
-export class FloorList implements OnInit, OnDestroy {
+export class FloorList extends BaseComponent implements OnInit, OnDestroy {
 
   floors: Floor[] = [];
   cols: any[];
@@ -20,18 +21,21 @@ export class FloorList implements OnInit, OnDestroy {
 
   constructor
     (
-      private genericService: GenericService,
-      private translate: TranslateService,
+      public genericService: GenericService,
+	  public translate: TranslateService,
+	  public confirmationService: ConfirmationService,
       private route: ActivatedRoute,
       private router: Router,
   ) {
+	  super(genericService, translate, confirmationService);
   }
 
   ngOnInit(): void {
     this.cols = [
-      { field: 'name', header: 'Name', headerKey: 'COMMON.NAME' },
-      { field: 'description', header: 'Description', headerKey: 'COMMON.DESCRIPTION' },
-      { field: 'status', header: 'Status', headerKey: 'COMMON.STATUS' }
+	  { field: 'buildingName', header: 'Building', headerKey: 'COMMON.BUILDING', style: {width: '20%', 'text-align': 'center'} },
+      { field: 'name', header: 'Name', headerKey: 'COMMON.NAME', style: {width: '20%', 'text-align': 'center'} },
+      { field: 'description', header: 'Description', headerKey: 'COMMON.DESCRIPTION', style: {width: '40%', 'text-align': 'center'} },
+      { field: 'statusDesc', header: 'Status', headerKey: 'COMMON.STATUS', style: {width: '10%', 'text-align': 'center'} }
     ];
 
     this.route
@@ -41,7 +45,7 @@ export class FloorList implements OnInit, OnDestroy {
 
         this.genericService.getAll('Floor')
           .subscribe((data: Floor[]) => {
-            this.floors = data
+            this.floors = data;
           },
             error => console.log(error),
             () => console.log('Get all Floors complete'));
@@ -88,18 +92,15 @@ export class FloorList implements OnInit, OnDestroy {
 
   }
 
-  delete(floorId: number) {
-    try {
-      let navigationExtras: NavigationExtras = {
-        queryParams: {
-          "floorId": floorId,
-        }
-      }
-      this.router.navigate(["/admin/floorDetails"], navigationExtras);
-    }
-    catch (e) {
-      console.log(e);
-    }
-  }
+  updateTable(floor: Floor) {
+		const index = this.floors.findIndex(x => x.id === floor.id);
+		
+		if (index === -1) {
+			this.floors.push(floor);
+		} else {
+			this.floors[index] = floor;
+		}
+
+	}
 
 }
