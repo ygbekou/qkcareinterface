@@ -20,11 +20,13 @@
     <ng-template pTemplate="body" let-rowData let-columns="columns">
       <tr>
         <td *ngFor="let col of columns">
-          <div *ngIf="col.type != 'date_time'">
+          <div *ngIf="col.type == 'string'">
             {{rowData[col.field]}}
           </div>
           <div *ngIf="col.type == 'date_time'">
             {{rowData[col.field] | date: globalEventsManager.DATE_TIME_FORMAT}}
+		  </div>
+		  <div *ngIf="col.type == 'html'" [innerHTML]="rowData[col.field]">
           </div>
         </td>
         <td align="justify">

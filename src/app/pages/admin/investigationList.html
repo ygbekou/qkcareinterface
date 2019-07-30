@@ -62,8 +62,9 @@
 	</form>
 	<p-messages [(value)]="messages"></p-messages>
 	<br/>
+	{{listMessage}}
 	<div class="ui-g-12 ui-sm-12" style="padding: 15px;">
-		<p-table [columns]="cols" [value]="investigations" dataKey="id" [(selection)]="parentSelection"> 
+		<p-table [columns]="cols" [value]="investigations" dataKey="id" [(selection)]="parentSelection" *ngIf="investigations.length > 0"> 
 			<ng-template pTemplate="caption">
 		        {{ 'COMMON.INVESTIGATION_LIST' | translate }}
 		    </ng-template>

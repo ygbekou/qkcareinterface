@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Input } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Constants } from '../../app.constants';
 import { Admission, Product, Prescription, PrescriptionDiagnosis,
@@ -28,6 +28,7 @@ export class PrescriptionDetails extends BaseComponent implements OnInit, OnDest
 
   invalidDatetime = false;
   invalidType = false;
+  @Output() prescriptionSaveEvent = new EventEmitter<Prescription>();
 
   constructor
     (
@@ -36,9 +37,7 @@ export class PrescriptionDetails extends BaseComponent implements OnInit, OnDest
       private admissionService: AdmissionService,
 	  public translate: TranslateService,
 	  public confirmationService: ConfirmationService,
-      private medicineDropdown: MedicineDropdown,
-      private route: ActivatedRoute,
-      private router: Router
+      private medicineDropdown: MedicineDropdown
     ) {
 		super(genericService, translate, confirmationService);
   }
@@ -201,6 +200,8 @@ export class PrescriptionDetails extends BaseComponent implements OnInit, OnDest
       this.admissionService.savePrescription(this.prescription)
         .subscribe(result => {
 		this.processResult(result, this.prescription, this.messages, null);
+		this.prescription = result;
+		this.prescriptionSaveEvent.emit(this.prescription);
 	});
     } catch (e) {
       console.log(e);

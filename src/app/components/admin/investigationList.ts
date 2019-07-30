@@ -33,6 +33,7 @@ export class InvestigationList extends BaseComponent implements OnInit, OnDestro
   display: boolean;
   
   searchCriteria: SearchCriteria = new SearchCriteria();
+  listMessage = '';
   
   
   constructor
@@ -79,6 +80,8 @@ export class InvestigationList extends BaseComponent implements OnInit, OnDestro
 		this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
 		this.updateCols();
 		});
+
+		this.getInvestigations();
 		
   }
  
@@ -118,8 +121,8 @@ export class InvestigationList extends BaseComponent implements OnInit, OnDestro
   
   getInvestigations() {
      
-      const parameters: string [] = []; 
-            
+	  const parameters: string [] = []; 
+	  this.listMessage = '';
       if (this.visit && this.visit.id > 0)  {
          parameters.push('e.visit.id = |visitId|' + this.visit.id + '|Long');
          parameters.push('e.status = |status|4|Integer');
@@ -133,10 +136,19 @@ export class InvestigationList extends BaseComponent implements OnInit, OnDestro
 		this.genericService.getAllByCriteria('Investigation', parameters, ' ORDER BY e.investigationDatetime DESC ')
 			.subscribe((data: Investigation[]) => {
 				this.investigations = data;
+				if (this.investigations.length === 0) {
+					this.translate.get('MESSAGE.NO_INVESTIGATION_FOUND').subscribe((res: string) => {
+						this.listMessage = res;
+					});
+				}
 			},
 			error => console.log(error),
 			() => console.log('Get Investigations complete'));
-		}
+	  } else {
+		  this.translate.get('MESSAGE.NO_INVESTIGATION_FOUND').subscribe((res: string) => {
+				this.listMessage = res;
+			});
+	  }
         
   }
   
@@ -161,7 +173,7 @@ export class InvestigationList extends BaseComponent implements OnInit, OnDestro
   }
   
   saveAction() {
-    
+    this.messages = [];
     try {
       
       if (this.actionType === 'Collection') {

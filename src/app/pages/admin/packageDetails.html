@@ -9,7 +9,7 @@
 					<p-message *ngIf="f.submitted && name.invalid" severity="error" text="Field is required"></p-message>
 				</div>
 			</div>
-			<div class="ui-grid-col-3 ui-sm-12">
+			<div class="ui-grid-col-6 ui-sm-12">
 				<div class="form-group">
 					<label for="description">{{ 'COMMON.DESCRIPTION' | translate }}</label>
 					<textarea pInputTextarea id="description" [(ngModel)]="pckage.description" name="description"  #description="ngModel"> </textarea>
@@ -17,7 +17,7 @@
 			</div>
 			<div class="ui-grid-col-3 ui-sm-12">
 				<div class="form-group">
-					<label for="quantity">{{ 'COMMON.DISCOUNT' | translate }}</label>
+					<label for="discount">{{ 'COMMON.DISCOUNT' | translate }}</label>
 					<input pInputText id="discount" [(ngModel)]="pckage.discount" name="discount"  #discount="ngModel" />
 				</div>
 			</div>

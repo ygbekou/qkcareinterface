@@ -94,7 +94,7 @@
           <p-tabPanel header="{{ 'COMMON.SOCIAL_HISTORY' | translate }}">
             <app-socialHistory-details [visit]="visit"></app-socialHistory-details>
           </p-tabPanel>
-          <p-tabPanel header="{{ 'COMMON.HOME_MEDICATIONS' | translate }}"> </p-tabPanel>
+          <p-tabPanel header="{{ 'COMMON.HOME_MEDICATIONS' | translate }}" *ngIf="shouldShow"> </p-tabPanel>
         </p-tabView>
         <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
           <button type="button" pButton icon="fa fa-close" (click)="delete()"
@@ -125,7 +125,7 @@
       <p-tabPanel header="{{ 'COMMON.INVESTIGATION_LIST' | translate }}" *ngIf="visit.id > 0">
         <app-investigation-list [showActions]="false" [visit]="visit"></app-investigation-list>
       </p-tabPanel>
-      <p-tabPanel header="{{ 'COMMON.PHARMACY' | translate }}" *ngIf="visit.id > 0">
+      <p-tabPanel header="{{ 'COMMON.PHARMACY' | translate }}" *ngIf="visit.id > 0 && shouldShow">
         <app-patientSale-details [visit]="visit"></app-patientSale-details> <br />
         <br />
         <app-patientSale-list (patientSaleIdEvent)="onPatientSaleSelected($event)" [visit]="visit">

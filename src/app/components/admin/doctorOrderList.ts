@@ -38,7 +38,7 @@ export class DoctorOrderList extends BaseComponent implements OnInit, OnDestroy 
                                         style: {width: '20%', 'text-align': 'center'} },
             { field: 'doctorOrderTypeName', header: 'Type', headerKey: 'COMMON.DOCTOR_ORDER_TYPE', type: 'string',
                                         style: {width: '20%', 'text-align': 'center'} },
-            { field: 'description', header: 'Description', headerKey: 'COMMON.DESCRIPTION', type: 'string',
+            { field: 'description', header: 'Description', headerKey: 'COMMON.DESCRIPTION', type: 'html',
                                         style: {width: '40%', 'text-align': 'center'}  },
             { field: 'doctorOrderStatusName', header: 'Status', headerKey: 'COMMON.STATUS', type: 'string',
                                         style: {width: '10%', 'text-align': 'center'}  }

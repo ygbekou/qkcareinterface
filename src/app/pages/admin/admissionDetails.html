@@ -146,14 +146,14 @@
       <app-admissionDiagnoses [admission]="admission"></app-admissionDiagnoses>
     </p-tabPanel>
     <p-tabPanel header="{{'COMMON.PRESCRIPTION_LIST' | translate }}" *ngIf="admission && admission.id > 0">
-      <app-prescription-details [admission]="admission"></app-prescription-details><br />
+      <app-prescription-details (prescriptionSaveEvent)="onPrescriptionSaved($event)" [admission]="admission"></app-prescription-details><br />
       <app-prescription-list [admission]="admission" (prescriptionIdEvent)="onPrescriptionSelected($event)">
       </app-prescription-list>
     </p-tabPanel>
     <p-tabPanel header="{{'COMMON.INVESTIGATION_LIST' | translate }}" *ngIf="admission && admission.id > 0">
       <app-investigation-list [showActions]="false" [admission]="admission"></app-investigation-list>
     </p-tabPanel>
-    <p-tabPanel header="{{'COMMON.PHARMACY' | translate }}" *ngIf="admission &&  admission.id > 0">
+    <p-tabPanel header="{{'COMMON.PHARMACY' | translate }}" *ngIf="admission &&  admission.id > 0 && shouldShow">
       <app-patientSale-details [admission]="admission"></app-patientSale-details> <br /><br />
       <app-patientSale-list (patientSaleIdEvent)="onPatientSaleSelected($event)" [admission]="admission">
       </app-patientSale-list>

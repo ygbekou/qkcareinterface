@@ -114,6 +114,7 @@ export class ReferenceDetails extends BaseComponent implements OnInit, OnDestroy
         .subscribe(result => {
           if (result.id > 0) {
 			this.processResult(result, this.reference, this.messages, null);
+			this.reference = result;
 			this.referenceSaveEvent.emit(this.reference);
           } else {
             this.processResult(result, this.reference, this.messages, null);
