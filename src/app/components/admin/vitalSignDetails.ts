@@ -90,14 +90,10 @@ export class VitalSignDetails extends BaseComponent implements OnInit, OnDestroy
   }
 
   calculateBMI() {
-    //let weightInKg = this.vitalSign.weight * 0.45;
-	//let heightInMeter = this.vitalSign.height * 0.025;
-
-	let weightInKg = this.vitalSign.weight;
-    let heightInMeter = this.vitalSign.height;
-	let heightInMeterSquare = heightInMeter * heightInMeter;
-	let bmi = weightInKg / heightInMeterSquare;
-
+	const weightInKg = this.vitalSign.weight;
+    const heightInMeter = this.vitalSign.height;
+	const heightInMeterSquare = heightInMeter * heightInMeter;
+	const bmi = weightInKg / heightInMeterSquare;
     this.vitalSign.bmi = Math.round(bmi);
   }
 

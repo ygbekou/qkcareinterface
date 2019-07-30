@@ -72,8 +72,7 @@ import { ToggleButtonModule } from 'primeng/togglebutton';
 import { ToolbarModule } from 'primeng/toolbar';
 import { TooltipModule } from 'primeng/tooltip';
 import { TreeModule } from 'primeng/tree';
-import { TreeTableModule } from 'primeng/treetable';
-
+import { TreeTableModule } from 'primeng/treetable'; 
 import { AppComponent } from './app.component';
 import { AppRightPanelComponent } from './app.rightpanel.component';
 import { AppProfileComponent } from './app.profile.component';

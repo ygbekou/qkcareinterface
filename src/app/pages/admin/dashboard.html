@@ -1,81 +1,109 @@
 <div class="dashboard">
-    <div class="ui-g">
-        <div class="ui-g-12 ui-md-12 ui-lg-4">
-            <div class="overview-box monthly-sales">
-                <div class="overview-title">Appointment</div>
-                <i class="fa fa-arrow-circle-up"></i>
-                <div class="overview-numbers">
-                    <strong>Total:   {{appointmentItem.itemTotal}}</strong>
-                </div>
-                <p-chart type="bar" [data]="appointmentItem.itemData"></p-chart>
-            </div>
+  <div class="ui-g">
+    <div class="ui-g-12 ui-md-12 ui-lg-4">
+      <div class="overview-box monthly-sales">
+        <div class="overview-title">{{ 'COMMON.APPOINTMENT' | translate }}</div>
+        <i class="fa fa-arrow-circle-up"></i>
+        <div class="overview-numbers">
+          <strong>Total: {{appointmentItem.itemTotal}}</strong>
         </div>
-        <div class="ui-g-12 ui-md-12 ui-lg-4">
-            <div class="overview-box monthly-views">
-                <div class="overview-title">Admission</div>
-                <i class="fa fa-arrow-circle-up"></i>
-                <div class="overview-numbers">
-                    <strong>Total:   {{admissionItem.itemTotal}}</strong>
-                </div>
-                <p-chart type="bar" [data]="admissionItem.itemData"></p-chart>
-            </div>
-        </div>
-         <div class="ui-g-12 ui-md-12 ui-lg-4">
-            <div class="overview-box monthly-users">
-                <div class="overview-title">Visit</div>
-                <i class="fa fa-arrow-circle-up"></i>
-                <div class="overview-numbers">
-                    <strong>Total:   {{visitItem.itemTotal}}</strong>
-                </div>
-                <p-chart type="bar" [data]="visitItem.itemData"></p-chart>
-            </div>
-        </div>
-        
-         <div class="ui-g-12 ui-md-12 ui-lg-6">
-            <p-panel styleClass="chart" header="Chart">
-                <p-chart type="line" [data]="appointmentItem.itemData"></p-chart>
-            </p-panel>
-
-         </div>
-
-
-        <div class="ui-g-12 ui-md-12 ui-lg-6">
-            <p-panel header="Appointment" styleClass="inventory">
-                <p-table [columns]="upcomingAppointmentCols" [value]="upcomingAppointments" 
-                    selectionMode="single" dataKey="" [(selection)]="selectedAppointment" [responsive]="true"
-                    [paginator]="true" [rows]="10">
-                    <ng-template pTemplate="header" let-columns> 
-                        <tr>
-                            <th *ngFor="let col of columns" [pSortableColumn]="col.field">
-                                {{col.header}}
-                                <p-sortIcon [field]="col.field"></p-sortIcon>
-                            </th>
-                        </tr>
-                    </ng-template>
-                    <ng-template pTemplate="body" let-rowData let-columns="columns">
-                        <tr [pSelectableRow]="rowData">
-                            <td *ngFor="let col of columns">
-                                <div *ngIf="col.type === 'Date'">
-                                    {{rowData[col.field] | date:'dd/MM/yyyy'}} 
-                                </div>
-                                <div *ngIf="col.type !== 'Date'">
-                                    {{rowData[col.field]}}
-                                </div>
-                            </td>
-                        </tr>
-                    </ng-template>
-                     <ng-template pTemplate="summary">
-                        <tr>
-                            <td width="10%">
-                                Total
-                            </td>
-                            <td>
-                                {{upcomingAppointments.length}}
-                            </td>
-                        </tr>     
-                    </ng-template>
-                </p-table>
-            </p-panel>
-        </div>
+        <p-chart type="bar" [data]="appointmentItem.itemData"></p-chart>
+      </div>
     </div>
+    <div class="ui-g-12 ui-md-12 ui-lg-4">
+      <div class="overview-box monthly-views">
+        <div class="overview-title">{{ 'COMMON.ADMISSION' | translate }}</div>
+        <i class="fa fa-arrow-circle-up"></i>
+        <div class="overview-numbers">
+          <strong>Total: {{admissionItem.itemTotal}}</strong>
+        </div>
+        <p-chart type="bar" [data]="admissionItem.itemData"></p-chart>
+      </div>
+    </div>
+    <div class="ui-g-12 ui-md-12 ui-lg-4">
+      <div class="overview-box monthly-users">
+        <div class="overview-title">{{ 'COMMON.VISIT' | translate }}</div>
+        <i class="fa fa-arrow-circle-up"></i>
+        <div class="overview-numbers">
+          <strong>Total: {{visitItem.itemTotal}}</strong>
+        </div>
+        <p-chart type="bar" [data]="visitItem.itemData"></p-chart>
+      </div>
+    </div>
+  </div>
+  <div class="ui-g">
+    <div class="ui-g-12 ui-md-12 ui-lg-6">
+      <p-panel header="{{ 'COMMON.APPOINTMENT' | translate }}" styleClass="inventory">
+        <p-table [value]="events">
+          <ng-template pTemplate="header">
+            <tr>
+              <th>{{ 'COMMON.PATIENT' | translate }}</th>
+              <th>{{ 'COMMON.START_TIME' | translate }}</th>
+              <th>{{ 'COMMON.END_TIME' | translate }}</th>
+              <th>{{ 'COMMON.PHONE' | translate }}</th>
+              <th>{{ 'COMMON.DOCTOR' | translate }}</th>
+              <th>Action</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-event>
+            <tr>
+              <td><a [routerLink]="['/admin/adminPatient']" [queryParams]="{patientId:event.patientId}"
+                  (click)="setPatientId(event.patientId,event.id)">
+                  {{event.title}}
+                </a></td>
+              <td>{{event.start}}</td>
+              <td>{{event.end}}</td>
+              <td>{{event.phone}}</td>
+              <td><a [routerLink]="['/admin/employeeDetails']" [queryParams]="{employeeId:event.employeeId}">
+                  {{event.designation +' '+event.docLastName}}
+                </a></td>
+              <td>
+                <button type="button" pButton icon="fa fa-close" (click)="cancel(event.id)"
+                  class="ui-button-rounded ui-button-warning" label="{{ 'COMMON.CANCEL' | translate }}"></button>&nbsp;
+                &nbsp;
+                <button pButton icon="fa fa-check" (click)="confirm(event.id)" class="ui-button-rounded"
+                  label="{{ 'COMMON.CONFIRM' | translate }}"></button>
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </p-panel>
+    </div>
+    <div class="ui-g-12 ui-md-12 ui-lg-6">
+      <p-panel header="{{ 'COMMON.WAITING_LIST' | translate }}" styleClass="inventory">
+
+        <p-table [value]="visits" [paginator]="true" [rows]="5">
+          <ng-template pTemplate="header">
+            <tr>
+              <th>{{ 'COMMON.VISIT_NUMBER' | translate }}</th>
+              <th>{{ 'COMMON.PATIENT' | translate }}</th>
+              <th>{{'COMMON.ARRIVAL_TIME' | translate }}</th>
+              <th>{{'COMMON.APPOINTMENT' | translate }}</th>
+              <th>Action</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-visit>
+            <tr>
+              <td> 
+                <a [routerLink]="['/admin/visitDetails']" [queryParams]="{visitId:visit.id}">
+                  {{visit.id}}
+                </a>
+              </td>
+              <td> <a [routerLink]="['/admin/adminPatient']" [queryParams]="{patientId:visit.patient.id}"
+                  (click)="setPatientId(visit.patient.id,(visit.appointment?visit.appointment.id:0))">
+                  {{visit.patient.name}}</a></td>
+              <td><a [routerLink]="['/admin/visitDetails']" [queryParams]="{visitId:visit.id}">
+                  {{visit.visitDatetime|date:'hh:mm'}}</a></td>
+              <td><a [routerLink]="['/admin/visitDetails']" [queryParams]="{visitId:visit.id}">
+                  {{visit.appointment?visit.appointment.beginTime:'-'}}</a></td>
+              <td> <button type="button" pButton icon="fa fa-close" (click)="cancelVisit(visit.id)"
+                  class="ui-button-rounded ui-button-warning" label="{{ 'COMMON.CANCEL' | translate }}"></button>&nbsp;
+                <button pButton icon="fa fa-check" (click)="endVisit(visit.id)" class="ui-button-rounded"
+                  label="{{ 'COMMON.END' | translate }}"></button></td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </p-panel>
+    </div>
+  </div>
 </div>

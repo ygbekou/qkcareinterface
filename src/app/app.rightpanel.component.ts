@@ -50,7 +50,7 @@ export class AppRightPanelComponent implements AfterViewInit {
 				this.activeTab = 0;
 			} else if (evt.index === 1) {
 				this.activeTab = 1;
-				this.getWaitList(5);
+				this.getWaitList(4);
 			} else {
 				this.activeTab = 2;
 				this.getTopN(4);
@@ -140,7 +140,7 @@ export class AppRightPanelComponent implements AfterViewInit {
 				break;
 			}
 		}
-		var onTheFly: Visit[] = [];
+		const onTheFly: Visit[] = [];
 		onTheFly.push(...this.visits);
 		this.visits = onTheFly;
 	}
