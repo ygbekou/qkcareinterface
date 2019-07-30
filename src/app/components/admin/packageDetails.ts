@@ -1,21 +1,22 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild, EventEmitter, Output } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Constants } from '../../app.constants';
 import { Package, Service, PackageService, User } from '../../models';
 import { EditorModule } from 'primeng/editor';
 import { ServiceDropdown } from '../dropdowns';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
-import { InputTextareaModule, CheckboxModule, MultiSelectModule, CalendarModule } from 'primeng/primeng';
+import { InputTextareaModule, CheckboxModule, MultiSelectModule, CalendarModule, ConfirmationService } from 'primeng/primeng';
 import { GenericService, BillingService } from '../../services';
 import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
 import { Message } from 'primeng/api';
+import { BaseComponent } from './baseComponent';
 
 @Component({
   selector: 'app-package-details',
   templateUrl: '../../pages/admin/packageDetails.html',
   providers: [GenericService, BillingService, ServiceDropdown]
 })
-export class PackageDetails implements OnInit, OnDestroy {
+export class PackageDetails extends BaseComponent implements OnInit, OnDestroy {
   
   pckage: Package = new Package();
   serviceCols: any[];
@@ -25,25 +26,28 @@ export class PackageDetails implements OnInit, OnDestroy {
   
   constructor
     (
-      private genericService: GenericService,
+      public genericService: GenericService,
       private billingService: BillingService,
-      private translate: TranslateService,
+	  public translate: TranslateService,
+	  public confirmationService: ConfirmationService,
       private srvDropdown: ServiceDropdown,
-      private changeDetectorRef: ChangeDetectorRef,
-      private route: ActivatedRoute,
-      private router: Router
+      private route: ActivatedRoute
     ) {
-    this.serviceDropdown = srvDropdown;
-    
+		super(genericService, translate, confirmationService);
+    	this.serviceDropdown = srvDropdown;
   }
 
   ngOnInit(): void {
 
      this.serviceCols = [
-            { field: 'service', header: 'Name', headerKey: 'COMMON.NAME' },
-            { field: 'description', header: 'Description', headerKey: 'COMMON.DESCRIPTION' },
-            { field: 'quantity', header: 'Quantity', headerKey: 'COMMON.QUANTITY' },
-            { field: 'rate', header: 'Rate', headerKey: 'COMMON.RATE' }
+            { field: 'service', header: 'Name', headerKey: 'COMMON.NAME', type: 'string',
+                                        style: {width: '20%', 'text-align': 'center'} },
+            { field: 'description', header: 'Description', headerKey: 'COMMON.DESCRIPTION', type: 'string',
+                                        style: {width: '30%', 'text-align': 'center'} },
+            { field: 'quantity', header: 'Quantity', headerKey: 'COMMON.QUANTITY', type: 'string',
+                                        style: {width: '20%', 'text-align': 'center'} },
+            { field: 'rate', header: 'Rate', headerKey: 'COMMON.RATE', type: 'string',
+                                        style: {width: '20%', 'text-align': 'center'} }
         ];
      
     let packageId = null;
@@ -58,7 +62,7 @@ export class PackageDetails implements OnInit, OnDestroy {
                   .subscribe(result => {
                 if (result.id > 0) {
                   this.pckage = result;
-                  if (this.pckage.packageServices == null || this.pckage.packageServices.length == 0 ){
+                  if (this.pckage.packageServices === null || this.pckage.packageServices.length === 0 ){
                     this.pckage.packageServices = [];
                     this.addRow();
                   }
@@ -100,20 +104,21 @@ export class PackageDetails implements OnInit, OnDestroy {
     this.pckage.packageServices.push(ps);
   }
   
-  
   save() {
     
-    this.messages = [];
+	this.messages = [];
+	if (!this.validate()) {
+      return;
+    }
     try {
       this.billingService.savePackage(this.pckage)
         .subscribe(result => {
           if (result.id > 0) {
-            this.pckage = result;
-            this.messages.push({severity:Constants.SUCCESS, summary:Constants.SAVE_LABEL, detail:Constants.SAVE_SUCCESSFUL});
-          }
-          else {
-            this.messages.push({severity:Constants.ERROR, summary:Constants.SAVE_LABEL, detail:Constants.SAVE_UNSUCCESSFUL});
-          }
+				this.processResult(result, this.pckage, this.messages, null);
+				this.pckage = result;
+			} else {
+				this.processResult(result, this.pckage, this.messages, null);
+			}
         })
     }
     catch (e) {
@@ -121,7 +126,38 @@ export class PackageDetails implements OnInit, OnDestroy {
     }
   }
   
-  delete() {
-    
+
+  validate() {
+    let noMedFound = true;
+      for (const i in this.pckage.packageServices) {
+      const ps = this.pckage.packageServices[i];
+      if (ps.service.id > 0) {
+        noMedFound = false;
+        if (ps.quantity === null) {
+          this.translate.get(['COMMON.SAVE', 'COMMON.QUANTITY', 'VALIDATION.IS_REQUIRED']).subscribe(res => {
+            this.messages.push({
+                severity: Constants.ERROR, summary: res['COMMON.SAVE'],
+                detail: res['COMMON.QUANTITY'] + ' ' + res['VALIDATION.IS_REQUIRED']
+            });
+        });
+        }
+        
+        if (ps.rate === null) {
+          this.translate.get(['COMMON.SAVE', 'COMMON.RATE', 'VALIDATION.IS_REQUIRED']).subscribe(res => {
+            this.messages.push({
+                severity: Constants.ERROR, summary: res['COMMON.SAVE'],
+                detail: res['COMMON.RATE'] + ' ' + res['VALIDATION.IS_REQUIRED']
+            });
+           });
+        }
+      }
+    }
+
+    if (noMedFound) {
+      this.messages.push({severity: Constants.ERROR, summary: Constants.SAVE_LABEL, detail: 'At least 1 service is required.'});
+    }
+
+    return this.messages.length === 0;
   }
+
 }

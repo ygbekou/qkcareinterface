@@ -4,6 +4,7 @@ import { Constants } from '../../app.constants';
 import { Package } from '../../models/package';
 import { GenericService } from '../../services';
 import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
+import { BaseComponent } from './baseComponent';
 
 @Component({
   selector: 'app-invoice-list',
@@ -11,22 +12,15 @@ import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
   providers: [GenericService]
 })
 // tslint:disable-next-line:component-class-suffix
-export class PackageList implements OnInit, OnDestroy {
+export class PackageList extends BaseComponent implements OnInit, OnDestroy {
 
-  public error: String = '';
-  displayDialog: boolean;
   packages: Package[] = [];
   cols: any[];
-
-  DETAIL: string = Constants.DETAIL;
-  ADD_IMAGE: string = Constants.ADD_IMAGE;
-  ADD_LABEL: string = Constants.ADD_LABEL;
 
   constructor
     (
     private genericService: GenericService,
     private translate: TranslateService,
-    private changeDetectorRef: ChangeDetectorRef,
     private route: ActivatedRoute,
     private router: Router,
     ) {
