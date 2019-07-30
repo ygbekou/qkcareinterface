@@ -114,19 +114,6 @@ export class AppMenuComponent implements OnInit {
         ]
       },
       {
-        label: this.lang === 'fr' ? 'Magasin' : 'Store', icon: 'fa fa-shopping-cart',
-        items: [
-          { label: this.lang === 'fr' ? 'Commander Produit' : 'Order a product', icon: 'fa fa-plus', routerLink: ['/admin/purchaseOrderDetails'] },
-          { label: this.lang === 'fr' ? 'Liste des commandes' : 'List orders', icon: 'fa fa-search', routerLink: ['/admin/purchaseOrderList'] },
-          { label: this.lang === 'fr' ? 'Réception de commande' : 'Receive order', icon: 'fa fa-plus', routerLink: ['/admin/receiveOrderDetails'] },
-          { label: this.lang === 'fr' ? 'Liste des réceptions' : 'List receipts', icon: 'fa fa-search', routerLink: ['/admin/receiveOrderList'] },
-          { label: this.lang === 'fr' ? 'Ajouter une vente' : 'Add a sale', icon: 'fa fa-plus', routerLink: ['/admin/patientSaleDetails'] },
-          { label: this.lang === 'fr' ? 'Liste des ventes' : 'List sales', icon: 'fa fa-search', routerLink: ['/admin/patientSaleList'] },
-          { label: this.lang === 'fr' ? 'Ajouter un retour achat' : 'Add a return', icon: 'fa fa-plus', routerLink: ['/admin/saleReturnDetails'] },
-          { label: this.lang === 'fr' ? 'Liste des retours' : 'List returns', icon: 'fa fa-search', routerLink: ['/admin/saleReturnList'] }
-        ]
-      },
-      {
         label: this.lang === 'fr' ? 'Activités' : 'Hospital activities', icon: 'fa fa-hospital-o',
         items: [
           { label: this.lang === 'fr' ? 'Déclarer une naissance' : 'Add birth', icon: 'fa fa-plus', routerLink: ['/admin/birthReportDetails'] },
