@@ -374,7 +374,8 @@
     "FORM_HAS_ERRORS": "Le formulaire comporte des erreurs. S'il vous plait vérifier et corriger.",
 	"NO_CRITERIA_SET": "Au moins une critère de recherche est nécessaire",
 	"SELECT_PATIENT": "Sélectioner un patient",
-	"SELECT_LOCATION": "Sélectioner un emplacement"
+	"SELECT_LOCATION": "Sélectioner un emplacement",
+	"NO_INVESTIGATION_FOUND": "Aucune investigation n'est faite"
   },
   "VALIDATION": {
     "IS_INVALID": "est invalide",

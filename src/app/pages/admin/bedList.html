@@ -1,11 +1,13 @@
-<div class="ui-g-12 ui-sm-12" style="padding: 15px;">
+<p-confirmDialog [style]="{width: '50vw'}"></p-confirmDialog>
+ <p-messages [(value)]="messages"></p-messages>
+ <div class="ui-g-12 ui-sm-12" style="padding: 15px;">
 	<p-table [value]="beds" [responsive]="true"> 
 		<ng-template pTemplate="caption">
 			{{ 'COMMON.BED_LIST' | translate }}
 		</ng-template>
 		<ng-template pTemplate="header">
 			<tr>
-				<th *ngFor="let col of cols" [pSortableColumn]="col.field">
+				<th *ngFor="let col of cols" [pSortableColumn]="col.field" [ngStyle]="col.style">
 					{{col.header}} <p-sortIcon [field]="col.field"></p-sortIcon>
 				</th>
 				<th>Action</th>
@@ -15,7 +17,7 @@
 			<td *ngFor="let col of cols">{{bed[col.field]}}</td>
 			<td>
 				<button type="button" pButton icon="fa fa-edit" (click)="edit(bed.id)"></button>&nbsp;&nbsp;
-				<button type="button" pButton icon="fa fa-eraser" (click)="delete(bed.id)"></button>
+				<button type="button" pButton icon="fa fa-eraser" (click)="deleteItem(beds, bed.id, 'Bed')"></button>
 			</td>
 		</tr>
 		</ng-template> 

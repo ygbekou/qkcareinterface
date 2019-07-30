@@ -13,16 +13,16 @@
         <app-appointment-list (appointmentIdEvent)="onAppointmentSelected($event)"></app-appointment-list>
       </div>
     </p-tabPanel>
-    <p-tabPanel header="{{ 'COMMON.VISIT' | translate }}" *ngIf="patient.id > 0">
+    <p-tabPanel header="{{ 'COMMON.VISIT' | translate }}" *ngIf="patient.id > 0 && shoulShow">
       Visits
     </p-tabPanel>
-    <p-tabPanel header="{{ 'COMMON.DIAGNOSIS' | translate }}" *ngIf="patient.id > 0">
+    <p-tabPanel header="{{ 'COMMON.DIAGNOSIS' | translate }}" *ngIf="patient.id > 0 && shoulShow">
       Diagnosis
     </p-tabPanel>
-    <p-tabPanel header="{{ 'COMMON.PRESCRIPTION_LIST' | translate }}" *ngIf="patient.id > 0">
+    <p-tabPanel header="{{ 'COMMON.PRESCRIPTION_LIST' | translate }}" *ngIf="patient.id > 0 && shoulShow">
       Medications
     </p-tabPanel>
-    <p-tabPanel header="{{ 'COMMON.RESULT' | translate }}" *ngIf="patient.id > 0">
+    <p-tabPanel header="{{ 'COMMON.RESULT' | translate }}" *ngIf="patient.id > 0 && shoulShow">
       Result/Review
     </p-tabPanel>
   </p-tabView>

@@ -198,6 +198,9 @@ export class AdmissionDetails implements OnInit, OnDestroy {
 		let prescriptionId = $event;
 		this.prescriptionDetails.getPrescription(prescriptionId);
 	}
+	onPrescriptionSaved($event) {
+		this.prescriptionList.updateTable($event);
+	}
 
 	onVitalSignSelected($event) {
 		const vitalSignId = $event;

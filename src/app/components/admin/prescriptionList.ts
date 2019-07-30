@@ -104,5 +104,16 @@ export class PrescriptionList extends BaseComponent implements OnInit, OnDestroy
           },
           error => console.log(error),
           () => console.log('Get all Prescriptions complete'));
-      }
+	  }
+	  
+	  updateTable(prescription: Prescription) {
+		const index = this.prescriptions.findIndex(x => x.id === prescription.id);
+
+		if (index === -1) {
+			this.prescriptions.push(prescription);
+		} else {
+			this.prescriptions[index] = prescription;
+		}
+
+	}
  }

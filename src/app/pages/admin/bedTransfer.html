@@ -1,5 +1,4 @@
 <div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="admission">
-	<p-messages [(value)]="messages"></p-messages>
 	<div class="ui-grid-row">
 		<div class="ui-grid-col-4 ui-sm-12">
 			<div class="ui-grid-row">
@@ -283,9 +282,8 @@
 		</div>
 	</p-tabPanel>
 	<br/>
-	<br/>
-	
-	<button type="button" pButton icon="fa fa-close" (click)="delete()" label="{{ 'COMMON.DELETE' | translate }}"></button>&nbsp;
+	<p-messages [(value)]="messages"></p-messages>
+	<button type="button" pButton icon="fa fa-close" (click)="delete()" label="{{ 'COMMON.DELETE' | translate }}"></button>&nbsp;&nbsp;
 	<button type="button" pButton icon="fa fa-check" (click)="transfer()" label="{{ 'COMMON.SAVE' | translate }}"></button>
 		
 	

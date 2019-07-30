@@ -373,7 +373,8 @@
     "FORM_HAS_ERRORS": "The form has some errors. Please verify and correct.",
 	"NO_CRITERIA_SET": "At least one search criteria is required",
 	"SELECT_PATIENT": "Select a patient",
-	"SELECT_LOCATION": "Sélectioner un emplacement"
+	"SELECT_LOCATION": "Sélectioner un emplacement",
+	"NO_INVESTIGATION_FOUND": "No Investigation ave being done"
   },
 "VALIDATION":{
     "IS_INVALID": "is invalid",
