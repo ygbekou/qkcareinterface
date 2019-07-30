@@ -1,10 +1,10 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
-import { Constants } from '../../app.constants';
 import { Package } from '../../models/package';
 import { GenericService } from '../../services';
 import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
 import { BaseComponent } from './baseComponent';
+import { ConfirmationService } from 'primeng/api';
 
 @Component({
   selector: 'app-invoice-list',
@@ -19,20 +19,25 @@ export class PackageList extends BaseComponent implements OnInit, OnDestroy {
 
   constructor
     (
-    private genericService: GenericService,
-    private translate: TranslateService,
+    public genericService: GenericService,
+	public translate: TranslateService,
+	public confirmationService: ConfirmationService,
     private route: ActivatedRoute,
     private router: Router,
     ) {
-
+		super(genericService, translate, confirmationService);
   }
 
   ngOnInit(): void {
     this.cols = [
-            { field: 'name', header: 'Name', headerKey: 'COMMON.NAME' },
-            { field: 'description', header: 'Description', headerKey: 'COMMON.DESCRIPTION' },
-            { field: 'discount', header: 'Discount', headerKey: 'COMMON.DISCOUNT' },
-            { field: 'status', header: 'Status', headerKey: 'COMMON.STATUS', type: 'string' }
+            { field: 'name', header: 'Name', headerKey: 'COMMON.NAME', type: 'string',
+                                        style: {width: '30%', 'text-align': 'center'} },
+            { field: 'description', header: 'Description', headerKey: 'COMMON.DESCRIPTION', type: 'string',
+                                        style: {width: '40%', 'text-align': 'center'} },
+            { field: 'discount', header: 'Discount', headerKey: 'COMMON.DISCOUNT', type: 'string',
+                                        style: {width: '10%', 'text-align': 'center'} },
+            { field: 'statusDesc', header: 'Status', headerKey: 'COMMON.STATUS', type: 'string',
+                                        style: {width: '10%', 'text-align': 'center'} }
         ];
 
     this.route
