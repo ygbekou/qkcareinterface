@@ -341,7 +341,9 @@
 	"DOCTOR_ORDER_PRIORITY_LIST": "Doctor order priorities",
 	"TARIF_LIST": "Tarifs" ,
 	"TARIF_TYPE_LIST": "Type of Tarifs" ,
-	"HOSPITAL": "Hospital"
+	"HOSPITAL": "Hospital",
+	"BEGIN_S": "Begin",
+    "END_S": "End" 
   },
   "MESSAGE": {
   	"TRANFER_DOCTOR_FAILED": "The transfer doctor should be different from the current doctor.",
