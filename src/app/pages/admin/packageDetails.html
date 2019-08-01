@@ -1,11 +1,12 @@
+<p-confirmDialog [style]="{width: '50vw'}"></p-confirmDialog>
 <form name="form" (ngSubmit)="f.form.valid && save()" #f="ngForm" validate>
 	<div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="pckage">
-		
+		<p-messages [(value)]="messages"></p-messages>
 		<div class="ui-grid-row">
 			<div class="ui-grid-col-3 ui-sm-12">
 				<div class="form-group">
 					<label for="name">{{ 'COMMON.NAME' | translate }}<font color="red">*</font></label>
-					<input pInputText [(ngModel)]="pckage.name"  name="name"  #name="ngModel" required />
+					<input pInputText [(ngModel)]="pckage.name"  id="name"  name="name"  #name="ngModel" required />
 					<p-message *ngIf="f.submitted && name.invalid" severity="error" text="Field is required"></p-message>
 				</div>
 			</div>
@@ -29,11 +30,11 @@
 		<div class="ui-grid-col-12 ui-sm-12">
 			<p-table [columns]="serviceCols" [value]="pckage.packageServices">	
 				<ng-template pTemplate="caption">
-			        {{ 'COMMON.PACKAGE_LIST' | translate }}
+			        {{ 'COMMON.SERVICE_LIST' | translate }}
 			    </ng-template>
 			    <ng-template pTemplate="header" let-serviceCols>
 			        <tr>
-			            <th *ngFor="let col of serviceCols" [pSortableColumn]="col.field">
+			            <th *ngFor="let col of serviceCols" [pSortableColumn]="col.field" [ngStyle]="col.style">
 			                {{col.header}}
 			                <p-sortIcon [field]="col.field"></p-sortIcon>
 			            </th>
@@ -76,21 +77,20 @@
 			            </td>
 			            <td>
 			            	<button type="button" pButton icon="fa fa-plus" (click)="addRow()"></button>&nbsp;
-							<button type="button" pButton icon="fa fa-eraser"></button>
+							<button type="button" pButton icon="fa fa-eraser" 
+								(click)="deleteItem(pckage.packageServices, rowData.id, 'PackageService')"></button>
 			            </td>
 			        </tr>
 			    </ng-template>
 			</p-table>
 		</div>
 	</div>
-	
-	<br/>
 	<br />
 	<div>
 		<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
-			<button type="button" pButton icon="fa fa-close" (click)="clear()" label="{{ 'COMMON.CLEAR' | translate }}"></button>&nbsp;&nbsp;
-			<button pButton icon="fa fa-check" label="{{ 'COMMON.SAVE' | translate }}"></button>&nbsp;&nbsp;&nbsp;&nbsp;
-			<button type="button" pButton icon="fa fa-close" (click)="delete()" label="{{ 'COMMON.DELETE' | translate }}"></button>
+			<button type="button" pButton icon="fa fa-close" (click)="clear()" 
+				label="{{ 'COMMON.CLEAR' | translate }}"></button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<button pButton icon="fa fa-check" label="{{ 'COMMON.SAVE' | translate }}"></button>
 		</div>
 	</div>
 </form>

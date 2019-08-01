@@ -1,9 +1,10 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
-import { Constants } from '../../app.constants';
 import { Package } from '../../models/package';
 import { GenericService } from '../../services';
 import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
+import { BaseComponent } from './baseComponent';
+import { ConfirmationService } from 'primeng/api';
 
 @Component({
   selector: 'app-invoice-list',
@@ -11,34 +12,32 @@ import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
   providers: [GenericService]
 })
 // tslint:disable-next-line:component-class-suffix
-export class PackageList implements OnInit, OnDestroy {
+export class PackageList extends BaseComponent implements OnInit, OnDestroy {
 
-  public error: String = '';
-  displayDialog: boolean;
   packages: Package[] = [];
   cols: any[];
 
-  DETAIL: string = Constants.DETAIL;
-  ADD_IMAGE: string = Constants.ADD_IMAGE;
-  ADD_LABEL: string = Constants.ADD_LABEL;
-
   constructor
     (
-    private genericService: GenericService,
-    private translate: TranslateService,
-    private changeDetectorRef: ChangeDetectorRef,
+    public genericService: GenericService,
+	public translate: TranslateService,
+	public confirmationService: ConfirmationService,
     private route: ActivatedRoute,
     private router: Router,
     ) {
-
+		super(genericService, translate, confirmationService);
   }
 
   ngOnInit(): void {
     this.cols = [
-            { field: 'name', header: 'Name', headerKey: 'COMMON.NAME' },
-            { field: 'description', header: 'Description', headerKey: 'COMMON.DESCRIPTION' },
-            { field: 'discount', header: 'Discount', headerKey: 'COMMON.DISCOUNT' },
-            { field: 'status', header: 'Status', headerKey: 'COMMON.STATUS', type: 'string' }
+            { field: 'name', header: 'Name', headerKey: 'COMMON.NAME', type: 'string',
+                                        style: {width: '30%', 'text-align': 'center'} },
+            { field: 'description', header: 'Description', headerKey: 'COMMON.DESCRIPTION', type: 'string',
+                                        style: {width: '40%', 'text-align': 'center'} },
+            { field: 'discount', header: 'Discount', headerKey: 'COMMON.DISCOUNT', type: 'string',
+                                        style: {width: '10%', 'text-align': 'center'} },
+            { field: 'statusDesc', header: 'Status', headerKey: 'COMMON.STATUS', type: 'string',
+                                        style: {width: '10%', 'text-align': 'center'} }
         ];
 
     this.route

@@ -170,7 +170,7 @@ export class PrescriptionDetails extends BaseComponent implements OnInit, OnDest
            });
         }
         if (pm.numberOfDays == null) {
-          this.translate.get(['COMMON.SAVE', 'COMMON.NUMBER_OF_DAYS', 'VALIDATION.IS_REUIRED']).subscribe(res => {
+          this.translate.get(['COMMON.SAVE', 'COMMON.NUMBER_OF_DAYS', 'VALIDATION.IS_REQUIRED']).subscribe(res => {
             this.messages.push({
                 severity: Constants.ERROR, summary: res['COMMON.SAVE'],
                 detail: res['COMMON.NUMBER_OF_DAYS'] + ' ' + res['VALIDATION.IS_REQUIRED']
