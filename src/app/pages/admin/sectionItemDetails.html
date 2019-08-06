@@ -29,7 +29,7 @@
         <div class="ui-grid-row">
             <div class="ui-grid-col-6 ui-sm-12">
                 <div class="form-group">
-                    <label for="description">{{ 'COMMON.DESCRIPTION' | translate }}</label>
+                    <label for="description">{{ 'COMMON.DESCRIPTION' | translate }}<font color="red">*</font></label>
                     <textarea pInputTextarea id="description" [rows]='5' [(ngModel)]="sectionItem.description"
                         name="description" #description="ngModel"> </textarea>
                 </div>
@@ -41,11 +41,11 @@
                         class="img-fluid"
                         *ngIf="sectionItem.fileLocation !== '' && sectionItem.fileLocation !== 'null'" />
                     <button pButton type="button" icon="fa fa-delete" (click)="sectionItem.fileLocation = ''"
-                        label="Remove2"
+                        label="{{'COMMON.REMOVE' | translate}}"
                         *ngIf="sectionItem.fileLocation !== '' && sectionItem.fileLocation !== null"></button>
                     <img class="thumb" src="{{pictureUrl}}" alt="" class="img-fluid" *ngIf="pictureUrl !== ''" />
-                    <button pButton type="button" icon="fa fa-delete" (click)="clearPictureFile()" label="Remove1"
-                        *ngIf="pictureUrl !== ''"></button>
+                    <button pButton type="button" icon="fa fa-delete" (click)="clearPictureFile()" label="{{'COMMON.REMOVE' | translate}}"
+                        *ngIf="pictureUrl !== ''"></button>f
                 </div>
                 <br />
                 <div class="ui-grid-col-12 ui-sm-12">

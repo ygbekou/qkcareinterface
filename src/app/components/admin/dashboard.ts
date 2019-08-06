@@ -35,7 +35,7 @@ export class Dashboard implements OnInit, OnDestroy {
 		console.log('In dashboard');
 		this.subscription = this.appointmentService.getByMonths()
 			.subscribe((data: any) => {
-				this.appointmentItem = this.pullData(data, 'Monthly Appointment', '#00ff00', '#00ff00');
+				this.appointmentItem = this.pullData(data, 'Rendez-vous', '#00ff00', '#00ff00');
 			},
 				error => console.log(error),
 				() => console.log('Get all month data complete')
