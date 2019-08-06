@@ -111,7 +111,7 @@
 </div>
 <br />
 <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
-  <button type="button" pButton icon="fa fa-refresh" (click)="addNew()" label="Effacer"></button>&nbsp;&nbsp;
+  <button type="button" pButton icon="fa fa-refresh" (click)="addNew()" label="{{ 'COMMON.NEW' | translate }}"></button>&nbsp;&nbsp;
   <button pButton icon="fa fa-save" label="{{ 'COMMON.SAVE' | translate }}" (click)="save()" [disabled]="!prescription.prescriptionDatetime || !prescription.prescriptionType 
 			|| !prescription.prescriptionMedicines[0].medicine.name"></button> 
  </div>

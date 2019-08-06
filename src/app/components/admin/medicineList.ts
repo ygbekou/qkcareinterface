@@ -14,8 +14,6 @@ import { ConfirmationService } from 'primeng/api';
 })
 export class MedicineList extends BaseComponent implements OnInit, OnDestroy {
   
-  public error: String = ''; 
-  displayDialog: boolean;
   medicines: Product[] = [];
   cols: any[];
   

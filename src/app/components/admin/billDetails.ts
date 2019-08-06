@@ -1,21 +1,20 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild, Input } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Constants } from '../../app.constants';
-import { Appointment, Admission, Bill, BillPayment, BillService, Employee, Patient, User, Visit, Service, ReportView, Parameter  } from '../../models';
-import { EditorModule } from 'primeng/editor';
-import { DoctorDropdown, ServiceDropdown } from '../dropdowns';
-import { Cookie } from 'ng2-cookies/ng2-cookies';
-import { InputTextareaModule, CheckboxModule, MultiSelectModule, CalendarModule } from 'primeng/primeng';
+import { Appointment, Admission, Bill, BillPayment, BillService, Employee, Patient, User, Visit, 
+	Service, ReportView, Parameter  } from '../../models';
+import { DoctorDropdown, ServiceDropdown, PackageDropdown, LabTestDropdown, ProductDropdown } from '../dropdowns';
 import { GenericService, BillingService, ReportService } from '../../services';
 import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
-import { Message } from 'primeng/api';
+import { Message, ConfirmationService } from 'primeng/api';
+import { BaseComponent } from './baseComponent';
 
 @Component({ 
   selector: 'app-bill-details',
   templateUrl: '../../pages/admin/billDetails.html',
   providers: [GenericService, BillingService, ReportService, ServiceDropdown, DoctorDropdown]
 })
-export class BillDetails implements OnInit, OnDestroy {
+export class BillDetails extends BaseComponent implements OnInit, OnDestroy {
   
   messages: Message[] = [];
   bill: Bill = new Bill();
@@ -28,40 +27,57 @@ export class BillDetails implements OnInit, OnDestroy {
   @Input() admission: Admission;
   
   itemNumber: string;
-  itemNumberLabel: string = 'Visit';
+  itemNumberLabel = 'Visit';
   reportView: ReportView = new ReportView();
   reportName: string;
   
   constructor
     (
-      private genericService: GenericService,
+      public genericService: GenericService,
       private billingService: BillingService,
       private reportService: ReportService,
-      private translate: TranslateService,
-      private serviceDropdown: ServiceDropdown,
+	  public translate: TranslateService,
+	  public confirmationService: ConfirmationService,
+	  private serviceDropdown: ServiceDropdown,
+	  private packageDropdown: PackageDropdown,
+	  private labTestDropdown: LabTestDropdown,
+	  private productDropdown: ProductDropdown,
       private doctorDropdown: DoctorDropdown,
-      private changeDetectorRef: ChangeDetectorRef,
-      private route: ActivatedRoute,
-      private router: Router
+      private route: ActivatedRoute
     ) {
-    this.patient.user = new User();
+		super(genericService, translate, confirmationService);
+    	this.patient.user = new User();
   }
 
   ngOnInit(): void {
 
      this.serviceCols = [
-            { field: 'serviceDate', header: 'Date', headerKey: 'COMMON.DATE', type: 'date' },
-            { field: 'service', header: 'Name', headerKey: 'COMMON.NAME' },
-            //{ field: 'doctor', header: 'Doctor', headerKey: 'COMMON.DOCTOR' },
-            { field: 'description', header: 'Description', headerKey: 'COMMON.DESCRIPTION' },
-            { field: 'quantity', header: 'Quantity', headerKey: 'COMMON.QUANTITY' },
-            { field: 'unitAmount', header: 'Price', headerKey: 'COMMON.PRICE' },
-            { field: 'totalAmount', header: 'Total', headerKey: 'COMMON.TOTAL' },
-            { field: 'discountAmount', header: 'Discount', headerKey: 'COMMON.DISCOUNT' },
-            { field: 'discountPercentage', header: 'Discount' + '%', headerKey: 'COMMON.DISCOUNT_PERCENTAGE' },
-            { field: 'netAmount', header: 'Price', headerKey: 'COMMON.NET_AMOUNT' },
-            { field: 'payerAmount', header: 'Payer Amount', headerKey: 'COMMON.PAYER_AMOUNT' },
-            { field: 'patientAmount', header: 'Patient Amount', headerKey: 'COMMON.PATIENT_AMOUNT' }
+            { field: 'serviceDate', header: 'Date', headerKey: 'COMMON.DATE', type: 'date',
+										style: {width: '8%', 'text-align': 'center'}  },
+			{ field: 'doctorOrderTypeName', header: 'Type', headerKey: 'COMMON.TYPE', type: 'string',
+										style: {width: '15%', 'text-align': 'center'}  },
+            { field: 'service', header: 'Name', headerKey: 'COMMON.NAME', type: 'string',
+										style: {width: '15%', 'text-align': 'center'}  },
+            //{ field: 'doctor', header: 'Doctor', headerKey: 'COMMON.DOCTOR', type: 'string',
+             //                           style: {width: '15%', 'text-align': 'center'} },
+            //{ field: 'description', header: 'Description', headerKey: 'COMMON.DESCRIPTION', type: 'string',
+            //                            style: {width: '15%', 'text-align': 'center'} },
+            { field: 'quantity', header: 'Quantity', headerKey: 'COMMON.QUANTITY', type: 'string',
+                                        style: {width: '7%', 'text-align': 'center'} },
+            { field: 'unitAmount', header: 'Price', headerKey: 'COMMON.PRICE', type: 'string',
+                                        style: {width: '7%', 'text-align': 'center'} },
+            { field: 'totalAmount', header: 'Total', headerKey: 'COMMON.TOTAL', type: 'string',
+                                        style: {width: '7%', 'text-align': 'center'} },
+            { field: 'discountAmount', header: 'Discount', headerKey: 'COMMON.DISCOUNT', type: 'string',
+                                        style: {width: '5%', 'text-align': 'center'} },
+            { field: 'discountPercentage', header: 'Discount' + '%', headerKey: 'COMMON.DISCOUNT_PERCENTAGE', type: 'string',
+                                        style: {width: '5%', 'text-align': 'center'} },
+            { field: 'netAmount', header: 'Price', headerKey: 'COMMON.NET_AMOUNT', type: 'string',
+                                        style: {width: '7%', 'text-align': 'center'} },
+            { field: 'payerAmount', header: 'Payer Amount', headerKey: 'COMMON.PAYER_AMOUNT', type: 'string',
+                                        style: {width: '7%', 'text-align': 'center'} },
+            { field: 'patientAmount', header: 'Patient Amount', headerKey: 'COMMON.PATIENT_AMOUNT', type: 'string',
+                                        style: {width: '7%', 'text-align': 'center'} }
         ]; 
     
       this.billPaymentCols = [
@@ -92,13 +108,14 @@ export class BillDetails implements OnInit, OnDestroy {
                   this.bill.dueDate = new Date(this.bill.dueDate);
                   this.addEmptyRows();
                   
-                  if (this.visit != null)
-                    this.itemNumberLabel = 'Visit';
-                  else if (this.admission != null)
-                    this.itemNumberLabel = 'Admission';
+                  if (this.visit != null) {
+					this.itemNumberLabel = 'Visit';
+				  } else if (this.admission != null) {
+					this.itemNumberLabel = 'Admission';
+				  }
                 }
                 
-              })
+              });
           } else {
               
           }
@@ -129,21 +146,33 @@ export class BillDetails implements OnInit, OnDestroy {
   }
   
   ngOnDestroy() {
-    this.bill = null;
+    this.messages = null;
+	this.bill = null;
+	this.serviceCols = null;
+	this.billPaymentCols = null;
+	this.patient = null;
+	this.visit = null;
+	this.admission = null;
+	this.itemNumber = null;
+	this.itemNumberLabel = null;
+	this.reportView = null;
+	this.reportName = null;
   }
   
   addEmptyRows() {
-    if (this.bill.billServices == null || this.bill.billServices.length == 0) 
-      this.addRow();
-    if (this.bill.billPayments == null || this.bill.billPayments.length == 0) 
-      this.addPaymentRow();
+    if (this.bill.billServices === null || this.bill.billServices.length === 0) {
+	  this.addRow();
+	}
+    if (this.bill.billPayments === null || this.bill.billPayments.length === 0) {
+	  this.addPaymentRow();
+	}
   }
   
   addRow() {
     if (this.bill.billServices == null) {
       this.bill.billServices = [];
     }
-    let bs =  new BillService();
+    const bs =  new BillService();
     bs.service = new Service();
     bs.doctor = new Employee();
     this.bill.billServices.push(bs);
@@ -153,7 +182,7 @@ export class BillDetails implements OnInit, OnDestroy {
     if (this.bill.billPayments == null) {
       this.bill.billPayments = [];
     }
-    let bp =  new BillPayment();
+    const bp =  new BillPayment();
     this.bill.billPayments.push(bp);
   }
   
@@ -168,47 +197,48 @@ export class BillDetails implements OnInit, OnDestroy {
   
   calculateTotal() {
     this.bill.subTotal = 0;
-    for (let i in this.bill.billServices) {
+    for (const i in this.bill.billServices) {
        this.bill.subTotal += this.calculateRowTotal(this.bill.billServices[i]);
     }
     
     this.calculateGrandTotal();
     this.calculateDue();
   }
-  
+
   calculateRowTotal(rowData) {
     rowData.totalAmount = (+this.getNumber(rowData.quantity) * +this.getNumber(rowData.unitAmount));
     rowData.netAmount = ( rowData.totalAmount - +this.getNumber(rowData.discountAmount));
-    rowData.patientAmount = rowData.netAmount - +this.getNumber(rowData.payerAmount);
+	rowData.patientAmount = rowData.netAmount - +this.getNumber(rowData.payerAmount);
+	
+	rowData.discountPercentage = ((rowData.discountAmount * 100) / rowData.totalAmount).toFixed(2);
     return rowData.netAmount;
     
   }
   
   private getNumber(value: number): number {
-    return value != undefined ? value : 0;
+    return value !== undefined ? value : 0;
   } 
   
   savePayment(rowData) {
     this.messages = [];
-    rowData.data.bill = new Bill()
+    rowData.data.bill = new Bill();
     rowData.data.bill.id = this.bill.id;
     
     this.genericService.saveWithUrl('/service/billing/payment/save', rowData.data)
         .subscribe(result => {
-          if (result.errors == null || result.errors.length == 0) {
+          if (result.errors == null || result.errors.length === 0) {
             this.bill = result;
-            this.messages.push({severity:Constants.SUCCESS, summary:Constants.SAVE_LABEL, detail:Constants.SAVE_SUCCESSFUL});
+            this.messages.push({severity: Constants.SUCCESS, summary: Constants.SAVE_LABEL, detail: Constants.SAVE_SUCCESSFUL});
+          } else {
+            this.messages.push({severity: Constants.ERROR, summary: Constants.SAVE_LABEL, detail: Constants.SAVE_UNSUCCESSFUL});
           }
-          else {
-            this.messages.push({severity:Constants.ERROR, summary:Constants.SAVE_LABEL, detail:Constants.SAVE_UNSUCCESSFUL});
-          }
-        })
+        });
   }
   
   
   validate() {
     this.messages = [];
-    let noProductFound: boolean = true;
+    let noProductFound = true;
     if (!(
         (this.visit && this.visit.id > 0)
         || (this.admission && this.admission.id > 0)
@@ -229,10 +259,10 @@ export class BillDetails implements OnInit, OnDestroy {
     }
     
     if (noProductFound) {
-      this.messages.push({severity:Constants.ERROR, summary:Constants.SAVE_LABEL, detail:'At least 1 service is required.'});
+      this.messages.push({severity: Constants.ERROR, summary: Constants.SAVE_LABEL, detail: 'At least 1 service is required.'});
     }
     
-    return this.messages.length == 0;
+    return this.messages.length === 0;
   }
   
   save() {
@@ -244,15 +274,13 @@ export class BillDetails implements OnInit, OnDestroy {
         .subscribe(result => {
           if (result.id > 0) {
             this.bill = result;
-            this.messages.push({severity:Constants.SUCCESS, summary:Constants.SAVE_LABEL, detail:Constants.SAVE_SUCCESSFUL});
+            this.messages.push({severity: Constants.SUCCESS, summary: Constants.SAVE_LABEL, detail: Constants.SAVE_SUCCESSFUL});
             this.addEmptyRows();
+          } else {
+            this.messages.push({severity: Constants.ERROR, summary: Constants.SAVE_LABEL, detail: Constants.SAVE_UNSUCCESSFUL});
           }
-          else {
-            this.messages.push({severity:Constants.ERROR, summary:Constants.SAVE_LABEL, detail:Constants.SAVE_UNSUCCESSFUL});
-          }
-        })
-    }
-    catch (e) {
+        });
+    } catch (e) {
       console.log(e);
     }
   }
@@ -266,7 +294,7 @@ export class BillDetails implements OnInit, OnDestroy {
   }
   
   lookUpBill(event) {
-    this.bill = event;
+	this.bill = event;
     this.bill.billDate = new Date(this.bill.billDate);
     this.bill.dueDate = new Date(this.bill.dueDate);
     this.addEmptyRows();
@@ -274,7 +302,7 @@ export class BillDetails implements OnInit, OnDestroy {
   
   printBill() {
     this.reportView.reportName = 'bill';
-    let parameter: Parameter = new Parameter();
+    const parameter: Parameter = new Parameter();
     parameter.name = 'BILL_ID_PARAM';
     parameter.dataType = 'Long';
     parameter.value = this.bill.id + '';
@@ -286,16 +314,11 @@ export class BillDetails implements OnInit, OnDestroy {
       .subscribe(result => {
         if (result.reportName) {
           this.reportName = result.reportName;
-          this.messages.push({severity:Constants.SUCCESS, summary:Constants.SAVE_LABEL, detail:Constants.SAVE_SUCCESSFUL});
+          this.messages.push({severity: Constants.SUCCESS, summary: Constants.SAVE_LABEL, detail: Constants.SAVE_SUCCESSFUL});
+        } else {
+          this.messages.push({severity: Constants.ERROR, summary: Constants.SAVE_LABEL, detail: Constants.SAVE_UNSUCCESSFUL});
         }
-        else {
-          this.messages.push({severity:Constants.ERROR, summary:Constants.SAVE_LABEL, detail:Constants.SAVE_UNSUCCESSFUL});
-        }
-      })
-  }
-  
-  delete() {
-    
+      });
   }
 
  }

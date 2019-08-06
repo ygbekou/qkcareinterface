@@ -1,0 +1,155 @@
+<p-confirmDialog [style]="{width: '50vw'}"></p-confirmDialog>
+<div class="ui-grid-row">
+	<div class="ui-grid-col-12 ui-sm-12">
+		<button type="button" pButton icon="fa fa-plus" (click)="addNewService()"></button>&nbsp;&nbsp;
+	</div>
+</div>
+<div class="ui-grid-row">
+	<div class="ui-grid-col-12 ui-sm-12">
+		<p-messages [(value)]="messages"></p-messages>
+		<p-table [columns]="serviceCols" [value]="patientServices">
+		<ng-template pTemplate="caption">
+	        {{ 'COMMON.SERVICE_LIST' | translate }}
+	    </ng-template>
+		    <ng-template pTemplate="header" let-diagnosisCols>
+		        <tr>
+		            <th *ngFor="let col of serviceCols" [pSortableColumn]="col.field" [ngStyle]="col.style">
+						{{col.header}}
+						<span *ngIf="col.type == 'date_time'">
+							({{globalEventsManager.DATE_TIME_FORMAT}})
+						</span>
+		                <p-sortIcon [field]="col.field"></p-sortIcon>
+		            </th>
+		            <th>Action</th>
+		        </tr>
+		    </ng-template>
+		    <ng-template pTemplate="body" let-rowData let-columns="columns">
+		        <tr>			           
+		            <td *ngFor="let col of columns" pEditableColumn>
+						<p-cellEditor *ngIf="col.field === 'serviceDate'">
+		                    <ng-template pTemplate="input">
+								<p-calendar [(ngModel)]="rowData[col.field]"></p-calendar>
+		                    </ng-template>
+		                    <ng-template pTemplate="output">
+		                        {{rowData[col.field] | date: globalEventsManager.DATE_FORMAT}}
+		                    </ng-template>
+		                </p-cellEditor>
+		            	<p-cellEditor *ngIf="col.field === 'notes'">
+		                    <ng-template pTemplate="input">
+		                        <input type="text" [(ngModel)]="rowData[col.field]">
+		                    </ng-template>
+		                    <ng-template pTemplate="output">
+		                        {{rowData[col.field]}}
+		                    </ng-template>
+		                </p-cellEditor>
+		                <p-cellEditor *ngIf="col.field === 'description'">
+		                	<ng-template pTemplate="input">
+		                        {{rowData[col.parent][col.field]}}
+		                    </ng-template>
+		                    <ng-template pTemplate="output">
+		                        {{rowData[col.parent][col.field]}}
+		                    </ng-template>
+		                </p-cellEditor>
+		                <p-cellEditor *ngIf="col.field === 'name'">
+		                    <ng-template pTemplate="input">
+		                        <p-autoComplete [(ngModel)]="rowData['service']"
+									(onDropdownClick)="serviceDropdown.handleDropdownClick($event)"
+									[suggestions]="serviceDropdown.filteredServices" [dropdown]="true"
+									(completeMethod)="serviceDropdown.filter($event)"
+									name="name" field="name" [size]="30" placeholder=""
+									[minLength]="1">
+								</p-autoComplete>
+		                    </ng-template>
+		                    <ng-template pTemplate="output">
+		                        {{rowData[col.parent][col.field]}}
+		                    </ng-template>
+		                </p-cellEditor>
+		            </td>
+		            <td>
+						<button type="button" pButton icon="fa fa-save" (click)="saveService(rowData)"></button>&nbsp;&nbsp;
+						<button type="button" pButton icon="fa fa-eraser" (click)="deleteItem(patientServices, rowData.id, 'PatientService')" 
+									[disabled]="!(rowData.id > 0)"></button>
+		            </td>
+		        </tr>
+		    </ng-template>
+		</p-table>
+	</div>
+</div>
+
+<br/>
+
+<div class="ui-grid-row">
+	<div class="ui-grid-col-12 ui-sm-12">
+		<button type="button" pButton icon="fa fa-plus" (click)="addNewPackage()"></button>&nbsp;&nbsp;
+	</div>
+</div>
+<div class="ui-grid-row">
+	<div class="ui-grid-col-12 ui-sm-12">
+		<p-table [columns]="packageCols" [value]="patientPackages">
+		<ng-template pTemplate="caption">
+	        {{ 'COMMON.PACKAGE_LIST' | translate }}
+	    </ng-template>
+		    <ng-template pTemplate="header" let-diagnosisCols>
+		        <tr>
+		            <th *ngFor="let col of packageCols" [pSortableColumn]="col.field" [ngStyle]="col.style">
+						{{col.header}}
+						<span *ngIf="col.type == 'date_time'">
+							({{globalEventsManager.DATE_TIME_FORMAT}})
+						</span>
+		                <p-sortIcon [field]="col.field"></p-sortIcon>
+		            </th>
+		            <th>Action</th>
+		        </tr>
+		    </ng-template>
+		    <ng-template pTemplate="body" let-rowData let-columns="columns">
+		        <tr>			           
+		            <td *ngFor="let col of columns" pEditableColumn>
+						<p-cellEditor *ngIf="col.field === 'packageDate'">
+		                    <ng-template pTemplate="input">
+								<p-calendar [(ngModel)]="rowData[col.field]"></p-calendar>
+		                    </ng-template>
+		                    <ng-template pTemplate="output">
+		                        {{rowData[col.field] | date: globalEventsManager.DATE_FORMAT}}
+		                    </ng-template>
+		                </p-cellEditor>
+		            	<p-cellEditor *ngIf="col.field === 'notes'">
+		                    <ng-template pTemplate="input">
+		                        <input type="text" [(ngModel)]="rowData[col.field]">
+		                    </ng-template>
+		                    <ng-template pTemplate="output">
+		                        {{rowData[col.field]}}
+		                    </ng-template>
+		                </p-cellEditor>
+		                <p-cellEditor *ngIf="col.field === 'description'">
+		                	<ng-template pTemplate="input">
+		                        {{rowData[col.parent][col.field]}}
+		                    </ng-template>
+		                    <ng-template pTemplate="output">
+		                        {{rowData[col.parent][col.field]}}
+		                    </ng-template>
+		                </p-cellEditor>
+		                <p-cellEditor *ngIf="col.field === 'name'">
+		                    <ng-template pTemplate="input">
+		                        <p-autoComplete [(ngModel)]="rowData['pckage']"
+									(onDropdownClick)="packageDropdown.handleDropdownClick($event)"
+									[suggestions]="packageDropdown.filteredPackages" [dropdown]="true"
+									(completeMethod)="packageDropdown.filter($event)"
+									name="name" field="name" [size]="30" placeholder=""
+									[minLength]="1">
+								</p-autoComplete>
+		                    </ng-template>
+		                    <ng-template pTemplate="output">
+		                        {{rowData[col.parent][col.field]}}
+		                    </ng-template>
+		                </p-cellEditor>
+		            </td>
+		            <td>
+						<button type="button" pButton icon="fa fa-save" (click)="savePackage(rowData)"></button>&nbsp;&nbsp;
+						<button type="button" pButton icon="fa fa-eraser" (click)="deleteItem(patientPackages, rowData.id, 'PatientPackage')" 
+									[disabled]="!(rowData.id > 0)"></button>
+		            </td>
+		        </tr>
+		    </ng-template>
+		</p-table>
+	</div>
+</div>

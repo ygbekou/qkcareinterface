@@ -10,6 +10,8 @@ export class LabTest {
   normalRangeMaximum: number;
   criticalLow: number;
   criticalHigh: number;
+  price: number;
+  payerPrice: number;
   unit: Reference; 
   status: number;
 }

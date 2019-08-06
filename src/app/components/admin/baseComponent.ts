@@ -51,7 +51,7 @@ export class BaseComponent {
 
   deleteItem(listItems: any[], id: string, entity: string) {
 	  	if (id === undefined || id === null) {
-			this.deleteItem(listItems, id + '', entity);
+			this.removeItem(listItems, +id);
 			return;
 		}
 

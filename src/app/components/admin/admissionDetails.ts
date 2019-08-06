@@ -187,7 +187,7 @@ export class AdmissionDetails implements OnInit, OnDestroy {
 		else if (evt.index === 2) {
 			this.admissionDiagnoses.getDiagnoses();
 		}
-		else if (evt.index === 4) {
+		else if (evt.index === 5) {
 			this.prescriptionDetails.admission = this.admission;
 			this.prescriptionList.admission = this.admission;
 			this.prescriptionList.getPrescriptions();

@@ -59,8 +59,9 @@ import { BedDetails } from '../components/admin/bedDetails';
 import { BedList } from '../components/admin/bedList';
 import { AdminBedStatus } from '../components/admin/adminBedStatus';
 import { AdmissionDiagnoses } from '../components/admin/admissionDiagnoses';
+import { PatientServiceDetails } from '../components/admin/patientServiceDetails';
 import { AdminReference } from '../components/admin/adminReference';
-import { CategoryDropdown, PackageDropdown, DoctorDropdown } from '../components/dropdowns';
+import { CategoryDropdown, PackageDropdown, DoctorDropdown, ServiceDropdown, LabTestDropdown, ProductDropdown } from '../components/dropdowns';
 import { AdminPatient } from '../components/admin/adminPatient';
 import { VisitDetails } from '../components/admin/visitDetails';
 import { VisitList } from '../components/admin/visitList';
@@ -224,7 +225,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     ServiceList, PackageDetails, PackageList, BillDetails, BillList, VitalSignDetails, VitalSignList, AllergyDetails,
     MedicalHistoryDetails, SocialHistoryDetails, VaccineDetails, SymptomDetails, BedTransfer,
     DoctorOrderDetails, DoctorOrderList, AdmissionDetails, AdmissionList, FloorDetails, FloorList,
-    RoomDetails, RoomList, BedDetails, BedList, AdminPatient, AdminBedStatus, AdmissionDiagnoses,
+    RoomDetails, RoomList, BedDetails, BedList, AdminPatient, AdminBedStatus, AdmissionDiagnoses, PatientServiceDetails, 
     AdminReference, VisitDetails, VisitList, DischargeDetails, LabTestDetails, LabTestList, InvestigationDetails,
     InvestigationList, PurchaseOrderDetails, PurchaseOrderList, ReceiveOrderDetails, ReceiveOrderList,
     PatientSaleDetails, PatientSaleList, SaleReturnDetails, SaleReturnList, BirthReportDetails, BirthReportList,
@@ -235,7 +236,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     CompanyDetails, CompanyList, ContactDetails, ContactList, Dashboard],
 
   providers: [
-    CategoryDropdown, PackageDropdown, DoctorDropdown, TokenStorage, BillingService, VisitService, LoggedInGuard, ConfirmationService]
+	CategoryDropdown, PackageDropdown, DoctorDropdown, TokenStorage, BillingService, VisitService, LoggedInGuard, 
+	ConfirmationService, ServiceDropdown, LabTestDropdown, ProductDropdown]
 })
 
 export class AdminModule { }

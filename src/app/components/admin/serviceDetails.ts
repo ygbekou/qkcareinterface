@@ -1,40 +1,33 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Service } from '../../models/service';
-import { Constants } from '../../app.constants';
-import { FileUploader } from './fileUploader';
-import { Cookie } from 'ng2-cookies/ng2-cookies';
-import { DataTableModule, DialogModule, InputTextareaModule, CheckboxModule } from 'primeng/primeng';
-import { User } from '../../models/user';  
 import { GenericService } from '../../services';
 import { DoctorOrderTypeDropdown } from '../dropdowns';
+import { BaseComponent } from './baseComponent';
+import { Message, ConfirmationService } from 'primeng/api';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-service-details',
   templateUrl: '../../pages/admin/serviceDetails.html',
   providers: [GenericService, DoctorOrderTypeDropdown]
 })
-export class ServiceDetails implements OnInit, OnDestroy {
+export class ServiceDetails extends BaseComponent implements OnInit, OnDestroy {
   
-  public error: String = '';
-  displayDialog: boolean;
   service: Service = new Service();
-  
   doctorOrderTypeDropdown: DoctorOrderTypeDropdown;
-  
-  DETAIL: string = Constants.DETAIL;
-  ADD_IMAGE: string = Constants.ADD_IMAGE;
-  ADD_LABEL: string = Constants.ADD_LABEL;  
-  
+  messages: Message[] = [];
+
   constructor
     (
-      private genericService: GenericService,
-      docOrderTypeDropdown: DoctorOrderTypeDropdown,
-      private changeDetectorRef: ChangeDetectorRef,
-      private route: ActivatedRoute,
-      private router: Router
+      public genericService: GenericService,
+      private docOrderTypeDropdown: DoctorOrderTypeDropdown,
+      public translate: TranslateService,
+	  public confirmationService: ConfirmationService,
+      private route: ActivatedRoute
     ) {
-      this.doctorOrderTypeDropdown = docOrderTypeDropdown;
+		super(genericService, translate, confirmationService);
+      	this.doctorOrderTypeDropdown = docOrderTypeDropdown;
   }
 
   ngOnInit(): void {
@@ -50,11 +43,7 @@ export class ServiceDetails implements OnInit, OnDestroy {
                 if (result.id > 0) {
                   this.service = result
                 }
-                else {
-                  this.error = Constants.SAVE_UNSUCCESSFUL;
-                  this.displayDialog = true;
-                }
-              })
+               })
           }
         });
     
@@ -66,15 +55,14 @@ export class ServiceDetails implements OnInit, OnDestroy {
 
   save() {
     try {
-      this.error = '';
+      this.messages = [];
       this.genericService.save(this.service, 'Service')
         .subscribe(result => {
           if (result.id > 0) {
-            this.service = result
-          }
-          else {
-            this.error = Constants.SAVE_UNSUCCESSFUL;
-            this.displayDialog = true;
+			this.processResult(result, this.service, this.messages, null);
+			this.service = result;
+          } else {
+            this.processResult(result, this.service, this.messages, null);
           }
         })
     }
@@ -83,8 +71,9 @@ export class ServiceDetails implements OnInit, OnDestroy {
     }
   }
 
-  delete() {
-    
+  addNew() {
+	this.messages = [];
+    this.service = new Service();
   }
   
  }

@@ -11,7 +11,7 @@ export class ServiceDropdown {
   
   constructor(
     private genericService: GenericService) {
-    this.getAllServices();
+    //this.getAllServices();
   }
   
   filter(event) {
@@ -35,7 +35,7 @@ export class ServiceDropdown {
   }
   
   public getServices(serviceTypeId: number): void {
-    let parameters: string [] = []; 
+	let parameters: string [] = []; 
             
     parameters.push('e.serviceType.id = |serviceTypeId|' + serviceTypeId + '|Long')
     

@@ -35,13 +35,13 @@
 			<br/>
 			<div class="ui-grid-row">
 				<div class="ui-grid-col-12 ui-sm-12">
-					<p-table [columns]="serviceCols" [value]="bill.billServices" (change)="calculateTotal()">
+					<p-table [columns]="serviceCols" [value]="bill.billServices" (onEditComplete)="calculateTotal()">
 						<ng-template pTemplate="caption">
 					        {{ 'COMMON.SERVICE_LIST' | translate }}
 					    </ng-template>
 					    <ng-template pTemplate="header" let-accountCols>
 					        <tr>
-					            <th *ngFor="let col of serviceCols" [pSortableColumn]="col.field">
+					            <th *ngFor="let col of serviceCols" [pSortableColumn]="col.field" [ngStyle]="col.style">
 					                {{col.header}}
 					                <p-sortIcon [field]="col.field"></p-sortIcon>
 					            </th>
@@ -52,15 +52,14 @@
 					        <tr>			           
 					            <td *ngFor="let col of columns" [pEditableColumn]="rowData" [pEditableColumnField]="rowData[col.field]">
 					                <p-cellEditor *ngIf="col.field == 'quantity' || col.field == 'unitAmount' || col.field == 'totalAmount' || 
-					                		col.field == 'netAmount' || col.field == 'discountAmount' || col.field == 'payerAmount' || col.field == 'patientAmount'">
+					                		col.field == 'netAmount' || col.field == 'discountPercentage' || col.field == 'discountAmount' || col.field == 'payerAmount' || col.field == 'patientAmount'">
 					                    <ng-template pTemplate="input">
-					                        <input type="text" [(ngModel)]="rowData[col.field]" [disabled]="col.isDisabled"
-					                        	 name="{{col.field}}" >
+					                        <input type="text" [(ngModel)]="rowData[col.field]" name="{{col.field}}" >
 					                    </ng-template>
 					                    <ng-template pTemplate="output">
 					                        {{rowData[col.field]}}
 					                    </ng-template>
-					                </p-cellEditor>
+									</p-cellEditor>
 					                <p-cellEditor *ngIf="col.field == 'description'">
 					                    <ng-template pTemplate="input">
 					                        <input type="text" [(ngModel)]="rowData[col.field]" [disabled]="col.isDisabled"
@@ -78,9 +77,11 @@
 					                        {{rowData[col.field] | date:'dd/MM/yyyy'}}
 					                    </ng-template>
 					                </p-cellEditor>
-					                <p-cellEditor *ngIf="col.field == 'service'">
+									<p-cellEditor *ngIf="col.header == 'Name' && rowData['doctorOrderType'] !== undefined 
+										&& rowData['doctorOrderType'] !== null
+										&& rowData['service'] !== undefined && rowData['service'] !== null ">
 					                    <ng-template pTemplate="input">
-					                        <p-autoComplete [(ngModel)]="rowData[col.field]"
+					                        <p-autoComplete [(ngModel)]="rowData.service"
 												(onDropdownClick)="serviceDropdown.handleDropdownClick($event)"
 												[suggestions]="serviceDropdown.filteredServices" [dropdown]="true"
 												(completeMethod)="serviceDropdown.filter($event)"
@@ -89,9 +90,74 @@
 											</p-autoComplete>
 					                    </ng-template>
 					                    <ng-template pTemplate="output">
-					                        {{rowData[col.field].name}}
+											{{rowData['service'].name}}
 					                    </ng-template>
-					                </p-cellEditor>
+									</p-cellEditor>
+									<p-cellEditor *ngIf="col.header == 'Name' && rowData['doctorOrderType'] !== undefined 
+										&& rowData['doctorOrderType'] !== null
+										&& rowData['pckage'] !== undefined && rowData['pckage'] !== null ">
+					                    <ng-template pTemplate="input">
+					                        <p-autoComplete [(ngModel)]="rowData.pckage"
+												(onDropdownClick)="packageDropdown.handleDropdownClick($event)"
+												[suggestions]="packageDropdown.filteredPackages" [dropdown]="true"
+												(completeMethod)="packageDropdown.filter($event)"
+												name="name" field="name" [size]="30" placeholder=""
+												[minLength]="1">
+											</p-autoComplete>
+					                    </ng-template>
+					                    <ng-template pTemplate="output">
+											{{rowData['pckage'].name}}
+					                    </ng-template>
+									</p-cellEditor>
+									<p-cellEditor *ngIf="col.header == 'Name' && rowData['doctorOrderType'] !== undefined 
+										&& rowData['doctorOrderType'] !== null
+										&& rowData['product'] !== undefined && rowData['product'] !== null ">
+					                    <ng-template pTemplate="input">
+					                        <p-autoComplete [(ngModel)]="rowData.product"
+												(onDropdownClick)="productDropdown.handleDropdownClick($event)"
+												[suggestions]="productDropdown.filteredProducts" [dropdown]="true"
+												(completeMethod)="productDropdown.filter($event)"
+												name="name" field="name" [size]="30" placeholder=""
+												[minLength]="1">
+											</p-autoComplete>
+					                    </ng-template>
+					                    <ng-template pTemplate="output">
+											{{rowData['product'].name}}
+					                    </ng-template>
+									</p-cellEditor>
+									<p-cellEditor *ngIf="col.header == 'Name' && rowData['doctorOrderType'] !== undefined 
+										&& rowData['doctorOrderType'] !== null
+										&& rowData['labTest'] !== undefined && rowData['labTest'] !== null ">
+					                    <ng-template pTemplate="input">
+					                        <p-autoComplete [(ngModel)]="rowData.product"
+												(onDropdownClick)="labTestDropdown.handleDropdownClick($event)"
+												[suggestions]="labTestDropdown.filteredLabTests" [dropdown]="true"
+												(completeMethod)="labTestDropdown.filter($event)"
+												name="name" field="name" [size]="30" placeholder=""
+												[minLength]="1">
+											</p-autoComplete>
+					                    </ng-template>
+					                    <ng-template pTemplate="output">
+											{{rowData['labTest'].name}}
+					                    </ng-template>
+									</p-cellEditor>
+									<p-cellEditor *ngIf="col.header == 'Name' && rowData['doctorOrderType'] !== undefined 
+										&& rowData['doctorOrderType'] !== null
+										&& rowData['bed'] !== undefined && rowData['bed'] !== null ">
+					                    <ng-template pTemplate="input">
+					                        <p-autoComplete [(ngModel)]="rowData.product"
+												(onDropdownClick)="bedDropdown.handleDropdownClick($event)"
+												[suggestions]="bedDropdown.filteredLabTests" [dropdown]="true"
+												(completeMethod)="bedDropdown.filter($event)"
+												name="name" field="name" [size]="30" placeholder=""
+												[minLength]="1">
+											</p-autoComplete>
+					                    </ng-template>
+					                    <ng-template pTemplate="output">
+											{{rowData['bed'].bedNumber}}
+					                    </ng-template>
+									</p-cellEditor>
+									
 					                <p-cellEditor *ngIf="col.field == 'doctor'">
 					                    <ng-template pTemplate="input">
 					                        <p-autoComplete [(ngModel)]="rowData[col.field]"
@@ -157,8 +223,9 @@
 					                </p-cellEditor>
 					            </td>	
 					            <td>
-					            	<button type="button" pButton icon="fa fa-plus"  (click)="addPaymentRow()"></button>&nbsp;
-									<button type="button" pButton icon="fa fa-eraser" ></button>
+									<button type="button" pButton icon="fa fa-plus"  (click)="addPaymentRow()"></button>&nbsp;
+									<button *ngIf="rowData.id === undefined" type="button" pButton icon="fa fa-eraser"
+									 (click)="deleteItem(bill.billPayments, rowData.id, 'BillPayment')" ></button>
 					            </td>
 					        </tr>
 					    </ng-template>

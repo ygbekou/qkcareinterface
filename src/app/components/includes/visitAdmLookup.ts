@@ -18,26 +18,19 @@ import { NavigationExtras, Router } from '@angular/router';
                     <p-radioButton name="itemLabel" value="Admission" label="Admission" (onClick)="clearSelection()"
                     [(ngModel)]="itemNumberLabel" #itemLabelr="ngModel" required></p-radioButton>
                  </div>
-                 <div class="ui-grid-row" *ngIf="itemType == 'ADMISSION'">
-                    Admission
-                 </div>
-                 <div class="ui-grid-row" *ngIf="itemType == 'VISIT'">
-                    Visit
-                 </div>
-                 <br/>
-                  
-                  
-                  <div class="ui-grid-row">
+				<br/>
+                 
+                 <div class="ui-grid-row">
                      <div class="form-group">
-                        <form #searchForm="ngForm">
-                          <input type="text" pInputText class="form-control" id="searchT"
-                            required [(ngModel)]="itemNumber" (change)="lookUpItem()"
-                            placeholder="{{SEARCH_TEXT}}" name="searchT"
-                            #searchT="ngModel">
+						<form #searchForm="ngForm">
+							<div class="ui-inputgroup">
+								<input type="text" pInputText class="form-control" id="searchT"
+									required [(ngModel)]="itemNumber" (change)="lookUpItem()"
+									placeholder="{{SEARCH_TEXT}}" name="searchT"
+									#searchT="ngModel">
+								<button type="button" pButton icon="fa fa-search" (click)="openVisitOrAdmSearchPage()"></button>
+							</div>
                         </form>
-                     </div>
-                     <div>
-                        <button type="button" pButton icon="fa fa-search" (click)="openPatientSearchPage()"></button>    
                      </div>
                   </div>
                 </div>
@@ -131,17 +124,21 @@ export class VisitAdmLookup implements OnInit {
   }
   
   openPatientSearchPage() {
-    try {
-      let navigationExtras: NavigationExtras = {
-        queryParams: {
-          "originalPage": this.originalPage,    
-        }
-      }
-      this.router.navigate(["/admin/visitList"], navigationExtras);
-    }
-    catch (e) {
-      console.log(e);
-    }
+	if (this.itemNumber !== undefined && this.itemNumber !== '') {
+			this.lookUpItem();
+	} else {
+		try {
+		let navigationExtras: NavigationExtras = {
+			queryParams: {
+				"originalPage": this.originalPage,    
+			}
+		}
+			this.router.navigate(["/admin/visitList"], navigationExtras);
+		}
+		catch (e) {
+			console.log(e);
+		}
+	}
   }
 
   lookUpItem() {

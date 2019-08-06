@@ -144,6 +144,9 @@
     </p-tabPanel>
     <p-tabPanel header="{{'COMMON.DIAGNOSIS_LIST' | translate }}" *ngIf="admission && admission.id > 0">
       <app-admissionDiagnoses [admission]="admission"></app-admissionDiagnoses>
+	</p-tabPanel>
+	<p-tabPanel header="{{'COMMON.SERVICE_LIST' | translate }}" *ngIf="admission && admission.id > 0">
+      <app-patientServiceDetails [admission]="admission"></app-patientServiceDetails>
     </p-tabPanel>
     <p-tabPanel header="{{'COMMON.PRESCRIPTION_LIST' | translate }}" *ngIf="admission && admission.id > 0">
       <app-prescription-details (prescriptionSaveEvent)="onPrescriptionSaved($event)" [admission]="admission"></app-prescription-details><br />

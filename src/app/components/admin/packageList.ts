@@ -31,9 +31,11 @@ export class PackageList extends BaseComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.cols = [
             { field: 'name', header: 'Name', headerKey: 'COMMON.NAME', type: 'string',
-                                        style: {width: '30%', 'text-align': 'center'} },
+                                        style: {width: '25%', 'text-align': 'center'} },
             { field: 'description', header: 'Description', headerKey: 'COMMON.DESCRIPTION', type: 'string',
-                                        style: {width: '40%', 'text-align': 'center'} },
+										style: {width: '35%', 'text-align': 'center'} },
+			{ field: 'rate', header: 'Rate', headerKey: 'COMMON.RATE', type: 'string',
+                                        style: {width: '10%', 'text-align': 'center'} },
             { field: 'discount', header: 'Discount', headerKey: 'COMMON.DISCOUNT', type: 'string',
                                         style: {width: '10%', 'text-align': 'center'} },
             { field: 'statusDesc', header: 'Status', headerKey: 'COMMON.STATUS', type: 'string',

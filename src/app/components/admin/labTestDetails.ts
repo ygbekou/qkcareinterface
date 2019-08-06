@@ -56,8 +56,9 @@ export class LabTestDetails extends BaseComponent implements OnInit, OnDestroy {
   
   save() {
     try {
-      this.messages = [];
-      this.genericService.save(this.labTest, "LabTest")
+	  this.messages = [];
+	  console.info(this.labTest)
+      this.genericService.saveWithUrl('/service/laboratory/investigationTest/labTest/save', this.labTest)
         .subscribe(result => {
           if (result.id > 0) {
 			this.processResult(result, this.labTest, this.messages, null);

@@ -1,4 +1,4 @@
-import { Service, Employee } from './';
+import { Service, Employee, Package, Reference } from './';
 import { Appointment } from './appointment';
 import { Admission } from './admission';
 import { Visit } from './visit';
@@ -34,7 +34,9 @@ export class BillPayment                                                        
 
 export class BillService {
   id: number;
+  doctorOrderType: Reference;
   service: Service;
+  pckage: Package;
   doctor: Employee;
   serviceDate: Date;
   description: string;

@@ -1,11 +1,12 @@
 <form name="form" (ngSubmit)="f.form.valid && save()" #f="ngForm" validate>
+	<p-messages [(value)]="messages"></p-messages>
 	<div class="ui-g-12 ui-sm-12" style="padding: 15px;">
 		<div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="service">
 			<div class="ui-grid-row">
 				<div class="ui-grid-col-3 ui-sm-12">
 					<div class="form-group">
 						<label for="name">{{ 'COMMON.NAME' | translate }}<font color="red">*</font></label>
-						<input pInputText id="name" [(ngModel)]="service.name" required />
+						<input pInputText id="name" name="name" [(ngModel)]="service.name" required />
 					</div>
 				</div>
 				<div class="ui-grid-col-3 ui-sm-12">
@@ -20,10 +21,10 @@
 						</p-autoComplete>
 					</div>
 				</div>
-				<div class="ui-grid-col-3 ui-sm-12">
+				<div class="ui-grid-col-6 ui-sm-12">
 					<div class="form-group">
 						<label for="description">{{ 'COMMON.DESCRIPTION' | translate }}</label>
-						<textarea pInputTextarea id="description" [(ngModel)]="service.description"> </textarea>
+						<textarea pInputTextarea id="description" name="description" [(ngModel)]="service.description"> </textarea>
 					</div>
 				</div>
 			</div>
@@ -31,13 +32,13 @@
 				<div class="ui-grid-col-3 ui-sm-12">
 					<div class="form-group">
 						<label for="quantity">{{ 'COMMON.QUANTITY' | translate }}<font color="red">*</font></label>
-						<input pInputText id="quantity" [(ngModel)]="service.quantity" required />
+						<input pInputText id="quantity" name="quantity" [(ngModel)]="service.quantity" required />
 					</div>
 				</div>
 				<div class="ui-grid-col-3 ui-sm-12">
 					<div class="form-group">
 						<label for="rate">{{ 'COMMON.RATE' | translate }}<font color="red">*</font></label>
-						<input pInputText id="rate" [(ngModel)]="service.rate" required />
+						<input pInputText id="rate" name="rate" [(ngModel)]="service.rate" required />
 					</div>
 				</div>
 				<div class="ui-grid-col-3 ui-sm-12">
@@ -54,8 +55,8 @@
 		<br />
 		<div>
 			<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
-				<button type="button" pButton icon="fa fa-close" (click)="delete()" label="{{ 'COMMON.DELETE' | translate }}"></button>&nbsp;&nbsp;
-				<button type="button" pButton icon="fa fa-check" (click)="save()" label="{{ 'COMMON.SAVE' | translate }}"></button>
+ 				<button type="button" pButton icon="fa fa-refresh" (click)="addNew()" label="{{ 'COMMON.NEW' | translate }}"></button>&nbsp;&nbsp;
+ 				<button type="button" pButton icon="fa fa-check" (click)="save()" label="{{ 'COMMON.SAVE' | translate }}"></button>
 			</div>
 		</div>
 	</div>

@@ -10,13 +10,20 @@
 					<p-message *ngIf="f.submitted && name.invalid" severity="error" text="Field is required"></p-message>
 				</div>
 			</div>
-			<div class="ui-grid-col-6 ui-sm-12">
+			<div class="ui-grid-col-5 ui-sm-12">
 				<div class="form-group">
 					<label for="description">{{ 'COMMON.DESCRIPTION' | translate }}</label>
 					<textarea pInputTextarea id="description" [(ngModel)]="pckage.description" name="description"  #description="ngModel"> </textarea>
 				</div>
 			</div>
-			<div class="ui-grid-col-3 ui-sm-12">
+			<div class="ui-grid-col-2 ui-sm-12">
+				<div class="form-group">
+					<label for="rate">{{ 'COMMON.RATE' | translate }}<font color="red">*</font></label>
+					<input pInputText id="rate" name="rate" [(ngModel)]="pckage.rate" #rate="ngModel" required />
+					<p-message *ngIf="f.submitted && rate.invalid" severity="error" text="Field is required"></p-message>
+				</div>
+			</div>
+			<div class="ui-grid-col-2 ui-sm-12">
 				<div class="form-group">
 					<label for="discount">{{ 'COMMON.DISCOUNT' | translate }}</label>
 					<input pInputText id="discount" [(ngModel)]="pckage.discount" name="discount"  #discount="ngModel" />

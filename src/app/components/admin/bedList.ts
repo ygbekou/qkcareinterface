@@ -37,7 +37,8 @@ export class BedList extends BaseComponent implements OnInit, OnDestroy {
 		  	{ field: 'floorName', header: 'Floor', headerKey: 'COMMON.FLOOR', style: {width: '15%', 'text-align': 'center'} },
 		   	{ field: 'roomName', header: 'Room', headerKey: 'COMMON.ROOM', style: {width: '15%', 'text-align': 'center'} },
 		    { field: 'bedCategoryName', header: 'Category', headerKey: 'COMMON.CATEGORY', style: {width: '15%', 'text-align': 'center'} },
-            { field: 'bedNumber', header: 'Number', headerKey: 'COMMON.BED_NUMBER', style: {width: '20%', 'text-align': 'center'} },
+			{ field: 'bedNumber', header: 'Number', headerKey: 'COMMON.BED_NUMBER', style: {width: '10%', 'text-align': 'center'} },
+			{ field: 'rate', header: 'Rate', headerKey: 'COMMON.RATE', style: {width: '10%', 'text-align': 'center'} },
             { field: 'statusDesc', header: 'Status', headerKey: 'COMMON.STATUS', style: {width: '10%', 'text-align': 'center'} }
         ];
     

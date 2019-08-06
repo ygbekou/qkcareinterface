@@ -7,5 +7,6 @@ export class Bed {
   description: string;
   status: number;
   room: Room;
+  rate: number;
   category: Reference;
 }

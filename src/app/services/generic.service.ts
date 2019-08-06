@@ -90,7 +90,7 @@ export class GenericService {
 
       const toAdd = JSON.stringify(genericObject);
       const re = /\"/gi;
-      const toSend = '{"json":"' + toAdd.replace(re, '\'') + '"}';
+	  const toSend = '{"json":"' + toAdd.replace(re, '\'') + '"}';
 
       const actionUrl = Constants.apiServer + url;
       return this.http.post(actionUrl, toSend, { headers: this.headers })

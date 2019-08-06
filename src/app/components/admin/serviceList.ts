@@ -1,42 +1,46 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild } from '@angular/core';
-import { Service, User } from '../../models';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { Service } from '../../models';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
-import { Constants } from '../../app.constants';
-import { FileUploader } from './fileUploader';
-import { Cookie } from 'ng2-cookies/ng2-cookies';
-import { DataTableModule, DialogModule, InputTextareaModule, CheckboxModule } from 'primeng/primeng';
+import { ConfirmationService } from 'primeng/primeng';
 import { GenericService } from '../../services';
 import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
+import { BaseComponent } from './baseComponent';
 
 @Component({
   selector: 'app-service-list',
   templateUrl: '../../pages/admin/serviceList.html',
-  providers: [GenericService]
+  providers: []
 })
-export class ServiceList implements OnInit, OnDestroy {
+export class ServiceList  extends BaseComponent  implements OnInit, OnDestroy {
  
   services: Service[] = [];
   cols: any[];
   
   constructor
     (
-    private genericService: GenericService,
-    private translate: TranslateService,
+    public genericService: GenericService,
+	public translate: TranslateService,
+	public confirmationService: ConfirmationService,
     private changeDetectorRef: ChangeDetectorRef,
     private route: ActivatedRoute,
     private router: Router,
     ) {
-
+		super(genericService, translate, confirmationService);
     
   }
 
   ngOnInit(): void {
     this.cols = [
-            { field: 'name', header: 'Name', headerKey: 'COMMON.NAME' },
-            { field: 'description', header: 'Description', headerKey: 'COMMON.DESCRIPTION' },
-            { field: 'quantity', header: 'Quantity', headerKey: 'COMMON.QUANTITY' },
-            { field: 'rate', header: 'Rate', headerKey: 'COMMON.RATE' },
-            { field: 'statusDesc', header: 'Status', headerKey: 'COMMON.STATUS' }
+            { field: 'name', header: 'Name', headerKey: 'COMMON.NAME', type: 'date_time',
+                                        style: {width: '25%', 'text-align': 'center'} },
+            { field: 'description', header: 'Description', headerKey: 'COMMON.DESCRIPTION', type: 'date_time',
+                                        style: {width: '35%', 'text-align': 'center'} },
+            { field: 'quantity', header: 'Quantity', headerKey: 'COMMON.QUANTITY', type: 'date_time',
+                                        style: {width: '10%', 'text-align': 'center'} },
+            { field: 'rate', header: 'Rate', headerKey: 'COMMON.RATE', type: 'date_time',
+                                        style: {width: '10%', 'text-align': 'center'} },
+            { field: 'statusDesc', header: 'Status', headerKey: 'COMMON.STATUS', type: 'date_time',
+                                        style: {width: '10%', 'text-align': 'center'} }
         ];
     
     this.genericService.getAll('Service')
@@ -68,20 +72,6 @@ export class ServiceList implements OnInit, OnDestroy {
   }
   
   edit(serviceId : number) {
-    try {
-      let navigationExtras: NavigationExtras = {
-        queryParams: {
-          "serviceId": serviceId,
-        }
-      }
-      this.router.navigate(["/admin/serviceDetails"], navigationExtras);
-    }
-    catch (e) {
-      console.log(e);
-    }
-  }
-
-  delete(serviceId : number) {
     try {
       let navigationExtras: NavigationExtras = {
         queryParams: {

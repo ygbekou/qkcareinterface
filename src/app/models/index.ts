@@ -38,4 +38,5 @@ export * from './service';
 export * from './packageService';
 export * from './report';
 export * from './enquiry';
+export * from './patientService';
 
