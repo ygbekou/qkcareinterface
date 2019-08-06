@@ -34,15 +34,14 @@
   <div class="ui-g">
     <div class="ui-g-12 ui-md-12 ui-lg-6">
       <p-panel header="{{ 'COMMON.APPOINTMENT' | translate }}" styleClass="inventory">
-        <p-table [value]="events">
+        <p-table [value]="events"  [paginator]="true" [rows]="5">
           <ng-template pTemplate="header">
             <tr>
-              <th>{{ 'COMMON.PATIENT' | translate }}</th>
-              <th>{{ 'COMMON.START_TIME' | translate }}</th>
-              <th>{{ 'COMMON.END_TIME' | translate }}</th>
-              <th>{{ 'COMMON.PHONE' | translate }}</th>
-              <th>{{ 'COMMON.DOCTOR' | translate }}</th>
-              <th>Action</th>
+              <th [ngStyle]="{width: '20%', 'text-align': 'center'}">{{ 'COMMON.PATIENT' | translate }}</th>
+              <th [ngStyle]="{width: '15%', 'text-align': 'center'}">{{ 'COMMON.APPOINTMENT' | translate }}</th>
+              <th [ngStyle]="{width: '12%', 'text-align': 'center'}">{{ 'COMMON.PHONE' | translate }}</th>
+              <th [ngStyle]="{width: '18%', 'text-align': 'center'}">{{ 'COMMON.DOCTOR' | translate }}</th>
+              <th [ngStyle]="{width: '35%', 'text-align': 'center'}">Action</th>
             </tr>
           </ng-template>
           <ng-template pTemplate="body" let-event>
@@ -51,8 +50,8 @@
                   (click)="setPatientId(event.patientId,event.id)">
                   {{event.title}}
                 </a></td>
-              <td>{{event.start}}</td>
-              <td>{{event.end}}</td>
+              <td>{{event.start +' - '+ event.end}}</td>
+               
               <td>{{event.phone}}</td>
               <td><a [routerLink]="['/admin/employeeDetails']" [queryParams]="{employeeId:event.employeeId}">
                   {{event.designation +' '+event.docLastName}}
@@ -60,7 +59,6 @@
               <td>
                 <button type="button" pButton icon="fa fa-close" (click)="cancel(event.id)"
                   class="ui-button-rounded ui-button-warning" label="{{ 'COMMON.CANCEL' | translate }}"></button>&nbsp;
-                &nbsp;
                 <button pButton icon="fa fa-check" (click)="confirm(event.id)" class="ui-button-rounded"
                   label="{{ 'COMMON.CONFIRM' | translate }}"></button>
               </td>
@@ -75,11 +73,11 @@
         <p-table [value]="visits" [paginator]="true" [rows]="5">
           <ng-template pTemplate="header">
             <tr>
-              <th>{{ 'COMMON.VISIT_NUMBER' | translate }}</th>
-              <th>{{ 'COMMON.PATIENT' | translate }}</th>
-              <th>{{'COMMON.ARRIVAL_TIME' | translate }}</th>
-              <th>{{'COMMON.APPOINTMENT' | translate }}</th>
-              <th>Action</th>
+              <th [ngStyle]="{width: '15%', 'text-align': 'center'}">{{ 'COMMON.VISIT_NUMBER' | translate }}</th>
+              <th [ngStyle]="{width: '22%', 'text-align': 'center'}">{{ 'COMMON.PATIENT' | translate }}</th>
+              <th [ngStyle]="{width: '15%', 'text-align': 'center'}">{{'COMMON.ARRIVAL_TIME' | translate }}</th>
+              <th [ngStyle]="{width: '15%', 'text-align': 'center'}">{{'COMMON.APPOINTMENT' | translate }}</th>
+              <th [ngStyle]="{width: '33%', 'text-align': 'center'}">Action</th>
             </tr>
           </ng-template>
           <ng-template pTemplate="body" let-visit>

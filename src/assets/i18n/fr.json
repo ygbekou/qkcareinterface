@@ -342,7 +342,9 @@
 	"DOCTOR_ORDER_PRIORITY_LIST": "Priorités ordre de médecin",
 	"TARIF_LIST": "Tarifs",
 	"TARIF_TYPE_LIST": "Type de Tarifs",
-	"HOSPITAL": "Hopital"
+	"HOSPITAL": "Hopital",
+	"BEGIN_S": "Debut",
+    "END_S": "Fin" 
   },
   "MESSAGE": {
     "TRANFER_DOCTOR_FAILED": "Le nouveau docteur assigné doit être différent de l'ancien.",

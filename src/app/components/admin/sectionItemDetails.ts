@@ -69,7 +69,7 @@ export class SectionItemDetails implements OnInit, OnDestroy {
           this.formData.append('file', files[i], files[i].name);
       }
     } else {
-       this.formData.append('file', null, null);
+      // this.formData.append('file', null, null);
     }
 
     try {

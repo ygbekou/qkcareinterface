@@ -16,9 +16,10 @@
 											<img src="assets/images/user/{{manager.user.picture}}" alt="">
 										</div>
 										<div class="feature-box-info ml-3">
-											<h4 class="font-weight-normal text-5">{{manager.name}}</h4>
-                                            <p class="text-4"><strong>{{manager.designation}}</strong></p>
-                                            <p class="text-2">{{manager.resume}}</p>
+											<h4 class="font-weight-normal text-5">{{manager.designation +' '+ manager.name}}</h4>
+                                            <p class="text-4"><strong>{{manager.department.name}}</strong></p>
+											 
+											<div [innerHTML]="manager.resume"></div>
 										</div>
 									</div>
 								</a>
