@@ -129,7 +129,7 @@
 										&& rowData['doctorOrderType'] !== null
 										&& rowData['labTest'] !== undefined && rowData['labTest'] !== null ">
 					                    <ng-template pTemplate="input">
-					                        <p-autoComplete [(ngModel)]="rowData.product"
+					                        <p-autoComplete [(ngModel)]="rowData.labTest"
 												(onDropdownClick)="labTestDropdown.handleDropdownClick($event)"
 												[suggestions]="labTestDropdown.filteredLabTests" [dropdown]="true"
 												(completeMethod)="labTestDropdown.filter($event)"
@@ -145,7 +145,7 @@
 										&& rowData['doctorOrderType'] !== null
 										&& rowData['bed'] !== undefined && rowData['bed'] !== null ">
 					                    <ng-template pTemplate="input">
-					                        <p-autoComplete [(ngModel)]="rowData.product"
+					                        <p-autoComplete [(ngModel)]="rowData.bed"
 												(onDropdownClick)="bedDropdown.handleDropdownClick($event)"
 												[suggestions]="bedDropdown.filteredLabTests" [dropdown]="true"
 												(completeMethod)="bedDropdown.filter($event)"
@@ -155,6 +155,20 @@
 					                    </ng-template>
 					                    <ng-template pTemplate="output">
 											{{rowData['bed'].bedNumber}}
+					                    </ng-template>
+									</p-cellEditor>
+									<p-cellEditor *ngIf="col.field == 'doctorOrderTypeName' ">
+					                    <ng-template pTemplate="input">
+					                        <p-autoComplete [(ngModel)]="rowData.product"
+												(onDropdownClick)="bedDropdown.handleDropdownClick($event)"
+												[suggestions]="bedDropdown.filteredLabTests" [dropdown]="true"
+												(completeMethod)="bedDropdown.filter($event)"
+												name="name" field="name" [size]="30" placeholder=""
+												[minLength]="1">
+											</p-autoComplete>
+					                    </ng-template>
+					                    <ng-template pTemplate="output">
+											{{rowData['doctorOrderTypeName']}}
 					                    </ng-template>
 									</p-cellEditor>
 									
@@ -297,7 +311,6 @@
 			<div>
 				<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
 					<button pButton icon="fa fa-check" label="{{ 'COMMON.SAVE' | translate }}"></button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<button type="button" pButton icon="fa fa-close" (click)="delete()" label="{{ 'COMMON.DELETE' | translate }}"></button>&nbsp;&nbsp;
 					<button type="button" pButton icon="fa fa-print" (click)="printBill()" label="{{ 'COMMON.PRINT' | translate }}"></button>
 					<div >
 						<a *ngIf="reportName" target="_blank"

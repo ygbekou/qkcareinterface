@@ -2,6 +2,8 @@ import { Service, Employee, Package, Reference } from './';
 import { Appointment } from './appointment';
 import { Admission } from './admission';
 import { Visit } from './visit';
+import { Product } from './product';
+import { LabTest } from './labTest';
 
 export class Bill {
   id: number;
@@ -37,6 +39,8 @@ export class BillService {
   doctorOrderType: Reference;
   service: Service;
   pckage: Package;
+  product: Product;
+  labTest: LabTest;
   doctor: Employee;
   serviceDate: Date;
   description: string;

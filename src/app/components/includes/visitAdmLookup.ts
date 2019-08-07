@@ -25,7 +25,7 @@ import { NavigationExtras, Router } from '@angular/router';
 						<form #searchForm="ngForm">
 							<div class="ui-inputgroup">
 								<input type="text" pInputText class="form-control" id="searchT"
-									required [(ngModel)]="itemNumber" (change)="lookUpItem()"
+									required [(ngModel)]="itemNumber"
 									placeholder="{{SEARCH_TEXT}}" name="searchT"
 									#searchT="ngModel">
 								<button type="button" pButton icon="fa fa-search" (click)="openVisitOrAdmSearchPage()"></button>
@@ -99,8 +99,8 @@ import { NavigationExtras, Router } from '@angular/router';
   
 export class VisitAdmLookup implements OnInit {
    
-  @Input() itemNumberLabel: string = 'Visit';
-  @Input() itemType: string = 'ALL';
+  @Input() itemNumberLabel = 'Visit';
+  @Input() itemType = 'ALL';
   @Input() visit: Visit;
   @Input() admission: Admission;
   
@@ -110,7 +110,7 @@ export class VisitAdmLookup implements OnInit {
   @Input() itemNumber: string;
   @Input() originalPage: string;
   
-  SEARCH_TEXT: string = "";
+  SEARCH_TEXT = '';
   
   constructor(
         private genericService: GenericService,
@@ -123,19 +123,19 @@ export class VisitAdmLookup implements OnInit {
   ngOnInit() {
   }
   
-  openPatientSearchPage() {
+  openVisitOrAdmSearchPage() {
 	if (this.itemNumber !== undefined && this.itemNumber !== '') {
 			this.lookUpItem();
 	} else {
+		alert('Here');
 		try {
-		let navigationExtras: NavigationExtras = {
-			queryParams: {
-				"originalPage": this.originalPage,    
-			}
-		}
-			this.router.navigate(["/admin/visitList"], navigationExtras);
-		}
-		catch (e) {
+			const navigationExtras: NavigationExtras = {
+				queryParams: {
+					'originalPage': this.originalPage,    
+				}
+			};
+			this.router.navigate(['/admin/' + this.itemNumberLabel.toLowerCase() + 'List'], navigationExtras);
+		} catch (e) {
 			console.log(e);
 		}
 	}
@@ -144,21 +144,23 @@ export class VisitAdmLookup implements OnInit {
   lookUpItem() {
     this.visit = null;
     this.admission = null;
-    let parameters: string[] = [];
+    const parameters: string[] = [];
 
-    if (this.itemNumberLabel == 'Visit') 
-      parameters.push('e.id = |visitId|' + this.itemNumber + '|Long')
-    if (this.itemNumberLabel == 'Admission') 
-      parameters.push('e.id = |admissionId|' + this.itemNumber + '|Long')
+    if (this.itemNumberLabel === 'Visit') { 
+      parameters.push('e.id = |visitId|' + this.itemNumber + '|Long');
+    }
+    if (this.itemNumberLabel === 'Admission') { 
+      parameters.push('e.id = |admissionId|' + this.itemNumber + '|Long');
+    }
   
       this.genericService.getAllByCriteria(this.itemNumberLabel, parameters)
         .subscribe((data: any[]) => {
           if (data) {
-            if (this.itemNumberLabel == 'Visit')  {
+            if (this.itemNumberLabel === 'Visit')  {
               this.visit = data[0];
               this.visitEmit.emit(this.visit);
             } 
-            if (this.itemNumberLabel == 'Admission') {
+            if (this.itemNumberLabel === 'Admission') {
               this.admission = data[0];
               this.admissionEmit.emit(this.admission);
             }
@@ -167,13 +169,24 @@ export class VisitAdmLookup implements OnInit {
         error => console.log(error),
         () => console.log('Get Item complete'));
     
-        if (this.originalPage == 'admin/billDetails') {
+        if (this.originalPage === 'admin/billDetails') {
 
             this.billingService.getBillByItemNumber(this.itemNumberLabel, this.itemNumber)
               .subscribe((data: Bill) => {
-                if (data) {
+                if (data && data.id != null && data.id != null) {
                     this.billEmit.emit(data);
-                }
+                } else {
+					try {
+						const navigationExtras: NavigationExtras = {
+							queryParams: {
+								'originalPage': this.originalPage,    
+							}
+						};
+						this.router.navigate(['/admin/' + this.itemNumberLabel.toLowerCase() + 'List'], navigationExtras);
+					} catch (e) {
+						console.log(e);
+					}
+				}
               },
               error => console.log(error),
               () => console.log('Get Item complete'));

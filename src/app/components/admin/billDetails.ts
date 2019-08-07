@@ -86,7 +86,10 @@ export class BillDetails extends BaseComponent implements OnInit, OnDestroy {
             { field: 'amount', header: 'Amount', headerKey: 'COMMON.AMOUNT', type: 'text' }
         ];
     
-    let billId = null;
+	let billId = null;
+	let visitId = null;
+	let admissionId = null;
+
     this.route
         .queryParams
         .subscribe(params => {          
@@ -95,7 +98,9 @@ export class BillDetails extends BaseComponent implements OnInit, OnDestroy {
           this.addRow();
           this.addPaymentRow();
           
-          billId = params['billId'];
+		  billId = params['billId'];
+		  visitId = params['visitId'];
+		  admissionId = params['admissionId'];
           
           if (billId != null) {
               this.billingService.getBill(billId)
@@ -117,7 +122,9 @@ export class BillDetails extends BaseComponent implements OnInit, OnDestroy {
                 
               });
           } else {
-              
+              if (admissionId != null) {
+				
+			  }
           }
      });
     
@@ -248,7 +255,11 @@ export class BillDetails extends BaseComponent implements OnInit, OnDestroy {
     
     for (let i in this.bill.billServices) {
       let bs = this.bill.billServices[i];
-      if (bs.service && bs.service.id > 0) {
+	  if ((bs.service && bs.service.id > 0)
+			|| (bs.pckage && bs.pckage.id > 0)
+			|| (bs.product && bs.product.id > 0)
+			|| (bs.labTest && bs.labTest.id > 0)
+	   ) {
         noProductFound = false;
         if (bs.quantity == null || bs.quantity <= 0)
           this.messages.push({severity:Constants.ERROR, summary:Constants.SAVE_LABEL, detail:'Quantity is required and must be greater than 0.'});
@@ -286,11 +297,13 @@ export class BillDetails extends BaseComponent implements OnInit, OnDestroy {
   }
   
   lookUpVisit(event) {
-    this.visit = event;
+	  this.bill = new Bill();
+	  this.visit = event;
   }
   
   lookUpAdmission(event) {
-    this.admission = event;
+	  this.bill = new Bill();
+      this.admission = event;
   }
   
   lookUpBill(event) {

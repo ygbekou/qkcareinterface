@@ -18,6 +18,7 @@ export class AdmissionList extends BaseComponent implements OnInit, OnDestroy {
   admissions: Admission[] = [];
   cols: any[];
   searchCriteria: SearchCriteria = new SearchCriteria();
+  originalPage = '';
 
   constructor
     (
@@ -37,7 +38,14 @@ export class AdmissionList extends BaseComponent implements OnInit, OnDestroy {
     this.updateCols();
     this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
         this.updateCols();
-    });
+	});
+	
+	this.route
+        .queryParams
+        .subscribe(params => {
+
+        this.originalPage = params['originalPage'];
+     });
 
     // Get all admission of the last 24 hrs;
     this.route
@@ -136,6 +144,26 @@ export class AdmissionList extends BaseComponent implements OnInit, OnDestroy {
       },
       error => console.log(error),
       () => console.log('Get all Admissions complete'));
+  }
+
+
+  redirectToOrigialPage(admission: Admission) {
+    try {
+      const navigationExtras: NavigationExtras = {
+        queryParams: {
+		  'admissionId': admission.id,
+		  'admissionDatetime': admission.admissionDatetime,
+		  'patientId': admission.patient.id,
+		  'patientGender`': admission.patient.user.sex,
+          'patientName': admission.patient.name,
+          'patientMRN': admission.patient.medicalRecordNumber,
+          'patientBirthDate': admission.patient.user.birthDate
+        }
+      };
+      this.router.navigate([this.originalPage], navigationExtras);
+    } catch (e) {
+      console.log(e);
+    }
   }
 
  }
