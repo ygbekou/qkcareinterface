@@ -134,13 +134,13 @@ export class VisitDetails implements OnInit, OnDestroy {
     this.activeTab = evt.index;
     if (evt.index === 1) {
 
-    } else if (evt.index === 2) {
-      this.admissionDiagnoses.getDiagnoses();
     } else if (evt.index === 3) {
+      this.admissionDiagnoses.getDiagnoses();
+    } else if (evt.index === 4) {
       this.prescriptionDetails.visit = this.visit;
       this.prescriptionList.visit = this.visit;
       this.prescriptionList.getPrescriptions();
-	} else if (evt.index === 4) {
+	} else if (evt.index === 5) {
       this.investigationList.getInvestigations();
     } 
   }

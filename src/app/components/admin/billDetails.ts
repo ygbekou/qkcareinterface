@@ -123,8 +123,46 @@ export class BillDetails extends BaseComponent implements OnInit, OnDestroy {
               });
           } else {
               if (admissionId != null) {
-				
-			  }
+				this.itemNumberLabel = 'Admission';
+				this.itemNumber = params['admissionId'];
+				this.admission = new Admission();
+				this.admission.id = params['admissionId'];
+				this.admission.admissionDatetime = params['admissionDatetime'];
+				this.admission.patient = new Patient();
+				this.admission.patient.id = params['patientId'];
+				this.admission.patient.medicalRecordNumber = params['patientMRN'];
+				this.admission.patient.user.sex = params['patientGender'];
+				this.admission.patient.name = params['patientName'];
+				this.admission.patient.user.birthDate = params['patientBirthDate'];
+
+				this.billingService.getBillByItemNumber(this.itemNumberLabel, this.itemNumber)
+              		.subscribe((data: Bill) => {
+                	this.lookUpBill(data);
+				},
+				error => console.log(error),
+				() => console.log('Get Item complete'));
+					
+			} else if (visitId != null) {
+				this.itemNumberLabel = 'Visit';
+				this.itemNumber = params['visitId'];
+				this.visit = new Visit();
+				this.visit.id = params['visitId'];
+				this.visit.visitDatetime = params['visitDatetime'];
+				this.visit.patient = new Patient();
+				this.visit.patient.id = params['patientId'];
+				this.visit.patient.medicalRecordNumber = params['patientMRN'];
+				this.visit.patient.user.sex = params['patientGender'];
+				this.visit.patient.name = params['patientName'];
+				this.visit.patient.user.birthDate = params['patientBirthDate'];
+
+				this.billingService.getBillByItemNumber(this.itemNumberLabel, this.itemNumber)
+              		.subscribe((data: Bill) => {
+                	this.lookUpBill(data);
+				},
+				error => console.log(error),
+				() => console.log('Get Item complete'));
+					
+			}
           }
      });
     
@@ -259,6 +297,7 @@ export class BillDetails extends BaseComponent implements OnInit, OnDestroy {
 			|| (bs.pckage && bs.pckage.id > 0)
 			|| (bs.product && bs.product.id > 0)
 			|| (bs.labTest && bs.labTest.id > 0)
+			|| (bs.bed && bs.bed.id > 0)
 	   ) {
         noProductFound = false;
         if (bs.quantity == null || bs.quantity <= 0)

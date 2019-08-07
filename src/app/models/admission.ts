@@ -1,7 +1,5 @@
-import { Employee } from './Employee';
 import { BedAssignment } from './bedAssignment';
 import { DoctorAssignment } from './doctorAssignment';
-import { Insurance } from './insurance';
 import { Package } from './package';
 import { Patient } from './patient';
 

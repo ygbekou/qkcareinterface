@@ -16,6 +16,7 @@ export class VisitList extends BaseComponent implements OnInit, OnDestroy {
 	visits: Visit[] = [];
 	cols: any[];
 	searchCriteria: SearchCriteria = new SearchCriteria();
+	originalPage = '';
 
 	constructor
 		(
@@ -74,6 +75,13 @@ export class VisitList extends BaseComponent implements OnInit, OnDestroy {
 						() => console.log('Get all Visits complete'));
 			});
 
+		this.route
+			.queryParams
+			.subscribe(params => {
+
+			this.originalPage = params['originalPage'];
+		});
+	 
 		this.updateCols();
 		this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
 			this.updateCols();
@@ -141,5 +149,25 @@ export class VisitList extends BaseComponent implements OnInit, OnDestroy {
 			},
 				error => console.log(error),
 				() => console.log('Get Visits complete'));
+	}
+
+
+	redirectToOrigialPage(visit: Visit) {
+		try {
+		const navigationExtras: NavigationExtras = {
+			queryParams: {
+				'visitId': visit.id,
+				'visitDatetime': visit.visitDatetime,
+				'patientId': visit.patient.id,
+				'patientGender`': visit.patient.user.sex,
+				'patientName': visit.patient.name,
+				'patientMRN': visit.patient.medicalRecordNumber,
+				'patientBirthDate': visit.patient.user.birthDate
+			}
+		};
+			this.router.navigate([this.originalPage], navigationExtras);
+		} catch (e) {
+			console.log(e);
+		}
 	}
 }

@@ -87,6 +87,10 @@
                 <td align="justify">
 					<button type="button" pButton icon="fa fa-edit"	(click)="edit(rowData.id)" title="{{ 'COMMON.EDIT' | translate }}"></button> 
 					&nbsp;&nbsp;
+					<button class="ui-button-rounded" type="button" pButton icon="fa fa-check"
+						(click)="redirectToOrigialPage(rowData)" title="{{ 'COMMON.SELECT' | translate }}"
+						*ngIf="this.originalPage !== undefined"></button>
+					&nbsp;&nbsp;
                     <button type="button"   class="ui-button-rounded ui-button-warning" pButton icon="fa fa-eraser" (click)="deleteItem(visits, rowData.id, 'Visit')" title="{{ 'COMMON.DELETE' | translate }}"></button>
                 </td>
 	        </tr>

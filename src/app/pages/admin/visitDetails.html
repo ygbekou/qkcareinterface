@@ -110,7 +110,9 @@
         <app-doctorOrder-list [visit]="visit" (doctorOrderIdEvent)="onDoctorOrderSelected($event)">
         </app-doctorOrder-list> 
 	  </p-tabPanel>
-	  
+	  <p-tabPanel header="{{'COMMON.SERVICE_LIST' | translate }}" *ngIf="visit && visit.id > 0">
+		<app-patientServiceDetails [visit]="visit"></app-patientServiceDetails>
+		</p-tabPanel>
       <p-tabPanel header="{{ 'COMMON.DIAGNOSIS_LIST' | translate }}" *ngIf="visit.id > 0">
         <app-admissionDiagnoses [visit]="visit"></app-admissionDiagnoses>
       </p-tabPanel>

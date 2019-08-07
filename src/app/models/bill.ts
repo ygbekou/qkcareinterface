@@ -4,6 +4,7 @@ import { Admission } from './admission';
 import { Visit } from './visit';
 import { Product } from './product';
 import { LabTest } from './labTest';
+import { Bed } from './bed';
 
 export class Bill {
   id: number;
@@ -41,6 +42,7 @@ export class BillService {
   pckage: Package;
   product: Product;
   labTest: LabTest;
+  bed: Bed;
   doctor: Employee;
   serviceDate: Date;
   description: string;
