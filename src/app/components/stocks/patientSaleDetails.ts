@@ -1,12 +1,9 @@
-import {Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild, Input} from '@angular/core';
-import {Router, ActivatedRoute} from '@angular/router';
+import {Component, OnInit, OnDestroy, ChangeDetectorRef, Input} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
 import {Constants} from '../../app.constants';
-import {Admission, Visit, Patient, Product, User} from '../../models';
+import {Admission, Visit, Patient, Product} from '../../models';
 import {PatientSale, PatientSaleProduct} from '../../models/stocks/patientSale';
-import {EditorModule} from 'primeng/editor';
-import {DoctorDropdown, ProductDropdown} from './../dropdowns';
-import {Cookie} from 'ng2-cookies/ng2-cookies';
-import {InputTextareaModule, CheckboxModule, MultiSelectModule, CalendarModule} from 'primeng/primeng';
+import {ProductDropdown} from './../dropdowns';
 import {GenericService, PurchasingService, GlobalEventsManager} from '../../services';
 import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
 import { Message } from 'primeng/api';
@@ -25,11 +22,13 @@ export class PatientSaleDetails implements OnInit, OnDestroy {
   @Input() admission: Admission;
   @Input() visit: Visit;
 
+  @Input() hideActionButtons: string;
+
   patient: Patient = new Patient();
   itemNumber: string;
-  itemNumberLabel: string = 'Visit';
+  itemNumberLabel = 'Visit';
   
-  isVisitOrAdmPage: boolean = false;
+  isVisitOrAdmPage = false;
 
   constructor
     (
@@ -38,9 +37,7 @@ export class PatientSaleDetails implements OnInit, OnDestroy {
     private purchasingService: PurchasingService,
     private translate: TranslateService,
     private productDropdown: ProductDropdown,
-    private changeDetectorRef: ChangeDetectorRef,
-    private route: ActivatedRoute,
-    private router: Router
+    private route: ActivatedRoute
     ) {
     
   }
@@ -71,10 +68,11 @@ export class PatientSaleDetails implements OnInit, OnDestroy {
                 if (result.id > 0) {
                   this.patientSale = result;
                   this.visit = this.patientSale.visit;
-                  if (this.patientSale.patientSaleProducts.length == 0) 
+                  if (this.patientSale.patientSaleProducts.length === 0) { 
                     this.addRow();
+                  }
                 }
-              })
+              });
           } else {
               
           }
@@ -88,8 +86,8 @@ export class PatientSaleDetails implements OnInit, OnDestroy {
  
   
   updateCols() {
-    for (var index in this.saleProductCols) {
-      let col = this.saleProductCols[index];
+    for (let index in this.saleProductCols) {
+      const col = this.saleProductCols[index];
       this.translate.get(col.headerKey).subscribe((res: string) => {
         col.header = res;
       });
@@ -105,22 +103,24 @@ export class PatientSaleDetails implements OnInit, OnDestroy {
   }
   
   validate() {
-    let noProductFound: boolean = true;
+    let noProductFound = true;
     
-    for (let i in this.patientSale.patientSaleProducts) {
-      let pp = this.patientSale.patientSaleProducts[i];
+    for (const i in this.patientSale.patientSaleProducts) {
+      const pp = this.patientSale.patientSaleProducts[i];
       if (pp.product && pp.product.id > 0) {
         noProductFound = false;
-        if (pp.quantity == null)
+        if (pp.quantity == null) {
           this.messages.push({severity:Constants.ERROR, summary:Constants.SAVE_LABEL, detail:'Quantity is required.'});
-        if (pp.unitPrice == null)
+        }
+        if (pp.unitPrice == null) {
           this.messages.push({severity:Constants.ERROR, summary:Constants.SAVE_LABEL, detail:'Price is required.'});
+        }
         
       }
     }
     
     if (noProductFound) {
-      this.messages.push({severity:Constants.ERROR, summary:Constants.SAVE_LABEL, detail:'At least 1 medication is required.'});
+      this.messages.push({severity: Constants.ERROR, summary: Constants.SAVE_LABEL, detail: 'At least 1 medication is required.'});
     }
     
     return this.messages.length == 0;
@@ -139,15 +139,13 @@ export class PatientSaleDetails implements OnInit, OnDestroy {
       this.purchasingService.savePatientSale(this.patientSale)
         .subscribe(result => {
           if (result.id > 0) {
-            this.patientSale = result
-            this.messages.push({severity:Constants.SUCCESS, summary:Constants.SAVE_LABEL, detail:Constants.SAVE_SUCCESSFUL});
+            this.patientSale = result;
+            this.messages.push({severity: Constants.SUCCESS, summary: Constants.SAVE_LABEL, detail: Constants.SAVE_SUCCESSFUL});
+          } else {
+            this.messages.push({severity: Constants.ERROR, summary: Constants.SAVE_LABEL, detail: Constants.SAVE_UNSUCCESSFUL});
           }
-          else {
-            this.messages.push({severity:Constants.ERROR, summary:Constants.SAVE_LABEL, detail:Constants.SAVE_UNSUCCESSFUL});
-          }
-        })
-    }
-    catch (e) {
+        });
+    } catch (e) {
       console.log(e);
     }
   }
@@ -157,14 +155,14 @@ export class PatientSaleDetails implements OnInit, OnDestroy {
     this.purchasingService.getPatientSale(patientSaleId)
         .subscribe(result => {
       if (result.id > 0) {
-        this.patientSale = result
+        this.patientSale = result;
         this.patientSale.saleDatetime = new Date(this.patientSale.saleDatetime);
       }
-    })
+    });
   }
   
   addRow() {
-    let psp =  new PatientSaleProduct();
+    const psp =  new PatientSaleProduct();
     psp.product = new Product();
     this.patientSale.patientSaleProducts.push(psp);
   }
@@ -177,7 +175,7 @@ export class PatientSaleDetails implements OnInit, OnDestroy {
   
   calculateTotal() {
     this.patientSale.subTotal = 0;
-    for (let i in this.patientSale.patientSaleProducts) {
+    for (const i in this.patientSale.patientSaleProducts) {
        this.patientSale.subTotal += this.calculateRowTotal(this.patientSale.patientSaleProducts[i]);
     }
   }
@@ -189,7 +187,7 @@ export class PatientSaleDetails implements OnInit, OnDestroy {
   }
   
   private getNumber(value: number): number {
-    return value != undefined ? value : 0;
+    return value !== undefined ? value : 0;
   } 
   
 
