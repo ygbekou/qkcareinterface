@@ -95,7 +95,7 @@
 
 <br/>
 <p-tabView> 
- 	<p-tabPanel header="{{ 'COMMON.ADMISSION_DETAILS' | translate }}">
+ 	<p-tabPanel header="{{ 'COMMON.CURRENT' | translate }}">
 		<div class="ui-grid-row">
 			<div class="ui-grid-col-4 ui-sm-12">
 				<div class="ui-grid-row">
@@ -177,7 +177,7 @@
 </p-tabView>
 
 <p-tabView> 
- 	<p-tabPanel header="Bed Transfer" *ngIf="transferType == 'BED'">
+ 	<p-tabPanel header="{{ 'COMMON.NEW' | translate }}" *ngIf="transferType == 'BED'">
  		<div class="ui-grid ui-grid-responsive ui-fluid">
 	 		<div class="ui-grid-row">
 	 			<div class="ui-grid-col-4 ui-sm-12">
@@ -257,7 +257,7 @@
 			</div>
 		</div>
  	</p-tabPanel>
- 	<p-tabPanel header="Doctor Transfer" *ngIf="transferType == 'DOCTOR'">
+ 	<p-tabPanel header="{{ 'COMMON.NEW' | translate }}" *ngIf="transferType == 'DOCTOR'">
 	 	<div class="ui-grid ui-grid-responsive ui-fluid">
 			<div class="ui-grid-row">
 				<div class="ui-grid-col-3 ui-sm-12"> 

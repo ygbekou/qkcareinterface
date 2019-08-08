@@ -38,7 +38,7 @@ export class Dashboard implements OnInit, OnDestroy {
 				this.appointmentItem = this.pullData(data, 'Rendez-vous', '#00ff00', '#00ff00');
 			},
 				error => console.log(error),
-				() => console.log('Get all month data complete')
+				() => console.log('Get all month data complete - this.appointmentService.getByMonths()')
 			);
 
 
@@ -47,16 +47,17 @@ export class Dashboard implements OnInit, OnDestroy {
 				this.admissionItem = this.pullData(data, 'Admissions', '#c4ffc1', '#c4ffc1');
 			},
 				error => console.log(error),
-				() => console.log('Get all month data complete')
+				() => console.log('Get all month data complete - this.admissionService.getByMonths() ')
 			));
 
-
+		console.log("Before call");
 		this.subscription.add(this.visitService.getByMonths()
-			.subscribe((data: any) => {
+			.subscribe((data: any) => { 
 				this.visitItem = this.pullData(data, 'Visites', '#ffc100', '#ffc100');
+				console.log(this.visitItem);
 			},
 				error => console.log(error),
-				() => console.log('Get all month data complete')
+				() => console.log('Get all month data complete - this.visitService.getByMonths()')
 			));
 		this.getWaitList(100);
 		this.getTopN(100);

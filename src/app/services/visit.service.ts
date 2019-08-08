@@ -113,10 +113,14 @@ export class VisitService {
 	}
 
 	public getByMonths = (): Observable<Visit[]> => {
-
 		const actionUrl = Constants.apiServer + '/service/visit/list/byMonth';
-		return this.http.get(actionUrl, { headers: this.headers })
-			.map((response: Response) => <any[]>response.json())
+		console.log("in GetByMonth");
+		 return this.http.get(actionUrl, { headers: this.headers })
+			.map((response: Response) =>{ 
+				console.log("inside GetByMonth");
+				console.log(response.json());
+				return response.json();			
+			})
 			.catch(this.handleError);
 	}
 
