@@ -344,7 +344,12 @@
 	"TARIF_TYPE_LIST": "Type de Tarifs",
 	"HOSPITAL": "Hopital",
 	"BEGIN_S": "Debut",
-    "END_S": "Fin" 
+	"END_S": "Fin",
+	"CURRENT_BED":"Lit actuel",
+	"NEW_BED": "Nouveau lit",
+	"CURRENT":"Actuel",
+	"NEW": "Nouveau",
+	"PAYER_PRICE": "Prix assuré"
   },
   "MESSAGE": {
     "TRANFER_DOCTOR_FAILED": "Le nouveau docteur assigné doit être différent de l'ancien.",

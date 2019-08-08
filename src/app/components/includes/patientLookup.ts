@@ -27,7 +27,7 @@ export class PatientLookup implements OnInit {
 	}
 
 	ngOnInit() {
-
+		console.log("Patient init");
 	}
 
 	openPatientSearchPage() {

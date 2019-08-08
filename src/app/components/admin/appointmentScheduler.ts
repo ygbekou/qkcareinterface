@@ -105,11 +105,13 @@ export class AppointmentScheduler implements OnInit, OnDestroy {
 		} else {
 			try {
 				// tslint:disable-next-line:no-console
+				const p:Patient = this.appointment.patient;
 				console.info(this.appointment.appointmentDate);
 				this.genericService.save(this.appointment, 'Appointment')
 					.subscribe(result => {
 						if (result.id > 0) {
 							this.appointment = result;
+							this.appointment.patient=p;
 							if (status === 1) {//confirm
 								this.confirm(this.appointment.id);
 							} else {
