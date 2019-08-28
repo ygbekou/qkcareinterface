@@ -39,4 +39,5 @@ export * from './packageService';
 export * from './report';
 export * from './enquiry';
 export * from './patientService';
+export * from './radiology/radiologyConfig';
 

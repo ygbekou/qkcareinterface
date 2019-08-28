@@ -349,7 +349,16 @@
 	"NEW_BED": "Nouveau lit",
 	"CURRENT":"Actuel",
 	"NEW": "Nouveau",
-	"PAYER_PRICE": "Prix assuré"
+	"PAYER_PRICE": "Prix assuré",
+	"MODALITY": "Modalité",
+	"BODY_PART": "Partie du corps",
+	"LATERALITY": "Latéralité",
+	"EXAM": "Examen",
+	"MODALITY_LIST": "Modalités",
+	"BODY_PART_LIST": "Parties du corps",
+	"LATERALITY_LIST": "Latéralités",
+	"EXAM_LIST": "Examens",
+	"ASSIGN_TO": "Assigner à"
   },
   "MESSAGE": {
     "TRANFER_DOCTOR_FAILED": "Le nouveau docteur assigné doit être différent de l'ancien.",

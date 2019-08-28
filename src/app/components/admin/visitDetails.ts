@@ -13,6 +13,7 @@ import { TranslateService} from '@ngx-translate/core';
 import { Message } from 'primeng/api';
 import { DoctorOrderList } from './doctorOrderList';
 import { InvestigationList } from './investigationList';
+import { PatientMedicineList } from './patientMedicineList';
 
 @Component({
   selector: 'app-visit-details',
@@ -38,6 +39,7 @@ export class VisitDetails implements OnInit, OnDestroy {
   @ViewChild(PatientSaleDetails) patientSaleDetails: PatientSaleDetails;
   @ViewChild(PrescriptionList) prescriptionList: PrescriptionList;
   @ViewChild(InvestigationList) investigationList: InvestigationList;
+  @ViewChild(PatientMedicineList) patientMedicinList: PatientMedicineList;
 
   messages: Message[] = [];
 
@@ -142,6 +144,8 @@ export class VisitDetails implements OnInit, OnDestroy {
       this.prescriptionList.getPrescriptions();
 	} else if (evt.index === 5) {
       this.investigationList.getInvestigations();
+    } else if (evt.index === 6) {
+      this.patientMedicinList.getSaleProducts();
     } 
   }
 

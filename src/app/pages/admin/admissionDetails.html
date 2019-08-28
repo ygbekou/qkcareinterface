@@ -157,9 +157,7 @@
       <app-investigation-list [showActions]="false" [admission]="admission"></app-investigation-list>
     </p-tabPanel>
     <p-tabPanel header="{{'COMMON.PHARMACY' | translate }}" *ngIf="admission &&  admission.id > 0">
-      <app-patientSale-details [admission]="admission"></app-patientSale-details> <br /><br />
-      <app-patientSale-list (patientSaleIdEvent)="onPatientSaleSelected($event)" [admission]="admission">
-      </app-patientSale-list>
+      <app-patientMedicine-list [admission]="admission"></app-patientMedicine-list>
     </p-tabPanel>
     <p-tabPanel header="{{'COMMON.DISCHARGE' | translate }}" *ngIf="admission && admission.id > 0">
       <app-discharge-details [admission]="admission"></app-discharge-details>

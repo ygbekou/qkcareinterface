@@ -1,0 +1,93 @@
+<form name="form" (ngSubmit)="f.form.valid && save()" #f="ngForm" validate>
+	<div class="ui-g-12 ui-sm-12" style="padding: 15px;">
+		<div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="investigation">
+			<p-messages [(value)]="messages"></p-messages>
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-5 ui-sm-12">
+					<app-visitAdm-lookup (visitEmit)="setSelectedVisit($event)" (admissionEmit)="setSelectedAdmission($event)" [originalPage]="'admin/investigationDetails'"
+						[visit]="investigation.visit" [admission]="investigation.admission"></app-visitAdm-lookup>
+				</div>
+				<div class="ui-grid-col-7 ui-sm-12">
+					<div class="ui-grid-col-2 ui-sm-12">
+						<div class="form-group">
+							<label for="investigationDatetime">{{ 'COMMON.INVESTIGATION_DATETIME' | translate }}<font color="red">*</font></label> 
+							<p-calendar [(ngModel)]="investigation.investigationDatetime" [showTime]="true"
+								name="investigationDatetime"  #investigationDatetime="ngModel" required></p-calendar>
+							<p-message *ngIf="f.submitted && investigationDatetime.invalid" severity="error" text="Field is required"></p-message>
+						</div>
+					</div>
+					<div class="ui-grid-col-3 ui-sm-12">
+						<div class="form-group">
+							<label for="name">{{ 'COMMON.NAME' | translate }}</label> 
+							<input pInputText id="name" [(ngModel)]="investigation.name" name="name"  #name="ngModel" required />	
+							<p-message *ngIf="f.submitted && name.invalid" severity="error" text="Field is required"></p-message>						
+						</div>
+					</div>
+					<div class="ui-grid-col-7 ui-sm-12">
+						<div class="form-group">
+							<label for="description">{{ 'COMMON.DESCRIPTION' | translate }}</label> 
+							<textarea pInputTextarea id="description" rows="4" cols="40" pInputTextarea maxlength="1000" 
+								[(ngModel)]="investigation.description" name="notes" #notes="ngModel"> </textarea>					
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-4 ui-sm-12">
+						<div class="form-group">
+							<label for="modality">{{ 'COMMON.MODALITY' | translate }}<font color="red">*</font></label>  
+							<p-autoComplete [(ngModel)]="modality" (ngModelChange)="populateExams($event)"
+							(onDropdownClick)="modalityDropdown.handleDropdownClick($event)"
+							[suggestions]="modalityDropdown.filteredModalities" [dropdown]="true"
+							id="modality" (completeMethod)="modalityDropdown.filter($event)"
+							name="modality" field="name" [size]="30" placeholder="{{SELECT_OPTION}}"
+							[minLength]="1" #modalityDrp="ngModel" required></p-autoComplete> 
+							<p-message *ngIf="f.submitted && modalityDrp.invalid" severity="error" text="Field is required"></p-message>
+					</div>
+				</div>
+				<div class="ui-grid-col-4 ui-sm-12">
+						<div class="form-group">
+							<label for="exam">{{ 'COMMON.EXAM' | translate }}<font color="red">*</font></label>  
+							<p-autoComplete [(ngModel)]="investigation.exam"
+							(onDropdownClick)="examDropdown.handleDropdownClick($event)"
+							[suggestions]="examDropdown.filteredExams" [dropdown]="true"
+							id="exam" (completeMethod)="examDropdown.filter($event)"
+							name="exam" field="name" [size]="30" placeholder="{{SELECT_OPTION}}"
+							[minLength]="1" #exam="ngModel" required></p-autoComplete> 
+							<p-message *ngIf="f.submitted && exam.invalid" severity="error" text="Field is required"></p-message>
+					</div>
+				</div>
+				<div class="ui-grid-col-4 ui-sm-12">
+						<div class="form-group">
+							<label for="examStatus">{{ 'COMMON.STATUS' | translate }}<font color="red">*</font></label>  
+							<p-autoComplete [(ngModel)]="investigation.examStatus"
+							(onDropdownClick)="examStatusDropdown.handleDropdownClick($event)"
+							[suggestions]="examStatusDropdown.filteredExamStatuses" [dropdown]="true"
+							id="examStatus" (completeMethod)="examStatusDropdown.filter($event)"
+							name="examStatus" field="name" [size]="30" placeholder="{{SELECT_OPTION}}"
+							[minLength]="1" #examStatus="ngModel" required></p-autoComplete> 
+							<p-message *ngIf="f.submitted && examStatus.invalid" severity="error" text="Field is required"></p-message>
+					</div>
+				</div>
+				<div class="ui-grid-col-4 ui-sm-12">
+						<div class="form-group">
+							<label for="examStatus">{{ 'COMMON.ASSIGN_TO' | translate }}</label>  
+							<p-autoComplete [(ngModel)]="investigation.assignTo"
+							(onDropdownClick)="radiologyTechDropdown.handleDropdownClick($event)"
+							[suggestions]="radiologyTechDropdown.filteredRadiologyTechs" [dropdown]="true"
+							id="assignTo" (completeMethod)="radiologyTechDropdown.filter($event)"
+							name="assignTo" field="name" [size]="30" placeholder="{{SELECT_OPTION}}"
+							[minLength]="1" #assignTo="ngModel"></p-autoComplete> 
+					</div>
+				</div>
+			</div>
+		</div>
+		<br/>
+		<br/>
+		<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+			<button type="button" pButton icon="fa fa-refresh" (click)="clear()" label="{{ 'COMMON.CLEAR' | translate }}"></button>&nbsp;&nbsp;
+			<button pButton icon="fa fa-save" label="{{ 'COMMON.SAVE' | translate }}"></button>
+		</div>
+	</div>
+</form>

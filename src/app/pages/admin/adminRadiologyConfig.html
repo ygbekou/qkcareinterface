@@ -1,0 +1,38 @@
+<div class="ui-grid-row"> 
+		<div class="ui-g-12 ui-sm-12" style="padding: 15px;">
+			
+			<p-tabView (onChange)="onTabChange($event)"> 
+			 	<p-tabPanel header="{{'COMMON.MODALITY_LIST' |translate}}">
+			    	<div *ngIf="activeTab == 0" class="ui-grid-row">
+				        <app-reference-details (referenceSaveEvent)="onReferenceSaved($event)"></app-reference-details>
+				        <br/> 
+				        <app-reference-list (referenceIdEvent)="onReferenceSelected($event, 'Modality')"></app-reference-list>
+				    </div>
+			    </p-tabPanel>
+			 	<p-tabPanel header="{{'COMMON.BODY_PART_LIST' |translate}}">
+			    	<div *ngIf="activeTab == 1" class="ui-grid-row">
+				        <app-reference-details (referenceSaveEvent)="onReferenceSaved($event)"></app-reference-details>
+				        <br/> 
+				        <app-reference-list (referenceIdEvent)="onReferenceSelected($event, 'BodyPart')"></app-reference-list>
+				    </div>
+				</p-tabPanel>
+				<p-tabPanel header="{{'COMMON.LATERALITY_LIST' |translate}}">
+			    	<div *ngIf="activeTab == 2" class="ui-grid-row">
+				        <app-reference-details (referenceSaveEvent)="onReferenceSaved($event)"></app-reference-details>
+				        <br/> 
+				        <app-reference-list (referenceIdEvent)="onReferenceSelected($event, 'Laterality')"></app-reference-list>
+				    </div>
+			    </p-tabPanel>
+			    <p-tabPanel header="{{'COMMON.EXAM_LIST' |translate}}">
+			    	<div *ngIf="activeTab == 3" class="ui-grid-row">
+				        <app-radExam-details (examSaveEvent)="onExamSaved($event)"></app-radExam-details> 
+				        <br/> 
+				        <app-radExam-list (examIdEvent)="onExamSelected($event)"></app-radExam-list>
+				    </div>
+			    </p-tabPanel>
+			    
+			</p-tabView>
+		</div>
+
+	</div>
+ 

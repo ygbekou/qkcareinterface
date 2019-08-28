@@ -1,0 +1,54 @@
+<form name="form" (ngSubmit)="f.form.valid && save()" #f="ngForm" validate>
+	<div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="exam">
+		<p-messages [(value)]="messages"></p-messages>
+		<div class="ui-grid-row">
+			<div class="ui-grid-col-6 ui-sm-12">
+				<div class="form-group">		
+					<label for="name">{{ 'COMMON.NAME' | translate }}</label>
+					<input pInputText id="name" name="name" [(ngModel)]="exam.name" required />
+				</div>
+			</div>
+			<div class="ui-grid-col-6 ui-sm-12">
+				<div class="form-group">								
+					<label for="modality">{{ 'COMMON.MODALITY' | translate }}</label>
+					<p-autoComplete [(ngModel)]="exam.modality"
+						(onDropdownClick)="modalityDropdown.handleDropdownClick($event)"
+						[suggestions]="modalityDropdown.filteredModalities"
+						[dropdown]="true"
+						(completeMethod)="modalityDropdown.filter($event)" name="modality"
+						field="name" [size]="30" placeholder="" [minLength]="1">
+					</p-autoComplete>
+				</div>
+			</div>
+		</div>
+		<div class="ui-grid-row">
+			<div class="ui-grid-col-6 ui-sm-12">
+				<div class="form-group">		
+					<label for="description">{{ 'COMMON.DESCRIPTION' | translate }}</label>
+					<textarea pInputTextarea id="description" name="description" [(ngModel)]="exam.description"> </textarea>
+				</div>
+			</div>
+			
+			<div class="ui-grid-col-3 ui-sm-12">
+				<div class="form-group">
+					<label for="rate">{{ 'COMMON.RATE' | translate }}<font color="red">*</font></label>
+					<input pInputText id="rate" name="rate" [(ngModel)]="exam.rate" #rate="ngModel" required />
+					<p-message *ngIf="f.submitted && rate.invalid" severity="error" text="Field is required"></p-message>
+				</div>
+			</div>
+			<div class="ui-grid-col-3 ui-sm-12">
+				<div class="form-group">
+					<label for="rank">{{ 'COMMON.STATUS' | translate }}</label>
+					<br />
+					<p-radioButton name="status" value="0" label="Actif" [(ngModel)]="exam.status"></p-radioButton>
+					<p-radioButton name="status" value="1" label="Inactif" [(ngModel)]="exam.status"></p-radioButton>
+				</div>
+			</div>
+		</div>
+	</div>
+	<br />
+	<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+		<button type="button" pButton icon="fa fa-close" (click)="clear()" label="{{ 'COMMON.CLEAR' | translate }}"></button> &nbsp;&nbsp;
+		<button pButton icon="fa fa-check" label="{{ 'COMMON.SAVE' | translate }}"></button>
+	</div>
+</form>

@@ -16,6 +16,7 @@ import { VitalSignDetails } from './vitalSignDetails';
 import { Message } from 'primeng/api';
 import { VitalSignList } from './vitalSignList';
 import { DoctorOrderList } from './doctorOrderList';
+import { PatientMedicineList } from './patientMedicineList';
 
 @Component({
 	selector: 'app-admission-details',
@@ -33,6 +34,7 @@ export class AdmissionDetails implements OnInit, OnDestroy {
 	@ViewChild(VitalSignDetails) vitalSignDetails: VitalSignDetails;
 	@ViewChild(VitalSignList) vitalSignList: VitalSignList;
 	@ViewChild(PrescriptionList) prescriptionList: PrescriptionList;
+	@ViewChild(PatientMedicineList) patientMedicineList: PatientMedicineList;
 
 	admission: Admission = new Admission();
 	medicineCols: any[];
@@ -40,7 +42,7 @@ export class AdmissionDetails implements OnInit, OnDestroy {
 	patient: Patient = new Patient();
 
 	messages: Message[] = [];
-	activeTab: number = 0;
+	activeTab = 0;
 
 
 	constructor
@@ -122,7 +124,7 @@ export class AdmissionDetails implements OnInit, OnDestroy {
 								if (this.admission.doctorAssignment == null) {
 									this.initilizePatientAdmissionDoctor();
 								} else {
-									this.admission.doctorAssignment.startDate = new Date(this.admission.doctorAssignment.startDate)
+									this.admission.doctorAssignment.startDate = new Date(this.admission.doctorAssignment.startDate);
 								}
 							}
 						},
@@ -148,13 +150,11 @@ export class AdmissionDetails implements OnInit, OnDestroy {
 					if (result.id > 0) {
 						this.admission = result;
 						this.messages.push({ severity: Constants.SUCCESS, summary: Constants.SAVE_LABEL, detail: Constants.SAVE_SUCCESSFUL });
-					}
-					else {
+					} else {
 						this.messages.push({ severity: Constants.ERROR, summary: Constants.SAVE_LABEL, detail: Constants.SAVE_UNSUCCESSFUL });
 					}
-				})
-		}
-		catch (e) {
+				});
+		} catch (e) {
 			console.log(e);
 		}
 	}
@@ -183,19 +183,20 @@ export class AdmissionDetails implements OnInit, OnDestroy {
 		this.activeTab = evt.index;
 		if (evt.index === 1) {
 			this.vitalSignList.ngOnInit();
-		}
-		else if (evt.index === 2) {
+		} else if (evt.index === 2) {
 			this.admissionDiagnoses.getDiagnoses();
-		}
-		else if (evt.index === 5) {
+		} else if (evt.index === 5) {
 			this.prescriptionDetails.admission = this.admission;
 			this.prescriptionList.admission = this.admission;
 			this.prescriptionList.getPrescriptions();
+		} else if (evt.index === 7) {
+			this.patientMedicineList.admission = this.admission;
+			this.patientMedicineList.getSaleProducts();
 		}
 	}
 
 	onPrescriptionSelected($event) {
-		let prescriptionId = $event;
+		const prescriptionId = $event;
 		this.prescriptionDetails.getPrescription(prescriptionId);
 	}
 	onPrescriptionSaved($event) {

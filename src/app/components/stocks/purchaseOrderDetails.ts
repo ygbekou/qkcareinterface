@@ -110,10 +110,16 @@ export class PurchaseOrderDetails extends BaseComponent implements OnInit, OnDes
 	}
   }
 
-  calculateGrandTotal() {
-	this.purchaseOrder.grandTotal = +this.getNumber(this.purchaseOrder.subTotal) 
+  calculateGrandTotal(event) {
+		this.calculateTotal(event);
+		this.purchaseOrder.grandTotal = +this.getNumber(this.purchaseOrder.subTotal) 
 						+ +this.getNumber(this.purchaseOrder.taxes)
-                    	- +this.getNumber(this.purchaseOrder.discount);
+						- +this.getNumber(this.purchaseOrder.discount);
+						
+		this.calculateDue();
+		this.purchaseOrder.taxes = +this.getNumber(this.purchaseOrder.taxes);
+		this.purchaseOrder.discount = +this.getNumber(this.purchaseOrder.discount);
+		this.purchaseOrder.paid = +this.getNumber(this.purchaseOrder.paid);
   }
   
   calculateDue() {
@@ -125,7 +131,7 @@ export class PurchaseOrderDetails extends BaseComponent implements OnInit, OnDes
     this.purchaseOrder.subTotal = 0;
     for (const i in this.purchaseOrder.purchaseOrderProducts) {
        this.purchaseOrder.subTotal += this.calculateRowTotal(this.purchaseOrder.purchaseOrderProducts[i]);
-    }
+	}
   }
   
   calculateRowTotal(rowData) {

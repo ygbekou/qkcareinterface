@@ -57,11 +57,14 @@ import { RoomDetails } from '../components/admin/roomDetails';
 import { RoomList } from '../components/admin/roomList';
 import { BedDetails } from '../components/admin/bedDetails';
 import { BedList } from '../components/admin/bedList';
+import { RadExamDetails } from '../components/admin/radExamDetails';
+import { RadExamList } from '../components/admin/radExamList';
 import { AdminBedStatus } from '../components/admin/adminBedStatus';
 import { AdmissionDiagnoses } from '../components/admin/admissionDiagnoses';
 import { PatientServiceDetails } from '../components/admin/patientServiceDetails';
 import { AdminReference } from '../components/admin/adminReference';
-import { CategoryDropdown, PackageDropdown, DoctorDropdown, ServiceDropdown, LabTestDropdown, ProductDropdown } from '../components/dropdowns';
+import { CategoryDropdown, PackageDropdown, DoctorDropdown, ServiceDropdown, LabTestDropdown, 
+			ProductDropdown, ModalityDropdown, RadExamDropdown, ExamStatusDropdown, RadiologyTechDropdown } from '../components/dropdowns';
 import { AdminPatient } from '../components/admin/adminPatient';
 import { VisitDetails } from '../components/admin/visitDetails';
 import { VisitList } from '../components/admin/visitList';
@@ -75,6 +78,8 @@ import { LabTestDetails } from '../components/admin/labTestDetails';
 import { LabTestList } from '../components/admin/labTestList';
 import { InvestigationDetails } from '../components/admin/investigationDetails';
 import { InvestigationList } from '../components/admin/investigationList';
+import { RadInvestigationDetails } from '../components/admin/radInvestigationDetails';
+import { RadInvestigationList } from '../components/admin/radInvestigationList';
 import { PurchaseOrderDetails } from '../components/stocks/purchaseOrderDetails';
 import { PurchaseOrderList } from '../components/stocks/purchaseOrderList';
 import { ReceiveOrderDetails } from '../components/stocks/receiveOrderDetails';
@@ -118,6 +123,9 @@ import { ContactList } from '../components/admin/contactList';
 import { Dashboard } from '../components/admin/dashboard';
 import { CurrencyMaskModule } from 'ng2-currency-mask';
 import { ConfirmationService } from 'primeng/api';
+import { PatientMedicineList } from '../components/admin/patientMedicineList';
+import { AdminRadiologyConfig } from '../components/admin/adminRadiologyConfig';
+import { RadInvestigationService } from '../services';
 
 const routes: Routes = [
   { path: 'adminMain', component: AdminMain },
@@ -168,6 +176,8 @@ const routes: Routes = [
   { path: 'roomList', component: RoomList },
   { path: 'bedDetails', component: BedDetails },
   { path: 'bedList', component: BedList },
+  { path: 'radExamDetails', component: RadExamDetails },
+  { path: 'radExamList', component: RadExamList },
   { path: 'visitDetails', component: VisitDetails },
   { path: 'visitList', component: VisitList },
   { path: 'adminPatient', component: AdminPatient },
@@ -175,6 +185,8 @@ const routes: Routes = [
   { path: 'adminReference', component: AdminReference },
   { path: 'investigationDetails', component: InvestigationDetails },
   { path: 'investigationList', component: InvestigationList },
+  { path: 'radInvestigationDetails', component: RadInvestigationDetails },
+  { path: 'radInvestigationList', component: RadInvestigationList },
   { path: 'purchaseOrderDetails', component: PurchaseOrderDetails },
   { path: 'purchaseOrderList', component: PurchaseOrderList },
   { path: 'receiveOrderDetails', component: ReceiveOrderDetails },
@@ -193,6 +205,7 @@ const routes: Routes = [
   { path: 'enquiryList', component: EnquiryList },
   { path: 'waitingList', component: WaitingList },
   { path: 'adminWebsite', component: AdminWebsite },
+  { path: 'adminRadiologyConfig', component: AdminRadiologyConfig },
   { path: 'dashboard', component: Dashboard }
 ];
 
@@ -225,19 +238,22 @@ export function HttpLoaderFactory(http: HttpClient) {
     ServiceList, PackageDetails, PackageList, BillDetails, BillList, VitalSignDetails, VitalSignList, AllergyDetails,
     MedicalHistoryDetails, SocialHistoryDetails, VaccineDetails, SymptomDetails, BedTransfer,
     DoctorOrderDetails, DoctorOrderList, AdmissionDetails, AdmissionList, FloorDetails, FloorList,
-    RoomDetails, RoomList, BedDetails, BedList, AdminPatient, AdminBedStatus, AdmissionDiagnoses, PatientServiceDetails, 
+	RoomDetails, RoomList, BedDetails, BedList, RadExamDetails, RadExamList, AdminPatient, AdminBedStatus, 
+	AdmissionDiagnoses, PatientServiceDetails, 
     AdminReference, VisitDetails, VisitList, DischargeDetails, LabTestDetails, LabTestList, InvestigationDetails,
-    InvestigationList, PurchaseOrderDetails, PurchaseOrderList, ReceiveOrderDetails, ReceiveOrderList,
+	InvestigationList, RadInvestigationDetails, RadInvestigationList, PurchaseOrderDetails, PurchaseOrderList, 
+	ReceiveOrderDetails, ReceiveOrderList,
     PatientSaleDetails, PatientSaleList, SaleReturnDetails, SaleReturnList, BirthReportDetails, BirthReportList,
     DeathReportDetails, DeathReportList, HospitalLocationDetails, HospitalLocationList, PatientLookup, VisitAdmLookup,
     PurchaseOrderLookup, PatientSaleLookup, HospitalDetails, EnquiryDetails, EnquiryList, WaitingList,
     SectionDetails, SectionList, SectionItemDetails, SectionItemList, DepartmentDetails,
     DepartmentList, AdminWebsite, AdminHeader, SliderDetails, SliderList, SliderTextList, SliderTextDetails,
-    CompanyDetails, CompanyList, ContactDetails, ContactList, Dashboard],
+    CompanyDetails, CompanyList, ContactDetails, ContactList, Dashboard, PatientMedicineList, AdminRadiologyConfig],
 
   providers: [
 	CategoryDropdown, PackageDropdown, DoctorDropdown, TokenStorage, BillingService, VisitService, LoggedInGuard, 
-	ConfirmationService, ServiceDropdown, LabTestDropdown, ProductDropdown]
+	ConfirmationService, ServiceDropdown, LabTestDropdown, ProductDropdown, ModalityDropdown, RadExamDropdown, 
+	RadInvestigationService, ExamStatusDropdown, RadiologyTechDropdown]
 })
 
 export class AdminModule { }

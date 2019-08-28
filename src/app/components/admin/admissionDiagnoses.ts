@@ -143,7 +143,6 @@ export class AdmissionDiagnoses extends BaseComponent implements OnInit, OnDestr
   }
 
   getDiagnoses() {
-
     this.admissionService.getDiagnoses(+this.parentId, this.parentEntity)
      .subscribe((data: AdmissionDiagnosis[]) => {
         this.admissionDiagnoses = data;

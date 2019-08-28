@@ -33,4 +33,7 @@ export * from './dropdown.medicine';
 export * from './dropdown.hospitalLocation';
 export * from './dropdown.section';
 export * from './dropdown.slider';
-
+export * from './dropdown.modality';
+export * from './dropdown.radExam';
+export * from './dropdown.examStatus';
+export * from './dropdown.radiologyTech';
