@@ -1,5 +1,4 @@
 import { Admission } from './admission';
-import { Patient } from './patient';
 import { LabTest } from './labTest';
 import { Visit } from './visit';
 

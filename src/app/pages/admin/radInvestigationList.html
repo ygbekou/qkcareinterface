@@ -1,0 +1,89 @@
+<p-confirmDialog [style]="{width: '50vw'}"></p-confirmDialog>
+
+<div class="ui-grid-row">
+	<form name="form" (ngSubmit)="f.form.valid && search()" #f="ngForm" validate>
+		<p-fieldset legend="{{ 'COMMON.SEARCH_CRITERIA' | translate }}" *ngIf="showActions">
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-2 ui-sm-12">
+					<div class="form-group">
+						<label for="investigationDate">{{ 'COMMON.INVESTIGATION_DATETIME' | translate }}:</label> 
+						<br/>
+						<p-calendar [(ngModel)]="searchCriteria.investigationDate" id="investigationDate"
+									name="investigationDate" #investigationDate="ngModel"></p-calendar>
+					</div>
+				</div>
+				<div class="ui-grid-col-1 ui-sm-12">
+					<div class="form-group">
+						<label for="visitId">{{ 'COMMON.VISIT_ID' | translate }}:</label> 
+						<input type="text" pInputText class="form-control" id="visitId"
+							 [(ngModel)]="searchCriteria.visitId" name="visitId" >
+					</div>
+				</div>
+				<div class="ui-grid-col-1 ui-sm-12">
+					<div class="form-group">
+						<label for="visitId">{{ 'COMMON.ADMISSION_NUMBER' | translate }}:</label> 
+						<input type="text" pInputText class="form-control" id="admissionId"
+							 [(ngModel)]="searchCriteria.admissionId" name="admissionId" >
+					</div>
+				</div>
+				<div class="ui-grid-col-2 ui-sm-12">
+					<div class="form-group">
+						<label for="patientId">{{ 'COMMON.PATIENT_ID' | translate }}:</label> 
+						<input type="text" pInputText class="form-control" id="medicalRecordNumber"
+							 [(ngModel)]="searchCriteria.medicalRecordNumber" name="medicalRecordNumber" >
+					</div>
+				</div>
+			</div>
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-1 ui-sm-12">
+					<button pButton icon="fa fa-search" label="{{ 'COMMON.SEARCH' | translate }}" ></button>
+				</div>
+			</div>
+		</p-fieldset>
+	</form>
+	<p-messages [(value)]="messages"></p-messages>
+	<br/>
+	{{listMessage}}
+	<div class="ui-g-12 ui-sm-12" style="padding: 15px;">
+		<p-table [columns]="cols" [value]="investigations" dataKey="id" [(selection)]="parentSelection" [responsive]="true" *ngIf="investigations.length > 0"> 
+			<ng-template pTemplate="caption">
+		        {{ 'COMMON.INVESTIGATION_LIST' | translate }}
+		    </ng-template>
+			<ng-template pTemplate="header" let-columns>
+				<tr>
+					<th *ngFor="let col of columns" [pSortableColumn]="col.field" [ngStyle]="col.style">
+						{{col.header}} <p-sortIcon [field]="col.field"></p-sortIcon>
+					</th>
+					<th style="width: 15%; text-align: center" *ngIf="showActions">Action</th>
+				</tr>
+			</ng-template> 
+			<ng-template pTemplate="body" let-rowData let-expanded="expanded" let-j="rowIndex" let-columns="columns">
+				<tr>
+					<td *ngFor="let col of columns">
+						<div *ngIf="col.type === 'Datetime'">
+							{{rowData[col.field] | date: globalEventsManager.DATE_TIME_FORMAT}}
+						</div>
+						<div *ngIf="col.type !== 'Datetime'">
+							<div *ngIf="col.field == 'statusDesc'">
+								{{getStatusDesc(rowData)}}</div>
+							<div *ngIf="col.field !== 'statusDesc'">
+								{{rowData[col.field]}}</div>
+						</div>
+					</td>
+					<td *ngIf="showActions">
+						<p-button label="Col" (click)="showInvestigationDialog('Collection', rowData)"
+							*ngIf="rowData.status === 0 "></p-button> &nbsp;
+						<p-button label="Rej" (click)="showInvestigationDialog('Rejection', rowData)"
+							*ngIf="rowData.status === 0 || rowData.status === 1 || rowData.status === 3"></p-button> &nbsp;
+						<p-button label="Fin" (click)="showInvestigationDialog('Finalization', rowData)"
+							*ngIf="rowData.status === 1 || rowData.status == 3"></p-button> &nbsp;
+						<button type="button" pButton icon="fa fa-edit" (click)="edit(rowData.id)"></button> &nbsp;
+						<button type="button" pButton icon="fa fa-eraser" *ngIf="rowData.status === 0 || rowData.status === 1"
+							 (click)="deleteItem(investigations, rowData.id, 'Investigation')"></button>
+					</td>
+				</tr>
+			</ng-template> 
+		</p-table>
+	</div>
+</div>
+

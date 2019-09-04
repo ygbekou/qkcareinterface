@@ -49,10 +49,10 @@ import { NavigationExtras, Router } from '@angular/router';
                       Gender:
                     </div>
                     <div class="ui-grid-col-4 ui-sm-12" *ngIf="visit && visit.patient">
-                      {{visit.patient.sex}}
+                      {{visit.patient.user.sex}}
                     </div>  
                     <div class="ui-grid-col-4 ui-sm-12" *ngIf="admission && admission.patient">
-                      {{admission.patient.sex}}
+                      {{admission.patient.user.sex}}
                     </div>     
                   </div>
                   <div class="ui-grid-row">

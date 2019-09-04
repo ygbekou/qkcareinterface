@@ -348,7 +348,16 @@
 	"NEW_BED": "New bed",
 	"CURRENT":"Current",
 	"NEW": "New",
-	"PAYER_PRICE": "Insured cost"
+	"PAYER_PRICE": "Insured cost",
+	"MODALITY": "Modality",
+	"BODY_PART": "Body Part",
+	"LATERALITY": "Laterality",
+	"EXAM": "Exam",
+	"MODALITY_LIST": "Modalities",
+	"BODY_PART_LIST": "Body Parts",
+	"LATERALITY_LIST": "Lateralities",
+	"EXAM_LIST": "Exams",
+	"ASSIGN_TO": "Assign To"
   },
   "MESSAGE": {
   	"TRANFER_DOCTOR_FAILED": "The transfer doctor should be different from the current doctor.",

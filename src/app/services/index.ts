@@ -6,6 +6,7 @@ export * from './billing.service';
 export * from './admission.service';
 export * from './visit.service';
 export * from './investigation.service';
+export * from './radInvestigation.service';
 export * from './purchasing.service';
 export * from './report.service';
 export * from './authentication.service';

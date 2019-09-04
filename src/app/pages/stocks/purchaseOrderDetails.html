@@ -63,7 +63,7 @@
 		
 		<div class="ui-grid-row">
 			<div class="ui-grid-col-6 ui-sm-12">					
-				<p-table [columns]="orderProductCols" [value]="purchaseOrder.purchaseOrderProducts" (onEditComplete)="calculateTotal($event)">
+				<p-table [columns]="orderProductCols" [value]="purchaseOrder.purchaseOrderProducts" (onEditComplete)="calculateGrandTotal($event)">
 					<ng-template pTemplate="caption">
 				        {{ 'COMMON.PRODUCT_LIST' | translate }}
 				    </ng-template>
