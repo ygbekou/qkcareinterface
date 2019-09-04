@@ -8,10 +8,10 @@ import { BaseComponent } from './baseComponent';
 
 @Component({
   selector: 'app-prescription-list',
-  templateUrl: '../../pages/admin/prescriptionList.html',
+  templateUrl: '../../pages/admin/patientMedicineList.html',
   providers: [GenericService, AdmissionService]
 })
-export class PrescriptionList extends BaseComponent implements OnInit, OnDestroy {
+export class PatientMedicineList extends BaseComponent implements OnInit, OnDestroy {
   
   prescriptions: Prescription[] = [];
   cols: any[];
