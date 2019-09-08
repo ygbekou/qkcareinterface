@@ -19,9 +19,6 @@ import {
   DataGridModule, PanelModule, UIChart, PickListModule, ScheduleModule, ToolbarModule, Message, MessageModule, ScrollPanelModule
 } from 'primeng/primeng';
 
-import { DicomViewerModule } from 'ng-dicomviewer';
-
-
 @NgModule({
   declarations: [],
 
@@ -33,7 +30,7 @@ import { DicomViewerModule } from 'ng-dicomviewer';
     CalendarModule, RadioButtonModule, DropdownModule, AutoCompleteModule, ScheduleModule, ProgressBarModule,
     DataTableModule, DialogModule, GalleriaModule, MessagesModule, TreeModule, AccordionModule, ConfirmDialogModule,
     DataGridModule, PanelModule, ScheduleModule, LightboxModule, TableModule, ToolbarModule, MessageModule,
-    CardModule, ScrollPanelModule, DicomViewerModule
+    CardModule, ScrollPanelModule
   ],
 
   exports: [

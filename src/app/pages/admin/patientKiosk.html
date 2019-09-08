@@ -1,0 +1,140 @@
+<form name="form" (ngSubmit)="f.form.valid && save()" #f="ngForm" validate>
+
+  <p-steps *ngIf="!done" [model]="steps" [(activeIndex)]="activeIndex" [readonly]="false" styleClass="steps-custom">
+  </p-steps>
+
+  <p-card *ngIf="done" [style]="{'text-align': 'center'}" >
+    <p-header>
+      <img class="thumb img-fluid"  src="assets/images/company/check.png" style="width:100px;">
+    </p-header>
+    <h1>
+      <font color="green">Vous etes enregistre avec succes!</font>
+    </h1>
+    <p-footer>
+      <button icon="fa fa-arrow-left" pButton type="button" *ngIf="done" (click)="newPatient()"
+        label="Enregistrer un nouveau patient" class="ui-button-raised ui-button-success"
+        style="margin-top: 0px; width: 100%; height: 50px;font-size: 1.85rem;"></button>
+    </p-footer>
+  </p-card>
+
+  <p-card *ngIf="activeIndex===3 && !done">
+    <p-header>
+      <h1>{{patient.user.firstName+' '+patient.user.lastName}}</h1>
+    </p-header>
+    <div class="ui-grid-row">
+      <h6>{{ 'COMMON.BIRTH_DATE' | translate }} : {{patient.user.birthDate|date: globalEventsManager.DATE_FORMAT}}
+      </h6>
+    </div>
+    <div class="ui-grid-row">
+      <h6>{{ 'COMMON.GENDER' | translate }} : {{patient.user.sex}}</h6>
+    </div>
+    <div class="ui-grid-row">
+      <h6>{{ 'COMMON.REASON' | translate }} :
+        <div [innerHTML]="patient.medicalHistory"></div>
+      </h6>
+    </div>
+    <div class="ui-grid-row">
+      <h6>{{ 'COMMON.EMERGENCY_CONTACT' | translate }} :{{patient.contact}}</h6>
+    </div>
+
+    <div class="ui-grid-row">
+      <h6> {{ 'COMMON.CONTACT_PHONE' | translate }} : {{patient.contactPhone}}</h6>
+    </div>
+  </p-card>
+
+  <div class="ui-grid-row" *ngIf="activeIndex===0">
+    <div class="ui-grid-col-12 ui-sm-12">
+      <div class="form-group">
+        <label for="lastName">{{ 'COMMON.LAST_NAME' | translate }}<font color="red">*</font>:
+        </label> <input type="text" pInputText class="form-control" id="lastName" required
+          style="margin-top: 0px; width: 100%; height: 50px;font-size: 1.85rem;" [(ngModel)]="patient.user.lastName"
+          name="lastName" #lastName="ngModel">
+        <p-message *ngIf="f.submitted && lastName.invalid" severity="error"
+          text="{{ 'COMMON.LAST_NAME' | translate }} {{ 'VALIDATION.IS_REQUIRED' | translate }}"></p-message>
+      </div>
+    </div>
+    <div class="ui-grid-col-12 ui-sm-12">
+      <div class="form-group">
+        <label for="firstName">{{ 'COMMON.FIRST_NAME' | translate }}<font color="red">*</font>:
+        </label> <input type="text" pInputText class="form-control" id="firstName" required
+          style="margin-top: 0px; width: 100%; height: 50px;font-size: 1.85rem;" [(ngModel)]="patient.user.firstName"
+          name="firstName" #firstName="ngModel">
+        <p-message *ngIf="f.submitted && firstName.invalid" severity="error"
+          text="{{ 'COMMON.FIRST_NAME' | translate }} {{ 'VALIDATION.IS_REQUIRED' | translate }}"></p-message>
+      </div>
+    </div>
+  </div>
+  <div class="ui-grid-row" *ngIf="activeIndex===0">
+    <div class="ui-grid-col-6 ui-sm-12">
+      <div class="form-group">
+        <div class="ui-grid-row">
+          <label for="sex">{{ 'COMMON.GENDER' | translate }}<font color="red">*</font></label>
+        </div>
+        <div class="ui-grid-row">
+          <p-toggleButton value="M" onLabel="{{ 'COMMON.MALE' | translate }}" offLabel="{{ 'COMMON.MALE' | translate }}"
+            onIcon="pi pi-check" offIcon="pi pi-times" name="gender" [(ngModel)]="sexM" #gender="ngModel"
+            (click)="setSex('M')"></p-toggleButton>
+          &nbsp;&nbsp;
+          <p-toggleButton value="F" onLabel="{{ 'COMMON.FEMALE' | translate }}"
+            offLabel="{{ 'COMMON.FEMALE' | translate }}" onIcon="pi pi-check" offIcon="pi pi-times" name="gender"
+            [(ngModel)]="sexF" #gender="ngModel" (click)="setSex('F')"></p-toggleButton>
+          <p-message *ngIf="f.submitted && !sexM && !sexF" severity="error"
+            text="{{ 'COMMON.GENDER' | translate }} {{ 'VALIDATION.IS_REQUIRED' | translate }}"></p-message>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="ui-grid-row" *ngIf="activeIndex===0">
+    <div class="ui-grid-col-12 ui-sm-12">
+      <div class="form-group">
+        <label for="birthDate">{{ 'COMMON.BIRTH_DATE' | translate }}<font color="red">*</font>:</label>
+        <br />
+        <p-calendar [(ngModel)]="patient.user.birthDate" id="birthDate" monthNavigator="true" yearRange="1940:2050"
+          yearNavigator="true" name="birthDate" #birthDate="ngModel" required date
+          dateFormat={{globalEventsManager.CAL_DATE_FORMAT}}></p-calendar>
+        <p-message *ngIf="f.submitted && birthDate.errors && birthDate.errors.required" severity="error"
+          text="{{ 'COMMON.BIRTH_DATE' | translate }} {{ 'VALIDATION.IS_REQUIRED' | translate }}"></p-message>
+        <p-message *ngIf="f.submitted && birthDate.errors && birthDate.errors.date" severity="error"
+          text="{{ 'COMMON.BIRTH_DATE' | translate }} {{ 'VALIDATION.IS_INVALID' | translate }}"></p-message>
+      </div>
+    </div>
+  </div>
+
+
+
+  <div class="ui-grid-row" *ngIf="activeIndex===1">
+    <div class="ui-grid-col-12 ui-sm-12">
+      <div class="form-group">
+        <label for="medicalHistory">{{ 'COMMON.REASON' | translate }}</label>
+        <p-editor [(ngModel)]="patient.medicalHistory" name="medicalHistory" [style]="{'height':'100px'}">
+        </p-editor>
+      </div>
+    </div>
+  </div>
+
+  <div class="ui-grid-row" *ngIf="activeIndex===2">
+    <div class="ui-grid-col-12 ui-sm-12">
+      <div class="form-group">
+        <label for="contact">{{ 'COMMON.EMERGENCY_CONTACT' | translate }}</label>
+        <input type="text" pInputText class="form-control" id="contact" [(ngModel)]="patient.contact" name="contact"
+          #contact="ngModel" style="margin-top: 0px; width: 100%; height: 50px;font-size: 1.85rem;">
+      </div>
+    </div>
+    <div class="ui-grid-col-12 ui-sm-12">
+      <div class="form-group">
+        <label for="contactPhone">{{ 'COMMON.CONTACT_PHONE' | translate }}</label>
+        <input type="text" pInputText class="form-control" id="contactPhone" [(ngModel)]="patient.contactPhone"
+          name="contactPhone" #contactPhone="ngModel"
+          style="margin-top: 0px; width: 100%; height: 50px;font-size: 1.85rem;">
+      </div>
+    </div>
+  </div>
+  <br>
+  <button pButton type="text" (click)="button=1" icon="fa fa fa-play-circle" *ngIf="activeIndex<3"
+    style="margin-top: 0px; width: 100%; height: 50px;" label="{{navigationLabel}}"></button>
+  <button (click)="button=2" pButton type="submit" icon="fa fa fa-play-circle"
+    style="margin-top: 0px; width: 100%; height: 50px;" *ngIf="activeIndex===3 && !done" label="Enregistrer"></button>
+  <br>
+  <div *ngIf="error" class="alert alert-danger">{{error}}</div>
+
+</form>

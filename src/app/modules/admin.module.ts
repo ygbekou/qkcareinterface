@@ -125,7 +125,9 @@ import { CurrencyMaskModule } from 'ng2-currency-mask';
 import { ConfirmationService } from 'primeng/api';
 import { BaseComponent } from '../components/admin/baseComponent';
 import { PatientMedicineList } from '../components/admin/patientMedicineList';
-import { AdminRadiologyConfig } from '../components/admin/adminRadiologyConfig';const routes: Routes = [
+import { AdminRadiologyConfig } from '../components/admin/adminRadiologyConfig';
+import { PatientKiosk } from '../components/admin/patientKiosk';
+const routes: Routes = [
   { path: 'adminMain', component: AdminMain },
   { path: 'adminAppointment', component: AdminAppointment },
   { path: 'employeeDetails', component: EmployeeDetails },
@@ -204,6 +206,7 @@ import { AdminRadiologyConfig } from '../components/admin/adminRadiologyConfig';
   { path: 'waitingList', component: WaitingList },
   { path: 'adminWebsite', component: AdminWebsite },
   { path: 'adminRadiologyConfig', component: AdminRadiologyConfig },
+  { path: 'patientKiosk', component: PatientKiosk },
   { path: 'dashboard', component: Dashboard }
 ];
 
@@ -237,7 +240,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     MedicalHistoryDetails, SocialHistoryDetails, VaccineDetails, SymptomDetails, BedTransfer,
     DoctorOrderDetails, DoctorOrderList, AdmissionDetails, AdmissionList, FloorDetails, FloorList,
 	RoomDetails, RoomList, BedDetails, BedList, RadExamDetails, RadExamList, AdminPatient, AdminBedStatus, 
-	AdmissionDiagnoses, PatientServiceDetails, 
+	AdmissionDiagnoses, PatientServiceDetails, PatientKiosk,
     AdminReference, VisitDetails, VisitList, DischargeDetails, LabTestDetails, LabTestList, InvestigationDetails,
 	InvestigationList, RadInvestigationDetails, RadInvestigationList, PurchaseOrderDetails, PurchaseOrderList, 
 	ReceiveOrderDetails, ReceiveOrderList,AdminRadiologyConfig,

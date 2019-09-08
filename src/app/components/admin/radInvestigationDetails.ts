@@ -7,8 +7,7 @@ import { GenericService, RadInvestigationService, GlobalEventsManager} from '../
 import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
 import { Message, ConfirmationService } from 'primeng/api';
 import { ScrollPanelModule} from 'primeng/scrollpanel';
-import { BaseComponent } from './baseComponent';
-import { DicomViewerModule } from 'ng-dicomviewer';
+import { BaseComponent } from './baseComponent'; 
 import { Constants } from 'src/app';
 
 @Component({

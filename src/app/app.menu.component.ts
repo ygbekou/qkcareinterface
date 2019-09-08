@@ -37,6 +37,10 @@ export class AppMenuComponent implements OnInit {
           {
             label: this.lang === 'fr' ? 'Ajouter un patient' : 'Add a patient',
             icon: 'fa fa-plus', routerLink: ['/admin/patientDetails'], displayList: '1,2,3'
+		  },
+		  {
+            label: this.lang === 'fr' ? 'Kiosk Patient' : 'Patient Kiosk',
+            icon: 'fa fa-plus', routerLink: ['/admin/patientKiosk'], displayList: '1,2,3'
           },
           {
             label: this.lang === 'fr' ? 'Liste des patients' : 'List patients',
@@ -50,7 +54,7 @@ export class AppMenuComponent implements OnInit {
           {
             label: this.lang === 'fr' ? 'Ajouter un personnel' : 'Add employee',
             icon: 'fa fa-plus', routerLink: ['/admin/employeeDetails'], displayList: '1,2'
-          },
+		  }, 
           {
             label: this.lang === 'fr' ? 'Liste du personnel' : 'List employees',
             icon: 'fa fa-search', routerLink: ['/admin/employeeList'], displayList: '1,2'
