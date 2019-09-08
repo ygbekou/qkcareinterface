@@ -240,7 +240,7 @@ export function HttpLoaderFactory(http: HttpClient) {
 	AdmissionDiagnoses, PatientServiceDetails, 
     AdminReference, VisitDetails, VisitList, DischargeDetails, LabTestDetails, LabTestList, InvestigationDetails,
 	InvestigationList, RadInvestigationDetails, RadInvestigationList, PurchaseOrderDetails, PurchaseOrderList, 
-	ReceiveOrderDetails, ReceiveOrderList,
+	ReceiveOrderDetails, ReceiveOrderList,AdminRadiologyConfig,
     PatientSaleDetails, PatientSaleList, SaleReturnDetails, SaleReturnList, BirthReportDetails, BirthReportList,
     DeathReportDetails, DeathReportList, HospitalLocationDetails, HospitalLocationList, PatientLookup, VisitAdmLookup,
     PurchaseOrderLookup, PatientSaleLookup, HospitalDetails, EnquiryDetails, EnquiryList, WaitingList,

@@ -8,7 +8,7 @@ import { BaseComponent } from './baseComponent';
 import { PatientSaleProduct } from 'src/app/models/stocks/patientSale';
 
 @Component({
-  selector: 'app-prescription-list',
+  selector: 'app-patientMedicine-list',
   templateUrl: '../../pages/admin/patientMedicineList.html',
   providers: [GenericService, AdmissionService]
 })
