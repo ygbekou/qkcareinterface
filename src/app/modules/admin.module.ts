@@ -103,7 +103,7 @@ import { WaitingList } from '../components/admin/waitingList';
 import { EnquiryDetails } from '../components/admin/enquiryDetails';
 import { EnquiryList } from '../components/admin/enquiryList';
 import { SearchComponent } from '../components/includes/search';
-import { BillingService, VisitService, TokenStorage, LoggedInGuard } from '../services';
+import { BillingService, VisitService, TokenStorage, LoggedInGuard,RadInvestigationService } from '../services';
 import { SectionDetails } from '../components/admin/sectionDetails';
 import { SectionList } from '../components/admin/sectionList';
 import { SectionItemDetails } from '../components/admin/sectionItemDetails';
