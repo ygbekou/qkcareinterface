@@ -103,7 +103,7 @@ import { WaitingList } from '../components/admin/waitingList';
 import { EnquiryDetails } from '../components/admin/enquiryDetails';
 import { EnquiryList } from '../components/admin/enquiryList';
 import { SearchComponent } from '../components/includes/search';
-import { BillingService, VisitService, TokenStorage, LoggedInGuard } from '../services';
+import { BillingService, VisitService, TokenStorage, LoggedInGuard,RadInvestigationService } from '../services';
 import { SectionDetails } from '../components/admin/sectionDetails';
 import { SectionList } from '../components/admin/sectionList';
 import { SectionItemDetails } from '../components/admin/sectionItemDetails';
@@ -123,11 +123,9 @@ import { ContactList } from '../components/admin/contactList';
 import { Dashboard } from '../components/admin/dashboard';
 import { CurrencyMaskModule } from 'ng2-currency-mask';
 import { ConfirmationService } from 'primeng/api';
+import { BaseComponent } from '../components/admin/baseComponent';
 import { PatientMedicineList } from '../components/admin/patientMedicineList';
-import { AdminRadiologyConfig } from '../components/admin/adminRadiologyConfig';
-import { RadInvestigationService } from '../services';
-
-const routes: Routes = [
+import { AdminRadiologyConfig } from '../components/admin/adminRadiologyConfig';const routes: Routes = [
   { path: 'adminMain', component: AdminMain },
   { path: 'adminAppointment', component: AdminAppointment },
   { path: 'employeeDetails', component: EmployeeDetails },
@@ -242,13 +240,13 @@ export function HttpLoaderFactory(http: HttpClient) {
 	AdmissionDiagnoses, PatientServiceDetails, 
     AdminReference, VisitDetails, VisitList, DischargeDetails, LabTestDetails, LabTestList, InvestigationDetails,
 	InvestigationList, RadInvestigationDetails, RadInvestigationList, PurchaseOrderDetails, PurchaseOrderList, 
-	ReceiveOrderDetails, ReceiveOrderList,
+	ReceiveOrderDetails, ReceiveOrderList,AdminRadiologyConfig,
     PatientSaleDetails, PatientSaleList, SaleReturnDetails, SaleReturnList, BirthReportDetails, BirthReportList,
     DeathReportDetails, DeathReportList, HospitalLocationDetails, HospitalLocationList, PatientLookup, VisitAdmLookup,
     PurchaseOrderLookup, PatientSaleLookup, HospitalDetails, EnquiryDetails, EnquiryList, WaitingList,
     SectionDetails, SectionList, SectionItemDetails, SectionItemList, DepartmentDetails,
     DepartmentList, AdminWebsite, AdminHeader, SliderDetails, SliderList, SliderTextList, SliderTextDetails,
-    CompanyDetails, CompanyList, ContactDetails, ContactList, Dashboard, PatientMedicineList, AdminRadiologyConfig],
+    CompanyDetails, CompanyList, ContactDetails, ContactList, Dashboard, BaseComponent, PatientMedicineList],
 
   providers: [
 	CategoryDropdown, PackageDropdown, DoctorDropdown, TokenStorage, BillingService, VisitService, LoggedInGuard, 

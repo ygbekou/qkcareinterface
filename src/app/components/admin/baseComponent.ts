@@ -7,6 +7,7 @@ import { GenericResponse } from 'src/app/models/genericResponse';
 
 
 @Component({
+	template: ``,
   providers: []
 })
 export class BaseComponent {
