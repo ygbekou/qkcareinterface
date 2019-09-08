@@ -34,6 +34,22 @@ export class RadInvestigationService {
         })
         .catch(this.handleError);
    }
+
+   public getInvestigation = (id: number): Observable<any> => {
+
+      const actionUrl = Constants.apiServer + '/service/radiology/investigation/get/' + id;
+      return this.http.get(actionUrl, { headers: this.headers })
+        .map((response: Response) => {
+            if (response && response.json()) {
+              const error = response.json() && response.json().error;
+              if (error == null) {
+
+              }
+            }
+            return response.json();
+        })
+        .catch(this.handleError);
+   }
   
    public searchInvestigations = (searchCriteria: SearchCriteria): Observable<RadInvestigation[]> => {
 

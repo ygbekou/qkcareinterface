@@ -124,6 +124,7 @@ import { CurrencyMaskModule } from 'ng2-currency-mask';
 import { MinDirective } from './components/directives/min-validator.directive'
 import { MaxDirective } from './components/directives/max-validator.directive'
 import { ConfirmationService } from 'primeng/api';
+import { DicomViewerModule } from 'ng-dicomviewer';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(httpClient: HttpClient) {
@@ -210,7 +211,8 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     TooltipModule,
     TreeModule,
     TreeTableModule,
-	CurrencyMaskModule
+    CurrencyMaskModule,
+    DicomViewerModule
   ],
   declarations: [
     AppComponent,

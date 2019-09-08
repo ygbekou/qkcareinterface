@@ -1,3 +1,29 @@
+<p-dialog header="{{ 'COMMON.DOCUMENT_LIST' | translate }}" [(visible)]="displayFileBox" [width]="1000">
+	<p-scrollPanel [style]="{width: '100%', height: '200px'}">
+		<div class="ui-grid-row" *ngFor="let doc of investigationDocs; let i = index">
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-8 ui-sm-12">
+					<a  target="_blank" 
+						href="assets/images/radinvestigation/{{investigation.id}}/{{doc}}">{{doc}}</a>
+				</div>
+				<div class="ui-grid-col-4 ui-sm-12">
+					<button type="button" pButton icon="fa fa-minus" (click)="deleteFile(i, doc)" label="{{ 'COMMON.DELETE' | translate }}"></button>
+				</div>
+			</div>
+			<br/>
+		</div>
+	</p-scrollPanel>	
+		<br/>
+		<br/>
+		<div class="ui-grid-row">
+			<p-fileUpload
+				customUpload="true" multiple="multiple"
+				(uploadHandler)="onFileUpload($event)">
+			</p-fileUpload>
+		</div>
+	
+</p-dialog>
+
 <form name="form" (ngSubmit)="f.form.valid && save()" #f="ngForm" validate>
 	<div class="ui-g-12 ui-sm-12" style="padding: 15px;">
 		<div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="investigation">
@@ -36,30 +62,6 @@
 			<div class="ui-grid-row">
 				<div class="ui-grid-col-4 ui-sm-12">
 						<div class="form-group">
-							<label for="modality">{{ 'COMMON.MODALITY' | translate }}<font color="red">*</font></label>  
-							<p-autoComplete [(ngModel)]="modality" (ngModelChange)="populateExams($event)"
-							(onDropdownClick)="modalityDropdown.handleDropdownClick($event)"
-							[suggestions]="modalityDropdown.filteredModalities" [dropdown]="true"
-							id="modality" (completeMethod)="modalityDropdown.filter($event)"
-							name="modality" field="name" [size]="30" placeholder="{{SELECT_OPTION}}"
-							[minLength]="1" #modalityDrp="ngModel" required></p-autoComplete> 
-							<p-message *ngIf="f.submitted && modalityDrp.invalid" severity="error" text="Field is required"></p-message>
-					</div>
-				</div>
-				<div class="ui-grid-col-4 ui-sm-12">
-						<div class="form-group">
-							<label for="exam">{{ 'COMMON.EXAM' | translate }}<font color="red">*</font></label>  
-							<p-autoComplete [(ngModel)]="investigation.exam"
-							(onDropdownClick)="examDropdown.handleDropdownClick($event)"
-							[suggestions]="examDropdown.filteredExams" [dropdown]="true"
-							id="exam" (completeMethod)="examDropdown.filter($event)"
-							name="exam" field="name" [size]="30" placeholder="{{SELECT_OPTION}}"
-							[minLength]="1" #exam="ngModel" required></p-autoComplete> 
-							<p-message *ngIf="f.submitted && exam.invalid" severity="error" text="Field is required"></p-message>
-					</div>
-				</div>
-				<div class="ui-grid-col-4 ui-sm-12">
-						<div class="form-group">
 							<label for="examStatus">{{ 'COMMON.STATUS' | translate }}<font color="red">*</font></label>  
 							<p-autoComplete [(ngModel)]="investigation.examStatus"
 							(onDropdownClick)="examStatusDropdown.handleDropdownClick($event)"
@@ -81,13 +83,121 @@
 							[minLength]="1" #assignTo="ngModel"></p-autoComplete> 
 					</div>
 				</div>
+
 			</div>
 		</div>
+
+	
+		<div class="ui-grid-row">
+			<div class="ui-grid-col-12 ui-sm-12">
+			<p-table [columns]="examCols" [value]="investigation.investigationExams">
+				<ng-template pTemplate="caption">
+				{{ 'COMMON.EXAM_LIST' | translate }}
+				</ng-template>
+				<ng-template pTemplate="header" let-medicineCols>
+				<tr>
+					<th *ngFor="let col of examCols" [pSortableColumn]="col.field" [ngStyle]="col.style">
+					{{col.header}}
+					<p-sortIcon [field]="col.field"></p-sortIcon>
+					</th>
+					<th>Action</th>
+				</tr>
+				</ng-template>
+				<ng-template pTemplate="body" let-rowData let-columns="columns">
+				<tr>
+					<td *ngFor="let col of columns" pEditableColumn>
+						<p-cellEditor *ngIf="col.field == 'modality'">
+							<ng-template pTemplate="input">
+								<p-autoComplete [(ngModel)]="rowData['modality']" (ngModelChange)="rowData.populateExams($event)"
+									(onDropdownClick)="modalityDropdown.handleDropdownClick($event)"
+									[suggestions]="modalityDropdown.filteredModalities" [dropdown]="true"
+									id="modality" (completeMethod)="modalityDropdown.filter($event)"
+									name="modality" field="name" [size]="10" placeholder="{{SELECT_OPTION}}"
+									[minLength]="1" #modalityDrp="ngModel" required>
+								</p-autoComplete> 
+							</ng-template>
+							<ng-template pTemplate="output">
+								{{rowData['exam'].modality.name}}
+							</ng-template>
+						</p-cellEditor>
+						<p-cellEditor *ngIf="col.field == 'exam'">
+							<ng-template pTemplate="input">
+								<p-autoComplete [(ngModel)]="rowData['exam']" [suggestions]="rowData['filteredExams']" [minLength]="1"
+									(completeMethod)="rowData.filter($event)" (onDropdownClick)="rowData.handleDropdownClick($event)"
+									[dropdown]="true" name="exam" field="name" [size]="20">
+								</p-autoComplete>
+							</ng-template>
+							<ng-template pTemplate="output">
+								{{rowData['exam'].name}}
+							</ng-template>
+						</p-cellEditor>
+					</td>
+					<td>
+						<button type="button" pButton icon="fa fa-plus" (click)="addNewExamRow()"></button>&nbsp;&nbsp;
+						<button type="button" pButton icon="fa fa-eraser"></button>
+					</td>
+				</tr>
+				</ng-template>
+			</p-table>
+			</div>
+		</div>
+
+		<br/>
+		<br/>
+
+		<p-fieldset legend="Comments" [toggleable]="true">
+			<p-card *ngFor="let comment of investigation.investigationComments" >
+				<p-header>
+					{{comment.title}}
+				</p-header>
+				<div>{{comment.comments}}</div>
+			</p-card>
+
+
+			<div class="ui-grid ui-grid-responsive" *ngIf="newComment">
+				<div class="ui-grid-row">
+					<div class="ui-grid-col-3 ui-sm-12 ui-fluid">
+						<div class="form-group">
+							<label for="name">{{ 'COMMON.TITLE' | translate }}</label> 
+							<input pInputText id="title" [(ngModel)]="newComment.title" name="title"  #title="ngModel" required />	
+							<p-message *ngIf="f.submitted && title.invalid" severity="error" text="Field is required"></p-message>						
+						</div>
+					</div>
+					<div class="ui-grid-col-7 ui-sm-12 ui-fluid">
+						<div class="form-group">
+							<label for="description">{{ 'COMMON.COMMENTS' | translate }}</label> 
+							<textarea pInputTextarea id="comments" rows="4" cols="40" pInputTextarea maxlength="1000" 
+								[(ngModel)]="newComment.comments" name="comments" #comments="ngModel"> </textarea>					
+						</div>
+					</div>
+					<div class="ui-grid-col-2 ui-sm-12">
+						<div class="ui-grid-col-4 ui-sm-12 ui-fluid">
+							<br/>
+							<button type="button" pButton icon="fa fa-save" label="{{ 'COMMON.SAVE' | translate }}"
+									(click)="saveComment()"></button>
+							<br/>
+							<br/>
+							<button type="button" pButton icon="fa fa-delete" label="{{ 'COMMON.CANCEL' | translate }}" 
+									(click)="cancelComment()"></button>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<button type="button" pButton icon="fa fa-plus" (click)="addNewCommentRow()"></button>
+		</p-fieldset>
+
 		<br/>
 		<br/>
 		<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
 			<button type="button" pButton icon="fa fa-refresh" (click)="clear()" label="{{ 'COMMON.CLEAR' | translate }}"></button>&nbsp;&nbsp;
-			<button pButton icon="fa fa-save" label="{{ 'COMMON.SAVE' | translate }}"></button>
+			<button pButton icon="fa fa-save" label="{{ 'COMMON.SAVE' | translate }}"></button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<button type="button" pButton icon="fa fa-plus" (click)="toggleDisplayFileBox()" label="{{ 'COMMON.VIEW_SCAN_DOC' | translate }}"></button>
 		</div>
 	</div>
 </form>
+
+
+<div style="height: 100%; width:100%;">
+	<dicom-viewer [enableViewerTools]="true" style="height:100%; width:100%; margin: 10px;"></dicom-viewer>
+</div>

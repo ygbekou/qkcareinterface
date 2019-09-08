@@ -1,7 +1,6 @@
 import { Injectable, OnInit } from '@angular/core';
 import { DropdownUtil } from './dropdown.util';
 import { GenericService } from '../../services';
-import { Reference } from '../../models/reference';
 import { RadExam } from 'src/app/models/radiology/radiologyConfig';
  
 @Injectable()

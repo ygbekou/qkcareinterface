@@ -2,6 +2,8 @@ import { Reference } from "../reference";
 import { Admission } from '../admission';
 import { Visit } from '../visit';
 import { Employee } from "..";
+import { GenericService } from "src/app/services/generic.service";
+import { DropdownUtil } from "src/app/components/dropdowns/dropdown.util";
 
 
 export class RadExam {
@@ -23,19 +25,72 @@ export class RadInvestigation {
   admission: Admission;
   visit: Visit;
   investigationDatetime: Date;
-  exam: RadExam;
   name: string;
   description: string;
   status: number;
   assignTo: Employee;
   assignDatetime: Date;
   rejectionDatetime: Date;
-  rejectionComments: string;
   completeDatetime: Date;
-  completeComments: string;
   examStatus: Reference;
+
+  investigationExams: RadInvestigationExam[] = [];
+  investigationComments: RadInvestigationComment[] = [];
   
+}
+
+
+export class RadInvestigationExam {
+  id: number;
+  exam: RadExam;
+  modality: Reference;
+  comments: string;
+
+  filteredExams: RadExam[];
+  exams: RadExam[] = [];
+
+  constructor(
+	   public genericService: GenericService,
+  ) {
+	  this.exam = new RadExam();
+  }
+
+
+  populateExams(event) {
+    const parameters: string[] = [];
+
+    parameters.push('e.modality.id = |modalityId|' + this.modality.id + '|Long');
+
+    this.genericService.getAllByCriteria('RadExam', parameters)
+      .subscribe((data: any[]) => {
+        this.exams = data;
+      },
+      error => console.log(error),
+      () => console.log('Get Exam List complete'));
+  }
+
+
+  filter(event) {
+    this.filteredExams = DropdownUtil.filter(event, this.exams);
+  }
+
+  handleDropdownClick(event) {
+    setTimeout(() => {
+      this.filteredExams = this.exams;
+    }, 10)
+  }
+}
+
+
+export class RadInvestigationComment {
+  id: number;
+  commentDatetime: Date;
+  title: string;
+  comments: string;
+
+  investigation: RadInvestigation = null;
+
   constructor() {
-	this.exam = new RadExam();
+	  
   }
 }

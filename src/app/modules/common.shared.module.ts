@@ -16,8 +16,10 @@ import {
   CalendarModule, RadioButtonModule, DropdownModule, InputMaskModule, OverlayPanelModule,
   AutoCompleteModule, DataTableModule, DialogModule, ListboxModule, AccordionModule,
   GalleriaModule, MessagesModule, TreeModule, TreeNode, OrganizationChartModule, ConfirmDialogModule,
-  DataGridModule, PanelModule, UIChart, PickListModule, ScheduleModule, ToolbarModule, Message, MessageModule
+  DataGridModule, PanelModule, UIChart, PickListModule, ScheduleModule, ToolbarModule, Message, MessageModule, ScrollPanelModule
 } from 'primeng/primeng';
+
+import { DicomViewerModule } from 'ng-dicomviewer';
 
 
 @NgModule({
@@ -31,7 +33,7 @@ import {
     CalendarModule, RadioButtonModule, DropdownModule, AutoCompleteModule, ScheduleModule, ProgressBarModule,
     DataTableModule, DialogModule, GalleriaModule, MessagesModule, TreeModule, AccordionModule, ConfirmDialogModule,
     DataGridModule, PanelModule, ScheduleModule, LightboxModule, TableModule, ToolbarModule, MessageModule,
-    CardModule
+    CardModule, ScrollPanelModule, DicomViewerModule
   ],
 
   exports: [
@@ -44,7 +46,7 @@ import {
     PasswordModule, DataListModule, CheckboxModule, InputTextModule, InputMaskModule, ScheduleModule, CarouselModule, OverlayPanelModule,
     CalendarModule, RadioButtonModule, DropdownModule, AutoCompleteModule, UIChart, PickListModule, OrganizationChartModule,
     DataTableModule, DialogModule, GalleriaModule, MessagesModule, TreeModule, DataGridModule, PanelModule, ScheduleModule, TableModule,
-    ToolbarModule, MessageModule, ConfirmDialogModule, CardModule
+    ToolbarModule, MessageModule, ConfirmDialogModule, CardModule, ScrollPanelModule
   ],
 })
 

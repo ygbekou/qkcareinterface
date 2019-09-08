@@ -37,3 +37,5 @@ export * from './dropdown.modality';
 export * from './dropdown.radExam';
 export * from './dropdown.examStatus';
 export * from './dropdown.radiologyTech';
+export * from './dropdown.bodyPart';
+export * from './dropdown.laterality';
