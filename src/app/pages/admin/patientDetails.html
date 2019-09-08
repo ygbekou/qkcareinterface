@@ -47,7 +47,7 @@
                         <p-radioButton name="sex" value="F" label="Female" name="sex" [(ngModel)]="patient.user.sex"
                           #gender="ngModel" required></p-radioButton>
                       </div>
-                      <p-message *ngIf="f.submitted && firstName.invalid" severity="error"
+                      <p-message *ngIf="f.submitted && gender.invalid" severity="error"
                         text="{{ 'COMMON.GENDER' | translate }} {{ 'VALIDATION.IS_REQUIRED' | translate }}"></p-message>
                     </div>
                   </div>

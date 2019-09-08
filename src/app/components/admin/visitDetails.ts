@@ -27,7 +27,7 @@ export class VisitDetails implements OnInit, OnDestroy {
   medicineCols: any[];
   diagnosisCols: any[];
   patient: Patient = new Patient();
-
+  shouldShow=false;
   activeTab = 0;
 
   vaccineGroups: Reference[] = [];

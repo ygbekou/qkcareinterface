@@ -359,7 +359,9 @@
     "EXAM_LIST": "Exams",
     "ASSIGN_TO": "Assign To",
     "VIEW_SCAN_DOC": "View/Scan Document",
-    "DOCUMENT_LIST": "Document List"
+    "DOCUMENT_LIST": "Document List",
+	"FEMALE":"Female",
+	"MALE":"Male"
   },
   "MESSAGE": {
   	"TRANFER_DOCTOR_FAILED": "The transfer doctor should be different from the current doctor.",

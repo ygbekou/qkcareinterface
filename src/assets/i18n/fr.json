@@ -360,7 +360,9 @@
     "EXAM_LIST": "Examens",
     "ASSIGN_TO": "Assigner à",
     "VIEW_SCAN_DOC": "Afficher/Scanner Document",
-    "DOCUMENT_LIST": "Liste des documents"
+	"DOCUMENT_LIST": "Liste des documents",
+	"FEMALE":"Femme",
+	"MALE":"Homme"
   },
   "MESSAGE": {
     "TRANFER_DOCTOR_FAILED": "Le nouveau docteur assigné doit être différent de l'ancien.",

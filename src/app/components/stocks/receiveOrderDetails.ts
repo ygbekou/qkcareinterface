@@ -116,6 +116,9 @@ export class ReceiveOrderDetails extends BaseComponent implements OnInit, OnDest
     }
   }
   
+  delete(){
+	  
+  }
 
   lookUpPurchaseOrder(event) {
     this.purchaseOrder = event;

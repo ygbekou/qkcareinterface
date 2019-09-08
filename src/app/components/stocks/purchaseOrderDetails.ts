@@ -110,8 +110,8 @@ export class PurchaseOrderDetails extends BaseComponent implements OnInit, OnDes
 	}
   }
 
-  calculateGrandTotal(event) {
-		this.calculateTotal(event);
+  calculateGrandTotal() {
+		this.calculateTotal();
 		this.purchaseOrder.grandTotal = +this.getNumber(this.purchaseOrder.subTotal) 
 						+ +this.getNumber(this.purchaseOrder.taxes)
 						- +this.getNumber(this.purchaseOrder.discount);
@@ -127,7 +127,7 @@ export class PurchaseOrderDetails extends BaseComponent implements OnInit, OnDes
 						- +this.getNumber(this.purchaseOrder.paid);
   }
   
-  calculateTotal(event) {
+  calculateTotal() {
     this.purchaseOrder.subTotal = 0;
     for (const i in this.purchaseOrder.purchaseOrderProducts) {
        this.purchaseOrder.subTotal += this.calculateRowTotal(this.purchaseOrder.purchaseOrderProducts[i]);
