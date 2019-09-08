@@ -89,7 +89,7 @@ export class AppMenuComponent implements OnInit {
           { label: this.lang === 'fr' ? 'Liste des tests' : 'List tests', icon: 'fa fa-search', routerLink: ['/admin/investigationList'] }
         ]
 	  },
-	        {
+	  {
 				
         label: this.lang === 'fr' ? 'Radiologie' : 'Radiology', icon: 'fa fa-xray',
         items: [
@@ -140,6 +140,14 @@ export class AppMenuComponent implements OnInit {
           { label: this.lang === 'fr' ? 'Config. des Références' : 'Reference config.', icon: 'fa fa-fw fa-paint-brush', routerLink: ['/admin/adminReference'] },
 		  { label: this.lang === 'fr' ? 'Config. du site web' : 'Website config.', icon: 'fa fa-fw fa-globe', routerLink: ['/admin/adminWebsite'] },
 		  { label: this.lang === 'fr' ? 'Config. du Radiologie' : 'Radiology config.', icon: 'fas fa-x-ray', routerLink: ['/admin/adminRadiologyConfig'] }
+        ]
+      },
+      {
+				
+        label: this.lang === 'fr' ? 'Security' : 'Security', icon: 'fa fa-xray',
+        items: [
+          { label: this.lang === 'fr' ? 'Ajouter un examen' : 'Add exam', icon: 'fa fa-plus', routerLink: ['/admin/radInvestigationDetails'] },
+          { label: this.lang === 'fr' ? 'Liste des examens' : 'List exams', icon: 'fa fa-search', routerLink: ['/admin/radInvestigationList'] }
         ]
       },
       {
