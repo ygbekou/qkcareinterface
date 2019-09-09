@@ -4,9 +4,10 @@ import { Constants } from '../../app.constants';
 import { ReportView, Parameter, User, UserGroup, Patient } from '../../models';
 import { CountryDropdown, ReligionDropdown, OccupationDropdown, PayerTypeDropdown, InsuranceDropdown } from '../dropdowns';
 import { GenericService, UserService, ReportService, GlobalEventsManager } from '../../services';
-import { Message, ConfirmationService, MenuItem } from 'primeng/api';
+import { Message, ConfirmationService, MenuItem, SelectItem } from 'primeng/api';
 import { TranslateService } from '@ngx-translate/core';
 import { BaseComponent } from './baseComponent';
+import { NgForm } from '@angular/forms';
 
 
 @Component({
@@ -15,6 +16,7 @@ import { BaseComponent } from './baseComponent';
 	providers: [GenericService, UserService, ReportService, CountryDropdown, ReligionDropdown,
 		OccupationDropdown, PayerTypeDropdown, InsuranceDropdown]
 })
+// tslint:disable-next-line: component-class-suffix
 export class PatientKiosk extends BaseComponent implements OnInit, OnDestroy {
 
 	messages: Message[] = [];
@@ -33,14 +35,15 @@ export class PatientKiosk extends BaseComponent implements OnInit, OnDestroy {
 	reportName: string;
 
 	steps: MenuItem[];
-	sexM = false;
-	sexF = false;
-
+	sexes: any[];
+	selectedSex: any;
 	error = '';
 	activeIndex = 0;
 	button = 1;
 	done = false;
 	navigationLabel = 'Suivant';
+
+	@ViewChild('f') myform: NgForm;
 
 	constructor
 		(
@@ -59,35 +62,31 @@ export class PatientKiosk extends BaseComponent implements OnInit, OnDestroy {
 			private route: ActivatedRoute,
 			private router: Router
 		) {
+
+
 		super(genericService, translate, confirmationService);
 		this.patient.user = new User();
+		this.sexes = [];
+		this.sexes.push({ label: 'Homme', value: 'M', pic: 'male.png' });
+		this.sexes.push({ label: 'Femme', value: 'F', pic: 'female.png' });
 	}
 
 	newPatient() {
 		this.patient = new Patient();
 		this.patient.user = new User();
 		this.done = false;
-		this.activeIndex = 0; 
+		this.activeIndex = 0;
+		this.myform.resetForm();
+		//this.myform.form.markAsPristine();
 	}
-	setSex(sex: string) {
-		if (sex === 'M') {
-			if (this.sexM) {
-				this.patient.user.sex = 'M';
-				this.sexF = false;
-			} else {
-				this.sexF = true;
-				this.patient.user.sex = 'F';
-			}
-		} else {
-			if (this.sexF) {
-				this.patient.user.sex = 'F';
-				this.sexM = false;
-			} else {
-				this.sexM = true;
-				this.patient.user.sex = 'M';
-			}
-		}
+
+	setSex() {
+
+		console.log(this.selectedSex);
+		this.patient.user.sex = this.selectedSex.value;
+		console.log(this.patient.user.sex);
 	}
+
 	ngOnInit(): void {
 		let patientId = null;
 		this.steps = [{
@@ -149,7 +148,7 @@ export class PatientKiosk extends BaseComponent implements OnInit, OnDestroy {
 
 	save() {
 		if (this.activeIndex === 0) {
-			if (this.sexM || this.sexF) {
+			if (this.patient.user.sex != null) {
 				this.activeIndex = 1;
 			} else {
 				this.activeIndex = 0;
@@ -164,17 +163,18 @@ export class PatientKiosk extends BaseComponent implements OnInit, OnDestroy {
 			this.messages = [];
 			this.formData = new FormData();
 
-			const pictureEl = this.picture.nativeElement;
-			if (pictureEl && pictureEl.files && (pictureEl.files.length > 0)) {
-				const files: FileList = pictureEl.files;
-				for (let i = 0; i < files.length; i++) {
-					this.formData.append('file', files[i], files[i].name);
+			if (this.picture != null) {
+				const pictureEl = this.picture.nativeElement;
+				if (pictureEl && pictureEl.files && (pictureEl.files.length > 0)) {
+					const files: FileList = pictureEl.files;
+					for (let i = 0; i < files.length; i++) {
+						this.formData.append('file', files[i], files[i].name);
+					}
+				} else {
+					// this.formData.append('file', null, null);
 				}
-			} else {
-				// this.formData.append('file', null, null);
+
 			}
-
-
 			try {
 				this.patient.user.userName = this.patient.user.email;
 				this.patient.user.userGroup.id = Constants.USER_GROUP_PATIENT;
@@ -247,4 +247,5 @@ export class PatientKiosk extends BaseComponent implements OnInit, OnDestroy {
 	delete(id: number) {
 		this.genericService.delete(id, 'com.qkcare.model.Patient');
 	}
+}
 }
