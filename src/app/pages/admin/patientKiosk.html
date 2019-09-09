@@ -3,9 +3,9 @@
   <p-steps *ngIf="!done" [model]="steps" [(activeIndex)]="activeIndex" [readonly]="false" styleClass="steps-custom">
   </p-steps>
 
-  <p-card *ngIf="done" [style]="{'text-align': 'center'}" >
+  <p-card *ngIf="done" [style]="{'text-align': 'center'}">
     <p-header>
-      <img class="thumb img-fluid"  src="assets/images/company/check.png" style="width:100px;">
+      <img class="thumb img-fluid" src="assets/images/company/check.png" style="width:100px;">
     </p-header>
     <h1>
       <font color="green">Vous etes enregistre avec succes!</font>
@@ -71,14 +71,19 @@
           <label for="sex">{{ 'COMMON.GENDER' | translate }}<font color="red">*</font></label>
         </div>
         <div class="ui-grid-row">
-          <p-toggleButton value="M" onLabel="{{ 'COMMON.MALE' | translate }}" offLabel="{{ 'COMMON.MALE' | translate }}"
-            onIcon="pi pi-check" offIcon="pi pi-times" name="gender" [(ngModel)]="sexM" #gender="ngModel"
-            (click)="setSex('M')"></p-toggleButton>
-          &nbsp;&nbsp;
-          <p-toggleButton value="F" onLabel="{{ 'COMMON.FEMALE' | translate }}"
-            offLabel="{{ 'COMMON.FEMALE' | translate }}" onIcon="pi pi-check" offIcon="pi pi-times" name="gender"
-            [(ngModel)]="sexF" #gender="ngModel" (click)="setSex('F')"></p-toggleButton>
-          <p-message *ngIf="f.submitted && !sexM && !sexF" severity="error"
+
+          <p-selectButton [options]="sexes" [(ngModel)]="selectedSex" optionLabel="label" (onChange)="setSex()"
+            name="sex" #sex="ngModel" required>
+            <ng-template let-item>
+              <div style="padding: .5em 1em">
+                <img style="vertical-align: middle; margin-right: .5em" src="assets/images/company/{{item.pic}}"
+                  height="50px" />
+                <span>{{item.label}}</span>
+              </div>
+            </ng-template>
+          </p-selectButton> 
+
+          <p-message *ngIf="f.submitted && sex.invalid" severity="error"
             text="{{ 'COMMON.GENDER' | translate }} {{ 'VALIDATION.IS_REQUIRED' | translate }}"></p-message>
         </div>
       </div>
@@ -129,10 +134,9 @@
       </div>
     </div>
   </div>
-  <br>
   <button pButton type="text" (click)="button=1" icon="fa fa fa-play-circle" *ngIf="activeIndex<3"
     style="margin-top: 0px; width: 100%; height: 50px;" label="{{navigationLabel}}"></button>
-  <button (click)="button=2" pButton type="submit" icon="fa fa fa-play-circle"
+  <button (click)="button=2" pButton type="submit" icon="fa fa fa-save"
     style="margin-top: 0px; width: 100%; height: 50px;" *ngIf="activeIndex===3 && !done" label="Enregistrer"></button>
   <br>
   <div *ngIf="error" class="alert alert-danger">{{error}}</div>
