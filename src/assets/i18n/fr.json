@@ -360,9 +360,13 @@
     "EXAM_LIST": "Examens",
     "ASSIGN_TO": "Assigner à",
     "VIEW_SCAN_DOC": "Afficher/Scanner Document",
-	"DOCUMENT_LIST": "Liste des documents",
-	"FEMALE":"Femme",
-	"MALE":"Homme"
+	  "DOCUMENT_LIST": "Liste des documents",
+	  "FEMALE":"Femme",
+	  "MALE":"Homme",
+    "ROLE_LIST": "Roles",
+    "RESOURCE_LIST": "Resources",
+    "URL_PATH": "Url",
+    "PARENT": "Parent"
   },
   "MESSAGE": {
     "TRANFER_DOCTOR_FAILED": "Le nouveau docteur assigné doit être différent de l'ancien.",
@@ -376,8 +380,8 @@
     "OVERLAP_SCHEDULE": "Deux horaires se chevauchent",
     "DELETE_CONFIRM": "Etes-vous sur de vouloir continuer?",
     "DELETE_SUCCESS": "La suppression a réussi",
-	"DELETE_UNSUCCESS": "La suppression a échoué. S'il vous plait contacter l'administrateur",
-	"DELETE_UNSUCCESS_FOREIGN_KEY": "La suppression a échoué à cause des données dependantes dans le system. S'il vous plait contacter l'administrateur.",
+	  "DELETE_UNSUCCESS": "La suppression a échoué. S'il vous plait contacter l'administrateur",
+	  "DELETE_UNSUCCESS_FOREIGN_KEY": "La suppression a échoué à cause des données dependantes dans le system. S'il vous plait contacter l'administrateur.",
     "FORGET_PASSWORD": "Vous avez oublié votre mot de passe? Cliquez sur le bouton pour recevoir un nouveau dans votre email",
     "SEND_PASSWORD": "Envoyer mot de passe",
     "INVALID_USER_PASS": "Nom d'utilisateur ou mot de passe invalide. Veuillez réessayer.",
@@ -392,10 +396,10 @@
     "MESSAGE_SENT": "Message envoyé avec succès",
     "MESSAGE_FAILED": "L'envois du message a échoué",
     "FORM_HAS_ERRORS": "Le formulaire comporte des erreurs. S'il vous plait vérifier et corriger.",
-	"NO_CRITERIA_SET": "Au moins une critère de recherche est nécessaire",
-	"SELECT_PATIENT": "Sélectioner un patient",
-	"SELECT_LOCATION": "Sélectioner un emplacement",
-	"NO_INVESTIGATION_FOUND": "Aucune investigation n'est faite"
+    "NO_CRITERIA_SET": "Au moins une critère de recherche est nécessaire",
+    "SELECT_PATIENT": "Sélectioner un patient",
+    "SELECT_LOCATION": "Sélectioner un emplacement",
+    "NO_INVESTIGATION_FOUND": "Aucune investigation n'est faite"
   },
   "VALIDATION": {
     "IS_INVALID": "est invalide",

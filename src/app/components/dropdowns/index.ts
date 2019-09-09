@@ -39,3 +39,4 @@ export * from './dropdown.examStatus';
 export * from './dropdown.radiologyTech';
 export * from './dropdown.bodyPart';
 export * from './dropdown.laterality';
+export * from './dropdown.resource';

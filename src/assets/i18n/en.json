@@ -360,8 +360,12 @@
     "ASSIGN_TO": "Assign To",
     "VIEW_SCAN_DOC": "View/Scan Document",
     "DOCUMENT_LIST": "Document List",
-	"FEMALE":"Female",
-	"MALE":"Male"
+    "FEMALE":"Female",
+    "MALE":"Male",
+    "ROLE_LIST": "Roles",
+    "RESOURCE_LIST": "Resources",
+    "URL_PATH": "Url",
+    "PARENT": "Parent"
   },
   "MESSAGE": {
   	"TRANFER_DOCTOR_FAILED": "The transfer doctor should be different from the current doctor.",
