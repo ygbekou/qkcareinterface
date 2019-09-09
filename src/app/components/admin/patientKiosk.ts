@@ -162,9 +162,9 @@ export class PatientKiosk extends BaseComponent implements OnInit, OnDestroy {
 			this.done = true;
 			this.messages = [];
 			this.formData = new FormData();
-
+			let pictureEl ;
 			if (this.picture != null) {
-				const pictureEl = this.picture.nativeElement;
+				pictureEl = this.picture.nativeElement;
 				if (pictureEl && pictureEl.files && (pictureEl.files.length > 0)) {
 					const files: FileList = pictureEl.files;
 					for (let i = 0; i < files.length; i++) {
@@ -247,5 +247,4 @@ export class PatientKiosk extends BaseComponent implements OnInit, OnDestroy {
 	delete(id: number) {
 		this.genericService.delete(id, 'com.qkcare.model.Patient');
 	}
-}
-}
+} 
