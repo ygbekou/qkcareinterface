@@ -60,6 +60,7 @@ import { BedList } from '../components/admin/bedList';
 import { RadExamDetails } from '../components/admin/radExamDetails';
 import { RadExamList } from '../components/admin/radExamList';
 import { AdminBedStatus } from '../components/admin/adminBedStatus';
+import { AdminAuthorization } from '../components/admin/adminAuthorization';
 import { AdmissionDiagnoses } from '../components/admin/admissionDiagnoses';
 import { PatientServiceDetails } from '../components/admin/patientServiceDetails';
 import { AdminReference } from '../components/admin/adminReference';
@@ -127,6 +128,11 @@ import { BaseComponent } from '../components/admin/baseComponent';
 import { PatientMedicineList } from '../components/admin/patientMedicineList';
 import { AdminRadiologyConfig } from '../components/admin/adminRadiologyConfig';
 import { PatientKiosk } from '../components/admin/patientKiosk';
+import { RoleDetails } from '../components/authorization/roleDetails';
+import { RoleList } from '../components/authorization/roleList';
+import { ResourceDetails } from '../components/authorization/resourceDetails';
+import { ResourceList } from '../components/authorization/resourceList';
+
 const routes: Routes = [
   { path: 'adminMain', component: AdminMain },
   { path: 'adminAppointment', component: AdminAppointment },
@@ -182,6 +188,7 @@ const routes: Routes = [
   { path: 'visitList', component: VisitList },
   { path: 'adminPatient', component: AdminPatient },
   { path: 'adminBedStatus', component: AdminBedStatus },
+  { path: 'adminAuthorization', component: AdminAuthorization },
   { path: 'adminReference', component: AdminReference },
   { path: 'investigationDetails', component: InvestigationDetails },
   { path: 'investigationList', component: InvestigationList },
@@ -207,7 +214,11 @@ const routes: Routes = [
   { path: 'adminWebsite', component: AdminWebsite },
   { path: 'adminRadiologyConfig', component: AdminRadiologyConfig },
   { path: 'patientKiosk', component: PatientKiosk },
-  { path: 'dashboard', component: Dashboard }
+  { path: 'dashboard', component: Dashboard },
+  { path: 'roleDetails', component: RoleDetails },
+  { path: 'roleList', component: RoleList },
+  { path: 'resourceDetails', component: ResourceDetails },
+  { path: 'resourceList', component: ResourceList },
 ];
 
 // AoT requires an exported function for factories
@@ -239,17 +250,18 @@ export function HttpLoaderFactory(http: HttpClient) {
     ServiceList, PackageDetails, PackageList, BillDetails, BillList, VitalSignDetails, VitalSignList, AllergyDetails,
     MedicalHistoryDetails, SocialHistoryDetails, VaccineDetails, SymptomDetails, BedTransfer,
     DoctorOrderDetails, DoctorOrderList, AdmissionDetails, AdmissionList, FloorDetails, FloorList,
-	RoomDetails, RoomList, BedDetails, BedList, RadExamDetails, RadExamList, AdminPatient, AdminBedStatus, 
-	AdmissionDiagnoses, PatientServiceDetails, PatientKiosk,
+	  RoomDetails, RoomList, BedDetails, BedList, RadExamDetails, RadExamList, AdminPatient, AdminBedStatus, AdminAuthorization,
+	  AdmissionDiagnoses, PatientServiceDetails, PatientKiosk,
     AdminReference, VisitDetails, VisitList, DischargeDetails, LabTestDetails, LabTestList, InvestigationDetails,
-	InvestigationList, RadInvestigationDetails, RadInvestigationList, PurchaseOrderDetails, PurchaseOrderList, 
-	ReceiveOrderDetails, ReceiveOrderList,AdminRadiologyConfig,
+	  InvestigationList, RadInvestigationDetails, RadInvestigationList, PurchaseOrderDetails, PurchaseOrderList, 
+	  ReceiveOrderDetails, ReceiveOrderList,AdminRadiologyConfig,
     PatientSaleDetails, PatientSaleList, SaleReturnDetails, SaleReturnList, BirthReportDetails, BirthReportList,
     DeathReportDetails, DeathReportList, HospitalLocationDetails, HospitalLocationList, PatientLookup, VisitAdmLookup,
     PurchaseOrderLookup, PatientSaleLookup, HospitalDetails, EnquiryDetails, EnquiryList, WaitingList,
     SectionDetails, SectionList, SectionItemDetails, SectionItemList, DepartmentDetails,
     DepartmentList, AdminWebsite, AdminHeader, SliderDetails, SliderList, SliderTextList, SliderTextDetails,
-    CompanyDetails, CompanyList, ContactDetails, ContactList, Dashboard, BaseComponent, PatientMedicineList],
+    CompanyDetails, CompanyList, ContactDetails, ContactList, Dashboard, BaseComponent, PatientMedicineList,
+    RoleDetails, RoleList, ResourceDetails, ResourceList],
 
   providers: [
 	CategoryDropdown, PackageDropdown, DoctorDropdown, TokenStorage, BillingService, VisitService, LoggedInGuard, 

@@ -150,8 +150,7 @@ export class AppMenuComponent implements OnInit {
 				
         label: this.lang === 'fr' ? 'Security' : 'Security', icon: 'fa fa-xray',
         items: [
-          { label: this.lang === 'fr' ? 'Ajouter un examen' : 'Add exam', icon: 'fa fa-plus', routerLink: ['/admin/radInvestigationDetails'] },
-          { label: this.lang === 'fr' ? 'Liste des examens' : 'List exams', icon: 'fa fa-search', routerLink: ['/admin/radInvestigationList'] }
+          { label: this.lang === 'fr' ? 'Configuration' : 'Configuration', icon: 'fa fa-plus', routerLink: ['/admin/adminAuthorization'] },
         ]
       },
       {

@@ -1,0 +1,23 @@
+<div class="ui-grid-row"> 
+		<div class="ui-g-12 ui-sm-12" style="padding: 15px;">
+			
+			<p-tabView (onChange)="onTabChange($event)"> 
+			    <p-tabPanel header="{{'COMMON.ROLE_LIST' |translate}}">
+			    	<div *ngIf="activeTab === 0" class="ui-grid-row">
+				        <app-role-details (roleSaveEvent)="onRoleSaved($event)"></app-role-details>
+				        <br/> 
+				        <app-role-list (roleIdEvent)="onRoleSelected($event)"></app-role-list>
+				    </div>
+				</p-tabPanel>
+				<p-tabPanel header="{{'COMMON.RESOURCE_LIST' |translate}}">
+			    	<div *ngIf="activeTab === 1" class="ui-grid-row">
+				        <app-resource-details (resourceSaveEvent)="onResourceSaved($event)"></app-resource-details>
+				        <br/> 
+				        <app-resource-list (resourceIdEvent)="onResourceSelected($event)"></app-resource-list>
+				    </div>
+			    </p-tabPanel>
+			</p-tabView>
+		</div>
+
+	</div>
+ 
