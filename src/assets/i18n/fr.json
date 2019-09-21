@@ -399,7 +399,8 @@
     "NO_CRITERIA_SET": "Au moins une critère de recherche est nécessaire",
     "SELECT_PATIENT": "Sélectioner un patient",
     "SELECT_LOCATION": "Sélectioner un emplacement",
-    "NO_INVESTIGATION_FOUND": "Aucune investigation n'est faite"
+    "NO_INVESTIGATION_FOUND": "Aucune investigation n'est faite",
+    "REGISTERED_WAIT":"Vous êtes enregistré avec succès! Veuillez attendre votre tour dans la salle d’attente."
   },
   "VALIDATION": {
     "IS_INVALID": "est invalide",

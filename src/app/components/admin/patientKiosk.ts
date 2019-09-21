@@ -41,6 +41,7 @@ export class PatientKiosk extends BaseComponent implements OnInit, OnDestroy {
 	activeIndex = 0;
 	button = 1;
 	done = false;
+	failed = false;
 	navigationLabel = 'Suivant';
 
 	@ViewChild('f') myform: NgForm;
@@ -53,11 +54,6 @@ export class PatientKiosk extends BaseComponent implements OnInit, OnDestroy {
 			public globalEventsManager: GlobalEventsManager,
 			public translate: TranslateService,
 			public confirmationService: ConfirmationService,
-			private countryDropdown: CountryDropdown,
-			private religionDropdown: ReligionDropdown,
-			private occupationDropdown: OccupationDropdown,
-			private payerTypeDropdown: PayerTypeDropdown,
-			private insuranceDropdown: InsuranceDropdown,
 			private changeDetectorRef: ChangeDetectorRef,
 			private route: ActivatedRoute,
 			private router: Router
@@ -147,48 +143,46 @@ export class PatientKiosk extends BaseComponent implements OnInit, OnDestroy {
 	}
 
 	save() {
+		console.log('clicked-->' + this.activeIndex);
+		this.failed = false;
+		this.done = false;
 		if (this.activeIndex === 0) {
 			if (this.patient.user.sex != null) {
 				this.activeIndex = 1;
 			} else {
 				this.activeIndex = 0;
 			}
-
 		} else if (this.activeIndex === 1) {
-			this.activeIndex = 2;
-		} else if (this.activeIndex === 2) {
-			this.activeIndex = 3;
-		} else if (this.activeIndex === 3) {//save 
-			this.done = true;
-			this.messages = [];
-			this.formData = new FormData();
-			let pictureEl ;
-			if (this.picture != null) {
-				pictureEl = this.picture.nativeElement;
-				if (pictureEl && pictureEl.files && (pictureEl.files.length > 0)) {
-					const files: FileList = pictureEl.files;
-					for (let i = 0; i < files.length; i++) {
-						this.formData.append('file', files[i], files[i].name);
-					}
-				} else {
-					// this.formData.append('file', null, null);
-				}
-
+			if (this.patient.visitReason) {
+				this.activeIndex = 2;
+			} else {
+				this.failed = true;
 			}
+		} else if (this.activeIndex === 2) {
+			if (this.patient.contact && this.patient.contactPhone) {
+				this.activeIndex = 3;
+			} else {
+				this.failed = true;
+			}
+		} else if (this.activeIndex === 3) {//save 
+
+			this.messages = [];
+			console.log('Before save');
 			try {
 				this.patient.user.userName = this.patient.user.email;
 				this.patient.user.userGroup.id = Constants.USER_GROUP_PATIENT;
-				if (pictureEl && pictureEl.files && (pictureEl.files.length > 0)) {
-					this.userService.saveUserWithPicture('Patient', this.patient, this.formData)
-						.subscribe(result => {
-							this.processResult(result, this.patient, this.messages, this.pictureUrl);
-						});
-				} else {
-					this.userService.saveUserWithoutPicture('Patient', this.patient)
-						.subscribe(result => {
-							this.processResult(result, this.patient, this.messages, this.pictureUrl);
-						});
-				}
+				this.userService.saveUserWithoutPicture('Patient', this.patient)
+					.subscribe(result => {
+						console.log(result);
+						this.patient = result;
+						if (result.errors === null || result.errors.length === 0) {
+							this.done = true;
+							setTimeout(() => {
+								console.log('after 10 sec');
+								this.newPatient();
+							}, 10000);
+						}
+					});
 			} catch (e) {
 				console.log(e);
 				this.messages.push({ severity: Constants.ERROR, summary: Constants.SAVE_LABEL, detail: Constants.SAVE_UNSUCCESSFUL });
@@ -220,17 +214,13 @@ export class PatientKiosk extends BaseComponent implements OnInit, OnDestroy {
 
 
 	readUrl(event: any) {
-
 		if (event.target.files && event.target.files[0]) {
 			const reader = new FileReader();
-
-			reader.onload = (event: ProgressEvent) => {
-				this.pictureUrl = (<FileReader>event.target).result;
+			reader.onload = (event1: ProgressEvent) => {
+				this.pictureUrl = (<FileReader>event1.target).result;
 			};
-
 			reader.readAsDataURL(event.target.files[0]);
 		}
-
 		this.patient.user.picture = '';
 	}
 

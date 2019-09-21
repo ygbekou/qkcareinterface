@@ -28,18 +28,22 @@ export class Patient {
   insurance: Insurance;
   policyNumber: string;
   insuranceExpiryDate: Date;
-  isSelfResponsible: boolean = true;
+  isSelfResponsible = true;
   responsiblePartyFirstName: string;
   responsiblePartyLastName: string;
   accountNumber: string;
-  
+
   payerTypeName: string;
   maritalStatusName: string;
   occupationName: string;
   nationalityName: string;
-  
+
   vitalSign: VitalSign;
-  
+
+  visitReason: string;
+
+  errors: string[];
+
   constructor() {
     this.user = new User();
     this.vitalSign = new VitalSign();
