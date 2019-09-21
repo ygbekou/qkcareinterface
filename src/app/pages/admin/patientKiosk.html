@@ -19,7 +19,8 @@
 
   <p-card *ngIf="activeIndex===3 && !done">
     <p-header>
-      <h1>{{patient.user.firstName+' '+patient.user.lastName}}</h1>
+      <h1>{{(patient.user.firstName?patient.user.firstName:'')+' '+(patient.user.lastName?patient.user.lastName:'')}}
+      </h1>
     </p-header>
     <div class="ui-grid-row">
       <h6>{{ 'COMMON.BIRTH_DATE' | translate }} : {{patient.user.birthDate|date: globalEventsManager.DATE_FORMAT}}
@@ -34,7 +35,7 @@
       </h6>
     </div>
     <div class="ui-grid-row">
-      <h6> {{ 'COMMON.EMERGENCY_CONTACT' | translate }} : {{patient.contact}} ,  {{patient.contactPhone}}
+      <h6> {{ 'COMMON.EMERGENCY_CONTACT' | translate }} : {{patient.contact}} , {{patient.contactPhone}}
       </h6>
     </div>
 
@@ -121,9 +122,10 @@
     <div class="ui-grid-col-12 ui-sm-12">
       <div class="form-group">
         <label for="medicalHistory">{{ 'COMMON.REASON' | translate }}<font color="red">*</font></label>
-        <p-editor [(ngModel)]="patient.visitReason" id="visitReason" #visitReason="ngModel" name="visitReason"
-          [style]="{'height':'100px'}">
-        </p-editor>
+        <br />
+        <textarea pInputTextarea id="visitReason" rows="5" maxlength="1000" [(ngModel)]="patient.visitReason"
+          name="visitReason" #visitReason="ngModel" style="margin-top: 0px; width: 100%; font-size: 1.85rem;"
+          required> </textarea>
         <br />
         <p-message *ngIf="failed || (f.submitted  && visitReason.invalid)" severity="error"
           text="{{ 'COMMON.REASON' | translate }} {{ 'VALIDATION.IS_REQUIRED' | translate }}"></p-message>
@@ -132,7 +134,7 @@
   </div>
 
   <div class="ui-grid-row" *ngIf="activeIndex===2">
-        <div class="ui-grid-col-12 ui-sm-12">
+    <div class="ui-grid-col-12 ui-sm-12">
       <div class="form-group">
         <label for="mobilePhone">{{ 'COMMON.CONTACT_PHONE' | translate }}<font color="red">*</font></label>
         <input type="text" pInputText class="form-control" id="mobilePhone" [(ngModel)]="patient.user.mobilePhone"
@@ -152,7 +154,7 @@
           text="{{ 'COMMON.EMERGENCY_CONTACT' | translate }} {{ 'VALIDATION.IS_REQUIRED' | translate }}"></p-message>
       </div>
     </div>
-        <div class="ui-grid-col-6 ui-sm-6">
+    <div class="ui-grid-col-6 ui-sm-6">
       <div class="form-group">
         <label for="contactPhone">{{ 'COMMON.CONTACT_PHONE' | translate }}<font color="red">*</font></label>
         <input type="text" pInputText class="form-control" id="contactPhone" [(ngModel)]="patient.contactPhone"
