@@ -1,8 +1,9 @@
 import { UserGroup } from './userGroup';
 import { Role } from '.';
+import { BaseModel } from './baseModel';
 
 
-export class User {
+export class User extends BaseModel {
   id: number;
   userGroup: UserGroup;
   userName: string;

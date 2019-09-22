@@ -55,6 +55,7 @@ export class Login implements OnInit {
 		try {
 			this.passwordSent = '';
 			console.log(this.button);
+			this.user.lang = this.translate.currentLang;
 			if (this.button === 'password') {
 				console.log('Send password called');
 				this.sendPassword();
