@@ -1,9 +1,9 @@
 <p-confirmDialog [style]="{width: '50vw'}"></p-confirmDialog>
 <div class="ui-g-12 ui-sm-12" style="padding: 15px;">
 	<p-messages [(value)]="messages"></p-messages>
-	<p-table [columns]="cols" [value]="resources">
+	<p-table [columns]="cols" [value]="menuItems">
 		<ng-template pTemplate="caption">
-			{{ 'COMMON.RESOURCE_LIST' | translate }}
+			{{ 'COMMON.MENU_ITEM_LIST' | translate }}
 		</ng-template>
 		<ng-template pTemplate="header" let-columns>
 			<tr>
@@ -20,9 +20,8 @@
 				{{rowData[col.field]}}
 			</td>
 			<td>
-				<button type="button" pButton icon="fa fa-plus" *ngIf="sourcePage === 'permission'" (click)="assignToRole(rowData)"></button>
-				<button type="button" pButton icon="fa fa-edit" *ngIf="sourcePage === ''" (click)="edit(rowData.id)"></button>&nbsp;&nbsp;
-				<button type="button" pButton icon="fa fa-eraser" *ngIf="sourcePage === ''" (click)="deleteItem(resources, rowData.id, 'com.qkcare.model.authorization.Resource')"></button>
+				<button type="button" pButton icon="fa fa-edit" (click)="edit(rowData.id)"></button>&nbsp;&nbsp;
+				<button type="button" pButton icon="fa fa-eraser" (click)="deleteItem(menuItems, rowData.id, MenuItem.PACKAGE)"></button>
 			</td>
 			</tr>
 		</ng-template>

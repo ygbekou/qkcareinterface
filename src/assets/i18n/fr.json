@@ -272,6 +272,7 @@
     "DESCRIPTION": "Description",
     "LOGO": "Logo",
     "LANGUAGE": "Langue",
+    "LANG": "Lang",
     "COPYRIGHT": "Copyright",
     "BANNER_CONTENT_PARAGRAPH": "Contenu de la bannière",
     "BANNER_CONTENT_SUFFIX": "Suffixe du contenu de la bannière",
@@ -364,9 +365,16 @@
 	  "FEMALE":"Femme",
 	  "MALE":"Homme",
     "ROLE_LIST": "Roles",
+    "RESOURCE": "Resource",
     "RESOURCE_LIST": "Resources",
     "URL_PATH": "Url",
-    "PARENT": "Parent"
+    "PARENT": "Parent",
+    "ASSIGN": "Assigner",
+    "SELECTED_USER": "Utilisateur sélectioné",
+    "MENU_LIST": "Eléments du Menu",
+    "ASSIGNED_RESOURCES": "Resources Assignés",
+    "LABEL":"Label",
+    "ICON":"Icon"
   },
   "MESSAGE": {
     "TRANFER_DOCTOR_FAILED": "Le nouveau docteur assigné doit être différent de l'ancien.",

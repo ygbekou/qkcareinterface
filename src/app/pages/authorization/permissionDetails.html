@@ -1,0 +1,56 @@
+<div class="ui-grid-row">
+		<div class="ui-g-3 ui-sm-12"></div>
+		<div class="ui-g-2 ui-sm-12">
+			<label for="building">{{ 'COMMON.ROLE' | translate }}:</label>
+		</div>
+		<div class="ui-g-3 ui-sm-12" style="padding: 15px;">
+      <p-autoComplete [(ngModel)]="selectedRole"
+        (ngModelChange)="selectRole($event)"
+        (onDropdownClick)="roleDropdown.handleDropdownClick($event)"
+        [suggestions]="roleDropdown.filteredRoles"
+        [dropdown]="true"
+        (completeMethod)="roleDropdown.filter($event)" name="role"
+        field="name" [size]="30" placeholder="" [minLength]="1">
+      </p-autoComplete>
+    </div>
+</div>
+
+<div class="ui-grid-row">
+  <div class="ui-g-6 ui-sm-12">
+		<app-resource-list #availableResourceList [sourcePage]="'permission'" (selectedResourceEmit)="assignResource($event)"></app-resource-list>
+  </div>
+	<div class="ui-g-6 ui-sm-12" style="padding: 15px;">
+    <p-table [columns]="cols" [value]="selectedRole.roleResources">
+		<ng-template pTemplate="caption">
+			{{ 'COMMON.ASSIGNED_RESOURCES' | translate }}
+		</ng-template>
+		<ng-template pTemplate="header" let-columns>
+			<tr>
+			<th *ngFor="let col of columns" [pSortableColumn]="col.field" [ngStyle]="col.style">
+				{{col.header}}
+				<p-sortIcon *ngIf="col.shouldSearch === 'Y'" [field]="col.field"></p-sortIcon>
+			</th>
+			<th>Action</th>
+			</tr>
+		</ng-template>
+		<ng-template pTemplate="body" let-rowData let-columns="columns">
+			<tr>
+			<td *ngFor="let col of columns">
+				<div *ngIf="col.field === 'canAddBool' || col.field === 'canEditBool' || col.field === 'canViewBool' || col.field === 'canDeleteBool'">
+					<p-checkbox [(ngModel)]="rowData[col.field]" binary="Y"> </p-checkbox>
+				</div>
+				<div *ngIf="col.field !== 'canAddBool' && col.field !== 'canEditBool' && col.field !== 'canViewBool' && col.field !== 'canDeleteBool'">
+					{{rowData[col.field]}}
+				</div>
+			</td>
+			<td>
+				<button type="button" pButton icon="fa fa-minus" (click)="unAssign(rowData)"></button>
+			</td>
+			</tr>
+		</ng-template>
+	</p-table>
+  </div>
+</div>
+
+<p-messages [(value)]="messages"></p-messages>
+<button type="button" pButton icon="fa fa-save" (click)="save()" label="{{ 'COMMON.SAVE' | translate }}"></button>

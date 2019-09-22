@@ -40,3 +40,5 @@ export * from './dropdown.radiologyTech';
 export * from './dropdown.bodyPart';
 export * from './dropdown.laterality';
 export * from './dropdown.resource';
+export * from './dropdown.role';
+export * from './dropdown.menuItem';

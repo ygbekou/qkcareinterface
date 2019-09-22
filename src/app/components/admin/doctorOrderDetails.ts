@@ -145,10 +145,10 @@ export class DoctorOrderDetails extends BaseComponent implements OnInit, OnDestr
   }
 
   clear() {
-	this.messages = [];
-	this.doctorOrder = new DoctorOrder();
-	this.productDropdown.getAllProducts();
-	this.labTestDropdown.getActiveLabTests();
+    this.messages = [];
+    this.doctorOrder = new DoctorOrder();
+    this.productDropdown.getAllProducts();
+    this.labTestDropdown.getActiveLabTests();
   }
 
   delete() {

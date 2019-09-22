@@ -1,0 +1,76 @@
+<form name="form" (ngSubmit)="f.form.valid && save()" #f="ngForm" validate>
+  	<div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="menuItem">
+		<p-messages [(value)]="messages"></p-messages>  
+		<div class="ui-grid-row">
+			<div class="ui-grid-col-4 ui-sm-12">
+				<div class="form-group">
+					<label for="parent">{{ 'COMMON.PARENT' | translate }}</label>
+					<p-autoComplete [(ngModel)]="menuItem.parent"
+					(onDropdownClick)="menuItemDropdown.handleDropdownClick($event)"
+					[suggestions]="menuItemDropdown.filteredMenuItems" [dropdown]="true" id="parent"
+					(completeMethod)="menuItemDropdown.filter($event)" name="parent" field="label" [size]="30"
+					placeholder="{{SELECT_OPTION}}" [minLength]="1" #parent="ngModel">
+					</p-autoComplete>
+				</div>
+			</div>
+			<div class="ui-grid-col-4 ui-sm-12">
+				<div class="form-group">
+					<label for="resource">{{ 'COMMON.RESOURCE' | translate }}</label>
+					<p-autoComplete [(ngModel)]="menuItem.resource"
+					(onDropdownClick)="resourceDropdown.handleDropdownClick($event)"
+					[suggestions]="resourceDropdown.filteredResources" [dropdown]="true" id="resource"
+					(completeMethod)="resourceDropdown.filter($event)" name="resource" field="urlPath" [size]="30"
+					placeholder="{{SELECT_OPTION}}" [minLength]="1" #resource="ngModel">
+					</p-autoComplete>
+				</div>
+			</div>
+			<div class="ui-grid-col-5 ui-sm-12">
+                <label for="language">{{'COMMON.LANGUAGE' | translate}}<font color="red">*</font></label>
+                <p-radioButton name="language" value="EN" label="{{'COMMON.ENGLISH' | translate}}"
+                    [(ngModel)]="menuItem.language" #language="ngModel" required></p-radioButton>
+                <p-radioButton name="language" value="FR" label="{{'COMMON.FRENCH' | translate}}"
+                    [(ngModel)]="menuItem.language" #language="ngModel" required></p-radioButton>
+                <p-message *ngIf="f.submitted && language.invalid" severity="error"
+                    text="{{ 'VALIDATION.FIELD_REQUIRED' | translate }}">
+                </p-message>
+            </div>
+		</div>
+		<div class="ui-grid-row">
+			<div class="ui-grid-col-4 ui-sm-12">
+				<div class="form-group">
+					<label for="label">{{ 'COMMON.LABEL' | translate }}</label>
+					<input pInputText id="label" [(ngModel)]="menuItem.label" name="label" #label="ngModel" required />
+					<p-message *ngIf="f.submitted && label.invalid" severity="error" text="Field is required"></p-message>
+				</div>
+			</div>
+			<div class="ui-grid-col-4 ui-sm-12">
+				<div class="form-group">
+					<label for="icon">{{ 'COMMON.ICON' | translate }}</label>
+					<input pInputText id="icon" [(ngModel)]="menuItem.icon" name="icon" #icon="ngModel" required />
+					<p-message *ngIf="f.submitted && icon.invalid" severity="error" text="Field is required"></p-message>
+				</div>
+			</div>
+			<div class="ui-grid-col-4 ui-sm-12">
+				<div class="form-group">
+					<label for="description">{{ 'COMMON.DESCRIPTION' | translate }}</label>
+					<textarea pInputTextarea id="description" name="description" [(ngModel)]="menuItem.description"> </textarea>
+				</div>
+			</div>
+			<div class="ui-grid-col-4 ui-sm-12">
+				<div class="form-group">
+					<label for="rank">{{ 'COMMON.STATUS' | translate }}</label>
+					<br />
+					<p-radioButton name="status" value="0" label="Actif" [(ngModel)]="menuItem.status"></p-radioButton>
+					<p-radioButton name="status" value="1" label="Inactif" [(ngModel)]="menuItem.status"></p-radioButton>
+				</div>
+			</div>
+		</div>
+	
+	</div>
+	<div>
+	<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+		<button type="button" pButton icon="fa fa-close" (click)="clear()" label="{{ 'COMMON.CLEAR' | translate }}"></button>&nbsp;&nbsp;
+		<button pButton icon="fa fa-check" label="{{ 'COMMON.SAVE' | translate }}"></button>
+	</div>
+	</div>
+</form>

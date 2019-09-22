@@ -110,6 +110,15 @@ export class BaseComponent {
   }
 
 
+  updateChildCols(cols: any[]) {
+    for (const index in cols) {
+      const col = cols[index];
+      this.translate.get(col.headerKey).subscribe((res: string) => {
+        col.header = res;
+      });
+    }
+
+  }
 
 
 

@@ -8,6 +8,7 @@ import { Message, ConfirmationService, MenuItem, SelectItem } from 'primeng/api'
 import { TranslateService } from '@ngx-translate/core';
 import { BaseComponent } from './baseComponent';
 import { NgForm } from '@angular/forms';
+import { analyzeAndValidateNgModules } from '@angular/compiler';
 
 
 @Component({
@@ -176,6 +177,7 @@ export class PatientKiosk extends BaseComponent implements OnInit, OnDestroy {
 
 			}
 			try {
+				let pictureEl: any;
 				this.patient.user.userName = this.patient.user.email;
 				this.patient.user.userGroup.id = Constants.USER_GROUP_PATIENT;
 				if (pictureEl && pictureEl.files && (pictureEl.files.length > 0)) {
@@ -247,5 +249,5 @@ export class PatientKiosk extends BaseComponent implements OnInit, OnDestroy {
 	delete(id: number) {
 		this.genericService.delete(id, 'com.qkcare.model.Patient');
 	}
-}
+
 }

@@ -271,6 +271,7 @@
     "MESSAGES": "Messages",
     "LOGO": "Logo",
     "LANGUAGE": "Language",
+    "LANG": "Lang",
     "COPYRIGHT": "Copyright",
     "BANNER_CONTENT_PARAGRAPH": "Banner Content Paragraph",
     "BANNER_CONTENT_SUFFIX": "Banner Conntent Suffix",
@@ -363,9 +364,16 @@
     "FEMALE":"Female",
     "MALE":"Male",
     "ROLE_LIST": "Roles",
+    "RESOURCE": "Resource",
     "RESOURCE_LIST": "Resources",
     "URL_PATH": "Url",
-    "PARENT": "Parent"
+    "PARENT": "Parent",
+    "ASSIGN": "Assign",
+    "SELECTED_USER": "Selected User",
+    "MENU_LIST": "Menu Items",
+    "ASSIGNED_RESOURCES": "Assigned Resources",
+    "LABEL":"Label",
+    "ICON":"Icon"
   },
   "MESSAGE": {
   	"TRANFER_DOCTOR_FAILED": "The transfer doctor should be different from the current doctor.",

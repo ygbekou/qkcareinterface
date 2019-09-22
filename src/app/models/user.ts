@@ -1,4 +1,5 @@
 import { UserGroup } from './userGroup';
+import { Role } from '.';
 
 
 export class User {
@@ -22,6 +23,8 @@ export class User {
   status: number;
     // Transients
   confirmPassword: string;
+  name: string;
+  roles: Role[];
 
   constructor() {
     this.userGroup = new UserGroup();

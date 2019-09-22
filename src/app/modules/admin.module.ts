@@ -65,7 +65,8 @@ import { AdmissionDiagnoses } from '../components/admin/admissionDiagnoses';
 import { PatientServiceDetails } from '../components/admin/patientServiceDetails';
 import { AdminReference } from '../components/admin/adminReference';
 import { CategoryDropdown, PackageDropdown, DoctorDropdown, ServiceDropdown, LabTestDropdown, 
-			ProductDropdown, ModalityDropdown, RadExamDropdown, ExamStatusDropdown, RadiologyTechDropdown } from '../components/dropdowns';
+      ProductDropdown, ModalityDropdown, RadExamDropdown, ExamStatusDropdown, RadiologyTechDropdown,
+      RoleDropdown } from '../components/dropdowns';
 import { AdminPatient } from '../components/admin/adminPatient';
 import { VisitDetails } from '../components/admin/visitDetails';
 import { VisitList } from '../components/admin/visitList';
@@ -132,6 +133,11 @@ import { RoleDetails } from '../components/authorization/roleDetails';
 import { RoleList } from '../components/authorization/roleList';
 import { ResourceDetails } from '../components/authorization/resourceDetails';
 import { ResourceList } from '../components/authorization/resourceList';
+import { MenuItemDetails } from '../components/authorization/menuItemDetails';
+import { MenuItemList } from '../components/authorization/menuItemList';
+import { UserRoleAssignment } from '../components/authorization/userRoleAssignment';
+import { UserList } from '../components/authorization/userList';
+import { PermissionDetails } from '../components/authorization/permissionDetails';
 
 const routes: Routes = [
   { path: 'adminMain', component: AdminMain },
@@ -219,6 +225,8 @@ const routes: Routes = [
   { path: 'roleList', component: RoleList },
   { path: 'resourceDetails', component: ResourceDetails },
   { path: 'resourceList', component: ResourceList },
+  { path: 'userRoleAssignment', component: UserRoleAssignment },
+  { path: 'permission', component: PermissionDetails },
 ];
 
 // AoT requires an exported function for factories
@@ -261,12 +269,12 @@ export function HttpLoaderFactory(http: HttpClient) {
     SectionDetails, SectionList, SectionItemDetails, SectionItemList, DepartmentDetails,
     DepartmentList, AdminWebsite, AdminHeader, SliderDetails, SliderList, SliderTextList, SliderTextDetails,
     CompanyDetails, CompanyList, ContactDetails, ContactList, Dashboard, BaseComponent, PatientMedicineList,
-    RoleDetails, RoleList, ResourceDetails, ResourceList],
+    RoleDetails, RoleList, ResourceDetails, ResourceList, MenuItemDetails, MenuItemList, UserRoleAssignment, UserList, PermissionDetails],
 
   providers: [
 	CategoryDropdown, PackageDropdown, DoctorDropdown, TokenStorage, BillingService, VisitService, LoggedInGuard, 
 	ConfirmationService, ServiceDropdown, LabTestDropdown, ProductDropdown, ModalityDropdown, RadExamDropdown, 
-	RadInvestigationService, ExamStatusDropdown, RadiologyTechDropdown]
+	RadInvestigationService, ExamStatusDropdown, RadiologyTechDropdown, RoleDropdown]
 })
 
 export class AdminModule { }

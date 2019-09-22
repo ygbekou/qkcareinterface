@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { AuthenticationService, TokenStorage, UserService } from '../../services';
+import { AuthenticationService, TokenStorage, UserService, GenericService } from '../../services';
 import { Constants } from '../../app.constants';
 import { User } from '../../models/user';
 import { GlobalEventsManager } from '../../services/globalEventsManager';
@@ -27,6 +27,7 @@ export class Login implements OnInit {
 	constructor(
 		private router: Router,
 		private userService: UserService,
+		private genericService: GenericService,
 		private tokenStorage: TokenStorage,
 		public translate: TranslateService,
 		private authenticationService: AuthenticationService,
@@ -64,9 +65,17 @@ export class Login implements OnInit {
 						if (this.tokenStorage.getToken() !== '' && this.tokenStorage.getToken() !== null) {
 							console.log('Token = ' + this.tokenStorage.getToken());
 							if (this.tokenStorage.getFirstTimeLogin() === 'Y') {
-								this.user.password = '';
-								this.display = true;
+								// this.user.password = '';
+								// this.display = true;
+
+								// Need to be removed later
+								alert('1111 Here Me again')
+								this.globalEventsManager.showMenu = true;
+								console.log('Navigating to dashboard');
+								this.router.navigate(['/admin/dashboard']);
+								//window.location.reload();
 							} else {
+								alert('Here Me again 2')
 								this.globalEventsManager.showMenu = true;
 								console.log('Navigating to dashboard');
 								this.router.navigate(['/admin/dashboard']);

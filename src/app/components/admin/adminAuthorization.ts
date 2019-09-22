@@ -6,6 +6,8 @@ import { RoleDetails } from '../authorization/roleDetails';
 import { RoleList } from '../authorization/roleList';
 import { ResourceDetails } from '../authorization/resourceDetails';
 import { ResourceList } from '../authorization/resourceList';
+import { MenuItemDetails } from '../authorization/menuItemDetails';
+import { MenuItemList } from '../authorization/menuItemList';
 
 @Component({
   selector: 'app-admin-authorization',
@@ -19,10 +21,14 @@ export class AdminAuthorization implements OnInit {
   @ViewChild(RoleList) roleList: RoleList;
   @ViewChild(ResourceDetails) resourceDetails: ResourceDetails;
   @ViewChild(ResourceList) resourceList: ResourceList;
+  @ViewChild(MenuItemDetails) menuItemDetails: MenuItemDetails;
+  @ViewChild(MenuItemList) menuItemList: MenuItemList;
   public user: User;
   public patient: Patient;
   public activeTab = 0;
   currentUser: User = JSON.parse(Cookie.get('user'));
+
+  pageAccessResources = ['roles', 'resources'];
 
   constructor (
     private genericService: GenericService,
@@ -62,6 +68,15 @@ export class AdminAuthorization implements OnInit {
 	  this.resourceList.updateTable($event);
   }
 
+  onMenuItemSelected($event) {
+    const menuItemId = $event;
+    this.menuItemDetails.getMenuItem(menuItemId);
+  }
+
+  onMenuItemSaved($event) {
+	  this.menuItemList.updateTable($event);
+  }
+
   onTabChange(evt) {
     this.activeTab = evt.index;
     if (evt.index === 0) {
@@ -71,13 +86,9 @@ export class AdminAuthorization implements OnInit {
     }
   }
 
-  processReference(categoryNumber: number, referenceType: string, listLabel: string) {
-    this.globalEventsManager.selectedParentId = categoryNumber;
-    this.globalEventsManager.selectedReferenceType = referenceType;
-    setTimeout(() => {
-      this.referenceList.updateCols(listLabel);
-    }, 0);
-    this.referenceList.getAll();
+  checkPermission(resource: string) {
+    //return this.pageAccessResources.findIndex(x => x === resource) !== -1;
+    return true; 
   }
 
 }

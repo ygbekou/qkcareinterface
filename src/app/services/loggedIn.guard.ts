@@ -13,7 +13,7 @@ export class LoggedInGuard implements CanActivate, CanActivateChild {
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
     let baseUrl = state.url.split('?')[0];
-    return this.tokenStorage.hasToken() && this.authenticationService.isGroupAllowForMenu(baseUrl);
+    return this.tokenStorage.hasToken();
   }
   
   canActivateChild(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
