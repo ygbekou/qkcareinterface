@@ -39,6 +39,7 @@ export class RoleDropdown {
       .subscribe((data: Role[]) => { 
         this.allRoles = data.slice();
         this.roles = data; 
+        console.info('All Roles ' +this.allRoles)
       },
       error => console.log(error),
       () => console.log('Get all Roles complete'));

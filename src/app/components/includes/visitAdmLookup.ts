@@ -127,7 +127,6 @@ export class VisitAdmLookup implements OnInit {
 	if (this.itemNumber !== undefined && this.itemNumber !== '') {
 			this.lookUpItem();
 	} else {
-		alert('Here');
 		try {
 			const navigationExtras: NavigationExtras = {
 				queryParams: {

@@ -65,17 +65,9 @@ export class Login implements OnInit {
 						if (this.tokenStorage.getToken() !== '' && this.tokenStorage.getToken() !== null) {
 							console.log('Token = ' + this.tokenStorage.getToken());
 							if (this.tokenStorage.getFirstTimeLogin() === 'Y') {
-								// this.user.password = '';
-								// this.display = true;
-
-								// Need to be removed later
-								alert('1111 Here Me again')
-								this.globalEventsManager.showMenu = true;
-								console.log('Navigating to dashboard');
-								this.router.navigate(['/admin/dashboard']);
-								//window.location.reload();
+								this.user.password = '';
+								this.display = true;
 							} else {
-								alert('Here Me again 2')
 								this.globalEventsManager.showMenu = true;
 								console.log('Navigating to dashboard');
 								this.router.navigate(['/admin/dashboard']);

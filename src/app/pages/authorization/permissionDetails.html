@@ -1,18 +1,22 @@
 <div class="ui-grid-row">
-		<div class="ui-g-3 ui-sm-12"></div>
-		<div class="ui-g-2 ui-sm-12">
-			<label for="building">{{ 'COMMON.ROLE' | translate }}:</label>
-		</div>
-		<div class="ui-g-3 ui-sm-12" style="padding: 15px;">
-      <p-autoComplete [(ngModel)]="selectedRole"
-        (ngModelChange)="selectRole($event)"
-        (onDropdownClick)="roleDropdown.handleDropdownClick($event)"
-        [suggestions]="roleDropdown.filteredRoles"
-        [dropdown]="true"
-        (completeMethod)="roleDropdown.filter($event)" name="role"
-        field="name" [size]="30" placeholder="" [minLength]="1">
-      </p-autoComplete>
-    </div>
+	<p-messages [(value)]="messages"></p-messages>
+	<div class="ui-g-3 ui-sm-12"></div>
+	<div class="ui-g-2 ui-sm-12">
+		<label for="building">{{ 'COMMON.ROLE' | translate }}:</label>
+	</div>
+	<div class="ui-g-3 ui-sm-12" style="padding: 15px;">
+		<p-autoComplete [(ngModel)]="selectedRole"
+			(ngModelChange)="selectRole($event)"
+			(onDropdownClick)="roleDropdown.handleDropdownClick($event)"
+			[suggestions]="roleDropdown.filteredRoles"
+			[dropdown]="true"
+			(completeMethod)="roleDropdown.filter($event)" name="role"
+			field="name" [size]="30" placeholder="" [minLength]="1">
+		</p-autoComplete>
+	</div>
+	<div class="ui-g-3 ui-sm-12" style="padding: 15px;">
+			<button type="button" pButton icon="fa fa-save" (click)="save()" label="{{ 'COMMON.SAVE' | translate }}"></button>
+	</div>
 </div>
 
 <div class="ui-grid-row">
@@ -20,7 +24,7 @@
 		<app-resource-list #availableResourceList [sourcePage]="'permission'" (selectedResourceEmit)="assignResource($event)"></app-resource-list>
   </div>
 	<div class="ui-g-6 ui-sm-12" style="padding: 15px;">
-    <p-table [columns]="cols" [value]="selectedRole.roleResources">
+    <p-table [columns]="cols" [value]="selectedRole.permissions">
 		<ng-template pTemplate="caption">
 			{{ 'COMMON.ASSIGNED_RESOURCES' | translate }}
 		</ng-template>
@@ -51,6 +55,3 @@
 	</p-table>
   </div>
 </div>
-
-<p-messages [(value)]="messages"></p-messages>
-<button type="button" pButton icon="fa fa-save" (click)="save()" label="{{ 'COMMON.SAVE' | translate }}"></button>

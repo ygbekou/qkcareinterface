@@ -86,7 +86,6 @@ export class BaseComponent {
                                 });
                             });
 						} else if ('GENERIC_FAILURE' === response.result) {
-							alert('Here')
                             this.translate.get(['COMMON.DELETE', 'MESSAGE.DELETE_UNSUCCESS']).subscribe(res => {
                                 this.messages.push({
                                     severity: Constants.ERROR, summary: res['COMMON.DELETE'],
