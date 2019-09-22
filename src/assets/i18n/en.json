@@ -406,7 +406,9 @@
 	"NO_CRITERIA_SET": "At least one search criteria is required",
 	"SELECT_PATIENT": "Select a patient",
 	"SELECT_LOCATION": "Sélectioner un emplacement",
-	"NO_INVESTIGATION_FOUND": "No Investigation ave being done"
+  "NO_INVESTIGATION_FOUND": "No Investigation ave being done",
+  "REGISTERED_WAIT":"You're successfully registered! Wait for your turn in the waiting room."
+
   },
 "VALIDATION":{
     "IS_INVALID": "is invalid",
