@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Role, Permission, Resource } from '../../models';
-import { GenericService, GlobalEventsManager } from '../../services';
+import { GenericService, GlobalEventsManager, TokenStorage } from '../../services';
 import { TranslateService } from '@ngx-translate/core';
 import { Message, ConfirmationService } from 'primeng/api';
 import { RoleDropdown } from '../dropdowns';
@@ -25,11 +25,12 @@ export class PermissionDetails extends BaseComponent implements OnInit, OnDestro
     (
       public genericService: GenericService,
       public translate: TranslateService,
+      public tokenStorage: TokenStorage,
       public confirmationService: ConfirmationService,
       public globalEventsManager: GlobalEventsManager,
       public roleDropdown: RoleDropdown
   ) {
-      super(genericService, translate, confirmationService);
+      super(genericService, translate, confirmationService, tokenStorage);
   }
 
 

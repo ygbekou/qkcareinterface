@@ -15,7 +15,8 @@
 		</p-autoComplete>
 	</div>
 	<div class="ui-g-3 ui-sm-12" style="padding: 15px;">
-			<button type="button" pButton icon="fa fa-save" (click)="save()" label="{{ 'COMMON.SAVE' | translate }}"></button>
+			<button type="button" pButton icon="fa fa-save" (click)="save()" label="{{ 'COMMON.SAVE' | translate }}"
+				*ngIf="permitSave(selectedRole.id, 'SECURITY_PERMISSION')"></button>
 	</div>
 </div>
 
@@ -48,7 +49,7 @@
 				</div>
 			</td>
 			<td>
-				<button type="button" pButton icon="fa fa-minus" (click)="unAssign(rowData)"></button>
+				<button type="button" pButton icon="fa fa-minus" (click)="unAssign(rowData)" *ngIf="permitDelete(rowData.id, 'SECURITY_PERMISSION')"></button>
 			</td>
 			</tr>
 		</ng-template>

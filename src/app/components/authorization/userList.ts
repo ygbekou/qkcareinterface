@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { SearchCriteria, User } from '../../models';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
-import { GenericService, GlobalEventsManager } from '../../services';
+import { GenericService, GlobalEventsManager, TokenStorage } from '../../services';
 import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
 import { Message, ConfirmationService } from 'primeng/api';
 import { Constants } from '../../app.constants';
@@ -27,11 +27,12 @@ export class UserList extends BaseComponent implements OnInit, OnDestroy {
       public genericService: GenericService,
       public translate: TranslateService,
       public confirmationService: ConfirmationService,
+      public tokenStorage: TokenStorage,
       public globalEventsManager: GlobalEventsManager,
       private route: ActivatedRoute,
       private router: Router,
   ) {
-      super(genericService, translate, confirmationService);
+      super(genericService, translate, confirmationService, tokenStorage);
   }
 
   updateCols() {
