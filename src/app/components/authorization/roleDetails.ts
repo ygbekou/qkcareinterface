@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, EventEmitter, Output } from '@angular/cor
 import { ActivatedRoute } from '@angular/router';
 import { BuildingDropdown } from '../dropdowns';
 import { Message, ConfirmationService } from 'primeng/primeng';
-import { GenericService } from '../../services';
+import { GenericService, TokenStorage } from '../../services';
 import { TranslateService } from '@ngx-translate/core';
 import { BaseComponent } from '../admin/baseComponent';
 import { Role } from 'src/app/models';
@@ -24,10 +24,11 @@ export class RoleDetails extends BaseComponent implements OnInit, OnDestroy {
     (
 	    public genericService: GenericService,
 	    public translate: TranslateService,
-	    public confirmationService: ConfirmationService,
+      public confirmationService: ConfirmationService,
+      public tokenStorage: TokenStorage,
       private route: ActivatedRoute
     ) {
-		    super(genericService, translate, confirmationService);
+		    super(genericService, translate, confirmationService, tokenStorage);
       	this.role = new Role();
   }
   

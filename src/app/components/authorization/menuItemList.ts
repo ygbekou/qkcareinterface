@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, Output, EventEmitter, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { GenericService } from '../../services';
+import { GenericService, TokenStorage } from '../../services';
 import { TranslateService} from '@ngx-translate/core';
 import { ConfirmationService } from 'primeng/api';
 import { BaseComponent } from '../admin/baseComponent';
@@ -22,10 +22,11 @@ export class MenuItemList extends BaseComponent implements OnInit, OnDestroy {
     (
     public genericService: GenericService,
 	  public translate: TranslateService,
-	  public confirmationService: ConfirmationService,
+    public confirmationService: ConfirmationService,
+    public tokenStorage: TokenStorage,
     private route: ActivatedRoute
     ) {
-		  super(genericService, translate, confirmationService);
+		  super(genericService, translate, confirmationService, tokenStorage);
     
   }
 

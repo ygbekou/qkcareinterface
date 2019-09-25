@@ -1,20 +1,23 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { User, Patient,  } from '../../models';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
-import { GenericService, GlobalEventsManager } from '../../services';
+import { GenericService, GlobalEventsManager, TokenStorage } from '../../services';
 import { RoleDetails } from '../authorization/roleDetails';
 import { RoleList } from '../authorization/roleList';
 import { ResourceDetails } from '../authorization/resourceDetails';
 import { ResourceList } from '../authorization/resourceList';
 import { MenuItemDetails } from '../authorization/menuItemDetails';
 import { MenuItemList } from '../authorization/menuItemList';
+import { BaseComponent } from './baseComponent';
+import { TranslateService } from '@ngx-translate/core';
+import { ConfirmationService } from 'primeng/api';
 
 @Component({
   selector: 'app-admin-authorization',
   templateUrl: '../../pages/admin/adminAuthorization.html',
   providers: [GenericService ]
 })
-export class AdminAuthorization implements OnInit {
+export class AdminAuthorization extends BaseComponent implements OnInit {
   [x: string]: any;
 
   @ViewChild(RoleDetails) roleDetails: RoleDetails;
@@ -28,13 +31,14 @@ export class AdminAuthorization implements OnInit {
   public activeTab = 0;
   currentUser: User = JSON.parse(Cookie.get('user'));
 
-  pageAccessResources = ['roles', 'resources'];
-
   constructor (
     private genericService: GenericService,
-    private globalEventsManager: GlobalEventsManager
+    private translate: TranslateService,
+    private confirmationService: ConfirmationService,
+    private globalEventsManager: GlobalEventsManager,
+    private tokenStorage: TokenStorage
   ) {
-    
+    super(genericService, translate, confirmationService, tokenStorage);
     this.user = new User();
     this.patient = new Patient();
   }
@@ -86,9 +90,5 @@ export class AdminAuthorization implements OnInit {
     }
   }
 
-  checkPermission(resource: string) {
-    //return this.pageAccessResources.findIndex(x => x === resource) !== -1;
-    return true; 
-  }
-
+  
 }

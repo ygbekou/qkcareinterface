@@ -2,9 +2,10 @@
 		<div class="ui-g-12 ui-sm-12" style="padding: 15px;">
 			
 			<p-tabView (onChange)="onTabChange($event)"> 
-			    <p-tabPanel header="{{'COMMON.ROLE_LIST' |translate}}" id="roles" *ngIf="checkPermission('ADMIN_AUTH_ROLES')">
+			    <p-tabPanel header="{{'COMMON.ROLE_LIST' |translate}}" id="roles" *ngIf="checkPermission('SECURITY_CONFIG_ROLES')">
 			    	<div *ngIf="activeTab === 0" class="ui-grid-row">
-				        <app-role-details (roleSaveEvent)="onRoleSaved($event)"></app-role-details>
+						<app-role-details (roleSaveEvent)="onRoleSaved($event)"></app-role-details>
+						<br/>
 				        <app-role-list (roleIdEvent)="onRoleSelected($event)"></app-role-list>
 				    </div>
 				</p-tabPanel>

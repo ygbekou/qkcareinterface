@@ -14,6 +14,8 @@ export class TokenStorage {
   public static LAST_NAME = 'last_name';
   public static FIRST_TIME_LOGIN = 'first_time_login';
   public static MENUS = 'menus';
+  public static NON_MENU_RESOURCES = "non_menu_resources";
+  
 
   constructor() { }
 
@@ -51,6 +53,9 @@ export class TokenStorage {
 
     window.sessionStorage.removeItem(TokenStorage.MENUS);
     window.sessionStorage.setItem(TokenStorage.MENUS,  JSON.stringify(authData.menus));
+
+    window.sessionStorage.removeItem(TokenStorage.NON_MENU_RESOURCES);
+    window.sessionStorage.setItem(TokenStorage.NON_MENU_RESOURCES,  JSON.stringify(authData.nonMenuPermissions));
   }
 
   public getToken(): string {
@@ -91,6 +96,10 @@ export class TokenStorage {
 
   public getMenus(): string {
     return window.sessionStorage.getItem(TokenStorage.MENUS);
+  }
+
+  public getNonMenuPermissions(): string {
+    return window.sessionStorage.getItem(TokenStorage.NON_MENU_RESOURCES);
   }
 
   public getName(): string {

@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, EventEmitter, Output } from '@angular/core';
 import { ResourceDropdown } from '../dropdowns';
-import { GenericService } from '../../services';
+import { GenericService, TokenStorage } from '../../services';
 import { TranslateService } from '@ngx-translate/core';
 import { ConfirmationService, Message } from 'primeng/api';
 import { BaseComponent } from '../admin/baseComponent';
@@ -25,10 +25,11 @@ export class ResourceDetails extends BaseComponent implements OnInit, OnDestroy 
       public genericService: GenericService,
       public translate: TranslateService,
       public confirmationService: ConfirmationService,
-      public resourceDropdown: ResourceDropdown
+      public resourceDropdown: ResourceDropdown,
+      public tokenStorage: TokenStorage
     ) {
 
-		  super(genericService, translate, confirmationService);
+		  super(genericService, translate, confirmationService, tokenStorage);
 
   }
 

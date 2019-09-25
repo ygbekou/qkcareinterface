@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { User, Role } from '../../models';
-import { GenericService, GlobalEventsManager } from '../../services';
+import { GenericService, GlobalEventsManager, TokenStorage } from '../../services';
 import { TranslateService } from '@ngx-translate/core';
 import { Message, ConfirmationService } from 'primeng/api';
 import { RoleDropdown } from '../dropdowns';
@@ -21,10 +21,11 @@ export class UserRoleAssignment extends BaseComponent implements OnInit, OnDestr
       public genericService: GenericService,
       public translate: TranslateService,
       public confirmationService: ConfirmationService,
+      public tokenStorage: TokenStorage,
       public globalEventsManager: GlobalEventsManager,
       public roleDropdown: RoleDropdown
   ) {
-      super(genericService, translate, confirmationService);
+      super(genericService, translate, confirmationService, tokenStorage);
   }
 
   ngOnInit(): void {

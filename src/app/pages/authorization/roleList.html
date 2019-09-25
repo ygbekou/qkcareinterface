@@ -16,8 +16,8 @@
 		<tr>
 			<td *ngFor="let col of cols">{{role[col.field]}}</td>
 			<td>
-				<button type="button" pButton icon="fa fa-edit" (click)="edit(role.id)"></button>&nbsp;&nbsp;
-				<button type="button" pButton icon="fa fa-eraser" (click)="deleteItem(roles, role.id, 'Role')"></button>
+				<button type="button" pButton icon="fa fa-edit" (click)="edit(role.id)" *ngIf="permitView('SECURITY_CONFIG_ROLES')"></button>&nbsp;&nbsp;
+				<button type="button" pButton icon="fa fa-eraser" (click)="deleteItem(roles, role.id, 'Role')" *ngIf="permitDelete('SECURITY_CONFIG_ROLES')"></button>
 			</td>
 		</tr>
 	</ng-template> 

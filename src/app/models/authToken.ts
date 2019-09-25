@@ -12,6 +12,8 @@ export class AuthToken {
   firstTimeLogin: string;
   authorities: number[];
   menus: MenuVO[];
+  nonMenuPermissions: PermissionVO[];
+
 
   constructor() {
   }
@@ -26,4 +28,13 @@ export class MenuVO {
   icon: string;
 	
 	items: MenuVO[];
+}
+
+export class PermissionVO {
+  id: number;
+	name: string;
+  canAdd: string;
+  canEdit: string;
+  canView: string;
+  canDelete: string;
 }

@@ -2,8 +2,9 @@ import {Component} from '@angular/core';
 import { Constants } from '../../app.constants';
 import { TranslateService} from '@ngx-translate/core';
 import { Message, ConfirmationService } from 'primeng/api';
-import { GenericService } from 'src/app/services';
+import { GenericService, TokenStorage } from 'src/app/services';
 import { GenericResponse } from 'src/app/models/genericResponse';
+import { PermissionVO } from 'src/app/models/authToken';
 
 
 @Component({
@@ -18,7 +19,8 @@ export class BaseComponent {
     (
 		public genericService: GenericService,
 		public translate: TranslateService,
-		public confirmationService: ConfirmationService,
+        public confirmationService: ConfirmationService,
+        public tokenStorage: TokenStorage
     ) {
 
   }
@@ -77,7 +79,7 @@ export class BaseComponent {
                                     detail: res['MESSAGE.DELETE_SUCCESS']
                                 });
                             });
-                            this.removeItem(listItems, +id)
+                            this.removeItem(listItems, +id);
                         } else if ('FOREIGN_KEY_FAILURE' === response.result) {
                             this.translate.get(['COMMON.DELETE', 'MESSAGE.DELETE_UNSUCCESS_FOREIGN_KEY']).subscribe(res => {
                                 this.messages.push({
@@ -103,8 +105,8 @@ export class BaseComponent {
 	
   removeItem(listItems: any[], id: number) {
 
-	let index = listItems.findIndex(x => x.id === id);
-	listItems.splice(index, 1)
+	const index = listItems.findIndex(x => x.id === id);
+	listItems.splice(index, 1);
 
   }
 
@@ -120,5 +122,44 @@ export class BaseComponent {
   }
 
 
+  checkPermission(resource: string, accessAttr: string, accessVal: string) {
+    const permissions = JSON.parse(this.tokenStorage.getNonMenuPermissions());
+    const res: PermissionVO = permissions.find(x => x.name === resource);
+
+    if (res !== null && res !== undefined) {
+        if (accessAttr === null || accessAttr ===  undefined) {
+            return true;
+        }
+
+        if ('CAN_ADD' === accessAttr && accessVal === res.canAdd) {
+            return true;
+        }
+        if ('CAN_EDIT' === accessAttr && accessVal === res.canEdit) {
+            return true;
+        }
+        if ('CAN_VIEW' === accessAttr && accessVal === res.canView) {
+            return true;
+        }
+        if ('CAN_DELETE' === accessAttr && accessVal === res.canDelete) {
+            return true;
+        }
+    }
+
+
+    return false;
+  }
+
+  permitSave(id: number, resource: string) {
+    return ((id === null || id === undefined) && this.checkPermission(resource, 'CAN_ADD', 'Y')) 
+				|| ((id !== null && id !== undefined) && this.checkPermission(resource, 'CAN_EDIT', 'Y'));
+  }
+
+  permitView(resource: string) {
+    return this.checkPermission(resource, 'CAN_VIEW', 'Y');
+  }
+
+  permitDelete(resource: string) {
+    return this.checkPermission(resource, 'CAN_DELETE', 'Y');
+  }
 
  }

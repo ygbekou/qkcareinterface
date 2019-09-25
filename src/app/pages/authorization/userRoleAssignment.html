@@ -30,6 +30,7 @@
       <br/>
       <br/>
     <p-messages [(value)]="messages"></p-messages>
-      <button type="button" pButton icon="fa fa-save" (click)="save()" label="{{ 'COMMON.SAVE' | translate }}"></button>
+      <button type="button" pButton icon="fa fa-save" (click)="save()" label="{{ 'COMMON.SAVE' | translate }}" 
+        *ngIf="permitSave(selectedUser.id, 'SECURITY_ASSIGNROLE')"></button>
   </div>
 </div>
