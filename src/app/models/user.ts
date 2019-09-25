@@ -28,6 +28,7 @@ export class User extends BaseModel {
   roles: Role[];
 
   constructor() {
+    super();
     this.userGroup = new UserGroup();
   }
 }
