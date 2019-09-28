@@ -5,7 +5,7 @@ import { Product } from '../../models';
 import { PurchaseOrder, PurchaseOrderProduct } from '../../models/stocks/purchaseOrder';
 import { EmployeeDropdown, SupplierDropdown, ProductDropdown } from '../dropdowns';
 import { ConfirmationService } from 'primeng/primeng';
-import { GenericService, PurchasingService } from '../../services';
+import { GenericService, PurchasingService, TokenStorage } from '../../services';
 import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
 import { Message } from 'primeng/api';
 import { BaseComponent } from '../admin/baseComponent';
@@ -25,14 +25,15 @@ export class PurchaseOrderDetails extends BaseComponent implements OnInit, OnDes
     (
       public genericService: GenericService,
       private purchaseOrderService: PurchasingService,
-	  public translate: TranslateService,
-	  public confirmationService: ConfirmationService,
+      public translate: TranslateService,
+      public confirmationService: ConfirmationService,
+      public tokenStorage: TokenStorage,
       private supplierDropdown: SupplierDropdown,
       private productDropdown: ProductDropdown,
       private employeeDropdown: EmployeeDropdown,
       private route: ActivatedRoute
     ) {
-		super(genericService, translate, confirmationService);
+		  super(genericService, translate, confirmationService, tokenStorage);
   }
 
   ngOnInit(): void {

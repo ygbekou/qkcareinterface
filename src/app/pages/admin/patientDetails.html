@@ -347,9 +347,10 @@
    <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
     <button type="button" pButton icon="fa fa-refresh" (click)="clear()"
       label="{{ 'COMMON.CLEAR' | translate }}"></button>&nbsp;&nbsp;
-    <button pButton icon="fa fa-save" label="{{ 'COMMON.SAVE' | translate }}" [disabled]="!f.form.valid"></button>
+    <button pButton icon="fa fa-save" label="{{ 'COMMON.SAVE' | translate }}" [disabled]="!f.form.valid" 
+      *ngIf="permitSave(patient.id, 'Patient Details')"></button>
     &nbsp;&nbsp;
-    <button type="button" pButton icon="fa fa-print" (click)="printIdCard()"
+    <button type="button" pButton icon="fa fa-print" (click)="printIdCard()" *ngIf="permitView(patient.id, 'Patient Details')"
       label="{{ 'COMMON.PRINT_ID_CARD' | translate }}"></button>
     <div>
       <a *ngIf="reportName" target="_blank"

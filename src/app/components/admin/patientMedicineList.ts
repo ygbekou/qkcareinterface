@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, Input, EventEmitter, Output } from '@angular/core';
-import { Visit, Admission, Prescription } from '../../models';
-import { Router, NavigationExtras } from '@angular/router';
-import { GenericService, AdmissionService, GlobalEventsManager } from '../../services';
+import { Visit, Admission } from '../../models';
+import { Router } from '@angular/router';
+import { GenericService, AdmissionService, GlobalEventsManager, TokenStorage } from '../../services';
 import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
 import { ConfirmationService } from 'primeng/api';
 import { BaseComponent } from './baseComponent';
@@ -25,11 +25,12 @@ export class PatientMedicineList extends BaseComponent implements OnInit, OnDest
     (
     public globalEventsManager: GlobalEventsManager,
     public genericService: GenericService,
-	public translate: TranslateService,
-	public confirmationService: ConfirmationService,
+    public translate: TranslateService,
+    public confirmationService: ConfirmationService,
+    public tokenStorage: TokenStorage,
     private router: Router,
     ) {
-		super(genericService, translate, confirmationService);
+		super(genericService, translate, confirmationService, tokenStorage);
   }
 
   ngOnInit(): void {

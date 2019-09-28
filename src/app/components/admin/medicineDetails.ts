@@ -4,7 +4,7 @@ import { Constants } from '../../app.constants';
 import { Product } from '../../models/product';
 import { Reference } from '../../models/reference';
 import { CategoryDropdown, ManufacturerDropdown } from '../dropdowns';
-import { GenericService, GlobalEventsManager } from '../../services';
+import { GenericService, GlobalEventsManager, TokenStorage } from '../../services';
 import { TranslateService } from '@ngx-translate/core';
 import { ConfirmationService } from 'primeng/api';
 import { BaseComponent } from './baseComponent';
@@ -25,16 +25,17 @@ export class MedicineDetails extends BaseComponent implements OnInit, OnDestroy 
   
   constructor
     (
-	  public genericService: GenericService,
-	  public translate: TranslateService,
-	  public confirmationService: ConfirmationService,
+      public genericService: GenericService,
+      public translate: TranslateService,
+      public confirmationService: ConfirmationService,
+      public tokenStorage: TokenStorage,
       private globalEventsManager: GlobalEventsManager,
       private ctgDropdown: CategoryDropdown,
       private mfctDropdown: ManufacturerDropdown,
       private route: ActivatedRoute
     ) {
-		super(genericService, translate, confirmationService);
-     	this.categoryDropdown = ctgDropdown;
+        super(genericService, translate, confirmationService, tokenStorage);
+        this.categoryDropdown = ctgDropdown;
       	this.manufacturerDropdown = mfctDropdown;
       	this.categoryDropdown.getAllCategories(Constants.CATEGORY_MEDICINE);
   }

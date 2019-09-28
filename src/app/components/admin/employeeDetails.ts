@@ -5,7 +5,7 @@ import { Employee } from '../../models/employee';
 import { UserGroup } from '../../models/userGroup';
 import { UserGroupDropdown, CountryDropdown, DepartmentDropdown } from '../dropdowns';
 import { User } from '../../models/user';
-import { GenericService, UserService, GlobalEventsManager } from '../../services';
+import { GenericService, UserService, GlobalEventsManager, TokenStorage } from '../../services';
 import { TranslateService } from '@ngx-translate/core';
 import { Message, ConfirmationService } from 'primeng/api';
 import { BaseComponent } from './baseComponent';
@@ -30,15 +30,16 @@ export class EmployeeDetails extends BaseComponent implements OnInit, OnDestroy 
     (
       public genericService: GenericService,
       private userService: UserService,
-	  public translate: TranslateService,
-	  public confirmationService: ConfirmationService,
+	    public translate: TranslateService,
+      public confirmationService: ConfirmationService,
+      public tokenStorage: TokenStorage,
       public globalEventsManager: GlobalEventsManager,
       public countryDropdown: CountryDropdown,
       public departmentDropdown: DepartmentDropdown,
       public userGroupDropdown: UserGroupDropdown,
       private route: ActivatedRoute,
   ) {
-      super(genericService, translate, confirmationService);
+      super(genericService, translate, confirmationService, tokenStorage);
       this.employee.user = new User();
   }
 

@@ -4,7 +4,7 @@ import { Constants } from '../../app.constants';
 import { Appointment, Admission, Bill, BillPayment, BillService, Employee, Patient, User, Visit, 
 	Service, ReportView, Parameter  } from '../../models';
 import { DoctorDropdown, ServiceDropdown, PackageDropdown, LabTestDropdown, ProductDropdown } from '../dropdowns';
-import { GenericService, BillingService, ReportService } from '../../services';
+import { GenericService, BillingService, ReportService, TokenStorage } from '../../services';
 import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
 import { Message, ConfirmationService } from 'primeng/api';
 import { BaseComponent } from './baseComponent';
@@ -36,16 +36,17 @@ export class BillDetails extends BaseComponent implements OnInit, OnDestroy {
       public genericService: GenericService,
       private billingService: BillingService,
       private reportService: ReportService,
-	  public translate: TranslateService,
-	  public confirmationService: ConfirmationService,
-	  private serviceDropdown: ServiceDropdown,
-	  private packageDropdown: PackageDropdown,
-	  private labTestDropdown: LabTestDropdown,
-	  private productDropdown: ProductDropdown,
+      public translate: TranslateService,
+      public tokenStorage: TokenStorage,
+      public confirmationService: ConfirmationService,
+      private serviceDropdown: ServiceDropdown,
+      private packageDropdown: PackageDropdown,
+      private labTestDropdown: LabTestDropdown,
+      private productDropdown: ProductDropdown,
       private doctorDropdown: DoctorDropdown,
       private route: ActivatedRoute
     ) {
-		super(genericService, translate, confirmationService);
+		  super(genericService, translate, confirmationService, tokenStorage);
     	this.patient.user = new User();
   }
 

@@ -3,7 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Constants } from '../../app.constants';
 import { Admission, AdmissionDiagnosis, Diagnosis, Visit } from '../../models';
 import { DiagnosisDropdown } from '../dropdowns';
-import { GenericService, GlobalEventsManager, AdmissionService } from '../../services';
+import { GenericService, GlobalEventsManager, AdmissionService, TokenStorage } from '../../services';
 import { Message, ConfirmationService } from 'primeng/api';
 import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
 import { BaseComponent } from './baseComponent';
@@ -33,15 +33,16 @@ export class AdmissionDiagnoses extends BaseComponent implements OnInit, OnDestr
     (
       private admissionService: AdmissionService,
       public genericService: GenericService,
-	  public translate: TranslateService,
-	  public confirmationService: ConfirmationService,
+	    public translate: TranslateService,
+      public confirmationService: ConfirmationService,
+      public tokenStorage: TokenStorage,
       public globalEventsManager: GlobalEventsManager,
       private diagnosisDropdown: DiagnosisDropdown,
       private changeDetectorRef: ChangeDetectorRef,
       private route: ActivatedRoute,
       private router: Router
     ) {
-		super(genericService, translate, confirmationService);
+		    super(genericService, translate, confirmationService, tokenStorage);
       	this.clear();
   }
 
@@ -156,4 +157,6 @@ export class AdmissionDiagnoses extends BaseComponent implements OnInit, OnDestr
       error => console.log(error),
       () => console.log('Get Patient Diagnoses complete'));
   }
+
+  
 }

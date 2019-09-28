@@ -6,17 +6,19 @@ import {
 	DoctorDropdown, PackageDropdown, InsuranceDropdown, BuildingDropdown, FloorDropdown, RoomDropdown,
 	CategoryDropdown, BedDropdown
 } from '../dropdowns';
-import { GenericService, GlobalEventsManager, AdmissionService } from '../../services';
+import { GenericService, GlobalEventsManager, AdmissionService, TokenStorage } from '../../services';
 import { AdmissionDiagnoses } from './admissionDiagnoses';
 import { DoctorOrderDetails } from './doctorOrderDetails';
 import { PrescriptionDetails } from './prescriptionDetails';
 import { PrescriptionList } from './prescriptionList';
 import { PatientSaleDetails } from '../stocks/patientSaleDetails';
 import { VitalSignDetails } from './vitalSignDetails';
-import { Message } from 'primeng/api';
+import { Message, ConfirmationService } from 'primeng/api';
 import { VitalSignList } from './vitalSignList';
 import { DoctorOrderList } from './doctorOrderList';
 import { PatientMedicineList } from './patientMedicineList';
+import { BaseComponent } from './baseComponent';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
 	selector: 'app-admission-details',
@@ -24,7 +26,7 @@ import { PatientMedicineList } from './patientMedicineList';
 	providers: [DoctorDropdown, PackageDropdown,
 		InsuranceDropdown, BuildingDropdown, FloorDropdown, RoomDropdown, CategoryDropdown, BedDropdown]
 })
-export class AdmissionDetails implements OnInit, OnDestroy {
+export class AdmissionDetails extends BaseComponent implements OnInit, OnDestroy {
 
 	@ViewChild(DoctorOrderDetails) doctorOrderDetails: DoctorOrderDetails;
 	@ViewChild(DoctorOrderList) doctorOrderList: DoctorOrderList;
@@ -47,7 +49,10 @@ export class AdmissionDetails implements OnInit, OnDestroy {
 
 	constructor
 		(
-			private genericService: GenericService,
+			public genericService: GenericService,
+			public translate: TranslateService,
+			public confirmationService: ConfirmationService,
+			public tokenStorage: TokenStorage,
 			private admissionService: AdmissionService,
 			private globalEventsManager: GlobalEventsManager,
 			public doctorDropdown: DoctorDropdown,
@@ -61,6 +66,7 @@ export class AdmissionDetails implements OnInit, OnDestroy {
 			private route: ActivatedRoute
 		) {
 
+			super(genericService, translate, confirmationService, tokenStorage);
 		// Initialize data
 		this.initilizePatientAdmissionPatient();
 		this.initilizePatientAdmissionBed();

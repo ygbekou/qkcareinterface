@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, Output, EventEmitter } from '@angular/cor
 import { ActivatedRoute } from '@angular/router';
 import { Constants } from '../../app.constants';
 import { Product } from '../../models/product';
-import { GenericService } from '../../services';
+import { GenericService, TokenStorage } from '../../services';
 import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
 import { BaseComponent } from './baseComponent';
 import { ConfirmationService } from 'primeng/api';
@@ -22,11 +22,12 @@ export class MedicineList extends BaseComponent implements OnInit, OnDestroy {
   constructor
     (
     public genericService: GenericService,
-	public translate: TranslateService,
-	public confirmationService: ConfirmationService,
+    public translate: TranslateService,
+    public confirmationService: ConfirmationService,
+    public tokenStorage: TokenStorage,
     private route: ActivatedRoute
     ) {
-		super(genericService, translate, confirmationService);
+		super(genericService, translate, confirmationService, tokenStorage);
   }
 
   ngOnInit(): void {

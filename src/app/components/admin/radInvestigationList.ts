@@ -3,7 +3,7 @@ import { Admission, Investigation, InvestigationTest, Visit, SearchCriteria, Rad
 import { Router, NavigationExtras } from '@angular/router';
 import { Constants } from '../../app.constants';
 import { ToolbarModule, ConfirmationService } from 'primeng/primeng';
-import { GenericService, InvestigationService, GlobalEventsManager, RadInvestigationService } from '../../services';
+import { GenericService, InvestigationService, GlobalEventsManager, RadInvestigationService, TokenStorage } from '../../services';
 import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
 import { BaseComponent } from './baseComponent';
 
@@ -41,11 +41,12 @@ export class RadInvestigationList extends BaseComponent implements OnInit, OnDes
     private globalEventsManager: GlobalEventsManager,
     public genericService: GenericService,
     private investigationService: RadInvestigationService,
-	public translate: TranslateService,
-	public confirmationService: ConfirmationService,
+    public translate: TranslateService,
+    public confirmationService: ConfirmationService,
+    public tokenStorage: TokenStorage,
     private router: Router,
     ) {
-		super(genericService, translate, confirmationService);
+		  super(genericService, translate, confirmationService, tokenStorage);
   }
 
   ngOnInit(): void {

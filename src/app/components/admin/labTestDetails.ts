@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, EventEmitter, Output } from '@angular/core';
 import { LabTest } from '../../models/labTest';
 import { LabTestMethodDropdown, LabTestGroupDropdown, LabTestUnitDropdown } from '../dropdowns';
-import { GenericService } from '../../services';
+import { GenericService, TokenStorage } from '../../services';
 import { TranslateService } from '@ngx-translate/core';
 import { ConfirmationService, Message } from 'primeng/api';
 import { BaseComponent } from './baseComponent';
@@ -24,14 +24,15 @@ export class LabTestDetails extends BaseComponent implements OnInit, OnDestroy {
   
   constructor
     (
-	  public genericService: GenericService,
-	  public translate: TranslateService,
-	  public confirmationService: ConfirmationService,
+      public genericService: GenericService,
+      public translate: TranslateService,
+      public confirmationService: ConfirmationService,
+      public tokenStorage: TokenStorage,
       ltMethodDropdown: LabTestMethodDropdown,
       ltGroupDropdown: LabTestGroupDropdown,
       ltUnitDropdown: LabTestUnitDropdown    ) {
 
-		super(genericService, translate, confirmationService);
+		    super(genericService, translate, confirmationService, tokenStorage);
       	this.labTestMethodDropdown = ltMethodDropdown;
       	this.labTestGroupDropdown = ltGroupDropdown;
       	this.labTestUnitDropdown = ltUnitDropdown;

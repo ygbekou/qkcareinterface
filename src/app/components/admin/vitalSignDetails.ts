@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angu
 import { ActivatedRoute } from '@angular/router';
 import { Constants } from '../../app.constants';
 import { Admission, VitalSign, Patient, User } from '../../models';
-import { GenericService } from '../../services';
+import { GenericService, TokenStorage } from '../../services';
 import { TranslateService } from '@ngx-translate/core';
 import { Message, ConfirmationService } from 'primeng/api';
 import { CurrencyMaskModule } from "ng2-currency-mask";
@@ -31,11 +31,12 @@ export class VitalSignDetails extends BaseComponent implements OnInit, OnDestroy
   constructor
     (
       public genericService: GenericService,
-	  public translate: TranslateService,
-	  public confirmationService: ConfirmationService,
+      public translate: TranslateService,
+      public confirmationService: ConfirmationService,
+      public tokenStorage: TokenStorage,
       private route: ActivatedRoute
     ) {
-		super(genericService, translate, confirmationService);
+		  super(genericService, translate, confirmationService, tokenStorage);
     	this.patient.user = new User();
   }
 

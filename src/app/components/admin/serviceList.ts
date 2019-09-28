@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { Service } from '../../models';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { ConfirmationService } from 'primeng/primeng';
-import { GenericService } from '../../services';
+import { GenericService, TokenStorage } from '../../services';
 import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
 import { BaseComponent } from './baseComponent';
 
@@ -19,13 +19,14 @@ export class ServiceList  extends BaseComponent  implements OnInit, OnDestroy {
   constructor
     (
     public genericService: GenericService,
-	public translate: TranslateService,
-	public confirmationService: ConfirmationService,
+    public translate: TranslateService,
+    public confirmationService: ConfirmationService,
+    public tokenStorage: TokenStorage,
     private changeDetectorRef: ChangeDetectorRef,
     private route: ActivatedRoute,
     private router: Router,
     ) {
-		super(genericService, translate, confirmationService);
+		    super(genericService, translate, confirmationService, tokenStorage);
     
   }
 

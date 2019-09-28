@@ -3,7 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Constants } from '../../app.constants';
 import { ReportView, Parameter, User, UserGroup, Patient } from '../../models';
 import { CountryDropdown, ReligionDropdown, OccupationDropdown, PayerTypeDropdown, InsuranceDropdown } from '../dropdowns';
-import { GenericService, UserService, ReportService, GlobalEventsManager } from '../../services';
+import { GenericService, UserService, ReportService, GlobalEventsManager, TokenStorage } from '../../services';
 import { Message, ConfirmationService } from 'primeng/api';
 import { TranslateService } from '@ngx-translate/core';
 import { BaseComponent } from './baseComponent';
@@ -40,16 +40,16 @@ export class PatientDetails extends BaseComponent implements OnInit, OnDestroy {
 			public globalEventsManager: GlobalEventsManager,
 			public translate: TranslateService,
 			public confirmationService: ConfirmationService,
+			public tokenStorage: TokenStorage,
 			private countryDropdown: CountryDropdown,
 			private religionDropdown: ReligionDropdown,
 			private occupationDropdown: OccupationDropdown,
 			private payerTypeDropdown: PayerTypeDropdown,
 			private insuranceDropdown: InsuranceDropdown,
 			private changeDetectorRef: ChangeDetectorRef,
-			private route: ActivatedRoute,
-			private router: Router
+			private route: ActivatedRoute
 		) {
-		super(genericService, translate, confirmationService);
+		super(genericService, translate, confirmationService, tokenStorage);
 		this.patient.user = new User();
 	}
 

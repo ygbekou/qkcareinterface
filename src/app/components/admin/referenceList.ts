@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, Output, EventEmitter } from '@angular/core';
 import { Reference } from '../../models';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
-import { GenericService, GlobalEventsManager } from '../../services';
+import { GenericService, GlobalEventsManager, TokenStorage } from '../../services';
 import { TranslateService} from '@ngx-translate/core';
 import { BaseComponent } from './baseComponent';
 import { ConfirmationService } from 'primeng/api';
@@ -27,13 +27,14 @@ export class ReferenceList extends BaseComponent implements OnInit, OnDestroy {
   constructor
     (
     public genericService: GenericService,
-	public translate: TranslateService,
-	public confirmationService: ConfirmationService,
+    public translate: TranslateService,
+    public confirmationService: ConfirmationService,
+    public tokenStorage: TokenStorage,
     private globalEventsManager: GlobalEventsManager,
     private route: ActivatedRoute,
     private router: Router,
     ) {
-		super(genericService, translate, confirmationService);
+		  super(genericService, translate, confirmationService, tokenStorage);
   }
 
   ngOnInit(): void {

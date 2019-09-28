@@ -3,9 +3,10 @@ import { ActivatedRoute } from '@angular/router';
 import { Schedule } from '../../models';
 import { Constants } from '../../app.constants';
 import { DoctorDropdown, WeekdayDropdown, HospitalLocationDropdown } from '../dropdowns';
-import { GenericService } from '../../services';
+import { GenericService, TokenStorage } from '../../services';
 import { TranslateService } from '@ngx-translate/core';
-import { Message } from 'primeng/api';
+import { Message, ConfirmationService } from 'primeng/api';
+import { BaseComponent } from './baseComponent';
 
 
 @Component({
@@ -13,7 +14,7 @@ import { Message } from 'primeng/api';
 	templateUrl: '../../pages/admin/scheduleDetails.html',
 	providers: [GenericService, DoctorDropdown, WeekdayDropdown, HospitalLocationDropdown]
 })
-export class ScheduleDetails implements OnInit, OnDestroy {
+export class ScheduleDetails extends BaseComponent implements OnInit, OnDestroy {
 
 	schedule: Schedule = new Schedule();
 	messages: Message[] = [];
@@ -22,13 +23,15 @@ export class ScheduleDetails implements OnInit, OnDestroy {
 
 	constructor
 		(
-			private genericService: GenericService,
-			private translate: TranslateService,
+			public genericService: GenericService,
+			public translate: TranslateService,
+			public confirmationService: ConfirmationService, 
+			public tokenStorage: TokenStorage, 
 			public doctorDropdown: DoctorDropdown,
 			public weekdayDropdown: WeekdayDropdown,
 			public hospitalLocationDropdown: HospitalLocationDropdown,
 			private route: ActivatedRoute) {
-
+		super(genericService, translate, confirmationService, tokenStorage);
 	}
 
 	ngOnInit(): void {

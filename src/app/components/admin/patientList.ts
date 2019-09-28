@@ -1,17 +1,18 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Patient, SearchCriteria, User } from '../../models';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
-import { GenericService, GlobalEventsManager } from '../../services';
+import { GenericService, GlobalEventsManager, TokenStorage } from '../../services';
 import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
-import { Message } from 'primeng/api';
+import { Message, ConfirmationService } from 'primeng/api';
 import { Constants } from '../../app.constants';
+import { BaseComponent } from './baseComponent';
 
 @Component({
   selector: 'app-patient-list',
   templateUrl: '../../pages/admin/patientList.html',
   providers: [GenericService]
 })
-export class PatientList implements OnInit, OnDestroy {
+export class PatientList extends BaseComponent implements OnInit, OnDestroy {
 
   messages: Message[] = [];
   patients: Patient[] = [];
@@ -23,13 +24,16 @@ export class PatientList implements OnInit, OnDestroy {
 
   constructor
     (
-    private genericService: GenericService,
-    private translate: TranslateService,
+    public genericService: GenericService,
+    public translate: TranslateService,
+    public confirmationService: ConfirmationService,
+    public tokenStorage: TokenStorage,
     public globalEventsManager: GlobalEventsManager,
     private route: ActivatedRoute,
     private router: Router,
     ) {
 
+      super(genericService, translate, confirmationService, tokenStorage);
 
   }
 

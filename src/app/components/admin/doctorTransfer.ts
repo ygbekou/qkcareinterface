@@ -1,4 +1,4 @@
-import {Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild} from '@angular/core';
+import {Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild, Input} from '@angular/core';
 import {Router, ActivatedRoute} from '@angular/router';
 import {Constants} from '../../app.constants';
 import {Bed, BedAssignment, Country, DoctorAssignment, Employee, Floor, Package, Patient, Admission, Reference, Room, User} from '../../models';
@@ -23,8 +23,10 @@ export class BedTransfer implements OnInit, OnDestroy {
 
   admission: Admission = new Admission();
 
+  @Input()
   transferType: string;
   messages: Message[] = [];
+
 
   constructor
     (
@@ -59,7 +61,7 @@ export class BedTransfer implements OnInit, OnDestroy {
     this.admission.bedAssignment.bed.category = new Reference();
 
     this.admission.doctorAssignment = new DoctorAssignment();
-    this.admission.doctorAssignment.doctor = new Employee()
+    this.admission.doctorAssignment.doctor = new Employee();
 
   }
 
@@ -73,11 +75,6 @@ export class BedTransfer implements OnInit, OnDestroy {
 
   ngOnInit(): void {
 
-    this.route
-      .queryParams
-      .subscribe(params => {
-        this.transferType = params['transferType'];
-      });
   }
 
   ngOnDestroy() {
@@ -85,10 +82,9 @@ export class BedTransfer implements OnInit, OnDestroy {
   }
 
   transfer() {
-    if (this.transferType == 'DOCTOR') {
+    if (this.transferType === 'DOCTOR') {
       this.transferDoctor();
-    }
-    else if (this.transferType == 'BED') {
+    } else if (this.transferType === 'BED') {
       this.transferBed();
     }
   }
@@ -102,15 +98,13 @@ export class BedTransfer implements OnInit, OnDestroy {
           .subscribe(result => {
             if (result.id > 0) {
               this.admission.doctorAssignment = result;
-               this.messages.push({severity:Constants.SUCCESS, summary:Constants.SAVE_LABEL, detail:Constants.SAVE_SUCCESSFUL});
+               this.messages.push({severity: Constants.SUCCESS, summary: Constants.SAVE_LABEL, detail: Constants.SAVE_SUCCESSFUL});
+            } else {
+               this.messages.push({severity: Constants.ERROR, summary: Constants.SAVE_LABEL, detail: Constants.SAVE_UNSUCCESSFUL});
             }
-            else {
-               this.messages.push({severity:Constants.ERROR, summary:Constants.SAVE_LABEL, detail:Constants.SAVE_UNSUCCESSFUL});
-            }
-          })
+          });
       }
-    }
-    catch (e) {
+    } catch (e) {
       console.log(e);
     }
   }
@@ -123,15 +117,13 @@ export class BedTransfer implements OnInit, OnDestroy {
           .subscribe(result => {
             if (result.id > 0) {
               this.admission.bedAssignment = result;
-               this.messages.push({severity:Constants.SUCCESS, summary:Constants.SAVE_LABEL, detail:Constants.SAVE_SUCCESSFUL});
+               this.messages.push({severity: Constants.SUCCESS, summary: Constants.SAVE_LABEL, detail: Constants.SAVE_SUCCESSFUL});
+            } else {
+               this.messages.push({severity: Constants.ERROR, summary: Constants.SAVE_LABEL, detail: Constants.SAVE_UNSUCCESSFUL});
             }
-            else {
-               this.messages.push({severity:Constants.ERROR, summary:Constants.SAVE_LABEL, detail:Constants.SAVE_UNSUCCESSFUL});
-            }
-          })
+          });
       }
-    }
-    catch (e) {
+    } catch (e) {
       console.log(e);
     }
   }
@@ -140,9 +132,9 @@ export class BedTransfer implements OnInit, OnDestroy {
     this.messages = [];
     if (this.admission.doctorAssignment.transferDoctor != null
       && this.admission.doctorAssignment.doctor.id
-      == this.admission.doctorAssignment.transferDoctor.id) {
+      === this.admission.doctorAssignment.transferDoctor.id) {
         this.translate.get('MESSAGE.TRANFER_DOCTOR_FAILED').subscribe((res: string) => {
-           this.messages.push({severity:Constants.ERROR, summary:Constants.SAVE_LABEL, detail:res});
+           this.messages.push({severity: Constants.ERROR, summary: Constants.SAVE_LABEL, detail: res});
         });
       return false;
     }
@@ -150,7 +142,7 @@ export class BedTransfer implements OnInit, OnDestroy {
       && this.admission.doctorAssignment.transferDate
       < this.admission.doctorAssignment.startDate) {
       this.translate.get('MESSAGE.TRANFER_DATE_FAILED').subscribe((res: string) => {
-           this.messages.push({severity:Constants.ERROR, summary:Constants.SAVE_LABEL, detail:res});
+           this.messages.push({severity: Constants.ERROR, summary: Constants.SAVE_LABEL, detail: res});
         });
       return false;
     }
@@ -163,9 +155,9 @@ export class BedTransfer implements OnInit, OnDestroy {
     this.messages = [];
     if (this.admission.bedAssignment.transferBed != null
       && this.admission.bedAssignment.bed.id
-      == this.admission.bedAssignment.transferBed.id) {
+      === this.admission.bedAssignment.transferBed.id) {
        this.translate.get('MESSAGE.TRANFER_BED_FAILED').subscribe((res: string) => {
-           this.messages.push({severity:Constants.ERROR, summary:Constants.SAVE_LABEL, detail:res});
+           this.messages.push({severity: Constants.ERROR, summary: Constants.SAVE_LABEL, detail: res});
         });
       return false;
     }
@@ -173,7 +165,7 @@ export class BedTransfer implements OnInit, OnDestroy {
       && this.admission.bedAssignment.transferDate
       < this.admission.bedAssignment.startDate) {
       this.translate.get('MESSAGE.TRANFER_DATE_FAILED').subscribe((res: string) => {
-           this.messages.push({severity:Constants.ERROR, summary:Constants.SAVE_LABEL, detail:res});
+           this.messages.push({severity: Constants.ERROR, summary: Constants.SAVE_LABEL, detail: res});
         });
       return false;
     }
@@ -183,11 +175,11 @@ export class BedTransfer implements OnInit, OnDestroy {
   }
 
   lookUpPatientAdmission() {
-    let parameters: string[] = [];
+    const parameters: string[] = [];
 
-    parameters.push('e.id = |patientAdmissionId|' + this.admission.admissionNumber + '|Long')
-    let admissionNumber = this.admission.admissionNumber;
-    this.admission = new Admission()
+    parameters.push('e.id = |patientAdmissionId|' + this.admission.admissionNumber + '|Long');
+    const admissionNumber = this.admission.admissionNumber;
+    this.admission = new Admission();
     this.initilizePatientAdmission();
     this.initTansferBedData();
     this.admission.admissionNumber = admissionNumber;
@@ -196,7 +188,7 @@ export class BedTransfer implements OnInit, OnDestroy {
       .subscribe((data: Admission) => {
         if (data.id > 0) {
           this.admission = data;
-          this.admission.doctorAssignment.startDate = new Date(this.admission.doctorAssignment.startDate)
+          this.admission.doctorAssignment.startDate = new Date(this.admission.doctorAssignment.startDate);
           this.initTansferBedData();
         }
       },

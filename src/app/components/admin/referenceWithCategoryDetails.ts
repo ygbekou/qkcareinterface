@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Constants } from '../../app.constants';
 import { ReferenceWithCategory } from '../../models/referenceWithCategory';
 import { CategoryDropdown } from '../dropdowns';
-import { GenericService, GlobalEventsManager } from '../../services';
+import { GenericService, GlobalEventsManager, TokenStorage } from '../../services';
 import { Message, ConfirmationService } from 'primeng/api';
 import { BaseComponent } from './baseComponent';
 import { TranslateService } from '@ngx-translate/core';
@@ -27,14 +27,15 @@ export class ReferenceWithCategoryDetails extends BaseComponent implements OnIni
 
   constructor
     (
-	  public genericService: GenericService,
-	  public translate: TranslateService,
-	  public confirmationService: ConfirmationService,
+      public genericService: GenericService,
+      public translate: TranslateService,
+      public confirmationService: ConfirmationService,
+      public tokenStorage: TokenStorage,
       private globalEventsManager: GlobalEventsManager,
       private categoryDropdown: CategoryDropdown,
       private route: ActivatedRoute
     ) {
-		super(genericService, translate, confirmationService);
+		  super(genericService, translate, confirmationService, tokenStorage);
   }
 
   ngOnInit(): void {

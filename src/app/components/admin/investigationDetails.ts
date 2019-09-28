@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, Input} from '@angular/core';
 import { ActivatedRoute} from '@angular/router';
 import { Admission, Visit, Investigation, LabTest} from '../../models';
 import { LabTestDropdown} from '../dropdowns';
-import { GenericService, InvestigationService, GlobalEventsManager} from '../../services';
+import { GenericService, InvestigationService, GlobalEventsManager, TokenStorage} from '../../services';
 import { TranslateService} from '@ngx-translate/core';
 import { Message, ConfirmationService } from 'primeng/api';
 import { BaseComponent } from './baseComponent';
@@ -31,12 +31,13 @@ export class InvestigationDetails extends BaseComponent implements OnInit, OnDes
     private globalEventsManager: GlobalEventsManager,
     public genericService: GenericService,
     private investigationService: InvestigationService,
-	public translate: TranslateService,
-	public confirmationService: ConfirmationService,
+    public translate: TranslateService,
+    public confirmationService: ConfirmationService,
+    public tokenStorage: TokenStorage,
     private lbTestDropdown: LabTestDropdown,
     private route: ActivatedRoute
     ) {
-		super(genericService, translate, confirmationService);
+		  super(genericService, translate, confirmationService, tokenStorage);
     	this.labTestDropdown = lbTestDropdown;
 
   }

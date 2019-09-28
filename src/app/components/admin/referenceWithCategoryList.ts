@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, Output, EventEmitter } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ReferenceWithCategory } from '../../models/referenceWithCategory';
-import { GenericService, GlobalEventsManager } from '../../services';
+import { GenericService, GlobalEventsManager, TokenStorage } from '../../services';
 import { TranslateService } from '@ngx-translate/core';
 import { BaseComponent } from './baseComponent';
 import { ConfirmationService } from 'primeng/api';
@@ -25,12 +25,13 @@ export class ReferenceWithCategoryList extends BaseComponent implements OnInit, 
   constructor
     (
     public genericService: GenericService,
-	public translate: TranslateService,
-	public confirmationService: ConfirmationService,
+    public translate: TranslateService,
+    public confirmationService: ConfirmationService,
+    public tokenStorage: TokenStorage,
     private globalEventsManager: GlobalEventsManager,
     private route: ActivatedRoute
     ) {
-		super(genericService, translate, confirmationService);
+		super(genericService, translate, confirmationService, tokenStorage);
   }
 
   ngOnInit(): void {

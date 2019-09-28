@@ -29,7 +29,7 @@
               <div class="form-group">
                 <label for="chiefOfComplain">{{ 'COMMON.CHIEF_OF_COMPLAIN' | translate }}<font color="red">*</font>
                 </label>
-                <textarea pInputTextarea id="chiefOfComplain" rows="2" cols="40" pInputTextarea maxlength="1000"
+                <textarea pInputTextarea id="chiefOfComplain" rows="2" cols="40" maxlength="1000"
                   [(ngModel)]="visit.chiefOfComplain" name="chiefOfComplain" #chiefOfComplain="ngModel"
                   required> </textarea>
                 <p-message *ngIf="f.submitted && chiefOfComplain.invalid" severity="error"
@@ -99,40 +99,41 @@
         <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
           <button type="button" pButton icon="fa fa-close" (click)="delete()"
             label="{{ 'COMMON.DELETE' | translate }}"></button>&nbsp;&nbsp;
-          <button pButton icon="fa fa-check" label="{{ 'COMMON.SAVE' | translate }}"></button>
+          <button pButton icon="fa fa-check" *ngIf="permitSave(visit.id, 'Add Visit')"
+             label="{{ 'COMMON.SAVE' | translate }}"></button>
         </div>
       </p-tabPanel>
 
-      <p-tabPanel header="{{ 'COMMON.DOCTOR_ORDER_LIST' | translate }}" *ngIf="visit.id > 0">
+      <p-tabPanel header="{{ 'COMMON.DOCTOR_ORDER_LIST' | translate }}" *ngIf="visit.id > 0 && permitView('VISIT_DOCTOR_ORDER')">
         <app-doctorOrder-details [visit]="visit" (doctorOrderSaveEvent)="onDoctorOrderSaved($event)">
-		</app-doctorOrder-details> 
-		<br/>
+        </app-doctorOrder-details> 
+        <br/>
         <app-doctorOrder-list [visit]="visit" (doctorOrderIdEvent)="onDoctorOrderSelected($event)">
         </app-doctorOrder-list> 
-	  </p-tabPanel>
-	  <p-tabPanel header="{{'COMMON.SERVICE_LIST' | translate }}" *ngIf="visit && visit.id > 0">
-		<app-patientServiceDetails [visit]="visit"></app-patientServiceDetails>
-		</p-tabPanel>
-      <p-tabPanel header="{{ 'COMMON.DIAGNOSIS_LIST' | translate }}" *ngIf="visit.id > 0">
+      </p-tabPanel>
+      <p-tabPanel header="{{'COMMON.SERVICE_LIST' | translate }}" *ngIf="visit && visit.id > 0 && permitView('VISIT_SERVICE')">
+          <app-patientServiceDetails [visit]="visit"></app-patientServiceDetails>
+      </p-tabPanel>
+      <p-tabPanel header="{{ 'COMMON.DIAGNOSIS_LIST' | translate }}" *ngIf="visit.id > 0 && permitView('VISIT_DIAGNOSIS')">
         <app-admissionDiagnoses [visit]="visit"></app-admissionDiagnoses>
       </p-tabPanel>
 
-      <p-tabPanel header="{{ 'COMMON.PRESCRIPTION_LIST' | translate }}" *ngIf="visit.id > 0">
-		<app-prescription-details [visit]="visit"></app-prescription-details> 
-		<br/>
+      <p-tabPanel header="{{ 'COMMON.PRESCRIPTION_LIST' | translate }}" *ngIf="visit.id > 0 && permitView('VISIT_PRESCRIPTION')">
+        <app-prescription-details [visit]="visit"></app-prescription-details> 
+        <br/>
         <app-prescription-list [visit]="visit" (prescriptionIdEvent)="onPrescriptionSelected($event)">
         </app-prescription-list>
       </p-tabPanel>
 
-      <p-tabPanel header="{{ 'COMMON.INVESTIGATION_LIST' | translate }}" *ngIf="visit.id > 0">
-        <app-investigation-list [showActions]="false" [visit]="visit"></app-investigation-list>
-	  </p-tabPanel>
-	  
-      <p-tabPanel header="{{ 'COMMON.PHARMACY' | translate }}" *ngIf="visit.id > 0">
-         <app-patientMedicine-list [visit]="visit"></app-patientMedicine-list>
+      <p-tabPanel header="{{ 'COMMON.INVESTIGATION_LIST' | translate }}" *ngIf="visit.id > 0 && permitView('VISIT_INVESTIGATION')">
+          <app-investigation-list [showActions]="false" [visit]="visit"></app-investigation-list>
+      </p-tabPanel>
+      
+      <p-tabPanel header="{{ 'COMMON.PHARMACY' | translate }}" *ngIf="visit.id > 0 && permitView('VISIT_PHARMACY')">
+          <app-patientMedicine-list [visit]="visit"></app-patientMedicine-list>
       </p-tabPanel>
 
-      <p-tabPanel header="{{ 'COMMON.DISCHARGE' | translate }}" *ngIf="visit.id > 0">
+      <p-tabPanel header="{{ 'COMMON.DISCHARGE' | translate }}" *ngIf="visit.id > 0 && permitView('VISIT_DISCHARGE')">
           <app-discharge-details [visit]="visit"></app-discharge-details>
       </p-tabPanel>
     </p-tabView>

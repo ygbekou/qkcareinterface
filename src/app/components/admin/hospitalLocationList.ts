@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, Output, EventEmitter } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HospitalLocation } from '../../models';  
-import { GenericService } from '../../services';
+import { GenericService, TokenStorage } from '../../services';
 import { TranslateService} from '@ngx-translate/core';
 import { BaseComponent } from './baseComponent';
 import { ConfirmationService } from 'primeng/api';
@@ -21,11 +21,12 @@ export class HospitalLocationList extends BaseComponent implements OnInit, OnDes
   constructor
     (
     public genericService: GenericService,
-	public translate: TranslateService,
-	public confirmationService: ConfirmationService,
+    public translate: TranslateService,
+    public confirmationService: ConfirmationService,
+    public tokenStorage: TokenStorage,
     private route: ActivatedRoute
     ) {
-		super(genericService, translate, confirmationService);
+		  super(genericService, translate, confirmationService, tokenStorage);
     
   }
 

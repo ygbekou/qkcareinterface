@@ -63,11 +63,11 @@
           &nbsp;&nbsp;
           <button class="ui-button-rounded" type="button" pButton icon="fa fa-check"
             (click)="redirectToOrigialPage(rowData)" title="{{ 'COMMON.SELECT' | translate }}"
-            *ngIf="this.originalPage !== undefined"></button>
+            *ngIf="permitView('Patient List') && this.originalPage !== undefined"></button>
           &nbsp;&nbsp;
           <button class="ui-button-rounded ui-button-warning" type="button" pButton icon="fa fa-eraser"
-			(click)="delete(rowData.id)" title="{{ 'COMMON.DELETE' | translate }}"
-			*ngIf="this.originalPage === undefined"></button>
+              (click)="delete(rowData.id)" title="{{ 'COMMON.DELETE' | translate }}"
+              *ngIf="permitDelete('Patient List') && this.originalPage === undefined"></button>
         </td>
       </tr>
     </ng-template>

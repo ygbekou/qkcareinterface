@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Floor } from '../../models/floor';
 import { BuildingDropdown } from '../dropdowns';
 import { Message, ConfirmationService } from 'primeng/primeng';
-import { GenericService } from '../../services';
+import { GenericService, TokenStorage } from '../../services';
 import { BaseComponent } from './baseComponent';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -25,14 +25,15 @@ export class FloorDetails extends BaseComponent implements OnInit, OnDestroy {
   
   constructor
     (
-	  public genericService: GenericService,
-	  public translate: TranslateService,
-	  public confirmationService: ConfirmationService,
+      public genericService: GenericService,
+      public translate: TranslateService,
+      public confirmationService: ConfirmationService,
+      public tokenStorage: TokenStorage,
       private bdgDropdown: BuildingDropdown,
       private route: ActivatedRoute
     ) {
-		super(genericService, translate, confirmationService);
-		this.buildingDropdown = bdgDropdown;
+      super(genericService, translate, confirmationService, tokenStorage);
+      this.buildingDropdown = bdgDropdown;
       	this.floor = new Floor();
   }
 

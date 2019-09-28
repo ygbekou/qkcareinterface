@@ -5,6 +5,7 @@ import { Message, ConfirmationService } from 'primeng/api';
 import { GenericService, TokenStorage } from 'src/app/services';
 import { GenericResponse } from 'src/app/models/genericResponse';
 import { PermissionVO } from 'src/app/models/authToken';
+import { Visit, Admission } from 'src/app/models';
 
 
 @Component({
@@ -160,6 +161,24 @@ export class BaseComponent {
 
   permitDelete(resource: string) {
     return this.checkPermission(resource, 'CAN_DELETE', 'Y');
+  }
+
+   shoulPermitSave(id: number, visit: Visit, admission: Admission) {
+    return ((visit !== undefined && this.permitSave(id, 'VISIT_DOCTOR_ORDER'))
+          || (admission !== undefined && this.permitSave(id, 'ADMISSION_DOCTOR_ORDER'))
+    );
+  }
+
+  shoulPermitView(visit: Visit, admission: Admission) {
+    return ((visit !== undefined && this.permitView('VISIT_DOCTOR_ORDER'))
+          || (admission !== undefined && this.permitView('ADMISSION_DOCTOR_ORDER'))
+    );
+  }
+
+  shoulPermitDelete(visit: Visit, admission: Admission) {
+    return ((visit !== undefined && this.permitDelete('VISIT_DOCTOR_ORDER'))
+          || (admission !== undefined && this.permitDelete('ADMISSION_DOCTOR_ORDER'))
+    );
   }
 
  }

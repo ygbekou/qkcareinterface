@@ -3,7 +3,7 @@ import { ActivatedRoute} from '@angular/router';
 import { Admission, Visit, RadInvestigation, Reference, RadInvestigationExam, RadExam, 
   RadInvestigationComment } from '../../models';
 import { ModalityDropdown, RadExamDropdown, ExamStatusDropdown, RadiologyTechDropdown} from '../dropdowns';
-import { GenericService, RadInvestigationService, GlobalEventsManager} from '../../services';
+import { GenericService, RadInvestigationService, GlobalEventsManager, TokenStorage} from '../../services';
 import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
 import { Message, ConfirmationService } from 'primeng/api';
 import { ScrollPanelModule} from 'primeng/scrollpanel';
@@ -43,15 +43,16 @@ export class RadInvestigationDetails extends BaseComponent implements OnInit, On
     private globalEventsManager: GlobalEventsManager,
     public genericService: GenericService,
     private investigationService: RadInvestigationService,
-	public translate: TranslateService,
-	public confirmationService: ConfirmationService,
-	public modalityDropdown: ModalityDropdown,
-	public examStatusDropdown: ExamStatusDropdown,
-	public radiologyTechDropdown: RadiologyTechDropdown,
+    public translate: TranslateService,
+    public confirmationService: ConfirmationService,
+    public tokenStorage: TokenStorage,
+    public modalityDropdown: ModalityDropdown,
+    public examStatusDropdown: ExamStatusDropdown,
+    public radiologyTechDropdown: RadiologyTechDropdown,
   	public examDropdown: RadExamDropdown,
     private route: ActivatedRoute
     ) {
-		super(genericService, translate, confirmationService);
+		  super(genericService, translate, confirmationService, tokenStorage);
 
   }
 

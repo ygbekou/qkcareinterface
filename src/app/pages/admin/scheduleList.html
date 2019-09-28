@@ -26,8 +26,9 @@
 		                	{{rowData[col.field]}}
 			            </td>
 			            <td>
-			            	<button type="button" pButton icon="fa fa-edit" (click)="edit(rowData.id)"></button>&nbsp;&nbsp;
-							<button type="button"  class="ui-button-rounded ui-button-warning" pButton icon="fa fa-eraser" (click)="delete(rowData.id)"></button>
+			            	<button type="button" pButton icon="fa fa-edit" *ngIf="permitView('List schedules')" (click)="edit(rowData.id)"></button>&nbsp;&nbsp;
+							<button type="button"  class="ui-button-rounded ui-button-warning" 
+								pButton icon="fa fa-eraser" *ngIf="permitDelete('List schedules')" (click)="delete(rowData.id)"></button>
 			            </td>
 			        </tr>
 			    </ng-template>

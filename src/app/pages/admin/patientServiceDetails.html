@@ -1,7 +1,7 @@
 <p-confirmDialog [style]="{width: '50vw'}"></p-confirmDialog>
 <div class="ui-grid-row">
 	<div class="ui-grid-col-12 ui-sm-12">
-		<button type="button" pButton icon="fa fa-plus" (click)="addNewService()"></button>&nbsp;&nbsp;
+		<button type="button" pButton icon="fa fa-plus" *ngIf="shoulPermitSave()" (click)="addNewService()"></button>&nbsp;&nbsp;
 	</div>
 </div>
 <div class="ui-grid-row">
@@ -66,9 +66,9 @@
 		                </p-cellEditor>
 		            </td>
 		            <td>
-						<button type="button" pButton icon="fa fa-save" (click)="saveService(rowData)"></button>&nbsp;&nbsp;
+						<button type="button" pButton icon="fa fa-save" (click)="saveService(rowData)" *ngIf="shoulPermitSave()"></button>&nbsp;&nbsp;
 						<button type="button" pButton icon="fa fa-eraser" (click)="deleteItem(patientServices, rowData.id, 'PatientService')" 
-									[disabled]="!(rowData.id > 0)"></button>
+									*ngIf="shoulPermitDelete()" [disabled]="!(rowData.id > 0)"></button>
 		            </td>
 		        </tr>
 		    </ng-template>
@@ -144,9 +144,10 @@
 		                </p-cellEditor>
 		            </td>
 		            <td>
-						<button type="button" pButton icon="fa fa-save" (click)="savePackage(rowData)"></button>&nbsp;&nbsp;
-						<button type="button" pButton icon="fa fa-eraser" (click)="deleteItem(patientPackages, rowData.id, 'PatientPackage')" 
-									[disabled]="!(rowData.id > 0)"></button>
+						<button type="button" pButton icon="fa fa-save" *ngIf="shoulPermitSave(rowData.id, visit, admission)" 
+							(click)="savePackage(rowData)"></button>&nbsp;&nbsp;
+						<button type="button" pButton icon="fa fa-eraser" *ngIf="shoulPermitDelete(visit, admission)" 
+							(click)="deleteItem(patientPackages, rowData.id, 'PatientPackage')" [disabled]="!(rowData.id > 0)"></button>
 		            </td>
 		        </tr>
 		    </ng-template>

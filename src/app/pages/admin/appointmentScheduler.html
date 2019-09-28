@@ -37,12 +37,12 @@
           </div>
         </div>
         <div class="ui-grid-row">
-          <button type="button" pButton icon="fa fa-close" (click)="save(3)" label="{{ 'COMMON.CANCEL' | translate }}"
+          <button type="button" pButton icon="fa fa-close" *ngIf="permitSave(appointment.id, 'Appointments')" (click)="save(3)" label="{{ 'COMMON.CANCEL' | translate }}"
             [disabled]="appointment.id == null || appointment.id <= 0 || appointment.status ===3"></button>&nbsp;&nbsp;
 
-          <button type="button" pButton icon="fa fa-check" (click)="save(0)" label="{{ 'COMMON.RESERVE' | translate }}"></button>
+          <button type="button" pButton icon="fa fa-check" *ngIf="permitSave(appointment.id, 'Appointments')" (click)="save(0)" label="{{ 'COMMON.RESERVE' | translate }}"></button>
           &nbsp;&nbsp;
-          <button type="button" pButton icon="fa fa-check" (click)="save(1)" label="{{ 'COMMON.CONFIRM' | translate }}"
+          <button type="button" pButton icon="fa fa-check" *ngIf="permitSave(appointment.id, 'Appointments')" (click)="save(1)" label="{{ 'COMMON.CONFIRM' | translate }}"
             [disabled]="appointment.id != null && appointment.status === 1"></button>
 
         </div>
@@ -92,7 +92,8 @@
           </div>
           <div class="ui-grid-col-1 ui-sm-12">
             <br />
-            <button type="button" pButton icon="fa fa-search" (click)="getAppointments()" label="Go"></button></div>
+            <button type="button" pButton icon="fa fa-search" *ngIf="permitView('Appointments')" 
+                (click)="getAppointments()" label="Go"></button></div>
         </div>
       </div>
     </div>

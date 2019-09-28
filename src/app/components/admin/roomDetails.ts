@@ -4,7 +4,7 @@ import { Floor } from '../../models/floor';
 import { Room } from '../../models/room';
 import { BuildingDropdown, FloorDropdown } from '../dropdowns';
 import { ConfirmationService, Message } from 'primeng/primeng';
-import { GenericService, GlobalEventsManager } from '../../services';
+import { GenericService, GlobalEventsManager, TokenStorage } from '../../services';
 import { BaseComponent } from './baseComponent';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -27,15 +27,16 @@ export class RoomDetails extends BaseComponent implements OnInit, OnDestroy {
   
   constructor
     (
-	  public genericService: GenericService,
-	  public translate: TranslateService,
-	  public confirmationService: ConfirmationService,
+      public genericService: GenericService,
+      public translate: TranslateService,
+      public confirmationService: ConfirmationService,
+      public tokenStorage: TokenStorage,
       private globalEventsManager: GlobalEventsManager,
       private bdgDropdown: BuildingDropdown,
       private flrDropdown: FloorDropdown,
       private route: ActivatedRoute
     ) {
-		super(genericService, translate, confirmationService);
+		    super(genericService, translate, confirmationService, tokenStorage);
       	this.buildingDropdown = bdgDropdown;
       	this.floorDropdown = flrDropdown;
       	this.clear();

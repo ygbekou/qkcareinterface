@@ -9,13 +9,13 @@
 				        <app-role-list (roleIdEvent)="onRoleSelected($event)"></app-role-list>
 				    </div>
 				</p-tabPanel>
-				<p-tabPanel header="{{'COMMON.RESOURCE_LIST' |translate}}" id="resources" *ngIf="checkPermission('ADMIN_AUTH_RESOURCES')"> 
+				<p-tabPanel header="{{'COMMON.RESOURCE_LIST' |translate}}" id="resources" *ngIf="checkPermission('SECURITY_CONFIG_RESOURCES')"> 
 			    	<div *ngIf="activeTab === 1" class="ui-grid-row">
 				        <app-resource-details (resourceSaveEvent)="onResourceSaved($event)"></app-resource-details>
 				        <app-resource-list (resourceIdEvent)="onResourceSelected($event)"></app-resource-list>
 				    </div>
 				</p-tabPanel>
-				<p-tabPanel header="{{'COMMON.MENU_LIST' |translate}}" id="menus" *ngIf="checkPermission('ADMIN_AUTH_MENUS')">
+				<p-tabPanel header="{{'COMMON.MENU_LIST' |translate}}" id="menus" *ngIf="checkPermission('SECURITY_CONFIG_MENUS')">
 			    	<div *ngIf="activeTab === 2" class="ui-grid-row">
 				        <app-menuItem-details (menuItemSaveEvent)="onMenuItemSaved($event)"></app-menuItem-details>
 				        <app-menuItem-list (menuItemIdEvent)="onMenuItemSelected($event)"></app-menuItem-list>

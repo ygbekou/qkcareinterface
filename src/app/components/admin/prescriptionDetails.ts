@@ -4,7 +4,7 @@ import { Constants } from '../../app.constants';
 import { Admission, Product, Prescription, PrescriptionDiagnosis,
         PrescriptionMedicine, Visit } from '../../models';
 import { MedicineDropdown } from '../dropdowns';
-import { GenericService, AdmissionService, GlobalEventsManager } from '../../services';
+import { GenericService, AdmissionService, GlobalEventsManager, TokenStorage } from '../../services';
 import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
 import { Message, ConfirmationService } from 'primeng/api';
 import { BaseComponent } from './baseComponent';
@@ -35,11 +35,12 @@ export class PrescriptionDetails extends BaseComponent implements OnInit, OnDest
       public globalEventsManager: GlobalEventsManager,
       public genericService: GenericService,
       private admissionService: AdmissionService,
-	  public translate: TranslateService,
-	  public confirmationService: ConfirmationService,
+      public translate: TranslateService,
+      public confirmationService: ConfirmationService,
+      public tokenStorage: TokenStorage,
       private medicineDropdown: MedicineDropdown
     ) {
-		super(genericService, translate, confirmationService);
+		  super(genericService, translate, confirmationService, tokenStorage);
   }
 
   ngOnInit(): void {

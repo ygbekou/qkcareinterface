@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, Input, EventEmitter, Output } from '@angu
 import { ActivatedRoute } from '@angular/router';
 import { Reference } from '../../models/reference';
 import { Constants } from '../../app.constants';
-import { GenericService, GlobalEventsManager } from '../../services';
+import { GenericService, GlobalEventsManager, TokenStorage } from '../../services';
 import { TranslateService} from '@ngx-translate/core';
 import { Message, ConfirmationService } from 'primeng/api';
 import { BaseComponent } from './baseComponent';
@@ -30,11 +30,12 @@ export class ReferenceDetails extends BaseComponent implements OnInit, OnDestroy
   constructor
     (
       public genericService: GenericService,
-	  public translate: TranslateService,
-	  public confirmationService: ConfirmationService,
+      public translate: TranslateService,
+      public confirmationService: ConfirmationService,
+      public tokenStorage: TokenStorage,
       private globalEventsManager: GlobalEventsManager,
       private route: ActivatedRoute    ) {
-		super(genericService, translate, confirmationService);
+		    super(genericService, translate, confirmationService, tokenStorage);
       	this.reference = new Reference();
   	}
 

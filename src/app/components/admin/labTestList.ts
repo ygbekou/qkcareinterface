@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, Output, EventEmitter } from '@angular/core';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { LabTest } from '../../models/labTest';
-import { GenericService } from '../../services';
+import { GenericService, TokenStorage } from '../../services';
 import { TranslateService} from '@ngx-translate/core';
 import { BaseComponent } from './baseComponent';
 import { ConfirmationService } from 'primeng/api';
@@ -21,12 +21,13 @@ export class LabTestList extends BaseComponent implements OnInit, OnDestroy {
   constructor
     (
     public genericService: GenericService,
-	public translate: TranslateService,
-	public confirmationService: ConfirmationService,
+    public translate: TranslateService,
+    public confirmationService: ConfirmationService,
+    public tokenStorage: TokenStorage,
     private route: ActivatedRoute,
     private router: Router,
     ) {
-		super(genericService, translate, confirmationService);
+		super(genericService, translate, confirmationService, tokenStorage);
     
   }
 

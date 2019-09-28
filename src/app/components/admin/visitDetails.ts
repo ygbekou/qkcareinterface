@@ -3,31 +3,32 @@ import { ActivatedRoute } from '@angular/router';
 import { Constants } from '../../app.constants';
 import { GivenVaccine, Patient, Visit, Reference, User } from '../../models';
 import { PackageDropdown, DoctorDropdown } from '../dropdowns';
-import { GenericService, GlobalEventsManager, VisitService } from '../../services';
+import { GenericService, GlobalEventsManager, VisitService, TokenStorage } from '../../services';
 import { AdmissionDiagnoses } from './admissionDiagnoses';
 import { DoctorOrderDetails } from './doctorOrderDetails';
 import { PrescriptionDetails } from './prescriptionDetails';
 import { PrescriptionList } from './prescriptionList';
 import { PatientSaleDetails } from '../stocks/patientSaleDetails';
 import { TranslateService} from '@ngx-translate/core';
-import { Message } from 'primeng/api';
+import { Message, ConfirmationService } from 'primeng/api';
 import { DoctorOrderList } from './doctorOrderList';
 import { InvestigationList } from './investigationList';
 import { PatientMedicineList } from './patientMedicineList';
+import { BaseComponent } from './baseComponent';
 
 @Component({
   selector: 'app-visit-details',
   templateUrl: '../../pages/admin/visitDetails.html',
   providers: [GenericService, VisitService]
 })
-export class VisitDetails implements OnInit, OnDestroy {
+export class VisitDetails extends BaseComponent implements OnInit, OnDestroy {
 
   displayDialog: boolean;
   visit: Visit = new Visit();
   medicineCols: any[];
   diagnosisCols: any[];
   patient: Patient = new Patient();
-  shouldShow=false;
+  shouldShow = false;
   activeTab = 0;
 
   vaccineGroups: Reference[] = [];
@@ -45,14 +46,17 @@ export class VisitDetails implements OnInit, OnDestroy {
 
   constructor
     (
-      private genericService: GenericService,
+      public genericService: GenericService,
+			public translate: TranslateService,
+			public confirmationService: ConfirmationService,
+			public tokenStorage: TokenStorage,
       private visitService: VisitService,
-      private translate: TranslateService,
       private doctorDropdown: DoctorDropdown,
       private packageDropdown: PackageDropdown,
       private globalEventsManager: GlobalEventsManager,
       private route: ActivatedRoute,
     ) {
+      super(genericService, translate, confirmationService, tokenStorage);
   }
 
 

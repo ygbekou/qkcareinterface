@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Constants } from '../../app.constants';
 import { Admission, Visit, PatientService, PatientPackage } from '../../models';
 import { ServiceDropdown, PackageDropdown } from '../dropdowns';
-import { GenericService, GlobalEventsManager, AdmissionService } from '../../services';
+import { GenericService, GlobalEventsManager, AdmissionService, TokenStorage } from '../../services';
 import { Message, ConfirmationService } from 'primeng/api';
 import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
 import { BaseComponent } from './baseComponent';
@@ -35,14 +35,15 @@ export class PatientServiceDetails extends BaseComponent implements OnInit, OnDe
     (
       private admissionService: AdmissionService,
       public genericService: GenericService,
-	  public translate: TranslateService,
-	  public confirmationService: ConfirmationService,
+      public translate: TranslateService,
+      public confirmationService: ConfirmationService,
+      public tokenStorage: TokenStorage,
       public globalEventsManager: GlobalEventsManager,
-	  private serviceDropdown: ServiceDropdown,
-	  private packageDropdown: PackageDropdown,
+      private serviceDropdown: ServiceDropdown,
+      private packageDropdown: PackageDropdown,
       private route: ActivatedRoute
     ) {
-		super(genericService, translate, confirmationService);
+		super(genericService, translate, confirmationService, tokenStorage);
 		serviceDropdown.getServices(3);
       	this.clear();
   }
@@ -91,9 +92,8 @@ export class PatientServiceDetails extends BaseComponent implements OnInit, OnDe
         .queryParams
         .subscribe(params => {
             this.genericService.getAllByCriteria('PatientService', parameters)
-              .subscribe((data: PatientService[]) =>
-			{
-				this.patientServices = data
+              .subscribe((data: PatientService[]) => {
+				this.patientServices = data;
 			},
 			error => console.log(error),
 			() => console.log('Get all Patient Services complete'));
@@ -103,9 +103,8 @@ export class PatientServiceDetails extends BaseComponent implements OnInit, OnDe
         .queryParams
         .subscribe(params => {
             this.genericService.getAllByCriteria('PatientPackage', parameters)
-              .subscribe((data: PatientPackage[]) =>
-			{
-				this.patientPackages = data
+              .subscribe((data: PatientPackage[]) => {
+				this.patientPackages = data;
 			},
 			error => console.log(error),
 			() => console.log('Get all Patient Packages complete'));
@@ -205,7 +204,6 @@ export class PatientServiceDetails extends BaseComponent implements OnInit, OnDe
     rowData.visit = this.visit;
 
     try {
-		console.info(rowData)
       this.genericService.save(rowData, 'PatientPackage')
         .subscribe(result => {
           if (result.id > 0) {
@@ -219,7 +217,6 @@ export class PatientServiceDetails extends BaseComponent implements OnInit, OnDe
       console.log(e);
     }
   }
-
 
   clear() {
   }

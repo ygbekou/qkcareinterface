@@ -246,9 +246,8 @@
   <p-messages [(value)]="messages"></p-messages>
   <div class="form-group">
     <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
-      <button type="button" pButton icon="fa fa-refresh" (click)="clear()"
-        label="{{ 'COMMON.CLEAR' | translate }}"></button>&nbsp;&nbsp;
-      <button pButton icon="fa fa-save" [disabled]="!f.form.valid" label="{{ 'COMMON.SAVE' | translate }}"></button>
+      <button type="button" pButton icon="fa fa-refresh" (click)="clear()" label="{{ 'COMMON.CLEAR' | translate }}"></button>&nbsp;&nbsp;
+      <button pButton icon="fa fa-save" [disabled]="!f.form.valid" *ngIf="permitSave(employee.id, 'Employee Details')" label="{{ 'COMMON.SAVE' | translate }}"></button>
     </div>
   </div>
 </form>

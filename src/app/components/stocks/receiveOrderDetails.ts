@@ -1,10 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Constants } from '../../app.constants';
-import { PurchaseOrder, PurchaseOrderProduct } from '../../models/stocks/purchaseOrder';
+import { PurchaseOrder } from '../../models/stocks/purchaseOrder';
 import { ReceiveOrder } from '../../models/stocks/receiveOrder';
 import { EmployeeDropdown, SupplierDropdown, ProductDropdown } from '../dropdowns';
-import { GenericService, PurchasingService } from '../../services';
+import { GenericService, PurchasingService, TokenStorage } from '../../services';
 import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
 import { Message, ConfirmationService } from 'primeng/api';
 import { BaseComponent } from '../admin/baseComponent';
@@ -28,14 +28,15 @@ export class ReceiveOrderDetails extends BaseComponent implements OnInit, OnDest
   (
       public genericService: GenericService,
       private purchasingService: PurchasingService,
-	  public translate: TranslateService,
-	  public confirmationService: ConfirmationService,
+      public translate: TranslateService,
+      public confirmationService: ConfirmationService,
+      public tokenStorage: TokenStorage,
       private splDropdown: SupplierDropdown,
       private pdtDropdown: ProductDropdown,
       private employeeDropdown: EmployeeDropdown,
       private route: ActivatedRoute
   ) {
-		super(genericService, translate, confirmationService);
+		  super(genericService, translate, confirmationService, tokenStorage);
     	this.supplierDropdown = splDropdown;
     	this.productDropdown = pdtDropdown;	
   }

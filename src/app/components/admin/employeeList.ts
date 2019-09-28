@@ -1,18 +1,19 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
-import { Message } from 'primeng/api';
-import { GenericService, GlobalEventsManager } from '../../services';
+import { Message, ConfirmationService } from 'primeng/api';
+import { GenericService, GlobalEventsManager, TokenStorage } from '../../services';
 import { Employee, User, SearchCriteria } from '../../models';
 import { DepartmentDropdown } from '../dropdowns';
 import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
 import { Constants } from 'src/app/app.constants';
+import { BaseComponent } from './baseComponent';
 
 @Component({
 	selector: 'app-employee-list',
 	templateUrl: '../../pages/admin/employeeList.html',
 	providers: [GenericService, DepartmentDropdown]
 })
-export class EmployeeList implements OnInit, OnDestroy {
+export class EmployeeList extends BaseComponent implements OnInit, OnDestroy {
 
 	messages: Message[] = [];
 	employees: Employee[] = [];
@@ -21,14 +22,16 @@ export class EmployeeList implements OnInit, OnDestroy {
 
 	constructor
 		(
-			private genericService: GenericService,
-			private translate: TranslateService,
+			public genericService: GenericService,
+			public translate: TranslateService,
+			public confirmationService: ConfirmationService,
+    		public tokenStorage: TokenStorage,
 			public globalEventsManager: GlobalEventsManager,
 			public departmentDropdown: DepartmentDropdown,
 			private router: Router,
 	) {
 
-
+		super(genericService, translate, confirmationService, tokenStorage);
 	}
 
 	ngOnInit(): void {

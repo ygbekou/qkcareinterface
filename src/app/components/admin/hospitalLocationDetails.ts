@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, Output, EventEmitter } from '@angular/cor
 import { ActivatedRoute } from '@angular/router';
 import { HospitalLocation, Country } from '../../models';
 import { CountryDropdown } from '../dropdowns';
-import { GenericService } from '../../services';
+import { GenericService, TokenStorage } from '../../services';
 import { BaseComponent } from './baseComponent';
 import { ConfirmationService } from 'primeng/api';
 import { TranslateService} from '@ngx-translate/core';
@@ -22,11 +22,12 @@ export class HospitalLocationDetails extends BaseComponent implements OnInit, On
     (
 	  public genericService: GenericService,
 	  public translate: TranslateService,
-	  public confirmationService: ConfirmationService,
+    public confirmationService: ConfirmationService,
+    public tokenStorage: TokenStorage,
 	  private countryDropdown: CountryDropdown,
 	  private route: ActivatedRoute    ) {
 
-		super(genericService, translate, confirmationService);
+		super(genericService, translate, confirmationService, tokenStorage);
   }
 
   ngOnInit(): void {

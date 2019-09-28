@@ -59,9 +59,10 @@
 		                </p-cellEditor>
 		            </td>
 		            <td>
-						<button type="button" pButton icon="fa fa-save" (click)="saveDiagnosis(rowData)"></button>&nbsp;&nbsp;
-						<button type="button" pButton icon="fa fa-eraser" (click)="deleteItem(admissionDiagnoses, rowData.id, 'AdmissionDiagnosis')" 
-									[disabled]="!(rowData.id > 0)"></button>
+						<button type="button" pButton icon="fa fa-save" (click)="saveDiagnosis(rowData)" 
+							*ngIf="shoulPermitSave(rowData.id, visit, admission)"></button>&nbsp;&nbsp;
+						<button type="button" pButton icon="fa fa-eraser" *ngIf="shoulPermitDelete(visit, admission)"
+							(click)="deleteItem(admissionDiagnoses, rowData.id, 'AdmissionDiagnosis')" [disabled]="!(rowData.id > 0)"></button>
 		            </td>
 		        </tr>
 		    </ng-template>

@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, ViewChild, ElementRef, EventEmitter, Output } from '@angular/core';
 import { Department } from '../../models';
 import { Constants } from '../../app.constants';
-import { GenericService } from '../../services';
+import { GenericService, TokenStorage } from '../../services';
 import { TranslateService } from '@ngx-translate/core';
 import { Message, ConfirmationService } from 'primeng/api';
 import { BaseComponent } from './baseComponent';
@@ -23,10 +23,11 @@ export class DepartmentDetails extends BaseComponent implements OnInit, OnDestro
     constructor
     (
       public genericService: GenericService,
-	  public translate: TranslateService,
-	  public confirmationService: ConfirmationService
+      public translate: TranslateService,
+      public confirmationService: ConfirmationService,
+      public tokenStorage: TokenStorage,
     ) {
-		super(genericService, translate, confirmationService);
+		    super(genericService, translate, confirmationService, tokenStorage);
       	this.department = new Department();
   }
 

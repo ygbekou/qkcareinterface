@@ -5,16 +5,19 @@ import { Cookie } from 'ng2-cookies/ng2-cookies';
 import { Constants } from '../../app.constants';
 import { Patient } from '../../models/patient';
 import { UserGroup } from '../../models/userGroup';
-import { GenericService, UserService, GlobalEventsManager } from '../../services';
+import { GenericService, UserService, GlobalEventsManager, TokenStorage } from '../../services';
 import { AppointmentDetails } from './appointmentDetails';
 import { AppointmentList } from './appointmentList';
+import { BaseComponent } from './baseComponent';
+import { ConfirmationService } from 'primeng/api';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
 	selector: 'app-admin-patient',
 	templateUrl: '../../pages/admin/adminPatient.html',
 	providers: [GenericService]
 })
-export class AdminPatient implements OnInit {
+export class AdminPatient extends BaseComponent implements OnInit {
 	[x: string]: any;
 
 	@ViewChild(PatientDetails) patientDetails: PatientDetails;
@@ -27,35 +30,38 @@ export class AdminPatient implements OnInit {
 
 	ABSENCES: string = Constants.ABSENCES;
 	constructor(
-		private genericService: GenericService,
-		private globalEventsManager: GlobalEventsManager,
-		private changeDetectorRef: ChangeDetectorRef
+		public genericService: GenericService,
+		public confirmationService: ConfirmationService,
+		public translate: TranslateService,
+		public tokenStorage: TokenStorage,
+		private globalEventsManager: GlobalEventsManager
 	) {
+		super(genericService, translate, confirmationService, tokenStorage);
 		this.user = new User();
 		this.patient = new Patient();
 	}
 
 	ngOnInit() {
-		console.log("AdminPatient Inited: appointmentId=" + this.globalEventsManager.selectedAppointmentId);
-		this.globalEventsManager.currentPatientId.subscribe(patientId => this.patient.id = patientId)
+		console.log('AdminPatient Inited: appointmentId=' + this.globalEventsManager.selectedAppointmentId);
+		this.globalEventsManager.currentPatientId.subscribe(patientId => this.patient.id = patientId);
 		if (this.currentUser == null) {
 			this.currentUser = new User();
 		}
 	}
 
 	onAppointmentSelected($event) {
-		let appointmentId = $event;
+		const appointmentId = $event;
 		this.appointmentDetails.getAppointment(appointmentId);
 	}
-	onAptSaved($event){ 
+	onAptSaved($event) { 
 		this.appointmentList.updateTable($event);
 	}
 
 	onTabChange(evt) {
 		this.activeTab = evt.index;
-		if (evt.index == 0) {
-			this.activeTab = 0
-		} else if (evt.index == 1) {
+		if (evt.index === 0) {
+			this.activeTab = 0;
+		} else if (evt.index === 1) {
 			this.activeTab = 1;
 		}
 	}

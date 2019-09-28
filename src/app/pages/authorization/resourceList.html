@@ -20,7 +20,7 @@
 				{{rowData[col.field]}}
 			</td>
 			<td>
-				<button type="button" pButton icon="fa fa-plus" *ngIf="sourcePage === 'permission' && permitSave('SECURITY_PERMISSION')" (click)="assignToRole(rowData)"></button>
+				<button type="button" pButton icon="fa fa-plus" *ngIf="sourcePage === 'permission' && permitSave(rowData.id, 'SECURITY_PERMISSION')" (click)="assignToRole(rowData)"></button>
 				<button type="button" pButton icon="fa fa-edit" *ngIf="sourcePage === '' && permitView('SECURITY_CONFIG_RESOURCES')" (click)="edit(rowData.id)"></button>&nbsp;&nbsp;
 				<button type="button" pButton icon="fa fa-eraser" *ngIf="sourcePage === '' && permitDelete('SECURITY_CONFIG_RESOURCES')" (click)="deleteItem(resources, rowData.id, 'com.qkcare.model.authorization.Resource')"></button>
 			</td>

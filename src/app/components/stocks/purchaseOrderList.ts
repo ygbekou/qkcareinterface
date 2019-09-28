@@ -6,7 +6,7 @@ import { PurchaseOrder, PurchaseOrderProduct } from '../../models/stocks/purchas
 import { EmployeeDropdown, SupplierDropdown, ProductDropdown } from '../dropdowns';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
 import { DataTableModule, DialogModule, InputTextareaModule, CheckboxModule, ConfirmationService } from 'primeng/primeng';
-import { GenericService, PurchasingService } from '../../services';
+import { GenericService, PurchasingService, TokenStorage } from '../../services';
 import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
 import { BaseComponent } from '../admin/baseComponent';
 
@@ -26,14 +26,15 @@ export class PurchaseOrderList extends BaseComponent implements OnInit, OnDestro
     (
     public genericService: GenericService,
     private purchasingService: PurchasingService,
-	public translate: TranslateService,
-	public confirmationService: ConfirmationService,
+    public translate: TranslateService,
+    public confirmationService: ConfirmationService,
+    public tokenStorage: TokenStorage,
     public supplierDropdown: SupplierDropdown,
     public productDropdown: ProductDropdown,
     public employeeDropdown: EmployeeDropdown,
     private router: Router,
     ) {
-		super(genericService, translate, confirmationService);
+		super(genericService, translate, confirmationService, tokenStorage);
     
   }
 

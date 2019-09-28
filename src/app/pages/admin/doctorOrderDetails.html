@@ -109,10 +109,10 @@
     <button type="button" pButton icon="fa fa-refresh" (click)="clear()"
       label="{{ 'COMMON.CLEAR' | translate }}"></button>&nbsp;&nbsp;
     <button pButton icon="fa fa-save" label="{{ 'COMMON.SIGNE' | translate }}"
-      [disabled]="!f.form.valid"></button>&nbsp;&nbsp;
+      [disabled]="!f.form.valid" *ngIf="shoulPermitSave(doctorOrder.id, visit, admission)"></button>&nbsp;&nbsp;
     <button type="button" pButton icon="" (click)="changeStatus(STATUS_INPROGRESS_ID, STATUS_INPROGRESS_NAME)"
-      label="{{ 'COMMON.REOPEN' | translate }}" *ngIf="doctorOrder.status.id == 4"></button>&nbsp;&nbsp;
+      label="{{ 'COMMON.REOPEN' | translate }}" *ngIf="doctorOrder.status.id == 4 && shoulPermitSave(doctorOrder.id, visit, admission)"></button>&nbsp;&nbsp;
     <button type="button" pButton icon="" (click)="changeStatus(STATUS_CLOSED_ID, STATUS_CLOSED_NAME)"
-      label="{{ 'COMMON.CLOSE' | translate }}" *ngIf="doctorOrder.status.id != 4"></button>
+      label="{{ 'COMMON.CLOSE' | translate }}" *ngIf="doctorOrder.status.id != 4 && shoulPermitSave(doctorOrder.id, visit, admission)"></button>
   </div>
 </form>

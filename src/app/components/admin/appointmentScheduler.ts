@@ -1,11 +1,12 @@
-import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Appointment, Department, Employee, Patient, SearchCriteria } from '../../models';
 import { Constants } from '../../app.constants';
 import { HospitalLocationDropdown, DoctorDropdown, DepartmentDropdown } from '../dropdowns';
-import { GenericService, AppointmentService } from '../../services';
+import { GenericService, AppointmentService, TokenStorage } from '../../services';
 import { TranslateService } from '@ngx-translate/core';
-import { Message } from 'primeng/api';
+import { Message, ConfirmationService } from 'primeng/api';
+import { BaseComponent } from './baseComponent';
 
 @Component({
 	selector: 'app-appointment-scheduler',
@@ -14,7 +15,7 @@ import { Message } from 'primeng/api';
 		DepartmentDropdown, DoctorDropdown]
 }) 
 
-export class AppointmentScheduler implements OnInit, OnDestroy {
+export class AppointmentScheduler extends BaseComponent implements OnInit, OnDestroy {
 	events: any[];
 	headerConfig: any;
 	dateConfig: any;
@@ -25,15 +26,18 @@ export class AppointmentScheduler implements OnInit, OnDestroy {
 
 	constructor
 		(
-			private genericService: GenericService,
-			private appointmentService: AppointmentService,
-			private translate: TranslateService,
+			public genericService: GenericService,
+			public translate: TranslateService,
+			public confirmationService: ConfirmationService, 
+			public tokenStorage: TokenStorage, 
+			public appointmentService: AppointmentService,
 			public doctorDropdown: DoctorDropdown,
 			public hospitalLocationDropdown: HospitalLocationDropdown,
 			public departmentDropdown: DepartmentDropdown,
 			private route: ActivatedRoute,
 			private router: Router
 		) {
+			super(genericService, translate, confirmationService, tokenStorage);
 	}
 
 	ngOnInit(): void {
@@ -105,13 +109,12 @@ export class AppointmentScheduler implements OnInit, OnDestroy {
 		} else {
 			try {
 				// tslint:disable-next-line:no-console
-				const p:Patient = this.appointment.patient;
-				console.info(this.appointment.appointmentDate);
+				const p: Patient = this.appointment.patient;
 				this.genericService.save(this.appointment, 'Appointment')
 					.subscribe(result => {
 						if (result.id > 0) {
 							this.appointment = result;
-							this.appointment.patient=p;
+							this.appointment.patient = p;
 							if (status === 1) {//confirm
 								this.confirm(this.appointment.id);
 							} else {

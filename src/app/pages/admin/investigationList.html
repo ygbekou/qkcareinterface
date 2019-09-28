@@ -15,7 +15,8 @@
 			</div>
 		</div>
 	</div>
-	<button type="button" pButton icon="fa fa-check" (click)="saveAction()" label="Save"></button>
+	<button type="button" pButton icon="fa fa-check" (click)="saveAction()" 
+		*ngIf="shoulPermitSave(null, visit, admission)" label="Save"></button>
 </p-dialog>
 
 
@@ -171,8 +172,10 @@
 						</p-cellEditor>
 						</td>
 						<td *ngIf="showActions">
-							<p-button label="Save" (click)="saveResult(childRowData)"></p-button> &nbsp;
-							<p-button label="Disp" (click)="saveResult(childRowData)"></p-button>
+							<p-button label="Save" (click)="saveResult(childRowData)" 
+								*ngIf="shoulPermitSave(this.selectedInvestigation.id, visit, admission)"></p-button> &nbsp;
+							<p-button label="Disp" (click)="saveResult(childRowData)"
+								*ngIf="shoulPermitSave(this.selectedInvestigation.id, visit, admission)"></p-button>
 						</td>
 					</tr>
 

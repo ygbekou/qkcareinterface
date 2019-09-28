@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Admission, VitalSign } from '../../models';
-import { GenericService } from '../../services';
+import { GenericService, TokenStorage } from '../../services';
 import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
 import { ConfirmationService, Message } from 'primeng/api';
 import { BaseComponent } from './baseComponent';
@@ -27,9 +27,10 @@ export class VitalSignList extends BaseComponent implements OnInit, OnDestroy {
 			private route: ActivatedRoute,
 			public genericService: GenericService,
 			public translate: TranslateService,
-			public confirmationService: ConfirmationService
+            public confirmationService: ConfirmationService,
+            public tokenStorage: TokenStorage,
         ) {
-		super(genericService, translate, confirmationService);
+		super(genericService, translate, confirmationService, tokenStorage);
 	}
 
     ngOnInit(): void {

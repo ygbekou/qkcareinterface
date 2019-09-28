@@ -1,14 +1,11 @@
 import { Component, OnInit, OnDestroy, Input, Output } from '@angular/core';
-import { Employee } from '../../models/employee';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { Constants } from '../../app.constants';
-import { Admission } from '../../models/admission';
 import { BirthReport } from '../../models/activities';
-import { Cookie } from 'ng2-cookies/ng2-cookies';
-import { DialogModule, InputTextareaModule, CheckboxModule } from 'primeng/primeng';
-import { User } from '../../models/user';  
-import { GenericService, GlobalEventsManager } from '../../services';
+import { GenericService, GlobalEventsManager, TokenStorage } from '../../services';
 import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
+import { BaseComponent } from '../admin/baseComponent';
+import { ConfirmationService } from 'primeng/api';
 
 @Component({ 
   selector: 'app-birthReport-list',
@@ -16,7 +13,7 @@ import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
   providers: [GenericService] 
 })
   
-export class BirthReportList implements OnInit, OnDestroy {
+export class BirthReportList extends BaseComponent implements OnInit, OnDestroy {
   
   public error: String = '';
   displayDialog: boolean;
@@ -25,11 +22,15 @@ export class BirthReportList implements OnInit, OnDestroy {
   
   constructor
     (
-    private genericService: GenericService,
-    private translate: TranslateService,
+    private globalEventsManager: GlobalEventsManager,
+    public genericService: GenericService,
+    public confirmationService: ConfirmationService,
+    public translate: TranslateService,
+    public tokenStorage: TokenStorage,
     private route: ActivatedRoute,
     private router: Router
     ) {
+      super(genericService, translate, confirmationService, tokenStorage);
   }
 
   ngOnInit(): void {

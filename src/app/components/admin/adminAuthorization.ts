@@ -32,11 +32,11 @@ export class AdminAuthorization extends BaseComponent implements OnInit {
   currentUser: User = JSON.parse(Cookie.get('user'));
 
   constructor (
-    private genericService: GenericService,
-    private translate: TranslateService,
-    private confirmationService: ConfirmationService,
+    public genericService: GenericService,
+    public translate: TranslateService,
+    public confirmationService: ConfirmationService,
     private globalEventsManager: GlobalEventsManager,
-    private tokenStorage: TokenStorage
+    public tokenStorage: TokenStorage
   ) {
     super(genericService, translate, confirmationService, tokenStorage);
     this.user = new User();

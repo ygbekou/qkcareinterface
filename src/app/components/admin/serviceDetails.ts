@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Service } from '../../models/service';
-import { GenericService } from '../../services';
+import { GenericService, TokenStorage } from '../../services';
 import { DoctorOrderTypeDropdown } from '../dropdowns';
 import { BaseComponent } from './baseComponent';
 import { Message, ConfirmationService } from 'primeng/api';
@@ -23,10 +23,11 @@ export class ServiceDetails extends BaseComponent implements OnInit, OnDestroy {
       public genericService: GenericService,
       private docOrderTypeDropdown: DoctorOrderTypeDropdown,
       public translate: TranslateService,
-	  public confirmationService: ConfirmationService,
+      public confirmationService: ConfirmationService,
+      public tokenStorage: TokenStorage,
       private route: ActivatedRoute
     ) {
-		super(genericService, translate, confirmationService);
+		    super(genericService, translate, confirmationService, tokenStorage);
       	this.doctorOrderTypeDropdown = docOrderTypeDropdown;
   }
 

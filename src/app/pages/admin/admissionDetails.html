@@ -34,7 +34,7 @@
   </div> 
   
   <p-tabView (onChange)="onTabChange($event)">
-    <p-tabPanel header="{{'COMMON.LOCATION' | translate }}">
+    <p-tabPanel header="{{'COMMON.LOCATION' | translate }}" *ngIf="permitView('Admission Details')">
       <div class="ui-grid ui-grid-responsive ui-fluid">
         <div class="ui-grid-row">
           <div class="ui-grid-col-4 ui-sm-12">
@@ -127,39 +127,39 @@
       <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
         <button type="button" pButton icon="fa fa-refresh" (click)="clear()"
           label="{{ 'COMMON.CLEAR' | translate }}"></button>&nbsp;
-        <button pButton icon="fa fa-check" label="{{ 'COMMON.SAVE' | translate }}"></button>
+        <button pButton icon="fa fa-check" label="{{ 'COMMON.SAVE' | translate }}" *ngIf="permitSave(admission.id, 'Admission Details')"></button>
       </div>
     </p-tabPanel>
-    <p-tabPanel header="{{'COMMON.VITAL_SIGN_LIST' | translate }}" *ngIf="admission && admission.id > 0">
+    <p-tabPanel header="{{'COMMON.VITAL_SIGN_LIST' | translate }}" *ngIf="admission && admission.id > 0 && permitView('ADMISSION_VITAL_SIGN')">
       <app-vitalSign-details [admission]="admission" (vitalSignSaveEvent)="onVitalSignSaved($event)">
       </app-vitalSign-details> <br />
       <app-vitalSign-list [admission]="admission" (vitalSignIdEvent)="onVitalSignSelected($event)">
       </app-vitalSign-list> 
     </p-tabPanel>
-    <p-tabPanel header="{{'COMMON.DOCTOR_ORDER_LIST' | translate }}" *ngIf="admission && admission.id > 0">
+    <p-tabPanel header="{{'COMMON.DOCTOR_ORDER_LIST' | translate }}" *ngIf="admission && admission.id > 0 && permitView('ADMISSION_DOCTOR_ORDER')">
       <app-doctorOrder-details [admission]="admission" (doctorOrderSaveEvent)="onDoctorOrderSaved($event)">
       </app-doctorOrder-details> <br /> <br />
       <app-doctorOrder-list [admission]="admission" (doctorOrderIdEvent)="onDoctorOrderSelected($event)">
       </app-doctorOrder-list><br />
     </p-tabPanel>
-    <p-tabPanel header="{{'COMMON.DIAGNOSIS_LIST' | translate }}" *ngIf="admission && admission.id > 0">
+    <p-tabPanel header="{{'COMMON.DIAGNOSIS_LIST' | translate }}" *ngIf="admission && admission.id > 0 && permitView('ADMISSION_DIAGNOSIS')">
       <app-admissionDiagnoses [admission]="admission"></app-admissionDiagnoses>
 	</p-tabPanel>
-	<p-tabPanel header="{{'COMMON.SERVICE_LIST' | translate }}" *ngIf="admission && admission.id > 0">
+	<p-tabPanel header="{{'COMMON.SERVICE_LIST' | translate }}" *ngIf="admission && admission.id > 0 && permitView('ADMISSION_SERVICE')">
       <app-patientServiceDetails [admission]="admission"></app-patientServiceDetails>
     </p-tabPanel>
-    <p-tabPanel header="{{'COMMON.PRESCRIPTION_LIST' | translate }}" *ngIf="admission && admission.id > 0">
+    <p-tabPanel header="{{'COMMON.PRESCRIPTION_LIST' | translate }}" *ngIf="admission && admission.id > 0 && permitView('ADMISSION_PRESCRIPTION')">
       <app-prescription-details (prescriptionSaveEvent)="onPrescriptionSaved($event)" [admission]="admission"></app-prescription-details><br />
       <app-prescription-list [admission]="admission" (prescriptionIdEvent)="onPrescriptionSelected($event)">
       </app-prescription-list>
     </p-tabPanel>
-    <p-tabPanel header="{{'COMMON.INVESTIGATION_LIST' | translate }}" *ngIf="admission && admission.id > 0">
+    <p-tabPanel header="{{'COMMON.INVESTIGATION_LIST' | translate }}" *ngIf="admission && admission.id > 0 && permitView('ADMISSION_INVESTIGATION')">
       <app-investigation-list [showActions]="false" [admission]="admission"></app-investigation-list>
     </p-tabPanel>
-    <p-tabPanel header="{{'COMMON.PHARMACY' | translate }}" *ngIf="admission &&  admission.id > 0">
+    <p-tabPanel header="{{'COMMON.PHARMACY' | translate }}" *ngIf="admission &&  admission.id > 0 && permitView('ADMISSION_PHARMACY')">
       <app-patientMedicine-list [admission]="admission"></app-patientMedicine-list>
     </p-tabPanel>
-    <p-tabPanel header="{{'COMMON.DISCHARGE' | translate }}" *ngIf="admission && admission.id > 0">
+    <p-tabPanel header="{{'COMMON.DISCHARGE' | translate }}" *ngIf="admission && admission.id > 0 && permitView('ADMISSION_DISCHARGE')">
       <app-discharge-details [admission]="admission"></app-discharge-details>
     </p-tabPanel>
   </p-tabView>

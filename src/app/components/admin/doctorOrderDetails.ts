@@ -1,10 +1,10 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
 import { Constants } from '../../app.constants';
 import { Admission, DoctorOrder, User, Visit, Product, LabTest } from '../../models';
 import { DoctorOrderTypeDropdown, DoctorOrderPriorityDropdown, DoctorOrderKindDropdown, DoctorDropdown,
 	LabTestDropdown, ProductDropdown} from '../dropdowns';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
-import { GenericService, VisitService } from '../../services';
+import { GenericService, VisitService, TokenStorage } from '../../services';
 import { Message, ConfirmationService } from 'primeng/api';
 import { BaseComponent } from './baseComponent';
 import { TranslateService } from '@ngx-translate/core';
@@ -34,9 +34,10 @@ export class DoctorOrderDetails extends BaseComponent implements OnInit, OnDestr
   constructor
     (
       public genericService: GenericService,
-	  private visitService: VisitService,
-	  public translate: TranslateService,
-	  public confirmationService: ConfirmationService,
+      private visitService: VisitService,
+      public translate: TranslateService,
+      public confirmationService: ConfirmationService,
+      public tokenStorage: TokenStorage,
       private doctorOrderTypeDropdown: DoctorOrderTypeDropdown,
       private doctorOrderPriorityDropdown: DoctorOrderPriorityDropdown,
       private doctorOrderKindDropdown: DoctorOrderKindDropdown,
@@ -44,8 +45,8 @@ export class DoctorOrderDetails extends BaseComponent implements OnInit, OnDestr
       private labTestDropdown: LabTestDropdown,
       private productDropdown: ProductDropdown,
     ) {
-	super(genericService, translate, confirmationService);
-    this.user = new User();
+	    super(genericService, translate, confirmationService, tokenStorage);
+      this.user = new User();
   }
 
   ngOnInit(): void {
@@ -151,7 +152,4 @@ export class DoctorOrderDetails extends BaseComponent implements OnInit, OnDestr
     this.labTestDropdown.getActiveLabTests();
   }
 
-  delete() {
-
-  }
- }
+}

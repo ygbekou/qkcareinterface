@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angu
 import { ActivatedRoute } from '@angular/router';
 import { Admission, Visit, DoctorOrder } from '../../models';
 import { ConfirmationService, Message } from 'primeng/api';
-import { GenericService, GlobalEventsManager } from '../../services';
+import { GenericService, GlobalEventsManager, TokenStorage } from '../../services';
 import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
 import { BaseComponent } from './baseComponent';
 
@@ -22,14 +22,15 @@ export class DoctorOrderList extends BaseComponent implements OnInit, OnDestroy 
 
   constructor
     (
-	public genericService: GenericService,
-	public globalEventsManager: GlobalEventsManager,
+	  public genericService: GenericService,
+	  public globalEventsManager: GlobalEventsManager,
     public translate: TranslateService,
     public confirmationService: ConfirmationService,
+    public tokenStorage: TokenStorage,
     private route: ActivatedRoute
     ) {
 
-    super(genericService, translate, confirmationService);
+    super(genericService, translate, confirmationService, tokenStorage);
   }
 
   ngOnInit(): void {
@@ -98,11 +99,10 @@ export class DoctorOrderList extends BaseComponent implements OnInit, OnDestroy 
               .subscribe((data: DoctorOrder[]) =>
               {
                 this.doctorOrders = data
-                console.info(this.doctorOrders);
               },
               error => console.log(error),
               () => console.log('Get all DoctorOrders complete'));
           });
-	}
-
+  }
+  
  }

@@ -3,7 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Constants } from '../../app.constants';
 import { ReportView, Parameter, User, UserGroup, Patient } from '../../models';
 import { CountryDropdown, ReligionDropdown, OccupationDropdown, PayerTypeDropdown, InsuranceDropdown } from '../dropdowns';
-import { GenericService, UserService, ReportService, GlobalEventsManager } from '../../services';
+import { GenericService, UserService, ReportService, GlobalEventsManager, TokenStorage } from '../../services';
 import { Message, ConfirmationService, MenuItem, SelectItem } from 'primeng/api';
 import { TranslateService } from '@ngx-translate/core';
 import { BaseComponent } from './baseComponent';
@@ -53,6 +53,7 @@ export class PatientKiosk extends BaseComponent implements OnInit, OnDestroy {
 			private reportService: ReportService,
 			public globalEventsManager: GlobalEventsManager,
 			public translate: TranslateService,
+			public tokenStorage: TokenStorage,
 			public confirmationService: ConfirmationService,
 			private countryDropdown: CountryDropdown,
 			private religionDropdown: ReligionDropdown,
@@ -65,7 +66,7 @@ export class PatientKiosk extends BaseComponent implements OnInit, OnDestroy {
 		) {
 
 
-		super(genericService, translate, confirmationService);
+		super(genericService, translate, confirmationService, tokenStorage);
 		this.patient.user = new User();
 		this.sexes = [];
 		this.sexes.push({ label: 'Homme', value: 'M', pic: 'male.png' });

@@ -4,7 +4,7 @@ import { Constants } from '../../app.constants';
 import { Package, Service, PackageService } from '../../models';
 import { ServiceDropdown } from '../dropdowns';
 import { ConfirmationService } from 'primeng/primeng';
-import { GenericService, BillingService } from '../../services';
+import { GenericService, BillingService, TokenStorage } from '../../services';
 import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
 import { Message } from 'primeng/api';
 import { BaseComponent } from './baseComponent';
@@ -26,12 +26,13 @@ export class PackageDetails extends BaseComponent implements OnInit, OnDestroy {
     (
       public genericService: GenericService,
       private billingService: BillingService,
-	  public translate: TranslateService,
-	  public confirmationService: ConfirmationService,
+      public translate: TranslateService,
+      public confirmationService: ConfirmationService,
+      public tokenStorage: TokenStorage,
       private srvDropdown: ServiceDropdown,
       private route: ActivatedRoute
     ) {
-		super(genericService, translate, confirmationService);
+		super(genericService, translate, confirmationService, tokenStorage);
     	this.serviceDropdown = srvDropdown;
   }
 

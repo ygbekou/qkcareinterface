@@ -176,8 +176,8 @@
 	</p-tabPanel>
 </p-tabView>
 
-<p-tabView> 
- 	<p-tabPanel header="{{ 'COMMON.NEW' | translate }}" *ngIf="transferType == 'BED'">
+<p-tabView (onChange)="onTabChange($event)"> 
+ 	<p-tabPanel header="{{ 'COMMON.NEW' | translate }} {{ 'COMMON.BED' | translate }}" *ngIf="permitView('Admission Transfer')">
  		<div class="ui-grid ui-grid-responsive ui-fluid">
 	 		<div class="ui-grid-row">
 	 			<div class="ui-grid-col-4 ui-sm-12">
@@ -257,7 +257,7 @@
 			</div>
 		</div>
  	</p-tabPanel>
- 	<p-tabPanel header="{{ 'COMMON.NEW' | translate }}" *ngIf="transferType == 'DOCTOR'">
+ 	<p-tabPanel header="{{ 'COMMON.NEW' | translate }} {{ 'COMMON.DOCTOR' | translate }}" *ngIf="permitView('Admission Transfer')">
 	 	<div class="ui-grid ui-grid-responsive ui-fluid">
 			<div class="ui-grid-row">
 				<div class="ui-grid-col-3 ui-sm-12"> 
@@ -283,8 +283,8 @@
 	</p-tabPanel>
 	<br/>
 	<p-messages [(value)]="messages"></p-messages>
-	<button type="button" pButton icon="fa fa-close" (click)="delete()" label="{{ 'COMMON.DELETE' | translate }}"></button>&nbsp;&nbsp;
-	<button type="button" pButton icon="fa fa-check" (click)="transfer()" label="{{ 'COMMON.SAVE' | translate }}"></button>
+	<button type="button" pButton icon="fa fa-check" (click)="transfer()" label="{{ 'COMMON.SAVE' | translate }}"
+		*ngIf="permitSave(admission.id, 'Admission Transfer')"></button>
 		
 	
  </p-tabView>

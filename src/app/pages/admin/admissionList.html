@@ -81,7 +81,7 @@
                     </div>
                 </td>
                 <td align="justify">
-					<button type="button" pButton icon="fa fa-edit"	(click)="edit(rowData.id)" title="{{ 'COMMON.EDIT' | translate }}"></button> 
+					<button type="button" pButton icon="fa fa-edit"	(click)="edit(rowData.id)" *ngIf="permitView('Admission List')" title="{{ 'COMMON.EDIT' | translate }}"></button> 
 					&nbsp;&nbsp;
 					<button class="ui-button-rounded" type="button" pButton icon="fa fa-check"
 						(click)="redirectToOrigialPage(rowData)" title="{{ 'COMMON.SELECT' | translate }}"

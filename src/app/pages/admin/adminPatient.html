@@ -1,11 +1,11 @@
 <div class="ui-g-12 ui-sm-12" style="padding: 15px;">
   <p-tabView (onChange)="onTabChange($event)">
-    <p-tabPanel header="{{ 'COMMON.DETAILS' | translate }}">
+    <p-tabPanel header="{{ 'COMMON.DETAILS' | translate }}" *ngIf="checkPermission('PATIENT_ADD_DETAILS')">
       <div *ngIf="activeTab == 0">
         <app-patient-details></app-patient-details>
       </div>
     </p-tabPanel>
-    <p-tabPanel header="{{ 'COMMON.APPOINTMENT' | translate }}" *ngIf="patient.id > 0">
+    <p-tabPanel header="{{ 'COMMON.APPOINTMENT' | translate }}" *ngIf="patient.id > 0 && checkPermission('PATIENT_ADD_DETAILS')">
       <div *ngIf="activeTab == 1">
         <app-appointment-details (aptSavedEvent)="onAptSaved($event)"></app-appointment-details>
         <br />

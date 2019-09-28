@@ -2,9 +2,8 @@ import { Component, OnInit, OnDestroy, ChangeDetectorRef, Input } from '@angular
 import { Router, ActivatedRoute } from '@angular/router';
 import { Constants } from '../../app.constants';
 import { Admission, AdmissionDiagnosis, Discharge, PrescriptionMedicine, Reference, Visit} from '../../models';
-import { EditorModule } from 'primeng/editor';
 import { DoctorDropdown } from '../dropdowns';
-import { GenericService, AdmissionService, GlobalEventsManager, VisitService } from '../../services';
+import { GenericService, AdmissionService, GlobalEventsManager, VisitService, TokenStorage } from '../../services';
 import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
 import { Message, ConfirmationService } from 'primeng/api';
 import { BaseComponent } from './baseComponent';
@@ -34,14 +33,15 @@ export class DischargeDetails extends BaseComponent implements OnInit, OnDestroy
     (
       private globalEventsManager: GlobalEventsManager,
       public genericService: GenericService,
-	  public translate: TranslateService,
-	  public confirmationService: ConfirmationService,
+      public translate: TranslateService,
+      public confirmationService: ConfirmationService,
+      public tokenStorage: TokenStorage,
       private doctorDropdown: DoctorDropdown,
       private changeDetectorRef: ChangeDetectorRef,
       private route: ActivatedRoute,
       private router: Router
     ) {
-		super(genericService, translate, confirmationService);
+		  super(genericService, translate, confirmationService, tokenStorage);
   }
 
   ngOnInit(): void {

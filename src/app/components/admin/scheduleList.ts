@@ -1,33 +1,31 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
-import { Constants } from '../../app.constants';
-import { Employee, Schedule, User } from '../../models';
-import { FileUploader } from './fileUploader';
-import { Cookie } from 'ng2-cookies/ng2-cookies';
-import { DataTableModule, DialogModule, InputTextareaModule, CheckboxModule } from 'primeng/primeng';
-import { GenericService } from '../../services';
+import { Schedule } from '../../models';
+import { ConfirmationService } from 'primeng/primeng';
+import { GenericService, TokenStorage } from '../../services';
 import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
-import { Message } from 'primeng/api';
+import { BaseComponent } from './baseComponent';
 
 @Component({
   selector: 'app-schedule-list',
   templateUrl: '../../pages/admin/scheduleList.html',
   providers: [GenericService]
 })
-export class ScheduleList implements OnInit, OnDestroy {
+export class ScheduleList extends BaseComponent implements OnInit, OnDestroy {
   
   schedules: Schedule[] = [];
   cols: any[];
   
   constructor
     (
-    private genericService: GenericService,
-    private translate: TranslateService,
-    private changeDetectorRef: ChangeDetectorRef,
+    public genericService: GenericService,
+    public translate: TranslateService,
+    public confirmationService: ConfirmationService, 
+    public tokenStorage: TokenStorage, 
     private route: ActivatedRoute,
     private router: Router,
     ) {
-
+      super(genericService, translate, confirmationService, tokenStorage);
     
   }
 
@@ -50,14 +48,13 @@ export class ScheduleList implements OnInit, OnDestroy {
         .queryParams
         .subscribe(params => {          
           
-            let parameters: string [] = []; 
+            const parameters: string [] = []; 
             
-            parameters.push('e.status = |status|0|Integer')
+            parameters.push('e.status = |status|0|Integer');
             
             this.genericService.getAllByCriteria('Schedule', parameters)
-              .subscribe((data: Schedule[]) => 
-              { 
-                this.schedules = data 
+              .subscribe((data: Schedule[]) => { 
+                this.schedules = data; 
                 this.updateRowGroupMetaData();
               },
               error => console.log(error),
@@ -66,8 +63,8 @@ export class ScheduleList implements OnInit, OnDestroy {
   }
  
  updateCols() {
-    for (var index in this.cols) {
-      let col = this.cols[index];
+    for (const index in this.cols) {
+      const col = this.cols[index];
       this.translate.get(col.headerKey).subscribe((res: string) => {
         col.header = res;
       });
@@ -87,30 +84,28 @@ export class ScheduleList implements OnInit, OnDestroy {
     this.schedules = null;
   }
   
-  edit(scheduleId : number) {
+  edit(scheduleId: number) {
     try {
-      let navigationExtras: NavigationExtras = {
+      const navigationExtras: NavigationExtras = {
         queryParams: {
-          "scheduleId": scheduleId,
+          'scheduleId': scheduleId,
         }
-      }
-      this.router.navigate(["/admin/scheduleDetails"], navigationExtras);
-    }
-    catch (e) {
+      };
+      this.router.navigate(['/admin/scheduleDetails'], navigationExtras);
+    } catch (e) {
       console.log(e);
     }
   }
 
-  delete(scheduleId : number) {
+  delete(scheduleId: number) {
     try {
-      let navigationExtras: NavigationExtras = {
+      const navigationExtras: NavigationExtras = {
         queryParams: {
-          "scheduleId": scheduleId,
+          'scheduleId': scheduleId,
         }
-      }
-      this.router.navigate(["/admin/scheduleDetails"], navigationExtras);
-    }
-    catch (e) {
+      };
+      this.router.navigate(['/admin/scheduleDetails'], navigationExtras);
+    } catch (e) {
       console.log(e);
     }
   }
@@ -123,18 +118,18 @@ export class ScheduleList implements OnInit, OnDestroy {
         this.rowGroupMetadata = {};
         if (this.schedules) {
             for (let i = 0; i < this.schedules.length; i++) {
-                let rowData = this.schedules[i];
-                let doctorName = rowData.doctorName;
-                if (i == 0) {
+                const rowData = this.schedules[i];
+                const doctorName = rowData.doctorName;
+                if (i === 0) {
                     this.rowGroupMetadata[doctorName] = { index: 0, size: 1 };
-                }
-                else {
-                    let previousRowData = this.schedules[i - 1];
-                    let previousRowGroup = previousRowData.doctorName;
-                    if (doctorName === previousRowGroup)
+                } else {
+                    const previousRowData = this.schedules[i - 1];
+                    const previousRowGroup = previousRowData.doctorName;
+                    if (doctorName === previousRowGroup) {
                         this.rowGroupMetadata[doctorName].size++;
-                    else
+                    } else {
                         this.rowGroupMetadata[doctorName] = { index: i, size: 1 };
+                    }
                 }
             }
         }

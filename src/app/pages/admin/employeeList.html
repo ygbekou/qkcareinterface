@@ -62,8 +62,10 @@
           </div>
         </td>
         <td>
-          <button class="ui-button-rounded" type="button" pButton icon="fa fa-edit" (click)="edit(rowData.id)"></button>&nbsp;&nbsp;
-          <button class="ui-button-rounded ui-button-warning" type="button" pButton icon="fa fa-eraser" (click)="delete(rowData.id)"></button>
+          <button class="ui-button-rounded" type="button" pButton icon="fa fa-edit" (click)="edit(rowData.id)" 
+            *ngIf="permitView('Employee List')"></button>&nbsp;&nbsp;
+          <button class="ui-button-rounded ui-button-warning" type="button" pButton icon="fa fa-eraser" 
+            *ngIf="permitDelete('Employee List')" (click)="delete(rowData.id)"></button>
         </td>
       </tr>
     </ng-template>
