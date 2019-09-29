@@ -25,50 +25,48 @@
   </form>
 </p-dialog>
 <div class="container">
-  <div class="row pt-3">
-    <br />
-    <br />
-    <div class="col-lg-4">
-
+  <form name="form" (ngSubmit)="f.form.valid && login()" #f="ngForm" validate>
+    <p-messages [(value)]="messages"></p-messages>
+    <div class="ui-grid-row">
+      <div class="form-group">
+        <label for="email">{{ 'COMMON.USERNAME' | translate }}<font color="red">*</font></label>
+        <input type="text" pInputText class="form-control" id="email" required [(ngModel)]="user.userName" name="email"
+          #email="ngModel">
+        <p-message *ngIf="f.submitted && email.invalid" severity="error" text="Field is required">
+        </p-message>
+      </div>
     </div>
-    <div class="col-lg-8">
-
-      <form name="form" (ngSubmit)="f.form.valid && login()" #f="ngForm" validate>
-        <p-messages [(value)]="messages"></p-messages>
-        <div class="ui-grid ui-grid-responsive ui-fluid">
-          <div class="ui-grid-row">
-            <div class="form-group">
-              <label for="email">{{ 'COMMON.USERNAME' | translate }}<font color="red">*</font></label>
-              <input type="text" pInputText class="form-control" id="email" required [(ngModel)]="user.userName"
-                name="email" #email="ngModel">
-              <p-message *ngIf="f.submitted && email.invalid" severity="error" text="Field is required">
-              </p-message>
-            </div>
-          </div>
-          <div class="ui-grid-row">
-            <div class="form-group">
-              <label for="password">{{ 'COMMON.PASSWORD' | translate }} <font color="red">*</font></label>
-              <input type="password" pInputText class="form-control" id="password" [(ngModel)]="user.password"
-                name="password" #password="ngModel">
-              <p-message *ngIf="f.submitted && password.invalid" severity="error" text="Field is required"></p-message>
-            </div>
-          </div>
-        </div>
-
-        <br />
-        <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
-          <button pButton type="submit" icon="fa fa-play-circle" label="{{ 'COMMON.SUBMIT' | translate }}"></button>
-          <br />
-          <br />
-
-          {{'MESSAGE.FORGET_PASSWORD' | translate}} &nbsp;&nbsp;<button pButton (click)="button='password'"
-            icon="fa fa-play-circle" label="{{'MESSAGE.SEND_PASSWORD' | translate}}"></button>
- 
-        </div>
-      </form>
+    <div class="ui-grid-row">
+      <div class="form-group">
+        <label for="password">{{ 'COMMON.PASSWORD' | translate }} <font color="red">*</font></label>
+        <input type="password" pInputText class="form-control" id="password" [(ngModel)]="user.password" name="password"
+          #password="ngModel">
+        <p-message *ngIf="f.submitted && password.invalid" severity="error" text="Field is required"></p-message>
+      </div>
     </div>
-  </div>
+    <div class="ui-grid-row">
+      <div class="form-group">
+        <button pButton type="submit" icon="fa fa-sign-in" label="{{ 'COMMON.LOGIN' | translate }}"></button>
+      </div>
+    </div>
+
+    <div class="ui-grid-row">
+      <hr/>
+      <div class="form-group"> 
+        <button pButton (click)="button='register'" icon="fa fa-user-plus"
+          label="{{'COMMON.REGISTER' | translate}}"></button>
+      </div>
+    </div>
+
+    <div class="ui-grid-row">
+      <hr/>
+      <div class="form-group">
+        <label for="">{{'MESSAGE.FORGET_PASSWORD' | translate}}</label>
+        &nbsp;&nbsp;
+        <button pButton (click)="button='password'" icon="fa fa-envelope-o"
+          label="{{'MESSAGE.SEND_PASSWORD' | translate}}"></button>
+      </div>
+    </div>
+  </form>
 </div>
-<br />
-<br />
 <app-web-footer></app-web-footer>

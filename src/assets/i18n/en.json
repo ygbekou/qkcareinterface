@@ -373,7 +373,10 @@
     "MENU_LIST": "Menu Items",
     "ASSIGNED_RESOURCES": "Assigned Resources",
     "LABEL":"Label",
-    "ICON":"Icon"
+    "ICON":"Icon",
+    "REGISTER":"I am new. I want to register",
+    "VALIDATE": "Validate",
+    "TEMP_CODE": "Temporary Code"
   },
   "MESSAGE": {
   	"TRANFER_DOCTOR_FAILED": "The transfer doctor should be different from the current doctor.",
