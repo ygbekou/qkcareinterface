@@ -60,6 +60,9 @@ export class Login implements OnInit {
 				console.log('Send password called');
 				this.sendPassword();
 				this.button = '';
+			}if (this.button === 'register') {
+				console.log('register called');
+				this.router.navigate(['/register']);
 			} else {
 				this.authenticationService.attemptAuth(this.user)
 					.subscribe(data => {
@@ -76,6 +79,7 @@ export class Login implements OnInit {
 							}
 
 						} else {
+							console.log('No token');
 							this.translate.get(['MESSAGE.INVALID_USER_PASS', 'COMMON.LOGIN']).subscribe(res => {
 								this.messages.push({ severity: Constants.ERROR, summary: res['COMMON.LOGIN'], detail: res['MESSAGE.INVALID_USER_PASS'] });
 							});
@@ -83,6 +87,7 @@ export class Login implements OnInit {
 					});
 			}
 		} catch (e) {
+				console.log('Exception...');
 			this.translate.get(['MESSAGE.INVALID_USER_PASS', 'COMMON.LOGIN']).subscribe(res => {
 				this.messages.push({ severity: Constants.ERROR, summary: res['COMMON.LOGIN'], detail: res['MESSAGE.INVALID_USER_PASS'] });
 			});

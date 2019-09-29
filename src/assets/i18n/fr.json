@@ -374,7 +374,10 @@
     "MENU_LIST": "Eléments du Menu",
     "ASSIGNED_RESOURCES": "Resources Assignés",
     "LABEL":"Label",
-    "ICON":"Icon"
+    "ICON":"Icon",
+    "REGISTER":"Je suis nouveau. Je veux m'enregistrer",
+    "VALIDATE": "Valider",
+    "TEMP_CODE": "Code temporaire"
   },
   "MESSAGE": {
     "TRANFER_DOCTOR_FAILED": "Le nouveau docteur assigné doit être différent de l'ancien.",
@@ -391,7 +394,7 @@
 	  "DELETE_UNSUCCESS": "La suppression a échoué. S'il vous plait contacter l'administrateur",
 	  "DELETE_UNSUCCESS_FOREIGN_KEY": "La suppression a échoué à cause des données dependantes dans le system. S'il vous plait contacter l'administrateur.",
     "FORGET_PASSWORD": "Vous avez oublié votre mot de passe? Cliquez sur le bouton pour recevoir un nouveau dans votre email",
-    "SEND_PASSWORD": "Envoyer mot de passe",
+    "SEND_PASSWORD": "Envoyez-moi mon mot de passe",
     "INVALID_USER_PASS": "Nom d'utilisateur ou mot de passe invalide. Veuillez réessayer.",
     "ERROR_OCCURRED": "Une erreur système s'est produite.",
     "PASSWORD_SENT": "Votre mot de passe a été envoyé à votre adresse email.",

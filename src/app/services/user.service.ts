@@ -96,6 +96,26 @@ export class UserService {
       .catch(this.handleError);
   }
 
+  public saveUserAndLogin = (user: User): Observable<User> => {
+    const toAdd = JSON.stringify(user);
+    const actionUrl = Constants.apiServer + '/service/user/saveUserAndLogin';
+    return this.http.post(actionUrl, toAdd, { headers: this.headers })
+      .map((response: Response) => {
+        return response.json();
+      })
+      .catch(this.handleError);
+  }
+
+  public getTempUser = (user: User): Observable<User> => {
+    const toAdd = JSON.stringify(user);
+    const actionUrl = Constants.apiServer + '/service/user/getTempUser';
+    return this.http.post(actionUrl, toAdd, { headers: this.headers })
+      .map((response: Response) => {
+        return response.json();
+      })
+      .catch(this.handleError);
+  }
+
   public saveUserWithoutPicture = (entityClass: string, entity: any): Observable<any> => {
     const toAdd = JSON.stringify(entity);
     const re = /\"/gi;

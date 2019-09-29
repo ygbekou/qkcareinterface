@@ -7,7 +7,6 @@ import { GenericResponse } from 'src/app/models/genericResponse';
 import { PermissionVO } from 'src/app/models/authToken';
 import { Visit, Admission } from 'src/app/models';
 
-
 @Component({
 	template: ``,
   providers: []

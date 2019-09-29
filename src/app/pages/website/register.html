@@ -1,0 +1,66 @@
+<app-web-header></app-web-header>
+<div class="container">
+  <form name="form" (ngSubmit)="f.form.valid && login()" #f="ngForm" validate>
+    <p-messages [(value)]="messages"></p-messages>
+    <div class="ui-grid-row" *ngIf="!user.id>0">
+      <div class="form-group">
+        <label for="userName">{{ 'COMMON.TEMP_CODE' | translate }}<font color="red">*</font></label>
+        <input type="text" pInputText class="form-control" id="userName" required [(ngModel)]="user.userName"
+          name="userName" #userName="ngModel">
+
+
+        <p-message *ngIf="f.submitted && userName.invalid" severity="error"
+          text="{{ 'COMMON.TEMP_CODE' | translate }} {{ 'VALIDATION.IS_REQUIRED' | translate }}"></p-message>
+
+      </div>
+    </div>
+
+    <div class="ui-grid-row" *ngIf="!user.id>0">
+      <div class="form-group">
+        <label for="birthDate">{{ 'COMMON.BIRTH_DATE' | translate }}<font color="red">*</font>:</label>
+        <br />
+        <p-calendar [(ngModel)]="user.birthDate" id="birthDate" monthNavigator="true" yearRange="1940:2050"
+          yearNavigator="true" name="birthDate" #birthDate="ngModel" required date
+          dateFormat={{globalEventsManager.CAL_DATE_FORMAT}}></p-calendar>
+        <p-message *ngIf="f.submitted && birthDate.errors && birthDate.errors.required" severity="error"
+          text="{{ 'COMMON.BIRTH_DATE' | translate }} {{ 'VALIDATION.IS_REQUIRED' | translate }}"></p-message>
+        <p-message *ngIf="f.submitted && birthDate.errors && birthDate.errors.date" severity="error"
+          text="{{ 'COMMON.BIRTH_DATE' | translate }} {{ 'VALIDATION.IS_INVALID' | translate }}"></p-message>
+      </div>
+    </div>
+    <div class="ui-grid-row" *ngIf="!user.id>0">
+      <div class="form-group">
+        <button pButton (click)="button='validate'" icon="fa fa-check-square-o"
+          label="{{'COMMON.VALIDATE' | translate}}"></button>
+      </div>
+    </div>
+
+
+    <div class="ui-grid-row" *ngIf="user.id>0">
+      <div class="form-group">
+        <label for="email">{{ 'COMMON.E_MAIL' | translate }}<font color="red">*</font></label>
+        <input type="text" pInputText class="form-control" id="email" required [(ngModel)]="user.email" name="email"
+          #email="ngModel">
+        <p-message *ngIf="f.submitted && email.errors && email.errors.email" severity="error"
+          text="{{ 'COMMON.E_MAIL' | translate }} {{ 'VALIDATION.IS_INVALID' | translate }}"></p-message>
+      </div>
+    </div>
+
+    <div class="ui-grid-row" *ngIf="user.id>0">
+      <div class="form-group">
+        <label for="password">{{ 'COMMON.PASSWORD' | translate }} <font color="red">*</font></label>
+        <input type="password" pInputText class="form-control" id="password" [(ngModel)]="user.password" name="password"
+          #password="ngModel">
+        <p-message *ngIf="f.submitted && password.invalid" severity="error"
+          text="{{ 'COMMON.PASSWORD' | translate }} {{ 'VALIDATION.IS_REQUIRED' | translate }}"></p-message>
+      </div>
+    </div>
+    <div class="ui-grid-row" *ngIf="user.id>0">
+      <div class="form-group">
+        <button pButton type="submit" icon="fa fa-sign-in" label="{{ 'COMMON.REGISTER' | translate }}"></button>
+      </div>
+    </div>
+
+  </form>
+</div>
+<app-web-footer></app-web-footer>

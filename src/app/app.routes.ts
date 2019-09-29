@@ -20,6 +20,7 @@ import { AboutUs } from './components/website/aboutUs';
 import { Contact } from './components/website/contact';
 import { SingleSection } from './components/website/singleSection';
 import { Services} from './components/website/services'; 
+import { Register } from './components/website/register';
 
 export const routes: Routes = [
   {path: '', component: Landing, pathMatch: 'full'}, 
@@ -41,6 +42,7 @@ export const routes: Routes = [
   {path: 'industries', component: Industries},
   {path: 'about', component: AboutUs},
   {path: 'contact', component: Contact},
+  { path: 'register', component: Register},
   {path: 'admin', loadChildren: './modules/admin.module#AdminModule', canActivate: [LoggedInGuard], }
 ];
 

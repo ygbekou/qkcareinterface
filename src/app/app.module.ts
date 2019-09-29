@@ -124,6 +124,7 @@ import { CurrencyMaskModule } from 'ng2-currency-mask';
 import { MinDirective } from './components/directives/min-validator.directive'
 import { MaxDirective } from './components/directives/max-validator.directive'
 import { ConfirmationService } from 'primeng/api'; 
+import { Register } from './components/website/register';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(httpClient: HttpClient) {
@@ -225,7 +226,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     MessagesDemoComponent, MiscDemoComponent,
     ChartsDemoComponent, EmptyDemoComponent,
     FileDemoComponent, DocumentationComponent,
-    Login, Services, Landing, Header,
+    Login, Services, Landing, Header, Register,
     Footer, Industries, SingleSection, AboutUs,
     Contact, Landing, Header, Footer, MinDirective, MaxDirective
   ],
