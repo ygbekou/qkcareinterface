@@ -163,21 +163,21 @@ export class BaseComponent {
     return this.checkPermission(resource, 'CAN_DELETE', 'Y');
   }
 
-   shoulPermitSave(id: number, visit: Visit, admission: Admission) {
-    return ((visit !== undefined && this.permitSave(id, 'VISIT_DOCTOR_ORDER'))
-          || (admission !== undefined && this.permitSave(id, 'ADMISSION_DOCTOR_ORDER'))
+   shoulPermitSave(id: number, visit: Visit, admission: Admission, resourcePrefix: string) {
+    return ((visit !== undefined && this.permitSave(id, 'VISIT_' + resourcePrefix))
+          || (admission !== undefined && this.permitSave(id, 'ADMISSION_' + resourcePrefix))
     );
   }
 
-  shoulPermitView(visit: Visit, admission: Admission) {
-    return ((visit !== undefined && this.permitView('VISIT_DOCTOR_ORDER'))
-          || (admission !== undefined && this.permitView('ADMISSION_DOCTOR_ORDER'))
+  shoulPermitView(visit: Visit, admission: Admission, resourcePrefix: string) {
+    return ((visit !== undefined && this.permitView('VISIT_' + resourcePrefix))
+          || (admission !== undefined && this.permitView('ADMISSION_' + resourcePrefix))
     );
   }
 
-  shoulPermitDelete(visit: Visit, admission: Admission) {
-    return ((visit !== undefined && this.permitDelete('VISIT_DOCTOR_ORDER'))
-          || (admission !== undefined && this.permitDelete('ADMISSION_DOCTOR_ORDER'))
+  shoulPermitDelete(visit: Visit, admission: Admission, resourcePrefix: string) {
+    return ((visit !== undefined && this.permitDelete('VISIT_' + resourcePrefix))
+          || (admission !== undefined && this.permitDelete('ADMISSION_' + resourcePrefix))
     );
   }
 

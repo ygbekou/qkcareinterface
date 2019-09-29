@@ -7,7 +7,8 @@
 						href="assets/images/radinvestigation/{{investigation.id}}/{{doc}}">{{doc}}</a>
 				</div>
 				<div class="ui-grid-col-4 ui-sm-12">
-					<button type="button" pButton icon="fa fa-minus" (click)="deleteFile(i, doc)" label="{{ 'COMMON.DELETE' | translate }}"></button>
+					<button type="button" pButton icon="fa fa-minus" *ngIf="shoulPermitSave(investigation.id, visit, admission, 'RAD_IVESTIGATION')"
+						(click)="deleteFile(i, doc)" label="{{ 'COMMON.DELETE' | translate }}"></button>
 				</div>
 			</div>
 			<br/>
@@ -191,8 +192,10 @@
 		<br/>
 		<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
 			<button type="button" pButton icon="fa fa-refresh" (click)="clear()" label="{{ 'COMMON.CLEAR' | translate }}"></button>&nbsp;&nbsp;
-			<button pButton icon="fa fa-save" label="{{ 'COMMON.SAVE' | translate }}"></button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			<button type="button" pButton icon="fa fa-plus" (click)="toggleDisplayFileBox()" label="{{ 'COMMON.VIEW_SCAN_DOC' | translate }}"></button>
+			<button pButton icon="fa fa-save" *ngIf="shoulPermitSave(investigation.id, visit, admission, 'RAD_IVESTIGATION')" label="{{ 'COMMON.SAVE' | translate }}"></button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<button type="button" pButton icon="fa fa-plus" 
+				*ngIf="shoulPermitSave(investigation.id, visit, admission) || shoulPermitView(visit, admission, 'RAD_IVESTIGATION')"
+			 (click)="toggleDisplayFileBox()" label="{{ 'COMMON.VIEW_SCAN_DOC' | translate }}"></button>
 		</div>
 	</div>
 </form>

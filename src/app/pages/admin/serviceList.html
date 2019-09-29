@@ -19,8 +19,8 @@
 					{{service[col.field]}}
 			</td>
 			<td>
-				<button type="button" pButton icon="fa fa-edit" (click)="edit(service.id)"></button>&nbsp;&nbsp;
-				<button type="button" pButton icon="fa fa-eraser" (click)="deleteItem(services, service.id, 'Service')"></button>
+				<button type="button" pButton icon="fa fa-edit" *ngIf="permitView('Tarif List')" (click)="edit(service.id)"></button>&nbsp;&nbsp;
+				<button type="button" pButton icon="fa fa-eraser" *ngIf="permitDelete('Tarif List')" (click)="deleteItem(services, service.id, 'Service')"></button>
 			</td>
 		</tr>
 	</ng-template>

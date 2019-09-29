@@ -28,8 +28,8 @@
 	                </div>
 	            </td>
 	            <td>
-	            	<button type="button" pButton icon="fa fa-edit" (click)="edit(rowData.id)"></button>&nbsp;&nbsp;
-					<button type="button" pButton icon="fa fa-eraser" (click)="delete(rowData.id)"></button>
+	            	<button type="button" pButton icon="fa fa-edit" (click)="edit(rowData.id)" *ngIf="permitView('Birth List')"></button>&nbsp;&nbsp;
+					<button type="button" pButton icon="fa fa-eraser" (click)="delete(rowData.id)" *ngIf="permitDelete('Birth List')"></button>
 	            </td>
 	        </tr>
 	    </ng-template>

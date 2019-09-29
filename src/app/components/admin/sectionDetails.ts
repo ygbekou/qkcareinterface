@@ -1,9 +1,10 @@
 import { Component, OnInit, OnDestroy, EventEmitter, Output } from '@angular/core';
 import { Section } from '../../models/website';
 import { Constants } from '../../app.constants';
-import { GenericService } from '../../services';
+import { GenericService, TokenStorage } from '../../services';
 import { TranslateService } from '@ngx-translate/core';
-import { Message } from 'primeng/api';
+import { Message, ConfirmationService } from 'primeng/api';
+import { BaseComponent } from './baseComponent';
 
 @Component({
   selector: 'app-section-details',
@@ -12,7 +13,7 @@ import { Message } from 'primeng/api';
 
 })
 // tslint:disable-next-line:component-class-suffix
-export class SectionDetails implements OnInit, OnDestroy {
+export class SectionDetails extends BaseComponent implements OnInit, OnDestroy {
 
   section: Section = new Section();
   messages: Message[] = [];
@@ -22,10 +23,13 @@ export class SectionDetails implements OnInit, OnDestroy {
   @Output() sectionSavedEvent = new EventEmitter<Section>();
   constructor
     (
-      private genericService: GenericService,
-      private translate: TranslateService
+      public genericService: GenericService,
+      public translate: TranslateService,
+      public confirmationService: ConfirmationService,
+      public tokenStorage: TokenStorage,
     ) {
-    this.section = new Section();
+      super(genericService, translate, confirmationService, tokenStorage);
+      this.section = new Section();
   }
 
   ngOnInit(): void {

@@ -29,8 +29,8 @@
         </div>
       </td>
       <td>
-        <button type="button" pButton icon="fa fa-edit" (click)="edit(rowData.id)" *ngIf="shoulPermitView(visit, admission)"></button>&nbsp;&nbsp;
-        <button type="button" pButton icon="fa fa-eraser" (click)="deleteItem(prescriptions)" *ngIf="shoulPermitDelete(visit, admission)"></button>
+        <button type="button" pButton icon="fa fa-edit" (click)="edit(rowData.id)" *ngIf="shoulPermitView(visit, admission, 'PRESCRIPTION')"></button>&nbsp;&nbsp;
+        <button type="button" pButton icon="fa fa-eraser" (click)="deleteItem(prescriptions)" *ngIf="shoulPermitDelete(visit, admission, 'PRESCRIPTION')"></button>
       </td>
     </tr>
   </ng-template>

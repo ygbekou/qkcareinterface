@@ -20,8 +20,8 @@
 				{{rowData[col.field]}}
 			</td>
 			<td>
-				<button type="button" pButton icon="fa fa-edit" (click)="edit(rowData.id)"></button>&nbsp;&nbsp;
-				<button type="button" pButton icon="fa fa-eraser" (click)="deleteItem(labTests, rowData.id, 'LabTest')"></button>
+				<button type="button" pButton icon="fa fa-edit" (click)="edit(rowData.id)" *ngIf="permitView('Reference Config')"></button>&nbsp;&nbsp;
+				<button type="button" pButton icon="fa fa-eraser" (click)="deleteItem(labTests, rowData.id, 'LabTest')" *ngIf="permitDelete('Reference Config')"></button>
 			</td>
 			</tr>
 		</ng-template>

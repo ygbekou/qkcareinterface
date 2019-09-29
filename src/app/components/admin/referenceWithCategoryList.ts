@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, OnDestroy, Output, EventEmitter, Input } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ReferenceWithCategory } from '../../models/referenceWithCategory';
 import { GenericService, GlobalEventsManager, TokenStorage } from '../../services';
@@ -18,6 +18,8 @@ export class ReferenceWithCategoryList extends BaseComponent implements OnInit, 
   cols: any[];
   
   category: string;
+  @Input() canView: boolean;
+  @Input() canDelete: boolean;
   @Output() referenceWithCategoryIdEvent = new EventEmitter<string>();
   
   REFERENCE_WITH_CATEGORY_LIST: string;

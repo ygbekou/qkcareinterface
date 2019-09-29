@@ -23,8 +23,8 @@
 	                </div>
 	            </td>
 	            <td>
-	            	<button type="button" pButton icon="fa fa-edit" (click)="edit(rowData.id)"></button>&nbsp;&nbsp;
-					<button type="button" pButton icon="fa fa-eraser" (click)="delete(rowData.id)"></button>
+	            	<button type="button" pButton icon="fa fa-edit" *ngIf="permitView('Receive Order List')" (click)="edit(rowData.id)"></button>&nbsp;&nbsp;
+					<button type="button" pButton icon="fa fa-eraser" *ngIf="permitDelete('Receive Order List')" (click)="delete(rowData.id)"></button>
 	            </td>
 	        </tr>
 	    </ng-template>

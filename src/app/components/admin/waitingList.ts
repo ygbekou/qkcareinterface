@@ -1,19 +1,17 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild } from '@angular/core';
-import { Employee, Visit, User, SearchCriteria } from '../../models';
-import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
-import { Constants } from '../../app.constants';
-import { FileUploader } from './fileUploader';
-import { Cookie } from 'ng2-cookies/ng2-cookies';
-import { } from 'primeng/primeng';
-import { GenericService, VisitService } from '../../services';
+import { Visit, SearchCriteria } from '../../models';
+import { Router, ActivatedRoute } from '@angular/router';
+import { ConfirmationService } from 'primeng/primeng';
+import { GenericService, VisitService, TokenStorage } from '../../services';
 import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
+import { BaseComponent } from './baseComponent';
 
 @Component({
 	selector: 'app-waiting-list',
 	templateUrl: '../../pages/admin/waitingList.html',
 	providers: [GenericService]
 })
-export class WaitingList implements OnInit, OnDestroy {
+export class WaitingList extends BaseComponent implements OnInit, OnDestroy {
 
 	visits: Visit[] = [];
 	cols: any[];
@@ -22,15 +20,15 @@ export class WaitingList implements OnInit, OnDestroy {
 	interval: any;
 	constructor
 		(
-			private genericService: GenericService,
-			private visitService: VisitService,
-			private translate: TranslateService,
-			private changeDetectorRef: ChangeDetectorRef,
+			public genericService: GenericService,
+			public visitService: VisitService,
+			public translate: TranslateService,
+			public confirmationService: ConfirmationService,
+			public tokenStorage: TokenStorage,
 			private route: ActivatedRoute,
 			private router: Router,
 	) {
-
-
+		super(genericService, translate, confirmationService, tokenStorage);
 	}
 
 	ngOnInit(): void {

@@ -2,9 +2,10 @@ import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/co
 import { Router, ActivatedRoute } from '@angular/router';
 import { Company } from '../../models/company';
 import { Constants } from '../../app.constants';
-import { GenericService } from '../../services';
-import { Message } from 'primeng/api';
+import { GenericService, TokenStorage } from '../../services';
+import { Message, ConfirmationService } from 'primeng/api';
 import { TranslateService } from '@ngx-translate/core';
+import { BaseComponent } from './baseComponent';
 
 @Component({
   selector: 'app-company-details',
@@ -12,7 +13,7 @@ import { TranslateService } from '@ngx-translate/core';
   providers: [GenericService]
 })
 // tslint:disable-next-line:component-class-suffix
-export class CompanyDetails implements OnInit, OnDestroy {
+export class CompanyDetails extends BaseComponent implements OnInit, OnDestroy {
 
   company: Company = new Company();
 
@@ -26,12 +27,14 @@ export class CompanyDetails implements OnInit, OnDestroy {
 
   constructor
   (
-      private genericService: GenericService,
+      public genericService: GenericService,
       public translate: TranslateService,
+      public confirmationService: ConfirmationService,
+      public tokenStorage: TokenStorage,
       private route: ActivatedRoute,
       private router: Router 
     ) {
-
+    super(genericService, translate, confirmationService, tokenStorage);
   }
 
   ngOnInit(): void {

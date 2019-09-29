@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, OnDestroy, EventEmitter, Output, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Floor } from '../../models/floor';
 import { BuildingDropdown } from '../dropdowns';
@@ -20,7 +20,7 @@ export class FloorDetails extends BaseComponent implements OnInit, OnDestroy {
   
   hiddenMenu: boolean = true;
   buildingDropdown: BuildingDropdown;
-
+  @Input() canSave: boolean;
   @Output() floorSaveEvent = new EventEmitter<Floor>();
   
   constructor

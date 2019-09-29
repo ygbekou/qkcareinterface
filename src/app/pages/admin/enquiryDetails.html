@@ -65,8 +65,9 @@
 	<br />
 	<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
 		<button type="button" pButton icon="fa fa-close" (click)="clear()" label="{{ 'COMMON.CLEAR' | translate }}"></button>&nbsp;&nbsp;
-		<button pButton icon="fa fa-check" label="{{ 'COMMON.SAVE' | translate }}" [disabled]="enquiry.id == null || enquiry.read == 'Y'"></button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<button pButton icon="fa fa-check" label="{{ 'COMMON.SAVE' | translate }}" *ngIf="permitSave(enquiry.id, 'Add Request')"
+			[disabled]="enquiry.id == null || enquiry.read == 'Y'"></button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		<button type="button" pButton icon="fa fa-check" (click)="save(2)" label="{{ 'COMMON.MARK_AS_READ' | translate }}" 
-					[disabled]="enquiry.id == null || enquiry.read == 'Y'"></button>
+					*ngIf="permitSave(enquiry.id, 'Add Request')" [disabled]="enquiry.id == null || enquiry.read == 'Y'"></button>
 	</div>
 </form>	

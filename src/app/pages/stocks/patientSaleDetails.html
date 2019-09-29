@@ -131,7 +131,7 @@
 		<br/>
 		<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix" *ngIf="!isVisitOrAdmissionPage()">
 			<button type="button" pButton icon="fa fa-refresh" (click)="clear()" label="{{ 'COMMON.CLEAR' | translate }}"></button>&nbsp;&nbsp;
-			<button pButton icon="fa fa-save" label="{{ 'COMMON.SAVE' | translate }}"></button>&nbsp;&nbsp;&nbsp;&nbsp;
+			<button pButton icon="fa fa-save" label="{{ 'COMMON.SAVE' | translate }}" *ngIf="permitSave(patientSale.id, 'Add Medication Sale')"></button>&nbsp;&nbsp;&nbsp;&nbsp;
 			<button type="button" pButton icon="fa fa-remove" (click)="delete()" label="{{ 'COMMON.DELETE' | translate }}"></button>
 		</div>
 	</div>

@@ -17,8 +17,9 @@
          {{rowData[col.field]}}
        </td>
        <td>
-         <button type="button" pButton icon="fa fa-edit" (click)="edit(rowData.id)"></button>&nbsp;
-         <button type="button" pButton icon="fa fa-eraser" (click)="deleteItem(hospitalLocations, rowData.id, 'HospitalLocation')"></button>
+         <button type="button" pButton icon="fa fa-edit" (click)="edit(rowData.id)" *ngIf="permitView('Reference Config')"></button>&nbsp;
+         <button type="button" pButton icon="fa fa-eraser" (click)="deleteItem(hospitalLocations, rowData.id, 'HospitalLocation')"
+          *ngIf="permitDelete('Reference Config')"></button>
        </td>
      </tr>
    </ng-template>

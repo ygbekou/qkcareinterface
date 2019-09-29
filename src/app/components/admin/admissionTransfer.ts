@@ -34,12 +34,12 @@ export class AdmissionTransfer extends BaseComponent implements OnInit, OnDestro
     public tokenStorage: TokenStorage,
     public confirmationService: ConfirmationService, 
     private globalEventsManager: GlobalEventsManager,
-    private doctorDropdown: DoctorDropdown,
-    private buildingDropdown: BuildingDropdown,
-    private floorDropdown: FloorDropdown,
-    private roomDropdown: RoomDropdown,
-    private categoryDropdown: CategoryDropdown,
-    private bedDropdown: BedDropdown,
+    public doctorDropdown: DoctorDropdown,
+    public buildingDropdown: BuildingDropdown,
+    public floorDropdown: FloorDropdown,
+    public roomDropdown: RoomDropdown,
+    public categoryDropdown: CategoryDropdown,
+    public bedDropdown: BedDropdown,
     private route: ActivatedRoute,
     private router: Router
     ) {

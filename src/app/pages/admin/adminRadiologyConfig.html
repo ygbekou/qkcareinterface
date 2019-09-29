@@ -4,23 +4,26 @@
 			<p-tabView (onChange)="onTabChange($event)"> 
 			 	<p-tabPanel header="{{'COMMON.MODALITY_LIST' |translate}}">
 			    	<div *ngIf="activeTab == 0" class="ui-grid-row">
-				        <app-reference-details (referenceSaveEvent)="onReferenceSaved($event)"></app-reference-details>
+				        <app-reference-details [canSave]="permitSave(null, 'Radiology Config')" (referenceSaveEvent)="onReferenceSaved($event)"></app-reference-details>
 				        <br/> 
-				        <app-reference-list (referenceIdEvent)="onReferenceSelected($event, 'Modality')"></app-reference-list>
+						<app-reference-list [canView]="permitView('Radiology Config')" [canDelete]="permitDelete('Radiology Config')" 
+							(referenceIdEvent)="onReferenceSelected($event, 'Modality')"></app-reference-list>
 				    </div>
 			    </p-tabPanel>
 			 	<p-tabPanel header="{{'COMMON.BODY_PART_LIST' |translate}}">
 			    	<div *ngIf="activeTab == 1" class="ui-grid-row">
-				        <app-reference-details (referenceSaveEvent)="onReferenceSaved($event)"></app-reference-details>
+				        <app-reference-details [canSave]="permitSave(null, 'Radiology Config')" (referenceSaveEvent)="onReferenceSaved($event)"></app-reference-details>
 				        <br/> 
-				        <app-reference-list (referenceIdEvent)="onReferenceSelected($event, 'BodyPart')"></app-reference-list>
+						<app-reference-list [canView]="permitView('Radiology Config')" [canDelete]="permitDelete('Radiology Config')" 
+							(referenceIdEvent)="onReferenceSelected($event, 'BodyPart')"></app-reference-list>
 				    </div>
 				</p-tabPanel>
 				<p-tabPanel header="{{'COMMON.LATERALITY_LIST' |translate}}">
 			    	<div *ngIf="activeTab == 2" class="ui-grid-row">
-				        <app-reference-details (referenceSaveEvent)="onReferenceSaved($event)"></app-reference-details>
+				        <app-reference-details [canSave]="permitSave(null, 'Radiology Config')" (referenceSaveEvent)="onReferenceSaved($event)"></app-reference-details>
 				        <br/> 
-				        <app-reference-list (referenceIdEvent)="onReferenceSelected($event, 'Laterality')"></app-reference-list>
+						<app-reference-list [canView]="permitView('Radiology Config')" [canDelete]="permitDelete('Radiology Config')" 
+							(referenceIdEvent)="onReferenceSelected($event, 'Laterality')"></app-reference-list>
 				    </div>
 			    </p-tabPanel>
 			    <p-tabPanel header="{{'COMMON.EXAM_LIST' |translate}}">

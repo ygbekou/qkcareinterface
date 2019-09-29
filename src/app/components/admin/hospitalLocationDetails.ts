@@ -24,7 +24,7 @@ export class HospitalLocationDetails extends BaseComponent implements OnInit, On
 	  public translate: TranslateService,
     public confirmationService: ConfirmationService,
     public tokenStorage: TokenStorage,
-	  private countryDropdown: CountryDropdown,
+	  public countryDropdown: CountryDropdown,
 	  private route: ActivatedRoute    ) {
 
 		super(genericService, translate, confirmationService, tokenStorage);

@@ -1,20 +1,17 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
-import { Constants } from '../../app.constants';
-import { ReceiveOrder, ReceiveOrderProduct } from '../../models/stocks/receiveOrder';
-import { Cookie } from 'ng2-cookies/ng2-cookies';
-import { InputTextareaModule, CheckboxModule } from 'primeng/primeng';
-import { User } from '../../models/user';  
-import { GenericService, PurchasingService } from '../../services';
+import { ReceiveOrder } from '../../models/stocks/receiveOrder'; 
+import { GenericService, PurchasingService, TokenStorage } from '../../services';
 import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
-import { Message } from 'primeng/api';
+import { Message, ConfirmationService } from 'primeng/api';
+import { BaseComponent } from '../admin/baseComponent';
 
 @Component({
   selector: 'app-receiveOrder-list',
   templateUrl: '../../pages/stocks/receiveOrderList.html',
   providers: [GenericService, PurchasingService]
 })
-export class ReceiveOrderList implements OnInit, OnDestroy {
+export class ReceiveOrderList extends BaseComponent implements OnInit, OnDestroy {
   
   receiveOrders: ReceiveOrder[] = [];
   cols: any[]; 
@@ -23,13 +20,13 @@ export class ReceiveOrderList implements OnInit, OnDestroy {
     (
     private genericService: GenericService,
     private purchasingService: PurchasingService,
-    private translate: TranslateService,
-    private changeDetectorRef: ChangeDetectorRef,
+    public translate: TranslateService,
+    public confirmationService: ConfirmationService,
+    public tokenStorage: TokenStorage,
     private route: ActivatedRoute,
-    private router: Router,
+    private router: Router
     ) {
-
-    
+      super(genericService, translate, confirmationService, tokenStorage);  
   }
 
   ngOnInit(): void {

@@ -1,8 +1,10 @@
 import { Component, OnInit, OnDestroy, Output, EventEmitter } from '@angular/core';
 import { SliderText } from '../../models/website';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
-import { GenericService } from '../../services';
+import { GenericService, TokenStorage } from '../../services';
 import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
+import { BaseComponent } from './baseComponent';
+import { ConfirmationService } from 'primeng/api';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -11,7 +13,7 @@ import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
   providers: [GenericService]
 })
 // tslint:disable-next-line:component-class-suffix
-export class SliderTextList implements OnInit, OnDestroy {
+export class SliderTextList extends BaseComponent implements OnInit, OnDestroy {
 
   sliderTexts: SliderText[] = [];
   cols: any[];
@@ -20,11 +22,14 @@ export class SliderTextList implements OnInit, OnDestroy {
 
   constructor
     (
-    private genericService: GenericService,
-    private translate: TranslateService,
+    public genericService: GenericService,
+    public translate: TranslateService,
+    public confirmationService: ConfirmationService,
+    public tokenStorage: TokenStorage,
     private route: ActivatedRoute,
     private router: Router,
     ) {
+      super(genericService, translate, confirmationService, tokenStorage);
   }
 
   ngOnInit(): void {

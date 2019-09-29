@@ -1,5 +1,4 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef, Input } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { Constants } from '../../app.constants';
 import { Admission, AdmissionDiagnosis, Discharge, PrescriptionMedicine, Reference, Visit} from '../../models';
 import { DoctorDropdown } from '../dropdowns';
@@ -36,10 +35,7 @@ export class DischargeDetails extends BaseComponent implements OnInit, OnDestroy
       public translate: TranslateService,
       public confirmationService: ConfirmationService,
       public tokenStorage: TokenStorage,
-      private doctorDropdown: DoctorDropdown,
-      private changeDetectorRef: ChangeDetectorRef,
-      private route: ActivatedRoute,
-      private router: Router
+      public doctorDropdown: DoctorDropdown
     ) {
 		  super(genericService, translate, confirmationService, tokenStorage);
   }

@@ -3,146 +3,157 @@
     <p-tabView (onChange)="onTabChange($event)">
       <p-tabPanel header="{{'COMMON.SYMPTOM_GROUP_LIST' |translate}}">
         <div *ngIf="activeTab == 0" class="ui-grid-row">
-		  <app-reference-details (referenceSaveEvent)="onReferenceSaved($event)"></app-reference-details>
-		  <br/>
-          <app-reference-list (referenceIdEvent)="onReferenceSelected($event, 'Category')"></app-reference-list>
+          <app-reference-details [canSave]="permitSave(null, 'Reference Config')" (referenceSaveEvent)="onReferenceSaved($event)"></app-reference-details>
+          <br/>
+          <app-reference-list [canView]="permitView('Reference Config')" [canDelete]="permitDelete('Reference Config')" 
+            (referenceIdEvent)="onReferenceSelected($event, 'Category')"></app-reference-list>
         </div>
       </p-tabPanel>
       <p-tabPanel header="{{'COMMON.SYMPTOMS' |translate}}">
         <div *ngIf="activeTab == 1" class="ui-grid-row">
-		  <app-referenceWithCategory-details (referenceWithCategorySaveEvent)="onReferenceWithCategorySaved($event)"></app-referenceWithCategory-details>
-		   <br/>
-          <app-referenceWithCategory-list
-            (referenceWithCategoryIdEvent)="onReferenceWithCategorySelected($event, 'Symptom')">
-          </app-referenceWithCategory-list>
+          <app-referenceWithCategory-details [canSave]="permitSave(null, 'Reference Config')" (referenceWithCategorySaveEvent)="onReferenceWithCategorySaved($event)"></app-referenceWithCategory-details>
+          <br/>
+          <app-referenceWithCategory-list [canView]="permitView('Reference Config')" [canDelete]="permitDelete('Reference Config')" 
+            (referenceWithCategoryIdEvent)="onReferenceWithCategorySelected($event, 'Symptom')"></app-referenceWithCategory-list>
         </div>
       </p-tabPanel>
       <p-tabPanel header="{{'COMMON.ALLERGY_TYPE_LIST' |translate}}">
         <div *ngIf="activeTab == 2" class="ui-grid-row">
-		  <app-reference-details (referenceSaveEvent)="onReferenceSaved($event)"></app-reference-details>
-		   <br/>
-          <app-reference-list (referenceIdEvent)="onReferenceSelected($event, 'Category')"></app-reference-list>
+          <app-reference-details [canSave]="permitSave(null, 'Reference Config')" (referenceSaveEvent)="onReferenceSaved($event)"></app-reference-details>
+          <br/>
+          <app-reference-list [canView]="permitView('Reference Config')" [canDelete]="permitDelete('Reference Config')"
+              (referenceIdEvent)="onReferenceSelected($event, 'Category')"></app-reference-list>
         </div>
       </p-tabPanel>
       <p-tabPanel header="{{'COMMON.ALLERGY_LIST' |translate}}">
         <div *ngIf="activeTab == 3" class="ui-grid-row">
-		  <app-referenceWithCategory-details (referenceWithCategorySaveEvent)="onReferenceWithCategorySaved($event)"></app-referenceWithCategory-details>
-		   <br/>
-          <app-referenceWithCategory-list
-            (referenceWithCategoryIdEvent)="onReferenceWithCategorySelected($event, 'Allergy')">
-          </app-referenceWithCategory-list>
+          <app-referenceWithCategory-details [canSave]="permitSave(null, 'Reference Config')" (referenceWithCategorySaveEvent)="onReferenceWithCategorySaved($event)"></app-referenceWithCategory-details>
+          <br/>
+          <app-referenceWithCategory-list [canView]="permitView('Reference Config')" [canDelete]="permitDelete('Reference Config')"
+            (referenceWithCategoryIdEvent)="onReferenceWithCategorySelected($event, 'Allergy')"></app-referenceWithCategory-list>
         </div>
       </p-tabPanel>
       <p-tabPanel header="{{'COMMON.VACCINE_LIST' |translate}}">
         <div *ngIf="activeTab == 4" class="ui-grid-row">
-		  <app-reference-details (referenceSaveEvent)="onReferenceSaved($event)"></app-reference-details>
-		  <br/>
-          <app-reference-list (referenceIdEvent)="onReferenceSelected($event, 'Vaccine')"></app-reference-list>
+          <app-reference-details [canSave]="permitSave(null, 'Reference Config')" (referenceSaveEvent)="onReferenceSaved($event)"></app-reference-details>
+          <br/>
+          <app-reference-list [canView]="permitView('Reference Config')" [canDelete]="permitDelete('Reference Config')" 
+            (referenceIdEvent)="onReferenceSelected($event, 'Vaccine')"></app-reference-list>
         </div>
       </p-tabPanel>
       <p-tabPanel header="{{'COMMON.MEDICAL_HISTORY_LIST' |translate}}">
         <div *ngIf="activeTab == 5" class="ui-grid-row">
-		  <app-reference-details (referenceSaveEvent)="onReferenceSaved($event)"></app-reference-details>
-		   <br/>
-          <app-reference-list (referenceIdEvent)="onReferenceSelected($event, 'MedicalHistory')"></app-reference-list>
+          <app-reference-details [canSave]="permitSave(null, 'Reference Config')" (referenceSaveEvent)="onReferenceSaved($event)"></app-reference-details>
+          <br/>
+          <app-reference-list [canView]="permitView('Reference Config')" [canDelete]="permitDelete('Reference Config')" 
+            (referenceIdEvent)="onReferenceSelected($event, 'MedicalHistory')"></app-reference-list>
         </div>
       </p-tabPanel>
       <p-tabPanel header="{{'COMMON.SOCIAL_HISTORY_LIST' |translate}}">
         <div *ngIf="activeTab == 6" class="ui-grid-row">
-		  <app-reference-details (referenceSaveEvent)="onReferenceSaved($event)"></app-reference-details>
-		   <br/>
-          <app-reference-list (referenceIdEvent)="onReferenceSelected($event, 'SocialHistory')"></app-reference-list>
+          <app-reference-details [canSave]="permitSave(null, 'Reference Config')" (referenceSaveEvent)="onReferenceSaved($event)"></app-reference-details>
+          <br/>
+          <app-reference-list [canView]="permitView('Reference Config')" [canDelete]="permitDelete('Reference Config')" 
+            (referenceIdEvent)="onReferenceSelected($event, 'SocialHistory')"></app-reference-list>
         </div>
       </p-tabPanel>
       <p-tabPanel header="{{'COMMON.PAYER_TYPE_LIST' |translate}}">
         <div *ngIf="activeTab == 7" class="ui-grid-row">
-		  <app-reference-details (referenceSaveEvent)="onReferenceSaved($event)"></app-reference-details>
-		   <br/>
-          <app-reference-list (referenceIdEvent)="onReferenceSelected($event, 'PayerType')"></app-reference-list>
+          <app-reference-details [canSave]="permitSave(null, 'Reference Config')" (referenceSaveEvent)="onReferenceSaved($event)"></app-reference-details>
+          <br/>
+          <app-reference-list [canView]="permitView('Reference Config')" [canDelete]="permitDelete('Reference Config')" 
+            (referenceIdEvent)="onReferenceSelected($event, 'PayerType')"></app-reference-list>
         </div>
       </p-tabPanel>
       <p-tabPanel header="{{'COMMON.DOCTOR_ORDER_TYPE_LIST' |translate}}">
         <div *ngIf="activeTab == 8" class="ui-grid-row">
-		  <app-reference-details [viewOnly]="true" (referenceSaveEvent)="onReferenceSaved($event)"></app-reference-details>
-		   <br/>
-          <app-reference-list (referenceIdEvent)="onReferenceSelected($event, 'DoctorOrderType')"></app-reference-list>
+          <app-reference-details [canSave]="permitSave(null, 'Reference Config')" (referenceSaveEvent)="onReferenceSaved($event)"></app-reference-details>
+          <br/>
+          <app-reference-list [canView]="permitView('Reference Config')" [canDelete]="permitDelete('Reference Config')" 
+            (referenceIdEvent)="onReferenceSelected($event, 'DoctorOrderType')"></app-reference-list>
         </div>
       </p-tabPanel>
       <p-tabPanel header="{{'COMMON.DOCTOR_ORDER_PRIORITY' |translate}}">
         <div *ngIf="activeTab == 9" class="ui-grid-row">
-		  <app-reference-details (referenceSaveEvent)="onReferenceSaved($event)"></app-reference-details>
-		   <br/>
-          <app-reference-list (referenceIdEvent)="onReferenceSelected($event, 'DoctorOrderPriority')">
-          </app-reference-list>
+          <app-reference-details [canSave]="permitSave(null, 'Reference Config')" (referenceSaveEvent)="onReferenceSaved($event)"></app-reference-details>
+          <br/>
+          <app-reference-list [canView]="permitView('Reference Config')" [canDelete]="permitDelete('Reference Config')" 
+            (referenceIdEvent)="onReferenceSelected($event, 'DoctorOrderPriority')"></app-reference-list>
         </div>
       </p-tabPanel>
       <p-tabPanel header="{{'COMMON.DOCTOR_ORDER_KIND_LIST' |translate}}">
         <div *ngIf="activeTab == 10" class="ui-grid-row">
-		  <app-reference-details (referenceSaveEvent)="onReferenceSaved($event)"></app-reference-details>
-		   <br/>
-          <app-reference-list (referenceIdEvent)="onReferenceSelected($event, 'DoctorOrderKind')"></app-reference-list>
+          <app-reference-details [canSave]="permitSave(null, 'Reference Config')" (referenceSaveEvent)="onReferenceSaved($event)"></app-reference-details>
+          <br/>
+          <app-reference-list [canView]="permitView('Reference Config')" [canDelete]="permitDelete('Reference Config')" 
+            (referenceIdEvent)="onReferenceSelected($event, 'DoctorOrderKind')"></app-reference-list>
         </div>
       </p-tabPanel>
       <p-tabPanel id="department" header="{{'COMMON.DEPARTMENT_LIST' |translate}}">
         <div *ngIf="activeTab == 11" class="ui-grid-row">
-		  <app-department-details (departmentSaveEvent)="onDepartmentSaved($event)"></app-department-details>
-		   <br/>
+          <app-department-details (departmentSaveEvent)="onDepartmentSaved($event)"></app-department-details>
+          <br/>
           <app-department-list (departmentIdEvent)="onDepartmentSelected($event, 'Department')"></app-department-list>
         </div>
       </p-tabPanel>
       <p-tabPanel id="manufacturer" header="{{'COMMON.MANUFACTURER_LIST' |translate}}">
         <div *ngIf="activeTab == 12" class="ui-grid-row">
-		  <app-reference-details (referenceSaveEvent)="onReferenceSaved($event)"></app-reference-details>
-		   <br/>
-          <app-reference-list (referenceIdEvent)="onReferenceSelected($event, 'Manufacturer')"></app-reference-list>
+          <app-reference-details [canSave]="permitSave(null, 'Reference Config')" (referenceSaveEvent)="onReferenceSaved($event)"></app-reference-details>
+          <br/>
+          <app-reference-list [canView]="permitView('Reference Config')" [canDelete]="permitDelete('Reference Config')" 
+            (referenceIdEvent)="onReferenceSelected($event, 'Manufacturer')"></app-reference-list>
         </div>
       </p-tabPanel>
       <p-tabPanel id="medicineType" header="{{'COMMON.MEDICINE_TYPE_LIST' |translate}}">
         <div *ngIf="activeTab == 13" class="ui-grid-row">
-		  <app-reference-details (referenceSaveEvent)="onReferenceSaved($event)"></app-reference-details>
-		   <br/>
-          <app-reference-list (referenceIdEvent)="onReferenceSelected($event, 'Category')"></app-reference-list>
+          <app-reference-details [canSave]="permitSave(null, 'Reference Config')" (referenceSaveEvent)="onReferenceSaved($event)"></app-reference-details>
+          <br/>    
+          <app-reference-list [canView]="permitView('Reference Config')" [canDelete]="permitDelete('Reference Config')" 
+            (referenceIdEvent)="onReferenceSelected($event, 'Category')"></app-reference-list>
         </div>
       </p-tabPanel>
       <p-tabPanel id="medicine" header="{{'COMMON.MEDICINE_LIST' |translate}}">
         <div *ngIf="activeTab == 14" class="ui-grid-row">
-		  <app-medicine-details (medicineSaveEvent)="onMedicineSaved($event)"></app-medicine-details>
-		   <br/>
+          <app-medicine-details (medicineSaveEvent)="onMedicineSaved($event)"></app-medicine-details>
+          <br/>
           <app-medicine-list (medicineIdEvent)="onMedicineSelected($event)"></app-medicine-list>
         </div>
       </p-tabPanel>
       <p-tabPanel id="serviceTarifType" header="{{'COMMON.TARIF_TYPE_LIST'|translate}}">
         <div *ngIf="activeTab == 15" class="ui-grid-row">
-		  <app-reference-details (referenceSaveEvent)="onReferenceSaved($event)"></app-reference-details>
-		   <br/>
-          <app-reference-list (referenceIdEvent)="onReferenceSelected($event, 'Category')"></app-reference-list>
+          <app-reference-details [canSave]="permitSave(null, 'Reference Config')" (referenceSaveEvent)="onReferenceSaved($event)"></app-reference-details>
+          <br/>
+          <app-reference-list [canView]="permitView('Reference Config')" [canDelete]="permitDelete('Reference Config')" 
+            (referenceIdEvent)="onReferenceSelected($event, 'Category')"></app-reference-list>
         </div>
       </p-tabPanel>
       <p-tabPanel id="labTestMethod" header="{{'COMMON.LAB_TEST_METHOD_LIST' |translate}}">
         <div *ngIf="activeTab == 16" class="ui-grid-row">
-		  <app-reference-details (referenceSaveEvent)="onReferenceSaved($event)"></app-reference-details>
-		   <br/>
-          <app-reference-list (referenceIdEvent)="onReferenceSelected($event, 'LabTestMethod')"></app-reference-list>
+          <app-reference-details [canSave]="permitSave(null, 'Reference Config')" (referenceSaveEvent)="onReferenceSaved($event)"></app-reference-details>
+          <br/>
+          <app-reference-list [canView]="permitView('Reference Config')" [canDelete]="permitDelete('Reference Config')" 
+            (referenceIdEvent)="onReferenceSelected($event, 'LabTestMethod')"></app-reference-list>
         </div>
       </p-tabPanel>
       <p-tabPanel id="labTestUnit" header="{{'COMMON.LAB_TEST_UNIT_LIST' |translate}}">
         <div *ngIf="activeTab == 17" class="ui-grid-row">
-		  <app-reference-details (referenceSaveEvent)="onReferenceSaved($event)"></app-reference-details>
-		   <br/>
-          <app-reference-list (referenceIdEvent)="onReferenceSelected($event, 'LabTestUnit')"></app-reference-list>
+          <app-reference-details [canSave]="permitSave(null, 'Reference Config')" (referenceSaveEvent)="onReferenceSaved($event)"></app-reference-details>
+          <br/>
+          <app-reference-list [canView]="permitView('Reference Config')" [canDelete]="permitDelete('Reference Config')" 
+            (referenceIdEvent)="onReferenceSelected($event, 'LabTestUnit')"></app-reference-list>
         </div>
       </p-tabPanel>
       <p-tabPanel id="labTest" header="{{'COMMON.LAB_TEST_LIST' |translate}}">
         <div *ngIf="activeTab == 18" class="ui-grid-row">
-		  <app-labTest-details (labTestSaveEvent)="onLabTestSaved($event)"></app-labTest-details>
-		   <br/>
+          <app-labTest-details (labTestSaveEvent)="onLabTestSaved($event)"></app-labTest-details>
+          <br/>
           <app-labTest-list (labTestIdEvent)="onLabTestSelected($event)"></app-labTest-list>
         </div>
       </p-tabPanel>
       <p-tabPanel id="hospitalLocation" header="{{'COMMON.LOCATION' |translate}}">
         <div *ngIf="activeTab == 19" class="ui-grid-row">
-		  <app-hospitalLocation-details (hospitalLocationSaveEvent)="onHospitalLocationSaved($event)"></app-hospitalLocation-details>
-		   <br/>
+          <app-hospitalLocation-details (hospitalLocationSaveEvent)="onHospitalLocationSaved($event)"></app-hospitalLocation-details>
+          <br/>
           <app-hospitalLocation-list (hospitalLocationIdEvent)="onHospitalLocationSelected($event)"></app-hospitalLocation-list>
         </div>
       </p-tabPanel>

@@ -4,32 +4,33 @@ import { Constants } from '../../app.constants';
 import { ReceiveOrder, ReceiveOrderProduct } from '../../models/stocks/receiveOrder';
 import { SaleReturn } from '../../models/stocks/saleReturn';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
-import { InputTextareaModule, CheckboxModule } from 'primeng/primeng';
+import { InputTextareaModule, CheckboxModule, ConfirmationService } from 'primeng/primeng';
 import { User } from '../../models/user';  
-import { GenericService, PurchasingService } from '../../services';
+import { GenericService, PurchasingService, TokenStorage } from '../../services';
 import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
+import { BaseComponent } from '../admin/baseComponent';
 
 @Component({
   selector: 'app-saleReturn-list',
   templateUrl: '../../pages/stocks/saleReturnList.html',
   providers: [GenericService, PurchasingService]
 })
-export class SaleReturnList implements OnInit, OnDestroy {
+export class SaleReturnList extends BaseComponent implements OnInit, OnDestroy {
   
   saleReturns: SaleReturn[] = [];
   cols: any[];
   
   constructor
     (
-    private genericService: GenericService,
+    public genericService: GenericService,
     private purchasingService: PurchasingService,
-    private translate: TranslateService,
-    private changeDetectorRef: ChangeDetectorRef,
+    public translate: TranslateService,
+    public confirmationService: ConfirmationService,
+    public tokenStorage: TokenStorage,
     private route: ActivatedRoute,
     private router: Router,
     ) {
-
-    
+      super(genericService, translate, confirmationService, tokenStorage);
   }
 
   ngOnInit(): void {

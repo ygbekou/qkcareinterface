@@ -51,7 +51,7 @@
 	<div>
 		<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
 			<button type="button" pButton icon="fa fa-close" (click)="clear()" label="{{ 'COMMON.CLEAR' | translate }}"></button> &nbsp;&nbsp;
-			<button pButton icon="fa fa-check" label="{{ 'COMMON.SAVE' | translate }}"></button>
+			<button pButton icon="fa fa-check" label="{{ 'COMMON.SAVE' | translate }}" *ngIf="permitSave(room.id, 'Room and Beds Config')"></button>
 		</div>
 	</div>
 </form>

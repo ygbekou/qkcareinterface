@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, OnDestroy, Output, EventEmitter, Input } from '@angular/core';
 import { Reference } from '../../models';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { GenericService, GlobalEventsManager, TokenStorage } from '../../services';
@@ -19,6 +19,8 @@ export class ReferenceList extends BaseComponent implements OnInit, OnDestroy {
   referenceType: string = null;
   parentId: number = null;
   hiddenMenu = false;
+  @Input() canView: boolean;
+  @Input() canDelete: boolean;
   @Output() referenceIdEvent = new EventEmitter<string>();
   
   REFERENCE_LIST_LABEL: string;

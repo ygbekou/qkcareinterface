@@ -15,8 +15,7 @@
 			<tr>
 				<td *ngFor="let col of cols">{{sliderText[col.field]}}</td>
 				<td>
-					<button type="button" pButton icon="fa fa-edit" 
-						(click)="edit(sliderText.id)"></button>
+					<button type="button" pButton icon="fa fa-edit" (click)="edit(sliderText.id)" *ngIf="permitView('Website Config')"></button>
 				</td>
 			</tr>
 		</ng-template> 

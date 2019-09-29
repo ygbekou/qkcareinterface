@@ -16,8 +16,8 @@
 		<tr>
 			<td *ngFor="let col of cols">{{floor[col.field]}}</td>
 			<td>
-				<button type="button" pButton icon="fa fa-edit" (click)="edit(floor.id)"></button>&nbsp;&nbsp;
-				<button type="button" pButton icon="fa fa-eraser" (click)="deleteItem(floors, floor.id, 'Floor')"></button>
+				<button type="button" pButton icon="fa fa-edit" (click)="edit(floor.id)" *ngIf="permitView('Room and Beds Config')"></button>&nbsp;&nbsp;
+				<button type="button" pButton icon="fa fa-eraser" (click)="deleteItem(floors, floor.id, 'Floor')" *ngIf="permitDelete('Room and Beds Config')"></button>
 			</td>
 		</tr>
 	</ng-template> 

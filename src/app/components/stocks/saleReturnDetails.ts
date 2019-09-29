@@ -1,25 +1,20 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild, Input } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Constants } from '../../app.constants';
-import { Product, Supplier, User } from '../../models';
 import { PatientSale } from '../../models/stocks/patientSale';
-import { PurchaseOrder, PurchaseOrderProduct } from '../../models/stocks/purchaseOrder';
-import { ReceiveOrder } from '../../models/stocks/receiveOrder';
 import { SaleReturn } from '../../models/stocks/saleReturn';
-import { EditorModule } from 'primeng/editor';
 import { EmployeeDropdown, SupplierDropdown, ProductDropdown } from '../dropdowns';
-import { Cookie } from 'ng2-cookies/ng2-cookies';
-import { InputTextareaModule, CheckboxModule, MultiSelectModule, CalendarModule } from 'primeng/primeng';
-import { GenericService, PurchasingService } from '../../services';
+import { GenericService, PurchasingService, TokenStorage } from '../../services';
 import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
-import { Message } from 'primeng/api';
+import { Message, ConfirmationService } from 'primeng/api';
+import { BaseComponent } from '../admin/baseComponent';
 
 @Component({
   selector: 'app-saleReturn-details',
   templateUrl: '../../pages/stocks/saleReturnDetails.html',
   providers: [GenericService, PurchasingService, EmployeeDropdown, SupplierDropdown, ProductDropdown]
 })
-export class SaleReturnDetails implements OnInit, OnDestroy {
+export class SaleReturnDetails extends BaseComponent implements OnInit, OnDestroy {
   
   saleReturn: SaleReturn = new SaleReturn();
   returnProductCols: any[];
@@ -29,15 +24,16 @@ export class SaleReturnDetails implements OnInit, OnDestroy {
   
   constructor
     (
-      private genericService: GenericService,
+      public genericService: GenericService,
       private purchasingService: PurchasingService,
-      private translate: TranslateService,
+      public translate: TranslateService,
+      public confirmationService: ConfirmationService,
+      public tokenStorage: TokenStorage,
       private productDropdown: ProductDropdown,
       private employeeDropdown: EmployeeDropdown,
-      private changeDetectorRef: ChangeDetectorRef,
-      private route: ActivatedRoute,
-      private router: Router
+      private route: ActivatedRoute
     ) {
+      super(genericService, translate, confirmationService, tokenStorage);
   }
 
   ngOnInit(): void {
@@ -47,7 +43,7 @@ export class SaleReturnDetails implements OnInit, OnDestroy {
             { field: 'unitPrice', header: 'Unit Price', headerKey: 'COMMON.PRICE', type: 'amount', inputType: 'text'},
             { field: 'originalQuantity', header: 'Sale Quantity', headerKey: 'COMMON.QUANTITY_SOLD', type: 'amount'},
             { field: 'quantity', header: 'Returned Quantity', headerKey: 'COMMON.QUANTITY_RETURNED', type: 'number'},
-            { field: 'notes', header: 'Notes', headerKey: 'COMMON.NOTES', type: "text"}
+            { field: 'notes', header: 'Notes', headerKey: 'COMMON.NOTES', type: 'text'}
         ]; 
     
     let saleReturnId = null;
@@ -61,9 +57,9 @@ export class SaleReturnDetails implements OnInit, OnDestroy {
               this.genericService.getNewObject('/service/purchasing/saleReturn/', saleReturnId)
                   .subscribe(result => {
                 if (result.id > 0) {
-                  this.saleReturn = result
+                  this.saleReturn = result;
                 }
-              })
+              });
           } else {
               
           }
@@ -77,8 +73,8 @@ export class SaleReturnDetails implements OnInit, OnDestroy {
  
   
   updateCols() {
-    for (var index in this.returnProductCols) {
-      let col = this.returnProductCols[index];
+    for (let index in this.returnProductCols) {
+      const col = this.returnProductCols[index];
       this.translate.get(col.headerKey).subscribe((res: string) => {
         col.header = res;
       });
@@ -91,37 +87,39 @@ export class SaleReturnDetails implements OnInit, OnDestroy {
  
   
   private getNumber(value: number): number {
-    return value != undefined ? value : 0;
+    return value !== undefined ? value : 0;
   } 
   
   validate(): boolean {
     this.messages = [];
     let noProductFound = true;
-    if (!this.patientSale || !(this.patientSale.id > 0))
+    if (!this.patientSale || !(this.patientSale.id > 0)) {
       return false;
+    }
     
-    for (let i in this.saleReturn.saleReturnProducts) {
-      let srp = this.saleReturn.saleReturnProducts[i];
+    for (const i in this.saleReturn.saleReturnProducts) {
+      const srp = this.saleReturn.saleReturnProducts[i];
       if (srp.product && srp.product.id > 0) {
         noProductFound = false;
-        if (srp.quantity == null || srp.quantity <= 0)
+        if (srp.quantity == null || srp.quantity <= 0) {
           this.messages.push({severity:Constants.ERROR, summary:Constants.SAVE_LABEL, detail:'Quantity is required.'});
+        }
       }
     }
     
     
     if (noProductFound) {
-      this.messages.push({severity:Constants.ERROR, summary:Constants.SAVE_LABEL, detail:'At least 1 medication is required.'});
+      this.messages.push({severity: Constants.ERROR, summary: Constants.SAVE_LABEL, detail: 'At least 1 medication is required.'});
     }
     
-    return this.messages.length == 0;
+    return this.messages.length === 0;
   }
   
   save(status: number = 1) {
-    this.messages = []
+    this.messages = [];
     
     if (!status) {
-      this.saleReturn.status = 1
+      this.saleReturn.status = 1;
     } else {
       this.saleReturn.status = status;
     }
@@ -131,15 +129,13 @@ export class SaleReturnDetails implements OnInit, OnDestroy {
       this.genericService.saveWithUrl('/service/purchasing/saleReturn/save', this.saleReturn)
         .subscribe(result => {
           if (result.id > 0) {
-            this.saleReturn = result
-            this.messages.push({severity:Constants.SUCCESS, summary:Constants.SAVE_LABEL, detail:Constants.SAVE_SUCCESSFUL});
+            this.saleReturn = result;
+            this.messages.push({severity: Constants.SUCCESS, summary: Constants.SAVE_LABEL, detail: Constants.SAVE_SUCCESSFUL});
+          } else {
+            this.messages.push({severity: Constants.ERROR, summary: Constants.SAVE_LABEL, detail: Constants.SAVE_UNSUCCESSFUL});
           }
-          else {
-            this.messages.push({severity:Constants.ERROR, summary:Constants.SAVE_LABEL, detail:Constants.SAVE_UNSUCCESSFUL});
-          }
-        })
-    }
-    catch (e) {
+        });
+    } catch (e) {
       console.log(e);
     }
   }
@@ -148,8 +144,7 @@ export class SaleReturnDetails implements OnInit, OnDestroy {
     this.patientSale = event;
     
     this.genericService.getNewObject('/service/purchasing/patientSale/newSaleReturn/', this.patientSale.id)
-      .subscribe((data: SaleReturn) => 
-      {
+      .subscribe((data: SaleReturn) => {
         this.saleReturn = data;
       },
       error => console.log(error),
@@ -164,7 +159,7 @@ export class SaleReturnDetails implements OnInit, OnDestroy {
   
   calculateTotal() {
     this.saleReturn.subTotal = 0;
-    for (let i in this.saleReturn.saleReturnProducts) {
+    for (const i in this.saleReturn.saleReturnProducts) {
        this.saleReturn.subTotal += this.calculateRowTotal(this.saleReturn.saleReturnProducts[i]);
     }
     this.calculateGrandTotal();

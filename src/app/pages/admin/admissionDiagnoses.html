@@ -60,8 +60,8 @@
 		            </td>
 		            <td>
 						<button type="button" pButton icon="fa fa-save" (click)="saveDiagnosis(rowData)" 
-							*ngIf="shoulPermitSave(rowData.id, visit, admission)"></button>&nbsp;&nbsp;
-						<button type="button" pButton icon="fa fa-eraser" *ngIf="shoulPermitDelete(visit, admission)"
+							*ngIf="shoulPermitSave(rowData.id, visit, admission, 'DIAGNOSIS')"></button>&nbsp;&nbsp;
+						<button type="button" pButton icon="fa fa-eraser" *ngIf="shoulPermitDelete(visit, admission, 'DIAGNOSIS')"
 							(click)="deleteItem(admissionDiagnoses, rowData.id, 'AdmissionDiagnosis')" [disabled]="!(rowData.id > 0)"></button>
 		            </td>
 		        </tr>

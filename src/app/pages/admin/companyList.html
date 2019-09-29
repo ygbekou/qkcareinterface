@@ -23,7 +23,7 @@
                     </div>
                 </td>
                 <td>
-                    <button type="button" pButton icon="fa fa-edit" (click)="edit(rowData.id)"></button>&nbsp;
+                    <button type="button" pButton icon="fa fa-edit" (click)="edit(rowData.id)" *ngIf="permitView('Website Config')"></button>&nbsp;
                 </td>
             </tr>
         </ng-template> 

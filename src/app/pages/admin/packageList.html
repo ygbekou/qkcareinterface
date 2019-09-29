@@ -18,8 +18,9 @@
 	                {{rowData[col.field]}}
 	            </td>
 	            <td>
-	            	<button type="button" pButton icon="fa fa-edit" (click)="edit(rowData.id)"></button>&nbsp;
-					<button type="button" pButton icon="fa fa-eraser" (click)="deleteItem(packages, rowData.id, 'Package')"></button>
+	            	<button type="button" pButton icon="fa fa-edit" (click)="edit(rowData.id)" *ngIf="permitView('Package List')"></button>&nbsp;
+					<button type="button" pButton icon="fa fa-eraser" (click)="deleteItem(packages, rowData.id, 'Package')" 
+							*ngIf="permitDelete('Package List')" ></button>
 	            </td>
 	        </tr>
 	    </ng-template>

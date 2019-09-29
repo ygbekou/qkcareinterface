@@ -31,9 +31,9 @@ export class ReceiveOrderDetails extends BaseComponent implements OnInit, OnDest
       public translate: TranslateService,
       public confirmationService: ConfirmationService,
       public tokenStorage: TokenStorage,
-      private splDropdown: SupplierDropdown,
-      private pdtDropdown: ProductDropdown,
-      private employeeDropdown: EmployeeDropdown,
+      public splDropdown: SupplierDropdown,
+      public pdtDropdown: ProductDropdown,
+      public employeeDropdown: EmployeeDropdown,
       private route: ActivatedRoute
   ) {
 		  super(genericService, translate, confirmationService, tokenStorage);

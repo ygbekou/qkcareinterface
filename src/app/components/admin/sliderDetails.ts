@@ -1,10 +1,10 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild, Input, ElementRef } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-import { Section, Slider } from '../../models/website';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
+import { Slider } from '../../models/website';
 import { Constants } from '../../app.constants';
-import { GenericService, GlobalEventsManager } from '../../services';
-import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
-import { Message } from 'primeng/api';
+import { GenericService, TokenStorage } from '../../services';
+import { TranslateService } from '@ngx-translate/core';
+import { Message, ConfirmationService } from 'primeng/api';
+import { BaseComponent } from './baseComponent';
 
 @Component({
   selector: 'app-slider-details',
@@ -13,7 +13,7 @@ import { Message } from 'primeng/api';
 
 })
 // tslint:disable-next-line:component-class-suffix
-export class SliderDetails implements OnInit, OnDestroy {
+export class SliderDetails extends BaseComponent implements OnInit, OnDestroy {
 
   slider: Slider = new Slider();
   messages: Message[] = [];
@@ -23,11 +23,14 @@ export class SliderDetails implements OnInit, OnDestroy {
 
   constructor
     (
-      private genericService: GenericService,
-      private translate: TranslateService
+      public genericService: GenericService,
+      public translate: TranslateService,
+      public confirmationService: ConfirmationService,
+      public tokenStorage: TokenStorage,
     ) {
-    this.slider = new Slider();
-    this.pictureUrl = '';
+      super(genericService, translate, confirmationService, tokenStorage);
+      this.slider = new Slider();
+      this.pictureUrl = '';
   }
 
 

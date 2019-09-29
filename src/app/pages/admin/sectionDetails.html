@@ -54,9 +54,8 @@
     </div>
 
     <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
-        <button type="button" pButton icon="fa fa-close" (click)="clear()"
-            label="{{ 'COMMON.ADD' | translate }}"></button>&nbsp;&nbsp;
-        <button pButton icon="fa fa-check" label="{{ 'COMMON.SAVE' | translate }}"></button>
+        <button type="button" pButton icon="fa fa-close" (click)="clear()" label="{{ 'COMMON.ADD' | translate }}"></button>&nbsp;&nbsp;
+        <button pButton icon="fa fa-check" label="{{ 'COMMON.SAVE' | translate }}" *ngIf="permitSave(section.id, 'Website Config')"></button>
         <p-messages [(value)]="messages"></p-messages>
     </div>
 

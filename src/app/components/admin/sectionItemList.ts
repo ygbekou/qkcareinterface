@@ -1,8 +1,10 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild, Input, Output, EventEmitter } from '@angular/core';
 import { SectionItem } from '../../models/website';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
-import { GenericService, GlobalEventsManager } from '../../services';
+import { GenericService, GlobalEventsManager, TokenStorage } from '../../services';
 import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
+import { BaseComponent } from './baseComponent';
+import { ConfirmationService } from 'primeng/api';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -11,7 +13,7 @@ import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
   providers: [GenericService]
 })
 // tslint:disable-next-line:component-class-suffix
-export class SectionItemList implements OnInit, OnDestroy {
+export class SectionItemList extends BaseComponent implements OnInit, OnDestroy {
 
   sectionItems: SectionItem[] = [];
   cols: any[];
@@ -23,11 +25,14 @@ export class SectionItemList implements OnInit, OnDestroy {
 
   constructor
     (
-      private genericService: GenericService,
-      private translate: TranslateService,
+      public genericService: GenericService,
+      public translate: TranslateService,
+      public confirmationService: ConfirmationService,
+      public tokenStorage: TokenStorage,
       private route: ActivatedRoute,
       private router: Router,
   ) {
+    super(genericService, translate, confirmationService, tokenStorage);
   }
 
   ngOnInit(): void {

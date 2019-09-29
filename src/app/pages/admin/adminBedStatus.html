@@ -4,24 +4,26 @@
 			<p-tabView (onChange)="onTabChange($event)"> 
 			 	<p-tabPanel header="{{'COMMON.WARD_LIST' |translate}}">
 			    	<div *ngIf="activeTab == 0" class="ui-grid-row">
-				        <app-reference-details (referenceSaveEvent)="onReferenceSaved($event)"></app-reference-details>
+				        <app-reference-details [canSave]="permitSave(null, 'Room and Beds Config')" (referenceSaveEvent)="onReferenceSaved($event)"></app-reference-details>
 				        <br/> 
-				        <app-reference-list (referenceIdEvent)="onReferenceSelected($event, 'Ward')"></app-reference-list>
+						<app-reference-list [canView]="permitView('Room and Beds Config')" [canDelete]="permitDelete('Room and Beds Config')" 
+							(referenceIdEvent)="onReferenceSelected($event, 'Ward')"></app-reference-list>
 				    </div>
 			    </p-tabPanel>
 			    <p-tabPanel header="{{'COMMON.BED_CATEGORY_LIST' |translate}}" class="ui-grid-row">
 			    	<div *ngIf="activeTab == 1">
-				        <app-reference-details (referenceSaveEvent)="onReferenceSaved($event)"></app-reference-details>
+				        <app-reference-details [canSave]="permitSave(null, 'Room and Beds Config')" (referenceSaveEvent)="onReferenceSaved($event)"></app-reference-details>
 				        <br/> 
-				        <app-reference-list (referenceIdEvent)="onReferenceSelected($event, 'Category')"></app-reference-list>
+						<app-reference-list [canView]="permitView('Room and Beds Config')" [canDelete]="permitDelete('Room and Beds Config')" 
+							(referenceIdEvent)="onReferenceSelected($event, 'Category')"></app-reference-list>
 				    </div>
 			    </p-tabPanel>
 			    <p-tabPanel header="{{'COMMON.BUILDING_LIST' |translate}}" class="ui-grid-row">
 			    	<div *ngIf="activeTab == 2">
-				        <app-reference-details (referenceSaveEvent)="onReferenceSaved($event)"></app-reference-details>
+				        <app-reference-details [canSave]="permitSave(null, 'Room and Beds Config')" (referenceSaveEvent)="onReferenceSaved($event)"></app-reference-details>
 				        <br/> 
-				        <br/>
-				        <app-reference-list (referenceIdEvent)="onReferenceSelected($event, 'Building')"></app-reference-list>
+						<app-reference-list [canView]="permitView('Room and Beds Config')" [canDelete]="permitDelete('Room and Beds Config')"
+							(referenceIdEvent)="onReferenceSelected($event, 'Building')"></app-reference-list>
 				    </div>
 			    </p-tabPanel>
 			    <p-tabPanel header="{{'COMMON.FLOOR_LIST' |translate}}">

@@ -24,7 +24,7 @@ export class ReferenceDetails extends BaseComponent implements OnInit, OnDestroy
   hiddenMenu = false;
   messages: Message[] = [];
   
-  @Input() viewOnly: boolean;
+  @Input() canSave: boolean;
   @Output() referenceSaveEvent = new EventEmitter<Reference>();
  
   constructor

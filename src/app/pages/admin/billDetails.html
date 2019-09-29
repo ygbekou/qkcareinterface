@@ -188,7 +188,8 @@
 					                </p-cellEditor>
 					            </td>
 					            <td>
-					            	<button type="button" pButton icon="fa fa-plus"  (click)="addRow()"></button>&nbsp;&nbsp;
+									<button type="button" pButton icon="fa fa-plus" (click)="addRow()"
+										*ngIf="permitSave(bill.id, 'Add Bill')"></button>&nbsp;&nbsp;
 									<button type="button" pButton icon="fa fa-eraser" ></button>
 					            </td>
 					        </tr>
@@ -310,8 +311,10 @@
 			<br />
 			<div>
 				<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
-					<button pButton icon="fa fa-check" label="{{ 'COMMON.SAVE' | translate }}"></button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<button type="button" pButton icon="fa fa-print" (click)="printBill()" label="{{ 'COMMON.PRINT' | translate }}"></button>
+					<button pButton icon="fa fa-check" label="{{ 'COMMON.SAVE' | translate }}" *ngIf="permitSave(bill.id, 'Add Bill')">
+					</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<button type="button" pButton icon="fa fa-print" (click)="printBill()" *ngIf="permitView(bill.id, 'Add Bill')" 
+						label="{{ 'COMMON.PRINT' | translate }}"></button>
 					<div >
 						<a *ngIf="reportName" target="_blank"
 							href="assets/reports/{{reportName}}">{{ 'COMMON.DOWNLOAD_REPORT' | translate }} {{reportName}}</a>

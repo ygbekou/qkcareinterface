@@ -15,8 +15,7 @@
 			<tr>
 				<td *ngFor="let col of cols">{{section[col.field]}}</td>
 				<td>
-					<button type="button" pButton icon="fa fa-edit" 
-						(click)="edit(section.id)"></button>&nbsp;&nbsp;
+					<button type="button" pButton icon="fa fa-edit" (click)="edit(section.id)" *ngIf="permitView('Website Config')"></button>&nbsp;&nbsp;
 				</td>
 			</tr>
 		</ng-template> 

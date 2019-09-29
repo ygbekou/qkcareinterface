@@ -24,9 +24,9 @@
                 </div>
             </td>
             <td>
-                <button type="button" pButton icon="fa fa-edit" (click)="edit(rowData.id)"></button>&nbsp;&nbsp;
+                <button type="button" pButton icon="fa fa-edit" (click)="edit(rowData.id)" *ngIf="permitView('Website Config')"></button>&nbsp;&nbsp;
                 &nbsp;&nbsp;
-                <button type="button" pButton icon="fa fa-remove" (click)="delete(rowData.id)"></button>
+                <button type="button" pButton icon="fa fa-remove" (click)="delete(rowData.id)" *ngIf="permitDelete('Website Config')"></button>
             </td>
         </tr>
     </ng-template> 

@@ -22,8 +22,8 @@
 	                </div>
 				</td>
 				<td>
-					<button type="button" pButton icon="fa fa-edit" (click)="edit(enquiry.id)"></button>&nbsp;&nbsp;
-					<button type="button" pButton icon="fa fa-eraser" (click)="delete(equiry.id)"></button>
+					<button type="button" pButton icon="fa fa-edit" (click)="edit(enquiry.id)" *ngIf="permitView('Request List')"></button>&nbsp;&nbsp;
+					<button type="button" pButton icon="fa fa-eraser" (click)="delete(enquiry.id)" *ngIf="permitDelete('Request List')"></button>
 				</td>
 			</tr>
 		</ng-template> 

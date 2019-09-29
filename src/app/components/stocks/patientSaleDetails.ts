@@ -1,19 +1,20 @@
-import {Component, OnInit, OnDestroy, ChangeDetectorRef, Input} from '@angular/core';
+import {Component, OnInit, OnDestroy, Input} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {Constants} from '../../app.constants';
 import {Admission, Visit, Patient, Product} from '../../models';
 import {PatientSale, PatientSaleProduct} from '../../models/stocks/patientSale';
 import {ProductDropdown} from './../dropdowns';
-import {GenericService, PurchasingService, GlobalEventsManager} from '../../services';
+import {GenericService, PurchasingService, GlobalEventsManager, TokenStorage} from '../../services';
 import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
-import { Message } from 'primeng/api';
+import { Message, ConfirmationService } from 'primeng/api';
+import { BaseComponent } from '../admin/baseComponent';
 
 @Component({
   selector: 'app-patientSale-details',
   templateUrl: '../../pages/stocks/patientSaleDetails.html',
   providers: [GenericService, PurchasingService, GlobalEventsManager, ProductDropdown]
 })
-export class PatientSaleDetails implements OnInit, OnDestroy {
+export class PatientSaleDetails extends BaseComponent implements OnInit, OnDestroy {
 
   patientSale: PatientSale = new PatientSale();
   saleProductCols: any[];
@@ -33,13 +34,15 @@ export class PatientSaleDetails implements OnInit, OnDestroy {
   constructor
     (
     private globalEventsManager: GlobalEventsManager,
-    private genericService: GenericService,
+    public genericService: GenericService,
     private purchasingService: PurchasingService,
-    private translate: TranslateService,
-    private productDropdown: ProductDropdown,
+    public translate: TranslateService,
+    public confirmationService: ConfirmationService,
+    public tokenStorage: TokenStorage,
+    public productDropdown: ProductDropdown,
     private route: ActivatedRoute
     ) {
-    
+    super(genericService, translate, confirmationService, tokenStorage);
   }
 
   ngOnInit(): void {
@@ -123,7 +126,7 @@ export class PatientSaleDetails implements OnInit, OnDestroy {
       this.messages.push({severity: Constants.ERROR, summary: Constants.SAVE_LABEL, detail: 'At least 1 medication is required.'});
     }
     
-    return this.messages.length == 0;
+    return this.messages.length === 0;
   }
   
   save() {

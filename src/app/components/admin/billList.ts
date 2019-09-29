@@ -1,32 +1,32 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
-import { Constants } from '../../app.constants';
-import { Bill, User } from '../../models';
-import { Cookie } from 'ng2-cookies/ng2-cookies';
-import { DialogModule, InputTextareaModule, CheckboxModule } from 'primeng/primeng';
-import { GenericService } from '../../services';
+import { Bill } from '../../models';
+import { GenericService, TokenStorage } from '../../services';
 import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
+import { BaseComponent } from './baseComponent';
+import { ConfirmationService } from 'primeng/api';
 
 @Component({
   selector: 'app-bill-list',
   templateUrl: '../../pages/admin/billList.html',
   providers: [GenericService]
 })
-export class BillList implements OnInit, OnDestroy {
+export class BillList extends BaseComponent implements OnInit, OnDestroy {
   
   bills: Bill[] = [];
   cols: any[];
   
   constructor
     (
-    private genericService: GenericService,
-    private translate: TranslateService,
-    private changeDetectorRef: ChangeDetectorRef,
+    public genericService: GenericService,
+    public translate: TranslateService,
+    public tokenStorage: TokenStorage,
+    public confirmationService: ConfirmationService,
     private route: ActivatedRoute,
     private router: Router,
     ) {
 
-    
+    super(genericService, translate, confirmationService, tokenStorage);
   }
 
   ngOnInit(): void {

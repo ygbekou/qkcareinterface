@@ -2,9 +2,10 @@ import { Component, OnInit, OnDestroy, ViewChild, ElementRef, Output, EventEmitt
 import { SectionItem } from '../../models/website';
 import { Constants } from '../../app.constants';
 import { SectionDropdown } from './../dropdowns';
-import { GenericService } from '../../services';
+import { GenericService, TokenStorage } from '../../services';
 import { TranslateService} from '@ngx-translate/core';
-import { Message } from 'primeng/api';
+import { Message, ConfirmationService } from 'primeng/api';
+import { BaseComponent } from './baseComponent';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -14,7 +15,7 @@ import { Message } from 'primeng/api';
 
 })
 // tslint:disable-next-line:component-class-suffix
-export class SectionItemDetails implements OnInit, OnDestroy {
+export class SectionItemDetails extends BaseComponent implements OnInit, OnDestroy {
 
     sectionItem: SectionItem = new SectionItem();
     messages: Message[] = [];
@@ -25,10 +26,14 @@ export class SectionItemDetails implements OnInit, OnDestroy {
 
     constructor
     (
-      private genericService: GenericService,
-      private translate: TranslateService,
-      public  sectionDropdown: SectionDropdown    ) {
-      this.sectionItem = new SectionItem();
+      public genericService: GenericService,
+      public translate: TranslateService,
+      public confirmationService: ConfirmationService,
+      public tokenStorage: TokenStorage,
+      public  sectionDropdown: SectionDropdown    
+    ) {
+        super(genericService, translate, confirmationService, tokenStorage);
+        this.sectionItem = new SectionItem();
   }
 
 

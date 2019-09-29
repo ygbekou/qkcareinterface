@@ -31,9 +31,9 @@
         </td>
         <td align="justify">
           <button type="button" pButton icon="fa fa-edit" (click)="edit(rowData.id)"
-            	title="{{ 'COMMON.EDIT' | translate }}" *ngIf="shoulPermitView(visit, admission)"></button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            	title="{{ 'COMMON.EDIT' | translate }}" *ngIf="shoulPermitView(visit, admission, 'DOCTOR_ORDER')"></button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <button type="button" pButton icon="fa fa-eraser" (click)="deleteItem(doctorOrders, rowData.id, 'DoctorOrder')"
-            	title="{{ 'COMMON.DELETE' | translate }}" *ngIf="shoulPermitDelete(visit, admission)"></button>
+            	title="{{ 'COMMON.DELETE' | translate }}" *ngIf="shoulPermitDelete(visit, admission, 'DOCTOR_ORDER')"></button>
         </td>
       </tr>
     </ng-template>

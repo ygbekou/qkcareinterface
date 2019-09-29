@@ -1,8 +1,8 @@
 import { Component, OnInit, ChangeDetectorRef, ViewChild, OnDestroy } from '@angular/core';
-import { Patient, User, UserGroup } from '../../models';
+import { Patient, User } from '../../models';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
 import { Constants } from '../../app.constants';
-import { GenericService, GlobalEventsManager } from '../../services';
+import { GenericService, GlobalEventsManager, TokenStorage } from '../../services';
 import { CategoryDropdown } from '../dropdowns';
 import { HospitalLocationDetails } from './hospitalLocationDetails';
 import { HospitalLocationList } from './hospitalLocationList';
@@ -16,6 +16,9 @@ import { ReferenceWithCategoryList } from './referenceWithCategoryList';
 import { DepartmentDetails } from './departmentDetails';
 import { DepartmentList } from './departmentList';
 import { MedicineList } from './medicineList';
+import { BaseComponent } from './baseComponent';
+import { TranslateService } from '@ngx-translate/core';
+import { ConfirmationService } from 'primeng/api';
 
 @Component({
   selector: 'app-admin-reference',
@@ -23,7 +26,7 @@ import { MedicineList } from './medicineList';
   providers: [GenericService ]
 })
 // tslint:disable-next-line:component-class-suffix
-export class AdminReference implements OnInit, OnDestroy {
+export class AdminReference extends BaseComponent implements OnInit, OnDestroy {
   [x: string]: any;
 
   @ViewChild(DepartmentDetails) departmentDetails: DepartmentDetails;
@@ -46,12 +49,14 @@ export class AdminReference implements OnInit, OnDestroy {
 
   ABSENCES: string = Constants.ABSENCES;
   constructor (
-    private genericService: GenericService,
+    public genericService: GenericService,
+    public translate: TranslateService,
+    public confirmationService: ConfirmationService,
+    public tokenStorage: TokenStorage,
     private globalEventsManager: GlobalEventsManager,
-    private categoryDropdown: CategoryDropdown,
-    private changeDetectorRef: ChangeDetectorRef
+    public categoryDropdown: CategoryDropdown
   ) {
-
+    super(genericService, translate, confirmationService, tokenStorage);
     this.user = new User();
     this.patient = new Patient();
   }

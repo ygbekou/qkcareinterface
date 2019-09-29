@@ -239,7 +239,7 @@
 	<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
 		<button type="button" pButton icon="fa fa-refresh" (click)="clear()"
 			label="{{ 'COMMON.ADD' | translate }}"></button>&nbsp;&nbsp;
-		<button pButton icon="fa fa-save" label="{{'COMMON.SAVE' | translate}}"></button>
+		<button pButton icon="fa fa-save" label="{{'COMMON.SAVE' | translate}}" *ngIf="permitSave(company.id, 'Website Config')"></button>
 		<p-messages [(value)]="messages"></p-messages>
 	</div>
 </form>

@@ -16,7 +16,7 @@
 		</div>
 	</div>
 	<button type="button" pButton icon="fa fa-check" (click)="saveAction()" 
-		*ngIf="shoulPermitSave(null, visit, admission)" label="Save"></button>
+		*ngIf="shoulPermitSave(null, visit, admission, 'INVESTIGTION')" label="Save"></button>
 </p-dialog>
 
 
@@ -173,9 +173,9 @@
 						</td>
 						<td *ngIf="showActions">
 							<p-button label="Save" (click)="saveResult(childRowData)" 
-								*ngIf="shoulPermitSave(this.selectedInvestigation.id, visit, admission)"></p-button> &nbsp;
+								*ngIf="shoulPermitSave(this.selectedInvestigation.id, visit, admission, 'INVESTIGATION')"></p-button> &nbsp;
 							<p-button label="Disp" (click)="saveResult(childRowData)"
-								*ngIf="shoulPermitSave(this.selectedInvestigation.id, visit, admission)"></p-button>
+								*ngIf="shoulPermitSave(this.selectedInvestigation.id, visit, admission, 'INVESTIGATION')"></p-button>
 						</td>
 					</tr>
 

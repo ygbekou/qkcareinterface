@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { User, Patient,  } from '../../models';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
-import { GenericService, GlobalEventsManager } from '../../services';
+import { GenericService, GlobalEventsManager, TokenStorage } from '../../services';
 import { BedDetails } from './bedDetails';
 import { FloorDetails } from './floorDetails';
 import { ReferenceDetails } from './referenceDetails';
@@ -11,13 +11,16 @@ import { Constants } from '../../app.constants';
 import { FloorList } from './floorList';
 import { RoomList } from './roomList';
 import { BedList } from './bedList';
+import { BaseComponent } from './baseComponent';
+import { TranslateService } from '@ngx-translate/core';
+import { ConfirmationService } from 'primeng/api';
 
 @Component({
   selector: 'app-admin-bedStatus',
   templateUrl: '../../pages/admin/adminBedStatus.html',
   providers: [GenericService ]
 })
-export class AdminBedStatus implements OnInit {
+export class AdminBedStatus extends BaseComponent implements OnInit {
   [x: string]: any;
 
   @ViewChild(ReferenceDetails) referenceDetails: ReferenceDetails;
@@ -35,10 +38,13 @@ export class AdminBedStatus implements OnInit {
 
   ABSENCES: string = Constants.ABSENCES;
   constructor (
-    private genericService: GenericService,
+    public genericService: GenericService,
+    public translate: TranslateService,
+    public tokenStorage: TokenStorage,
+    public confirmationService: ConfirmationService, 
     private globalEventsManager: GlobalEventsManager
   ) {
-    
+    super(genericService, translate, confirmationService, tokenStorage);
     this.user = new User();
     this.patient = new Patient();
   }

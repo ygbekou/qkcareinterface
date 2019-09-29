@@ -61,8 +61,9 @@
 	                </div>
 	            </td>
 	            <td>
-	            	<button type="button" pButton icon="fa fa-edit" (click)="edit(rowData.id)"></button>&nbsp;
-					<button type="button" pButton icon="fa fa-eraser" (click)="delete(rowData.id)" *ngIf="!isVisitOrAdmissionPage()"></button>
+	            	<button type="button" pButton icon="fa fa-edit" (click)="edit(rowData.id)" *ngIf="permitView('Medication Sale List')"></button>&nbsp;
+					<button type="button" pButton icon="fa fa-eraser" (click)="delete(rowData.id)" 
+						*ngIf="!isVisitOrAdmissionPage() && permitDelete('Medication Sale List')"></button>
 	            </td>
 	        </tr>
 	    </ng-template>

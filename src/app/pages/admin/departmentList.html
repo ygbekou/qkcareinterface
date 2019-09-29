@@ -15,8 +15,8 @@
 			<tr>
 				<td *ngFor="let col of cols">{{department[col.field]}}</td>
 				<td>
-					<button type="button" pButton icon="fa fa-edit" (click)="edit(department.id)"></button>&nbsp;&nbsp;
-					<button type="button" pButton icon="fa fa-eraser" (click)="deleteItem(departments, department.id, 'Department')"></button>
+					<button type="button" pButton icon="fa fa-edit" (click)="edit(department.id)" *ngIf="permitView('Reference Config')"></button>&nbsp;&nbsp;
+					<button type="button" pButton icon="fa fa-eraser" (click)="deleteItem(departments, department.id, 'Department')" *ngIf="permitDelete('Reference Config')"></button>
 				</td>
 			</tr>
 		</ng-template> 

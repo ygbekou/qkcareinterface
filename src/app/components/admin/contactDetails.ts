@@ -1,9 +1,10 @@
 import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { Constants } from '../../app.constants';
-import { GenericService } from '../../services';
-import { Message } from 'primeng/api';
+import { GenericService, TokenStorage } from '../../services';
+import { Message, ConfirmationService } from 'primeng/api';
 import { TranslateService } from '@ngx-translate/core';
 import { ContactUsMessage } from '../../models/website';
+import { BaseComponent } from './baseComponent';
 
 
 @Component({
@@ -12,17 +13,19 @@ import { ContactUsMessage } from '../../models/website';
   providers: [GenericService]
 })
 // tslint:disable-next-line:component-class-suffix 
-export class ContactDetails implements OnInit, OnDestroy {
+export class ContactDetails extends BaseComponent implements OnInit, OnDestroy {
 
   contactUsMessage: ContactUsMessage = new ContactUsMessage();
   messages: Message[] = [];
 
   constructor
   (
-      private genericService: GenericService,
-      public translate: TranslateService
+      public genericService: GenericService,
+      public translate: TranslateService,
+      public confirmationService: ConfirmationService,
+      public tokenStorage: TokenStorage,
     ) {
-
+      super(genericService, translate, confirmationService, tokenStorage);
   }
 
   ngOnInit(): void {

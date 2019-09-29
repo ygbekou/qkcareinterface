@@ -16,8 +16,9 @@
 		<tr>
 			<td *ngFor="let col of cols">{{exam[col.field]}}</td>
 			<td>
-				<button type="button" pButton icon="fa fa-edit" (click)="edit(exam.id)"></button>&nbsp;&nbsp;
-				<button type="button" pButton icon="fa fa-eraser" (click)="deleteItem(exam, exam.id, 'com.qkcare.model.imaging.RadExam')"></button>
+				<button type="button" pButton icon="fa fa-edit" (click)="edit(exam.id)" *ngIf="permitView('Radiology Config')"></button>&nbsp;&nbsp;
+				<button type="button" pButton icon="fa fa-eraser" (click)="deleteItem(exam, exam.id, 'com.qkcare.model.imaging.RadExam')"
+					*ngIf="permitDelete('Website Config')"></button>
 			</td>
 		</tr>
 		</ng-template> 

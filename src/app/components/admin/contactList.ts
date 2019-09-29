@@ -1,13 +1,13 @@
 import { Component, OnInit, OnDestroy, Output, EventEmitter } from '@angular/core';
-import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
+import { Router } from '@angular/router';
 import {  } from 'primeng/primeng';
-import { GenericService } from '../../services';
+import { GenericService, TokenStorage } from '../../services';
 import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
 import { ContactUsMessage } from '../../models/website';
-import {ConfirmDialogModule} from 'primeng/confirmdialog';
 import {ConfirmationService, Message} from 'primeng/api';
 import { Constants } from '../../app.constants';
 import { GenericResponse } from '../../models/genericResponse';
+import { BaseComponent } from './baseComponent';
 
 @Component({
   selector: 'app-contact-list',
@@ -15,7 +15,7 @@ import { GenericResponse } from '../../models/genericResponse';
   providers: [GenericService, ConfirmationService]
 })
 // tslint:disable-next-line:component-class-suffix
-export class ContactList implements OnInit, OnDestroy {
+export class ContactList extends BaseComponent implements OnInit, OnDestroy {
 
   contactUsMessages: ContactUsMessage[] = [];
   cols: any[];
@@ -24,12 +24,13 @@ export class ContactList implements OnInit, OnDestroy {
 
   constructor
     (
-        private genericService: GenericService,
-        private translate: TranslateService,
-        private confirmationService: ConfirmationService,
+        public genericService: GenericService,
+        public translate: TranslateService,
+        public confirmationService: ConfirmationService,
+        public tokenStorage: TokenStorage,
         private router: Router,
     ) {
-
+      super(genericService, translate, confirmationService, tokenStorage);
       this.getAll();
 
   }

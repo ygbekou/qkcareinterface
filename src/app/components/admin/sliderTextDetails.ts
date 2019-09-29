@@ -2,9 +2,10 @@ import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/co
 import { SliderText } from '../../models/website';
 import { Constants } from '../../app.constants';
 import { SliderDropdown } from '../dropdowns';
-import { GenericService } from '../../services';
+import { GenericService, TokenStorage } from '../../services';
 import { TranslateService} from '@ngx-translate/core';
-import { Message } from 'primeng/api';
+import { Message, ConfirmationService } from 'primeng/api';
+import { BaseComponent } from './baseComponent';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -14,7 +15,7 @@ import { Message } from 'primeng/api';
 
 })
 // tslint:disable-next-line:component-class-suffix
-export class SliderTextDetails implements OnInit, OnDestroy {
+export class SliderTextDetails extends BaseComponent implements OnInit, OnDestroy {
 
     sliderText: SliderText = new SliderText();
     messages: Message[] = [];
@@ -22,10 +23,13 @@ export class SliderTextDetails implements OnInit, OnDestroy {
 
     constructor
     (
-      private genericService: GenericService,
-      private translate: TranslateService,
+      public genericService: GenericService,
+      public translate: TranslateService,
+      public confirmationService: ConfirmationService,
+      public tokenStorage: TokenStorage,
       public  sliderDropdown: SliderDropdown
     ) {
+      super(genericService, translate, confirmationService, tokenStorage);
       this.sliderText = new SliderText();
   }
 

@@ -17,10 +17,8 @@
 			<tr>
 				<td *ngFor="let col of columns">{{rowData[col.field]}}</td>
 				<td>
-					<button type="button" pButton icon="fa fa-edit"
-						(click)="edit(rowData.id)"></button>&nbsp;&nbsp;
-					<button type="button" pButton icon="fa fa-eraser"
-						(click)="deleteItem(medicines, rowData.id, 'Product')"></button>
+					<button type="button" pButton icon="fa fa-edit" *ngIf="permitView('Reference Config')" (click)="edit(rowData.id)"></button>&nbsp;&nbsp;
+					<button type="button" pButton icon="fa fa-eraser" *ngIf="permitDelete('Reference Config')" (click)="deleteItem(medicines, rowData.id, 'Product')"></button>
 				</td>
 			</tr>
 		</ng-template> 

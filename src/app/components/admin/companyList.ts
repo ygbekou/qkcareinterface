@@ -1,9 +1,10 @@
 import { Component, OnInit, OnDestroy, Output, EventEmitter } from '@angular/core';
 import { Router, NavigationExtras } from '@angular/router';
-import {  } from 'primeng/primeng';
-import { GenericService } from '../../services';
+import { ConfirmationService } from 'primeng/primeng';
+import { GenericService, TokenStorage } from '../../services';
 import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
 import { Company } from '../../models/company';
+import { BaseComponent } from './baseComponent';
 
 @Component({
   selector: 'app-company-list',
@@ -11,7 +12,7 @@ import { Company } from '../../models/company';
   providers: [GenericService]
 })
 // tslint:disable-next-line:component-class-suffix
-export class CompanyList implements OnInit, OnDestroy {
+export class CompanyList extends BaseComponent implements OnInit, OnDestroy {
 
   companies: Company[] = [];
   cols: any[];
@@ -19,11 +20,13 @@ export class CompanyList implements OnInit, OnDestroy {
 
   constructor
     (
-    private genericService: GenericService,
-    private translate: TranslateService,
-    private router: Router,
+      public genericService: GenericService,
+      public translate: TranslateService,
+      public confirmationService: ConfirmationService,
+      public tokenStorage: TokenStorage,
+      private router: Router,
     ) {
-
+      super(genericService, translate, confirmationService, tokenStorage);
       const parameters: string [] = [];
       this.genericService.getAllByCriteria('Company', parameters)
           .subscribe((data: Company[]) => {

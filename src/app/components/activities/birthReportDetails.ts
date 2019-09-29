@@ -1,4 +1,4 @@
-import {Component, OnInit, OnDestroy, ChangeDetectorRef, Input} from '@angular/core';
+import {Component, OnInit, OnDestroy, Input} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {Constants} from '../../app.constants';
 import {Admission, Patient, User} from '../../models';

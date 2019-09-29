@@ -39,11 +39,11 @@ export class BillDetails extends BaseComponent implements OnInit, OnDestroy {
       public translate: TranslateService,
       public tokenStorage: TokenStorage,
       public confirmationService: ConfirmationService,
-      private serviceDropdown: ServiceDropdown,
-      private packageDropdown: PackageDropdown,
-      private labTestDropdown: LabTestDropdown,
-      private productDropdown: ProductDropdown,
-      private doctorDropdown: DoctorDropdown,
+      public serviceDropdown: ServiceDropdown,
+      public packageDropdown: PackageDropdown,
+      public labTestDropdown: LabTestDropdown,
+      public productDropdown: ProductDropdown,
+      public doctorDropdown: DoctorDropdown,
       private route: ActivatedRoute
     ) {
 		  super(genericService, translate, confirmationService, tokenStorage);

@@ -37,8 +37,7 @@ export class AdmissionDiagnoses extends BaseComponent implements OnInit, OnDestr
       public confirmationService: ConfirmationService,
       public tokenStorage: TokenStorage,
       public globalEventsManager: GlobalEventsManager,
-      private diagnosisDropdown: DiagnosisDropdown,
-      private changeDetectorRef: ChangeDetectorRef,
+      public diagnosisDropdown: DiagnosisDropdown,
       private route: ActivatedRoute,
       private router: Router
     ) {

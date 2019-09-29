@@ -4,10 +4,11 @@ import { Enquiry, User } from '../../models';
 import { Constants } from '../../app.constants';
 import { FileUploader } from './fileUploader';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
-import { DataTableModule, DialogModule, InputTextareaModule, CheckboxModule } from 'primeng/primeng';
-import { GenericService, GlobalEventsManager } from '../../services';
+import { DataTableModule, DialogModule, InputTextareaModule, CheckboxModule, ConfirmationService } from 'primeng/primeng';
+import { GenericService, GlobalEventsManager, TokenStorage } from '../../services';
 import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
 import { Message } from 'primeng/api';
+import { BaseComponent } from './baseComponent';
 
 @Component({
   selector: 'app-enquiry-details',
@@ -15,19 +16,21 @@ import { Message } from 'primeng/api';
   providers: [GenericService]
   
 })
-export class EnquiryDetails implements OnInit, OnDestroy {
+export class EnquiryDetails extends BaseComponent implements OnInit, OnDestroy {
   
   enquiry: Enquiry = new Enquiry();
   messages: Message[] = [];
  
   constructor
     (
-      private genericService: GenericService,
-      private translate: TranslateService,
+      public genericService: GenericService,
+      public confirmationService: ConfirmationService,
+      public translate: TranslateService,
+      public tokenStorage: TokenStorage,
       private route: ActivatedRoute,
       private router: Router
     ) {
-
+      super(genericService, translate, confirmationService, tokenStorage);
   }
 
   
@@ -84,7 +87,6 @@ export class EnquiryDetails implements OnInit, OnDestroy {
         this.enquiry.checkedBy = JSON.parse(Cookie.get('user'));
       }
 
-      console.info(this.enquiry);
       this.genericService.save(this.enquiry, 'Enquiry')
         .subscribe(result => {
           if (result.id > 0) {

@@ -77,8 +77,9 @@
 	                </div>
 	            </td>
 	            <td>
-	            	<button type="button" pButton icon="fa fa-edit" (click)="edit(rowData.id)"></button>&nbsp;&nbsp;
-					<button type="button" pButton icon="fa fa-eraser" (click)="deleteItem(purchaseOrders, rowData.id, 'PurchaseOrder')"></button>
+					<button type="button" pButton icon="fa fa-edit" (click)="edit(rowData.id)" *ngIf="permitView('Medication Order List')"></button>&nbsp;&nbsp;
+					<button type="button" pButton icon="fa fa-eraser" (click)="deleteItem(purchaseOrders, rowData.id, 'PurchaseOrder')"
+						*ngIf="permitDelete('Medication Order List')"></button>
 	            </td>
 	        </tr>
 	    </ng-template>

@@ -33,13 +33,13 @@
         </div>
       </td>
       <td>
-        <button pButton icon="fa fa-close" (click)="updateStatus(rowData.id, 3)"
-          label="{{ 'COMMON.CANCEL' | translate }}" class="ui-button-rounded ui-button-warning" ></button>
+        <button pButton icon="fa fa-close" (click)="updateStatus(rowData.id, 3)" *ngIf="permitSave(rowData.id,'Visit List')"
+          label="{{ 'COMMON.CANCEL' | translate }}" class="ui-button-rounded ui-button-warning"  ></button>
         &nbsp;&nbsp;
-        <button pButton icon="fa fa-check" (click)="updateStatus(rowData.id, 1)"
+        <button pButton icon="fa fa-check" (click)="updateStatus(rowData.id, 1)" *ngIf="permitSave(rowData.id,'Visit List')"
           label="{{ 'COMMON.END' | translate }}" class="ui-button-rounded" ></button>
  &nbsp;&nbsp;
-		    <a [routerLink]="['/admin/visitDetails']" [queryParams]="{visitId:rowData.id}">
+		    <a [routerLink]="['/admin/visitDetails']" [queryParams]="{visitId:rowData.id}" *ngIf="permitView('Visit List')">
               <button pButton type="button" label="{{ 'COMMON.EDIT' | translate }}" class="ui-button-rounded" icon="pi pi-search" > </button>
              </a>
       </td>

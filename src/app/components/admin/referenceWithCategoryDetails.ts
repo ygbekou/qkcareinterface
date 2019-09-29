@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef, EventEmitter, Output, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Constants } from '../../app.constants';
 import { ReferenceWithCategory } from '../../models/referenceWithCategory';
@@ -22,7 +22,7 @@ export class ReferenceWithCategoryDetails extends BaseComponent implements OnIni
   referenceWithCategoryType: string;
 
   messages: Message[] = [];
-
+  @Input() canSave: boolean;
   @Output() referenceWithCategorySaveEvent = new EventEmitter<ReferenceWithCategory>();
 
   constructor

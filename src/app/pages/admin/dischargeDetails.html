@@ -116,6 +116,6 @@
   </div>
   <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
     <button pButton icon="fa fa-check" label="{{ 'COMMON.SAVE' | translate }}" [disabled]="!f.form.valid" 
-      *ngIf="shoulPermitSave(discharge.id, visit, admission)"></button>&nbsp;&nbsp;
+      *ngIf="shoulPermitSave(discharge.id, visit, admission, 'DISCHARGE')"></button>&nbsp;&nbsp;
   </div>
 </form>

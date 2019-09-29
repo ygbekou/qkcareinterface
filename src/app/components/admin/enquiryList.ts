@@ -1,19 +1,17 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild, Input, Output, EventEmitter } from '@angular/core';
-import { Reference, User, Enquiry } from '../../models';
+import { Component, OnInit, OnDestroy, Output, EventEmitter } from '@angular/core';
+import { Enquiry } from '../../models';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
-import { Constants } from '../../app.constants';
-import { FileUploader } from './fileUploader';
-import { Cookie } from 'ng2-cookies/ng2-cookies';
-import { DataTableModule, DialogModule, InputTextareaModule, CheckboxModule } from 'primeng/primeng';
-import { GenericService, GlobalEventsManager } from '../../services';
+import { ConfirmationService } from 'primeng/primeng';
+import { GenericService, TokenStorage } from '../../services';
 import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
+import { BaseComponent } from './baseComponent';
 
 @Component({
   selector: 'app-enquiry-list',
   templateUrl: '../../pages/admin/enquiryList.html',
   providers: [GenericService]
 })
-export class EnquiryList implements OnInit, OnDestroy {
+export class EnquiryList extends BaseComponent implements OnInit, OnDestroy {
   
   enquiries: Enquiry[] = [];
   cols: any[];
@@ -22,17 +20,20 @@ export class EnquiryList implements OnInit, OnDestroy {
   
   constructor
     (
-    private genericService: GenericService,
-    private translate: TranslateService,
+    public genericService: GenericService,
+    public confirmationService: ConfirmationService,
+    public translate: TranslateService,
+    public tokenStorage: TokenStorage,
     private route: ActivatedRoute,
     private router: Router,
     ) {
+      super(genericService, translate, confirmationService, tokenStorage);
   }
 
   ngOnInit(): void {
     
     this.cols = [
-            { field: 'enquiryDatetime', header: 'Date/Time', headerKey: 'COMMON.ENQUIRY_DATETIME', type:'date' },
+            { field: 'enquiryDatetime', header: 'Date/Time', headerKey: 'COMMON.ENQUIRY_DATETIME', type: 'date' },
             { field: 'name', header: 'Name', headerKey: 'COMMON.NAME' },
             { field: 'email', header: 'Email', headerKey: 'COMMON.EMAIL' },
             { field: 'phone', header: 'Phone', headerKey: 'COMMON.PHONE' },
@@ -44,12 +45,11 @@ export class EnquiryList implements OnInit, OnDestroy {
         .queryParams
         .subscribe(params => {
           
-          let parameters: string [] = []; 
+          const parameters: string [] = []; 
           
           this.genericService.getAllByCriteria('Enquiry', parameters)
-            .subscribe((data: Enquiry[]) => 
-            { 
-              this.enquiries = data 
+            .subscribe((data: Enquiry[]) => { 
+              this.enquiries = data; 
             },
             error => console.log(error),
             () => console.log('Get all Enquiries complete'));
@@ -64,8 +64,8 @@ export class EnquiryList implements OnInit, OnDestroy {
  
   
   updateCols() {
-    for (var index in this.cols) {
-      let col = this.cols[index];
+    for (let index in this.cols) {
+      const col = this.cols[index];
       this.translate.get(col.headerKey).subscribe((res: string) => {
         col.header = res;
       });
@@ -77,30 +77,28 @@ export class EnquiryList implements OnInit, OnDestroy {
     this.enquiries = null;
   }
   
-  edit(enquiryId : number) {
+  edit(enquiryId: number) {
     try {
-      let navigationExtras: NavigationExtras = {
+      const navigationExtras: NavigationExtras = {
         queryParams: {
-          "enquiryId": enquiryId,
+          'enquiryId': enquiryId,
         }
-      }
-      this.router.navigate(["/admin/enquiryDetails"], navigationExtras);
-    }
-    catch (e) {
+      };
+      this.router.navigate(['/admin/enquiryDetails'], navigationExtras);
+    } catch (e) {
       console.log(e);
     }
   }
 
-  delete(enquiryId : number) {
+  delete(enquiryId: number) {
     try {
-      let navigationExtras: NavigationExtras = {
+      const navigationExtras: NavigationExtras = {
         queryParams: {
-          "enquiryId": enquiryId,
+          'enquiryId': enquiryId,
         }
-      }
-      this.router.navigate(["/admin/enquiryDetails"], navigationExtras);
-    }
-    catch (e) {
+      };
+      this.router.navigate(['/admin/enquiryDetails'], navigationExtras);
+    } catch (e) {
       console.log(e);
     }
   }

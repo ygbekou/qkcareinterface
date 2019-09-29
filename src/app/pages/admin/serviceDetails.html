@@ -55,8 +55,8 @@
 		<br />
 		<div>
 			<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
- 				<button type="button" pButton icon="fa fa-refresh" (click)="addNew()" label="{{ 'COMMON.NEW' | translate }}"></button>&nbsp;&nbsp;
- 				<button type="button" pButton icon="fa fa-check" (click)="save()" label="{{ 'COMMON.SAVE' | translate }}"></button>
+ 				<button type="button" pButton icon="fa fa-refresh" (click)="addNew()" *ngIf="permitSave(service.id, 'Add Tarif')" label="{{ 'COMMON.NEW' | translate }}"></button>&nbsp;&nbsp;
+ 				<button type="button" pButton icon="fa fa-check" (click)="save()" *ngIf="permitSave(service.id, 'Add Tarif')"  label="{{ 'COMMON.SAVE' | translate }}"></button>
 			</div>
 		</div>
 	</div>

@@ -110,9 +110,8 @@
 		<br/>
 		<div>
 			<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
-				<button type="button" pButton icon="fa fa-close" (click)="delete()" label="{{ 'COMMON.DELETE' | translate }}"></button> &nbsp;&nbsp;
-				<button pButton icon="fa fa-check" label="{{ 'COMMON.SAVE' | translate }}"></button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				<button type="button" pButton icon="fa fa-check" (click)="save(2)" label="{{ 'COMMON.DONE' | translate }}"></button>
+				<button pButton icon="fa fa-check" label="{{ 'COMMON.SAVE' | translate }}" *ngIf="permitSave(saleReturn.id, 'Add Sale Return')"></button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<button type="button" pButton icon="fa fa-check" (click)="save(2)" *ngIf="permitSave(saleReturn.id, 'Add Sale Return')" label="{{ 'COMMON.DONE' | translate }}"></button>
 			</div>
 		</div>
 	</div>

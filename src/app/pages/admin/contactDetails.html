@@ -27,8 +27,8 @@
 				<div [innerHTML]="contactUsMessage.message"></div>
 			</div>
 			<p-footer>
-				<button type="button" pButton icon="fa fa-close" (click)="delete()"
-					label="{{ 'COMMON.DELETE' | translate }}" style="width: 25%"></button>
+				<button type="button" pButton icon="fa fa-close" (click)="delete()" label="{{ 'COMMON.DELETE' | translate }}" 
+				*ngIf="permitDelete('Website Config')" style="width: 25%"></button>
 			</p-footer>
 		</p-card>
 	</div>
