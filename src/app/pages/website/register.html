@@ -35,32 +35,60 @@
       </div>
     </div>
 
-
-    <div class="ui-grid-row" *ngIf="user.id>0">
-      <div class="form-group">
-        <label for="email">{{ 'COMMON.E_MAIL' | translate }}<font color="red">*</font></label>
-        <input type="text" pInputText class="form-control" id="email" required [(ngModel)]="user.email" name="email"
-          #email="ngModel">
-        <p-message *ngIf="f.submitted && email.errors && email.errors.email" severity="error"
-          text="{{ 'COMMON.E_MAIL' | translate }} {{ 'VALIDATION.IS_INVALID' | translate }}"></p-message>
+    <br />
+    <p-card *ngIf="user.id>0">
+      <p-header>
+        <h6> <font color="green">{{ 'MESSAGE.MATCHING_RECORD_FOUND' | translate }}</font> 
+        </h6>
+      </p-header>
+      <div class="ui-grid-row">
+        <h6>{{ 'COMMON.PATIENT_NAME' | translate }} :
+          {{(user.firstName?user.firstName:'')+' '+(user.lastName?user.lastName:'')}}
+        </h6>
       </div>
-    </div>
-
-    <div class="ui-grid-row" *ngIf="user.id>0">
-      <div class="form-group">
-        <label for="password">{{ 'COMMON.PASSWORD' | translate }} <font color="red">*</font></label>
-        <input type="password" pInputText class="form-control" id="password" [(ngModel)]="user.password" name="password"
-          #password="ngModel">
-        <p-message *ngIf="f.submitted && password.invalid" severity="error"
-          text="{{ 'COMMON.PASSWORD' | translate }} {{ 'VALIDATION.IS_REQUIRED' | translate }}"></p-message>
+      <div class="ui-grid-row">
+        <h6>{{ 'COMMON.BIRTH_DATE' | translate }} : {{user.birthDate|date: globalEventsManager.DATE_FORMAT}}
+        </h6>
       </div>
-    </div>
-    <div class="ui-grid-row" *ngIf="user.id>0">
-      <div class="form-group">
-        <button pButton type="submit" icon="fa fa-sign-in" label="{{ 'COMMON.REGISTER' | translate }}"></button>
+      <div class="ui-grid-row">
+        <h6>{{ 'COMMON.GENDER' | translate }} : {{user.sex}}</h6>
       </div>
-    </div>
+      <div class="ui-grid-row">
+        <h6> {{ 'COMMON.CONTACT_PHONE' | translate }} : {{user.mobilePhone}}</h6>
+      </div>
+    </p-card>
 
+    <br />
+    <p-card *ngIf="user.id>0">
+      <p-header>
+        <h6>  <font color="green">{{ 'MESSAGE.CHOOSE_MAIL_PASSWD' | translate }}</font>
+        </h6>
+      </p-header>
+      <div class="ui-grid-row" *ngIf="user.id>0">
+        <div class="form-group">
+          <label for="email">{{ 'COMMON.E_MAIL' | translate }}<font color="red">*</font></label>
+          <input type="text" pInputText class="form-control" id="email" required [(ngModel)]="user.email" name="email"
+            #email="ngModel">
+          <p-message *ngIf="f.submitted && email.errors && email.errors.email" severity="error"
+            text="{{ 'COMMON.E_MAIL' | translate }} {{ 'VALIDATION.IS_INVALID' | translate }}"></p-message>
+        </div>
+      </div>
+
+      <div class="ui-grid-row" *ngIf="user.id>0">
+        <div class="form-group">
+          <label for="password">{{ 'COMMON.PASSWORD' | translate }} <font color="red">*</font></label>
+          <input type="password" pInputText class="form-control" id="password" [(ngModel)]="user.password"
+            name="password" #password="ngModel">
+          <p-message *ngIf="f.submitted && password.invalid" severity="error"
+            text="{{ 'COMMON.PASSWORD' | translate }} {{ 'VALIDATION.IS_REQUIRED' | translate }}"></p-message>
+        </div>
+      </div>
+      <div class="ui-grid-row" *ngIf="user.id>0">
+        <div class="form-group">
+          <button pButton type="submit" (click)="button='register'" icon="fa fa-sign-in" label="{{ 'COMMON.REGISTER' | translate }}"></button>
+        </div>
+      </div>
+    </p-card>
   </form>
 </div>
 <app-web-footer></app-web-footer>

@@ -50,17 +50,18 @@ export class Register implements OnInit {
 
 	public login() {
 		try {
+			this.messages = [];
 			console.log(this.button);
 			this.user.lang = this.translate.currentLang;
 			if (this.button === 'validate') {
 				this.userService.getTempUser(this.user)
 					.subscribe(data => {
-						this.user = data;
-						if (this.user.id && this.user.id > 0) {
+						if (data.id && data.id > 0) {
 							//this is good
+							this.user = data;
 						} else {
-							this.translate.get(['MESSAGE.INVALID_USER_PASS', 'COMMON.LOGIN']).subscribe(res => {
-								this.messages.push({ severity: Constants.ERROR, summary: res['COMMON.LOGIN'], detail: res['MESSAGE.INVALID_USER_PASS'] });
+							this.translate.get(['MESSAGE.NO_MATCHING_RECORD_FOUND', 'COMMON.LOGIN']).subscribe(res => {
+								this.messages.push({ severity: Constants.ERROR, summary: res['COMMON.LOGIN'], detail: res['MESSAGE.NO_MATCHING_RECORD_FOUND'] });
 							});
 						}
 					});

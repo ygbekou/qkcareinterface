@@ -9,6 +9,7 @@ import { Patient } from '../models/patient';
 import { UserGroup } from '../models/userGroup';
 import { TokenStorage } from './token.storage';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
+import { GlobalEventsManager } from './globalEventsManager';
 
 @Injectable()
 export class UserService {
@@ -16,7 +17,8 @@ export class UserService {
   private actionUrl: string;
   private headers: Headers;
 
-  constructor(private http: Http, private token: TokenStorage) {
+  constructor(private http: Http, private token: TokenStorage,
+    private globalEventsManager: GlobalEventsManager) {
     this.headers = new Headers();
     if (this.token.hasToken()) {
       this.headers.append('Authorization', 'Bearer ' + this.token.getToken());
@@ -69,6 +71,7 @@ export class UserService {
       .map((response: Response) => {
         // login successful if there's a jwt token in the response
         if (response && response.json()) {
+          // tslint:disable-next-line:no-console
           console.info(response.json());
           user = response.json();
           if (user.id > 0) {
@@ -78,9 +81,7 @@ export class UserService {
         } else {
           return false;
         }
-      }
-
-      )
+      })
       .catch(
         this.handleError
       );
@@ -96,19 +97,32 @@ export class UserService {
       .catch(this.handleError);
   }
 
-  public saveUserAndLogin = (user: User): Observable<User> => {
+  public saveUserAndLogin = (user: User): Observable<Boolean> => {
     const toAdd = JSON.stringify(user);
-    const actionUrl = Constants.apiServer + '/service/user/saveUserAndLogin';
-    return this.http.post(actionUrl, toAdd, { headers: this.headers })
+    const actionUrl = Constants.apiServer + '/service/user/User/saveUserAndLogin';
+ return this.http.post(actionUrl, toAdd, {headers: this.headers})
       .map((response: Response) => {
-        return response.json();
-      })
+        // login successful if there's a jwt token in the response
+        if (response) {
+          const data = response.json();
+          this.token.saveAuthData(data);
+            if (data.token !== '') {
+              this.globalEventsManager.showMenu = true;
+            }
+          return response.json();
+
+        } else {
+          return null;
+        }
+      }
+
+      )
       .catch(this.handleError);
   }
 
   public getTempUser = (user: User): Observable<User> => {
     const toAdd = JSON.stringify(user);
-    const actionUrl = Constants.apiServer + '/service/user/getTempUser';
+    const actionUrl = Constants.apiServer + '/service/user/User/getTempUser';
     return this.http.post(actionUrl, toAdd, { headers: this.headers })
       .map((response: Response) => {
         return response.json();
