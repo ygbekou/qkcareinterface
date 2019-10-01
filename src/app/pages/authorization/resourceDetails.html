@@ -4,38 +4,24 @@
 		<div class="ui-grid-row">
 			<div class="ui-grid-col-4 ui-sm-12">
 				<div class="form-group">
-					<label for="parent">{{ 'COMMON.PARENT' | translate }}</label>
-					<p-autoComplete [(ngModel)]="resource.parent"
-					(onDropdownClick)="resourceDropdown.handleDropdownClick($event)"
-					[suggestions]="resourceDropdown.filteredResources" [dropdown]="true" id="parent"
-					(completeMethod)="resourceDropdown.filter($event)" name="parent" field="name" [size]="30"
-					placeholder="{{SELECT_OPTION}}" [minLength]="1" #parent="ngModel">
-					</p-autoComplete>
-				</div>
-			</div>
-			<div class="ui-grid-col-6 ui-sm-12">
-				<div class="form-group">
 					<label for="urlPath">{{ 'COMMON.URL_PATH' | translate }}</label>
 					<input pInputText id="urlPath" [(ngModel)]="resource.urlPath" name="urlPath" #urlPath="ngModel" />
 				</div>
 			</div>
-		</div>
-		<br />
-		<div class="ui-grid-row">
-			<div class="ui-grid-col-4 ui-sm-12">
+			<div class="ui-grid-col-3 ui-sm-12">
 				<div class="form-group">
 					<label for="name">{{ 'COMMON.NAME' | translate }}</label>
 					<input pInputText id="name" [(ngModel)]="resource.name" name="name" #name="ngModel" required />
 					<p-message *ngIf="f.submitted && name.invalid" severity="error" text="Field is required"></p-message>
 				</div>
 			</div>
-			<div class="ui-grid-col-4 ui-sm-12">
+			<div class="ui-grid-col-3 ui-sm-12">
 				<div class="form-group">
 					<label for="description">{{ 'COMMON.DESCRIPTION' | translate }}</label>
 					<textarea pInputTextarea id="description" name="description" [(ngModel)]="resource.description"> </textarea>
 				</div>
 			</div>
-			<div class="ui-grid-col-4 ui-sm-12">
+			<div class="ui-grid-col-2 ui-sm-12">
 				<div class="form-group">
 					<label for="rank">{{ 'COMMON.STATUS' | translate }}</label>
 					<br />
@@ -51,6 +37,6 @@
 	<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
 		<button type="button" pButton icon="fa fa-close" (click)="clear()" label="{{ 'COMMON.CLEAR' | translate }}"></button>&nbsp;&nbsp;
 		<button pButton icon="fa fa-check" label="{{ 'COMMON.SAVE' | translate }}" *ngIf="permitSave(resource.id, 'SECURITY_CONFIG_RESOURCES')"></button>
-	</div>
+	</div>++
 	</div>
 </form>

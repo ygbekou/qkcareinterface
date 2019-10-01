@@ -86,14 +86,14 @@
                 </td>
                 <td align="justify">
 					<button type="button" pButton icon="fa fa-edit"	(click)="edit(rowData.id)" 
-						title="{{ 'COMMON.EDIT' | translate }}" *ngIf="permitView('Visit List')"></button> 
+						title="{{ 'COMMON.EDIT' | translate }}" *ngIf="permitView('List visits')"></button> 
 					&nbsp;&nbsp;
 					<button class="ui-button-rounded" type="button" pButton icon="fa fa-check"
 						(click)="redirectToOrigialPage(rowData)" title="{{ 'COMMON.SELECT' | translate }}"
 						*ngIf="this.originalPage !== undefined"></button>
 					&nbsp;&nbsp;
 					<button type="button" class="ui-button-rounded ui-button-warning" pButton icon="fa fa-eraser" 
-						(click)="deleteItem(visits, rowData.id, 'Visit')" *ngIf="permitDelete('Visit List')" 
+						(click)="deleteItem(visits, rowData.id, 'Visit')" *ngIf="permitDelete('List visits')" 
 						title="{{ 'COMMON.DELETE' | translate }}">
 					</button>
                 </td>

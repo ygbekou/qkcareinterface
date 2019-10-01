@@ -26,7 +26,7 @@ export class PatientSaleList extends BaseComponent implements OnInit, OnDestroy 
   
   constructor
     (
-    private genericService: GenericService,
+    public genericService: GenericService,
     private purchasingService: PurchasingService,
     public translate: TranslateService,
     public confirmationService: ConfirmationService,
