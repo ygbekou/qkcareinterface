@@ -168,7 +168,8 @@
   </div>
   <button pButton type="text" (click)="button=1" icon="fa fa fa-play-circle" *ngIf="activeIndex<3"
     style="margin-top: 0px; width: 100%; height: 50px;" label="{{navigationLabel}}"></button>
-  <button (click)="button=2" pButton type="submit" icon="fa fa fa-save" style="margin-top: 0px; width: 100%; height: 50px;" 
+  <button (click)="button=2" pButton type="submit" icon="fa fa fa-save"
+    style="margin-top: 0px; width: 100%; height: 50px;"
     *ngIf="permitSave(patient.id, 'Patient Kiosk') && activeIndex===3 && !done" label="Enregistrer"></button>
   <br>
   <div *ngIf="error" class="alert alert-danger">{{error}}</div>
