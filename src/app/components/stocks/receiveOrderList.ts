@@ -7,10 +7,11 @@ import { Message, ConfirmationService } from 'primeng/api';
 import { BaseComponent } from '../admin/baseComponent';
 
 @Component({
-  selector: 'app-receiveOrder-list',
+  selector: 'app-receive-order-list',
   templateUrl: '../../pages/stocks/receiveOrderList.html',
   providers: [GenericService, PurchasingService]
 })
+// tslint:disable-next-line: component-class-suffix
 export class ReceiveOrderList extends BaseComponent implements OnInit, OnDestroy {
   
   receiveOrders: ReceiveOrder[] = [];
