@@ -167,19 +167,22 @@
 					<div class="ui-grid-col-7 ui-sm-12 ui-fluid">
 						<div class="form-group">
 							<label for="description">{{ 'COMMON.COMMENTS' | translate }}</label> 
-							<textarea pInputTextarea id="comments" rows="4" cols="40" pInputTextarea maxlength="1000" 
+							<textarea pInputTextarea id="comments" rows="4" cols="40" maxlength="1000" 
 								[(ngModel)]="newComment.comments" name="comments" #comments="ngModel"> </textarea>					
 						</div>
 					</div>
 					<div class="ui-grid-col-2 ui-sm-12">
-						<div class="ui-grid-col-4 ui-sm-12 ui-fluid">
-							<br/>
-							<button type="button" pButton icon="fa fa-save" label="{{ 'COMMON.SAVE' | translate }}"
-									(click)="saveComment()"></button>
-							<br/>
-							<br/>
-							<button type="button" pButton icon="fa fa-delete" label="{{ 'COMMON.CANCEL' | translate }}" 
-									(click)="cancelComment()"></button>
+						<div class="row">
+							<div class="ui-grid-col-2 ui-sm-12"></div>
+							<div class="ui-grid-col-4 ui-sm-12">
+								<br/>
+								<button type="button" pButton icon="fa fa-save" label="{{ 'COMMON.SAVE' | translate }}"
+										(click)="saveComment()"></button>
+								<br/>
+								<br/>
+								<button type="button" pButton icon="fa fa-delete" label="{{ 'COMMON.CANCEL' | translate }}" 
+										(click)="cancelComment()"></button>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -190,11 +193,11 @@
 
 		<br/>
 		<br/>
-		<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+		<div class="ui-dialog-buttonpane">
 			<button type="button" pButton icon="fa fa-refresh" (click)="clear()" label="{{ 'COMMON.CLEAR' | translate }}"></button>&nbsp;&nbsp;
-			<button pButton icon="fa fa-save" *ngIf="shoulPermitSave(investigation.id, visit, admission, 'RAD_IVESTIGATION')" label="{{ 'COMMON.SAVE' | translate }}"></button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<button pButton icon="fa fa-save" *ngIf="permitSave(investigation.id, 'Add Exam')" label="{{ 'COMMON.SAVE' | translate }}"></button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			<button type="button" pButton icon="fa fa-plus" 
-				*ngIf="shoulPermitSave(investigation.id, visit, admission) || shoulPermitView(visit, admission, 'RAD_IVESTIGATION')"
+				*ngIf="permitView('Add Exam')"
 			 (click)="toggleDisplayFileBox()" label="{{ 'COMMON.VIEW_SCAN_DOC' | translate }}"></button>
 		</div>
 	</div>
