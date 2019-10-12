@@ -30,7 +30,7 @@
     <div class="ui-grid-row">
       <div class="form-group">
         <label for="email">{{ 'COMMON.USERNAME' | translate }}<font color="red">*</font></label>
-        <input type="text" pInputText class="form-control" id="email" required [(ngModel)]="user.userName" name="email"
+        <input type="text" pInputText class="form-control" id="email"   [(ngModel)]="user.userName" name="email"
           #email="ngModel">
         <p-message *ngIf="f.submitted && email.invalid" severity="error" text="Field is required">
         </p-message>
