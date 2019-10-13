@@ -11,7 +11,7 @@ import { GenericService } from '../../services';
 @Component({
   selector: 'app-account-list',
   templateUrl: '../../pages/admin/accountList.html',
-  providers: [GenericService]
+  providers: []
 })
 export class AccountList implements OnInit, OnDestroy {
   

@@ -15,7 +15,7 @@ import { ConfirmationService } from 'primeng/api';
 @Component({
   selector: 'app-admin-authorization',
   templateUrl: '../../pages/admin/adminAuthorization.html',
-  providers: [GenericService ]
+  providers: [ ]
 })
 export class AdminAuthorization extends BaseComponent implements OnInit {
   [x: string]: any;

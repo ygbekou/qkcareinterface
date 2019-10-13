@@ -1,18 +1,17 @@
-import { Component, OnInit, ViewChild, Input } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
 import { User } from '../../models/user';
 import { Constants } from '../../app.constants';
 import { GenericService } from '../../services/generic.service';
 import { UserService } from '../../services/user.service';
 import { GlobalEventsManager } from "../../services/globalEventsManager";
-import { FileUploader } from './fileUploader';
 import { Router, ActivatedRoute } from "@angular/router";
 import { DoctorDropdown, DepartmentDropdown } from '../dropdowns';
 
 @Component({
 	selector: 'admin-appointment',
 	templateUrl: '../../pages/admin/adminAppointment.html',
-	providers: [GenericService, Constants, UserService],
+	providers: [Constants, UserService],
 	styles: [` 
 * { 
   margin: 0; 
@@ -26,9 +25,6 @@ export class AdminAppointment implements OnInit {
 	@Input() moduleName: string;
 
 	constructor(
-		private baseService: GenericService,
-		private userService: UserService,
-		private router: Router,
 		public doctorDropdown: DoctorDropdown,
 		public departmentDropdown: DepartmentDropdown,
 		private route: ActivatedRoute,

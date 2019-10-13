@@ -77,6 +77,7 @@ export class Login implements OnInit {
 								this.router.navigate(['/admin/dashboard']);
 								window.location.reload();
 							}
+							this.genericService.updateToken();
 
 						} else {
 							console.log('No token');

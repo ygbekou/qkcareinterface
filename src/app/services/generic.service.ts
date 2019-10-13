@@ -306,4 +306,10 @@ export class GenericService {
     console.error(error);
     return Observable.throw(error.json().error || 'Server error');
   }
+
+  public updateToken() {
+    if (this.token.hasToken()) {
+      this.headers.append('Authorization', 'Bearer ' + this.token.getToken());
+    }
+  }
 }

@@ -7,7 +7,7 @@ import { GenericService } from '../../services';
 @Component({
   selector: 'app-account-details',
   templateUrl: '../../pages/admin/accountDetails.html',
-  providers: [GenericService]
+  providers: []
 })
 export class AccountDetails implements OnInit, OnDestroy {
   

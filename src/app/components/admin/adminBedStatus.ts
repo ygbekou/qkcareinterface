@@ -18,7 +18,7 @@ import { ConfirmationService } from 'primeng/api';
 @Component({
   selector: 'app-admin-bedStatus',
   templateUrl: '../../pages/admin/adminBedStatus.html',
-  providers: [GenericService ]
+  providers: [ ]
 })
 export class AdminBedStatus extends BaseComponent implements OnInit {
   [x: string]: any;

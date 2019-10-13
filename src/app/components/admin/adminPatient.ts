@@ -1,11 +1,10 @@
-import { Component, LOCALE_ID, OnInit, ChangeDetectorRef, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { User } from '../../models/user';
 import { PatientDetails } from './patientDetails';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
 import { Constants } from '../../app.constants';
 import { Patient } from '../../models/patient';
-import { UserGroup } from '../../models/userGroup';
-import { GenericService, UserService, GlobalEventsManager, TokenStorage } from '../../services';
+import { GenericService, GlobalEventsManager, TokenStorage } from '../../services';
 import { AppointmentDetails } from './appointmentDetails';
 import { AppointmentList } from './appointmentList';
 import { BaseComponent } from './baseComponent';
@@ -15,7 +14,7 @@ import { TranslateService } from '@ngx-translate/core';
 @Component({
 	selector: 'app-admin-patient',
 	templateUrl: '../../pages/admin/adminPatient.html',
-	providers: [GenericService]
+	providers: []
 })
 export class AdminPatient extends BaseComponent implements OnInit {
 	[x: string]: any;

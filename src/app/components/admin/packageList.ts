@@ -9,7 +9,7 @@ import { ConfirmationService } from 'primeng/api';
 @Component({
   selector: 'app-invoice-list',
   templateUrl: '../../pages/admin/packageList.html',
-  providers: [GenericService]
+  providers: []
 })
 // tslint:disable-next-line:component-class-suffix
 export class PackageList extends BaseComponent implements OnInit, OnDestroy {

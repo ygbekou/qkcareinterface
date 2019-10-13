@@ -6,12 +6,11 @@ import {GenericService} from '../../services/generic.service';
 import {UserService} from '../../services/user.service';
 import { AdminAppointment } from './adminAppointment';
 import {CountryDropdown} from './../dropdowns/dropdown.country';
-import {FileUploader} from './fileUploader';
 import {Router, NavigationExtras} from "@angular/router";
 @Component({
   selector: 'admin-main',
   templateUrl: '../../pages/admin/adminMain.html',
-  providers: [GenericService, Constants, UserService, CountryDropdown],
+  providers: [Constants, UserService, CountryDropdown],
   styles: [` 
 * { 
   margin: 0; 
