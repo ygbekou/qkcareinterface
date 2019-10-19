@@ -14,9 +14,14 @@
 	    </ng-template>
 	    <ng-template pTemplate="body" let-rowData let-columns="columns">
 	        <tr>			           
-	            <td *ngFor="let col of columns">
-	                {{rowData[col.field]}}
-	            </td>
+	            <td *ngFor="let col of cols">
+					<div *ngIf="col.type === 'number'" class="text-right">
+						{{rowData[col.field] | currency: ' ':'symbol':'1.0-0':translate.currentLang}}
+					</div>
+					<div *ngIf="col.type === 'string'">
+						{{rowData[col.field]}}
+					</div>
+				</td>
 	            <td>
 	            	<button type="button" pButton icon="fa fa-edit" (click)="edit(rowData.id)" *ngIf="permitView('Package List')"></button>&nbsp;
 					<button type="button" pButton icon="fa fa-eraser" (click)="deleteItem(packages, rowData.id, 'Package')" 

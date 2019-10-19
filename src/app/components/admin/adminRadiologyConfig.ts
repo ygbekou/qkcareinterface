@@ -14,7 +14,7 @@ import { ConfirmationService } from 'primeng/api';
 @Component({
   selector: 'app-admin-radiologyConfig',
   templateUrl: '../../pages/admin/adminRadiologyConfig.html',
-  providers: [GenericService ]
+  providers: [ ]
 })
 export class AdminRadiologyConfig extends BaseComponent implements OnInit {
   [x: string]: any;

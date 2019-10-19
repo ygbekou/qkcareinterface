@@ -120,7 +120,7 @@ import { TranslateService } from '@ngx-translate/core';
 			</header>
 
   `,
-  providers: [GenericService]
+  providers: []
 })
 // tslint:disable-next-line:component-class-suffix
 export class AdminHeader implements OnInit, OnDestroy {

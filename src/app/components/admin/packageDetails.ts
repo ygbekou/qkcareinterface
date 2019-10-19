@@ -4,7 +4,7 @@ import { Constants } from '../../app.constants';
 import { Package, Service, PackageService } from '../../models';
 import { ServiceDropdown } from '../dropdowns';
 import { ConfirmationService } from 'primeng/primeng';
-import { GenericService, BillingService, TokenStorage } from '../../services';
+import { GenericService, BillingService, TokenStorage, AppInfoStorage } from '../../services';
 import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
 import { Message } from 'primeng/api';
 import { BaseComponent } from './baseComponent';
@@ -19,7 +19,6 @@ export class PackageDetails extends BaseComponent implements OnInit, OnDestroy {
   pckage: Package = new Package();
   serviceCols: any[];
   
-  serviceDropdown: ServiceDropdown;
   messages: Message[] = [];
   
   constructor
@@ -29,23 +28,22 @@ export class PackageDetails extends BaseComponent implements OnInit, OnDestroy {
       public translate: TranslateService,
       public confirmationService: ConfirmationService,
       public tokenStorage: TokenStorage,
-      private srvDropdown: ServiceDropdown,
+      public appInfoStorage: AppInfoStorage,
+      public serviceDropdown: ServiceDropdown,
       private route: ActivatedRoute
     ) {
 		super(genericService, translate, confirmationService, tokenStorage);
-    	this.serviceDropdown = srvDropdown;
   }
 
   ngOnInit(): void {
-
      this.serviceCols = [
             { field: 'service', header: 'Name', headerKey: 'COMMON.NAME', type: 'string',
                                         style: {width: '20%', 'text-align': 'center'} },
             { field: 'description', header: 'Description', headerKey: 'COMMON.DESCRIPTION', type: 'string',
                                         style: {width: '30%', 'text-align': 'center'} },
-            { field: 'quantity', header: 'Quantity', headerKey: 'COMMON.QUANTITY', type: 'string',
+            { field: 'quantity', header: 'Quantity', headerKey: 'COMMON.QUANTITY', type: 'string', 
                                         style: {width: '20%', 'text-align': 'center'} },
-            { field: 'rate', header: 'Rate', headerKey: 'COMMON.RATE', type: 'string',
+            { field: 'rate', header: 'Rate', headerKey: 'COMMON.RATE', type: 'string', isDisabled: 'true',
                                         style: {width: '20%', 'text-align': 'center'} }
         ];
      
@@ -158,5 +156,37 @@ export class PackageDetails extends BaseComponent implements OnInit, OnDestroy {
 
     return this.messages.length === 0;
   }
+
+
+  calculateRate() {
+    this.pckage.rate = +this.getNumber(this.pckage.grandTotal) - +this.getNumber(this.pckage.discount);
+  }
+  
+  calculateGrandTotal() {
+    this.pckage.grandTotal = 0;
+    for (const i in this.pckage.packageServices) {
+       this.pckage.grandTotal += this.calculateRowTotal(this.pckage.packageServices[i]);
+    }
+    
+    this.calculateRate();
+  }
+
+  calculateRowTotal(rowData) {
+    rowData.total = (+this.getNumber(rowData.quantity) * +this.getNumber(rowData.rate));
+    return rowData.total;
+    
+  }
+  
+  populateServiceData(rowData: PackageService) {
+    rowData.description = rowData.service.description;
+    rowData.quantity = rowData.service.quantity;
+    rowData.rate = rowData.service.rate;
+  }
+
+  
+  private getNumber(value: number): number {
+    return value !== undefined ? value : 0;
+  } 
+
 
 }

@@ -6,12 +6,12 @@ import { Service } from '../../models/service';
 @Injectable()
 export class ServiceDropdown {
   
-  filteredServices : Service[];
-  services : Service[] = []; 
+  filteredServices: Service[];
+  services: Service[] = []; 
   
   constructor(
     private genericService: GenericService) {
-    //this.getAllServices();
+    this.getAllServices();
   }
   
   filter(event) {
@@ -21,13 +21,13 @@ export class ServiceDropdown {
   handleDropdownClick(event) {
     setTimeout(() => {
       this.filteredServices = this.services;
-    }, 10)
+    }, 10);
   }
   
   private getAllServices(): void {
     this.genericService.getAll('Service')
       .subscribe((data: any[]) => {
-        this.services = data
+        this.services = data;
       },
         
       error => console.log(error),
@@ -35,13 +35,13 @@ export class ServiceDropdown {
   }
   
   public getServices(serviceTypeId: number): void {
-	let parameters: string [] = []; 
+	  const parameters: string [] = []; 
             
-    parameters.push('e.serviceType.id = |serviceTypeId|' + serviceTypeId + '|Long')
+    parameters.push('e.serviceType.id = |serviceTypeId|' + serviceTypeId + '|Long');
     
     this.genericService.getAllByCriteria('Service', parameters)
       .subscribe((data: any[]) => {
-        this.services = data
+        this.services = data;
         
       },
         

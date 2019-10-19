@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Service } from '../../models';
 import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
 import { ConfirmationService } from 'primeng/primeng';
-import { GenericService, TokenStorage } from '../../services';
+import { GenericService, TokenStorage, AppInfoStorage } from '../../services';
 import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
 import { BaseComponent } from './baseComponent';
 
@@ -21,34 +21,34 @@ export class ServiceList extends BaseComponent implements OnInit, OnDestroy {
       public genericService: GenericService,
       public translate: TranslateService,
       public confirmationService: ConfirmationService,
+      public appInfoStorage: AppInfoStorage,
       public tokenStorage: TokenStorage,
       private route: ActivatedRoute,
       private router: Router,
   ) {
     super(genericService, translate, confirmationService, tokenStorage);
-
   }
 
   ngOnInit(): void {
     this.cols = [
       {
-        field: 'name', header: 'Name', headerKey: 'COMMON.NAME', type: 'date_time',
+        field: 'name', header: 'Name', headerKey: 'COMMON.NAME', type: 'string',
         style: { width: '25%', 'text-align': 'center' }
       },
       {
-        field: 'description', header: 'Description', headerKey: 'COMMON.DESCRIPTION', type: 'date_time',
+        field: 'description', header: 'Description', headerKey: 'COMMON.DESCRIPTION', type: 'string',
         style: { width: '35%', 'text-align': 'center' }
       },
       {
-        field: 'quantity', header: 'Quantity', headerKey: 'COMMON.QUANTITY', type: 'date_time',
-        style: { width: '10%', 'text-align': 'center' }
+        field: 'quantity', header: 'Quantity', headerKey: 'COMMON.QUANTITY', type: 'number',
+        style: { width: '10%', 'text-align': 'right' }
       },
       {
-        field: 'rate', header: 'Rate', headerKey: 'COMMON.RATE', type: 'date_time',
-        style: { width: '10%', 'text-align': 'center' }
+        field: 'rate', header: 'Rate', headerKey: 'COMMON.RATE', type: 'number',
+        style: { width: '10%', 'text-align': 'right' }
       },
       {
-        field: 'statusDesc', header: 'Status', headerKey: 'COMMON.STATUS', type: 'date_time',
+        field: 'statusDesc', header: 'Status', headerKey: 'COMMON.STATUS', type: 'string',
         style: { width: '10%', 'text-align': 'center' }
       }
     ];

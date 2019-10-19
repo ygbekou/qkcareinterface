@@ -4,6 +4,7 @@ export class Package {
   id: number;
   name: string;
   description: number;
+  grandTotal: number;
   rate: number;
   discount: number;
   status: number;

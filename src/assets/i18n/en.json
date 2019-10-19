@@ -441,5 +441,8 @@
     "DATE_FORMAT": "MM/dd/yyyy",
     "LOCALE": "en-US",
     "CAL_DATE_FORMAT": "mm/dd/yy"
+  },
+  "CURRENCY_MASK": {
+    "INTEGER": "{ prefix: '', thousands: '.', precision: 0, allowNegative: false }"
   }
 }

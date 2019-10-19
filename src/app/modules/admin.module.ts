@@ -105,7 +105,7 @@ import { WaitingList } from '../components/admin/waitingList';
 import { EnquiryDetails } from '../components/admin/enquiryDetails';
 import { EnquiryList } from '../components/admin/enquiryList';
 import { SearchComponent } from '../components/includes/search';
-import { BillingService, VisitService, TokenStorage, LoggedInGuard,RadInvestigationService } from '../services';
+import { BillingService, VisitService, TokenStorage, AppInfoStorage, LoggedInGuard, RadInvestigationService } from '../services';
 import { SectionDetails } from '../components/admin/sectionDetails';
 import { SectionList } from '../components/admin/sectionList';
 import { SectionItemDetails } from '../components/admin/sectionItemDetails';
@@ -262,7 +262,7 @@ export function HttpLoaderFactory(http: HttpClient) {
 	  AdmissionDiagnoses, PatientServiceDetails, PatientKiosk,
     AdminReference, VisitDetails, VisitList, DischargeDetails, LabTestDetails, LabTestList, InvestigationDetails,
 	  InvestigationList, RadInvestigationDetails, RadInvestigationList, PurchaseOrderDetails, PurchaseOrderList, 
-	  ReceiveOrderDetails, ReceiveOrderList,AdminRadiologyConfig,
+	  ReceiveOrderDetails, ReceiveOrderList, AdminRadiologyConfig,
     PatientSaleDetails, PatientSaleList, SaleReturnDetails, SaleReturnList, BirthReportDetails, BirthReportList,
     DeathReportDetails, DeathReportList, HospitalLocationDetails, HospitalLocationList, PatientLookup, VisitAdmLookup,
     PurchaseOrderLookup, PatientSaleLookup, HospitalDetails, EnquiryDetails, EnquiryList, WaitingList,
@@ -272,7 +272,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     RoleDetails, RoleList, ResourceDetails, ResourceList, MenuItemDetails, MenuItemList, UserRoleAssignment, UserList, PermissionDetails],
 
   providers: [
-	CategoryDropdown, PackageDropdown, DoctorDropdown, TokenStorage, BillingService, VisitService, LoggedInGuard, 
+	CategoryDropdown, PackageDropdown, DoctorDropdown, TokenStorage, AppInfoStorage, BillingService, VisitService, LoggedInGuard, 
 	ConfirmationService, ServiceDropdown, LabTestDropdown, ProductDropdown, ModalityDropdown, RadExamDropdown, 
 	RadInvestigationService, ExamStatusDropdown, RadiologyTechDropdown, RoleDropdown]
 })

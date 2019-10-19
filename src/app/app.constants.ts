@@ -72,4 +72,5 @@ export class Constants {
 	public static ERROR = 'error';
 
 	public static LOCAL_DATE_OPTIONS = { year: 'numeric', month: '2-digit', day: '2-digit' };
+	
 }

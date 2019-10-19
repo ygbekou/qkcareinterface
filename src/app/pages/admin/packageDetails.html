@@ -10,7 +10,7 @@
 					<p-message *ngIf="f.submitted && name.invalid" severity="error" text="Field is required"></p-message>
 				</div>
 			</div>
-			<div class="ui-grid-col-5 ui-sm-12">
+			<div class="ui-grid-col-3 ui-sm-12">
 				<div class="form-group">
 					<label for="description">{{ 'COMMON.DESCRIPTION' | translate }}</label>
 					<textarea pInputTextarea id="description" [(ngModel)]="pckage.description" name="description"  #description="ngModel"> </textarea>
@@ -18,15 +18,26 @@
 			</div>
 			<div class="ui-grid-col-2 ui-sm-12">
 				<div class="form-group">
+					<label for="rate">{{ 'COMMON.GRANDTOTAL' | translate }}<font color="red">*</font></label>
+					<input pInputText id="grandTotal" name="grandTotal" [(ngModel)]="pckage.grandTotal" 
+					currencyMask [options]=appInfoStorage.CURRENCY_MASK_INTEGER disabled #grandTotal="ngModel" required />
+					<p-message *ngIf="f.submitted && grandTotal.invalid" severity="error" text="Field is required"></p-message>
+				</div>
+			</div>
+			<div class="ui-grid-col-2 ui-sm-12">
+				<div class="form-group">
 					<label for="rate">{{ 'COMMON.RATE' | translate }}<font color="red">*</font></label>
-					<input pInputText id="rate" name="rate" [(ngModel)]="pckage.rate" #rate="ngModel" required />
+					<input pInputText id="rate" name="rate" [(ngModel)]="pckage.rate" 
+					currencyMask [options]=appInfoStorage.CURRENCY_MASK_INTEGER #rate="ngModel" disabled required />
 					<p-message *ngIf="f.submitted && rate.invalid" severity="error" text="Field is required"></p-message>
 				</div>
 			</div>
 			<div class="ui-grid-col-2 ui-sm-12">
 				<div class="form-group">
 					<label for="discount">{{ 'COMMON.DISCOUNT' | translate }}</label>
-					<input pInputText id="discount" [(ngModel)]="pckage.discount" name="discount"  #discount="ngModel" />
+					<input pInputText id="discount" [(ngModel)]="pckage.discount" name="discount" 
+					(ngModelChange)="calculateRate();" currencyMask [options]=appInfoStorage.CURRENCY_MASK_INTEGER 
+					 #discount="ngModel" />
 				</div>
 			</div>
 		</div>
@@ -35,7 +46,7 @@
 	<br/>
 	<div class="ui-grid-row">
 		<div class="ui-grid-col-12 ui-sm-12">
-			<p-table [columns]="serviceCols" [value]="pckage.packageServices">	
+			<p-table [columns]="serviceCols" [value]="pckage.packageServices" (onEditComplete)="calculateGrandTotal()">	
 				<ng-template pTemplate="caption">
 			        {{ 'COMMON.SERVICE_LIST' | translate }}
 			    </ng-template>
@@ -59,22 +70,38 @@
 			                        {{rowData[col.field]}}
 			                    </ng-template>
 			                </p-cellEditor>
-			                <p-cellEditor *ngIf="col.field == 'quantity' || col.field == 'rate'">
+			                <p-cellEditor *ngIf="col.field === 'quantity'">
 			                    <ng-template pTemplate="input">
-			                        <input type="text" [(ngModel)]="rowData[col.field]" [disabled]="col.isDisabled" name="{{col.field}}">
+									<input type="text" [(ngModel)]="rowData[col.field]" [disabled]="col.isDisabled" 
+										currencyMask [options]=appInfoStorage.CURRENCY_MASK_INTEGER 
+										(ngModelChange)="calculateGrandTotal()" name="{{col.field}}">
 			                    </ng-template>
 			                    <ng-template pTemplate="output">
-			                        {{rowData[col.field]}}
+			                        <div class="text-right">
+										{{rowData[col.field] | currency: ' ':'symbol':'1.0-0':translate.currentLang}}
+									</div>
+			                    </ng-template>
+							</p-cellEditor>
+							<p-cellEditor *ngIf="col.field === 'rate'">
+			                    <ng-template pTemplate="input">
+									<div class="text-right">
+										{{rowData[col.field] | currency: ' ':'symbol':'1.0-0':translate.currentLang}}
+									</div>
+			                    </ng-template>
+			                    <ng-template pTemplate="output">
+			                        <div class="text-right">
+										{{rowData[col.field] | currency: ' ':'symbol':'1.0-0':translate.currentLang}}
+									</div>
 			                    </ng-template>
 			                </p-cellEditor>
-			                <p-cellEditor *ngIf="col.field == 'service'">
+			                <p-cellEditor *ngIf="col.field === 'service'">
 			                    <ng-template pTemplate="input">
 			                        <p-autoComplete [(ngModel)]="rowData[col.field]"
 										(onDropdownClick)="serviceDropdown.handleDropdownClick($event)"
 										[suggestions]="serviceDropdown.filteredServices" [dropdown]="true"
 										(completeMethod)="serviceDropdown.filter($event)"
-										name="name" field="name" [size]="30" placeholder=""
-										[minLength]="1">
+										name="serviceName" field="name" [size]="30" placeholder=""
+										[minLength]="1" (onSelect)="populateServiceData(rowData); calculateGrandTotal();">
 									</p-autoComplete>
 			                    </ng-template>
 			                    <ng-template pTemplate="output">
@@ -97,7 +124,7 @@
 		<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
 			<button type="button" pButton icon="fa fa-close" (click)="clear()" 
 				label="{{ 'COMMON.CLEAR' | translate }}"></button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			<button pButton icon="fa fa-check" label="{{ 'COMMON.SAVE' | translate }}" *ngIf="permitSave(pckage.id, 'Add Package')"></button>
+			<button pButton icon="fa fa-check" label="{{ 'COMMON.SAVE' | translate }}" *ngIf="permitSave(pckage.id, 'Add a package')"></button>
 		</div>
 	</div>
 </form>

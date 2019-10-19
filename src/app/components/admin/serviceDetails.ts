@@ -6,6 +6,7 @@ import { DoctorOrderTypeDropdown } from '../dropdowns';
 import { BaseComponent } from './baseComponent';
 import { Message, ConfirmationService } from 'primeng/api';
 import { TranslateService } from '@ngx-translate/core';
+import { AppInfoStorage } from 'src/app/services/app.info.storage';
 
 @Component({
   selector: 'app-service-details',
@@ -23,6 +24,7 @@ export class ServiceDetails extends BaseComponent implements OnInit, OnDestroy {
       public genericService: GenericService,
       private docOrderTypeDropdown: DoctorOrderTypeDropdown,
       public translate: TranslateService,
+      public appInfoStorage: AppInfoStorage,
       public confirmationService: ConfirmationService,
       public tokenStorage: TokenStorage,
       private route: ActivatedRoute

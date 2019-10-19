@@ -7,6 +7,8 @@ import { TranslateService } from '@ngx-translate/core';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
+import { registerLocaleData } from '@angular/common';
+import localeFr from '@angular/common/locales/fr';
 
 @Component({
   selector: 'app-root',
@@ -72,6 +74,7 @@ export class AppComponent implements AfterViewInit, AfterViewChecked {
       this.translate.use('fr');
       console.log('Using default lang=fr');
     }
+    registerLocaleData(localeFr)
   }
 
   ngAfterViewInit() {

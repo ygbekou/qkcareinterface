@@ -6,4 +6,5 @@ export class PackageService {
   description: string;
   quantity: number;
   rate: number;
+  total: number;
 }

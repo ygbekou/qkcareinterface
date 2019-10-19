@@ -37,7 +37,7 @@ export class VitalSignDetails extends BaseComponent implements OnInit, OnDestroy
       private route: ActivatedRoute
     ) {
 		  super(genericService, translate, confirmationService, tokenStorage);
-    	this.patient.user = new User();
+      this.patient.user = new User();
   }
 
   ngOnInit(): void {

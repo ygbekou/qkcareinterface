@@ -25,7 +25,7 @@
 					<div class="ui-grid-col-9 ui-sm-12">
 						<div class="form-group">
 							<label for="notes">{{ 'COMMON.NOTES' | translate }}</label>  
-							<textarea pInputTextarea id="notes" rows="4" cols="40" pInputTextarea maxlength="1000" 
+							<textarea pInputTextarea id="notes" rows="4" cols="40" maxlength="1000" 
 									[(ngModel)]="bill.notes" name="notes" #notes="ngModel"> </textarea>		
 						</div>
 					</div>
@@ -35,7 +35,7 @@
 			<br/>
 			<div class="ui-grid-row">
 				<div class="ui-grid-col-12 ui-sm-12">
-					<p-table [columns]="serviceCols" [value]="bill.billServices" (onEditComplete)="calculateTotal()">
+					<p-table [columns]="serviceCols" [value]="bill.billServices" [responsive]="true" (onEditComplete)="calculateTotal()">
 						<ng-template pTemplate="caption">
 					        {{ 'COMMON.SERVICE_LIST' | translate }}
 					    </ng-template>
@@ -51,13 +51,16 @@
 					    <ng-template pTemplate="body" let-rowData let-columns="columns">
 					        <tr>			           
 					            <td *ngFor="let col of columns" [pEditableColumn]="rowData" [pEditableColumnField]="rowData[col.field]">
-					                <p-cellEditor *ngIf="col.field == 'quantity' || col.field == 'unitAmount' || col.field == 'totalAmount' || 
-					                		col.field == 'netAmount' || col.field == 'discountPercentage' || col.field == 'discountAmount' || col.field == 'payerAmount' || col.field == 'patientAmount'">
+									<p-cellEditor *ngIf="col.field == 'quantity' || col.field == 'unitAmount' || col.field == 'totalAmount' 
+											|| col.field == 'netAmount' || col.field == 'discountPercentage' || col.field == 'discountAmount' 
+											|| col.field == 'payerAmount' || col.field == 'patientAmount'">
 					                    <ng-template pTemplate="input">
 					                        <input type="text" [(ngModel)]="rowData[col.field]" name="{{col.field}}" >
 					                    </ng-template>
 					                    <ng-template pTemplate="output">
-					                        {{rowData[col.field]}}
+											<div class="text-right">
+												{{rowData[col.field] | currency: ' ':'symbol':'1.0-0':translate.currentLang}}
+											</div>
 					                    </ng-template>
 									</p-cellEditor>
 					                <p-cellEditor *ngIf="col.field == 'description'">
@@ -189,7 +192,7 @@
 					            </td>
 					            <td>
 									<button type="button" pButton icon="fa fa-plus" (click)="addRow()"
-										*ngIf="permitSave(bill.id, 'Add Bill')"></button>&nbsp;&nbsp;
+										*ngIf="permitSave(bill.id, 'Add a bill')"></button>&nbsp;&nbsp;
 									<button type="button" pButton icon="fa fa-eraser" ></button>
 					            </td>
 					        </tr>
@@ -235,6 +238,17 @@
 					                    <ng-template pTemplate="output">
 					                        {{rowData[col.field]}}
 					                    </ng-template>
+									</p-cellEditor>
+									<p-cellEditor *ngIf="col.type == 'number'">
+					                    <ng-template pTemplate="input">
+											<input type="text" [(ngModel)]="rowData[col.field]" [disabled]="col.isDisabled" 
+												currencyMask [options]=appInfoStorage.CURRENCY_MASK_INTEGER name="{{col.field}}">
+					                    </ng-template>
+					                    <ng-template pTemplate="output">
+											<div class="text-right">
+												{{rowData[col.field] | currency: ' ':'symbol':'1.0-0':translate.currentLang}}
+											</div>
+					                    </ng-template>
 					                </p-cellEditor>
 					            </td>	
 					            <td>
@@ -255,8 +269,8 @@
 							<label for="subTotal">{{ 'COMMON.SUBTOTAL' | translate }}</label> 
 						</div>
 						<div class="ui-grid-col-6 ui-sm-12">
-							<input type="text" pInputText id="subTotal" readonly
-							[(ngModel)]="bill.subTotal" name="subTotal" #subTotal="ngModel">
+							<input type="text" pInputText id="subTotal" readonly currencyMask
+							[options]=appInfoStorage.CURRENCY_MASK_INTEGER [(ngModel)]="bill.subTotal" name="subTotal" #subTotal="ngModel">
 						</div>
 					</div>
 					<div class="ui-grid-row">
@@ -264,8 +278,8 @@
 							<label for="taxes">{{ 'COMMON.TAXES' | translate }}</label> 
 						</div>
 						<div class="ui-grid-col-6 ui-sm-12">
-							<input type="text" pInputText id="taxes" (change)="calculateGrandTotal()"
-								[(ngModel)]="bill.taxes" name="taxes" #taxes="ngModel">
+							<input type="text" pInputText id="taxes" (change)="calculateGrandTotal()" currencyMask 
+							[options]=appInfoStorage.CURRENCY_MASK_INTEGER [(ngModel)]="bill.taxes" name="taxes" #taxes="ngModel">
 						</div>
 					</div>
 					<div class="ui-grid-row">
@@ -274,7 +288,8 @@
 						</div>
 						<div class="ui-grid-col-6 ui-sm-12">
 							<input type="text" pInputText id="discount" (change)="calculateGrandTotal(); calculateDue()"
-								[(ngModel)]="bill.discount" name="discount" #discount="ngModel">
+								[(ngModel)]="bill.discount" name="discount" #discount="ngModel"
+								currencyMask [options]=appInfoStorage.CURRENCY_MASK_INTEGER>
 						</div>
 					</div>
 					<div class="ui-grid-row">
@@ -283,7 +298,8 @@
 						</div>
 						<div class="ui-grid-col-6 ui-sm-12">
 							<input type="text" pInputText id="grandTotal"  readonly
-								[(ngModel)]="bill.grandTotal" name="grandTotal" #grandTotal="ngModel">
+								[(ngModel)]="bill.grandTotal" name="grandTotal" #grandTotal="ngModel"
+								currencyMask [options]=appInfoStorage.CURRENCY_MASK_INTEGER>
 						</div>
 					</div>
 					<div class="ui-grid-row">
@@ -292,7 +308,8 @@
 						</div>
 						<div class="ui-grid-col-6 ui-sm-12">
 							<input type="text" pInputText id="paid" readonly
-								[(ngModel)]="bill.paid" name="paid" #paid="ngModel">
+								[(ngModel)]="bill.paid" name="paid" #paid="ngModel"
+								currencyMask [options]=appInfoStorage.CURRENCY_MASK_INTEGER>
 						</div>
 					</div>
 					<div class="ui-grid-row">
@@ -300,8 +317,10 @@
 							<font color="red"><label for="due">{{ 'COMMON.AMOUNT_DUE' | translate }}</label></font>
 						</div>
 						<div class="ui-grid-col-6 ui-sm-12">
-							<font color="red"><input type="text" pInputText id="due" readonly
-								[(ngModel)]="bill.due" name="due" #due="ngModel"></font>
+							<font color="red">
+								<input type="text" pInputText id="due" readonly [(ngModel)]="bill.due" 
+								currencyMask [options]=appInfoStorage.CURRENCY_MASK_INTEGER name="due" #due="ngModel">
+							</font>
 						</div>
 					</div>
 				</div>
@@ -311,9 +330,9 @@
 			<br />
 			<div>
 				<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
-					<button pButton icon="fa fa-check" label="{{ 'COMMON.SAVE' | translate }}" *ngIf="permitSave(bill.id, 'Add Bill')">
+					<button pButton icon="fa fa-check" label="{{ 'COMMON.SAVE' | translate }}" *ngIf="permitSave(bill.id, 'Add a bill')">
 					</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<button type="button" pButton icon="fa fa-print" (click)="printBill()" *ngIf="permitView(bill.id, 'Add Bill')" 
+					<button type="button" pButton icon="fa fa-print" (click)="printBill()" *ngIf="permitView(bill.id, 'Add a bill')" 
 						label="{{ 'COMMON.PRINT' | translate }}"></button>
 					<div >
 						<a *ngIf="reportName" target="_blank"

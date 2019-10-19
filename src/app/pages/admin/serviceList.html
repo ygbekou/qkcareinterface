@@ -16,11 +16,16 @@
 	<ng-template pTemplate="body" let-service>
 		<tr>
 			<td *ngFor="let col of cols">
+				<div *ngIf="col.type === 'number'" class="text-right">
+					{{service[col.field] | currency: ' ':'symbol':'1.0-0':translate.currentLang}}
+				</div>
+				<div *ngIf="col.type === 'string'">
 					{{service[col.field]}}
+				</div>
 			</td>
 			<td>
-				<button type="button" pButton icon="fa fa-edit" *ngIf="permitView('Tarif List')" (click)="edit(service.id)"></button>&nbsp;&nbsp;
-				<button type="button" pButton icon="fa fa-eraser" *ngIf="permitDelete('Tarif List')" (click)="deleteItem(services, service.id, 'Service')"></button>
+				<button type="button" pButton icon="fa fa-edit" *ngIf="permitView('List Tarifs')" (click)="edit(service.id)"></button>&nbsp;&nbsp;
+				<button type="button" pButton icon="fa fa-eraser" *ngIf="permitDelete('List Tarifs')" (click)="deleteItem(services, service.id, 'Service')"></button>
 			</td>
 		</tr>
 	</ng-template>
