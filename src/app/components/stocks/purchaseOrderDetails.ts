@@ -28,9 +28,9 @@ export class PurchaseOrderDetails extends BaseComponent implements OnInit, OnDes
       public translate: TranslateService,
       public confirmationService: ConfirmationService,
       public tokenStorage: TokenStorage,
-      private supplierDropdown: SupplierDropdown,
-      private productDropdown: ProductDropdown,
-      private employeeDropdown: EmployeeDropdown,
+      public supplierDropdown: SupplierDropdown,
+      public productDropdown: ProductDropdown,
+      public employeeDropdown: EmployeeDropdown,
       private route: ActivatedRoute
     ) {
 		  super(genericService, translate, confirmationService, tokenStorage);

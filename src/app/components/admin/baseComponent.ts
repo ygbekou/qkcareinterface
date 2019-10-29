@@ -53,12 +53,14 @@ export class BaseComponent {
 
 
   deleteItem(listItems: any[], id: string, entity: string) {
-	  	if (id === undefined || id === null) {
+    
+	  if (id === undefined || id === null) {
 			this.removeItem(listItems, +id);
 			return;
 		}
 
-        this.messages = [];
+    
+    this.messages = [];
 		let confirmMessage = '';
 
         this.translate.get(['', 'MESSAGE.DELETE_CONFIRM']).subscribe(res => {

@@ -3,9 +3,9 @@ import { ActivatedRoute } from '@angular/router';
 import { Constants } from '../../app.constants';
 import {
   Appointment, Admission, Bill, BillPayment, BillService, Employee, Patient, User, Visit,
-  Service, ReportView, Parameter
+  ReportView, Parameter, PatientService
 } from '../../models';
-import { DoctorDropdown, ServiceDropdown, PackageDropdown, LabTestDropdown, ProductDropdown } from '../dropdowns';
+import { DoctorDropdown, ServiceDropdown, PackageDropdown, LabTestDropdown, ProductDropdown, DoctorOrderTypeDropdown } from '../dropdowns';
 import { GenericService, BillingService, ReportService, TokenStorage, AppInfoStorage } from '../../services';
 import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
 import { Message, ConfirmationService } from 'primeng/api';
@@ -14,7 +14,7 @@ import { BaseComponent } from './baseComponent';
 @Component({
   selector: 'app-bill-details',
   templateUrl: '../../pages/admin/billDetails.html',
-  providers: [GenericService, BillingService, ReportService, ServiceDropdown, DoctorDropdown]
+  providers: [BillingService, ReportService, ServiceDropdown, DoctorDropdown, DoctorOrderTypeDropdown]
 })
 export class BillDetails extends BaseComponent implements OnInit, OnDestroy {
 
@@ -42,6 +42,7 @@ export class BillDetails extends BaseComponent implements OnInit, OnDestroy {
       public tokenStorage: TokenStorage,
       public confirmationService: ConfirmationService,
       public appInfoStorage: AppInfoStorage,
+      public doctorOrderTypeDropdown: DoctorOrderTypeDropdown,
       public serviceDropdown: ServiceDropdown,
       public packageDropdown: PackageDropdown,
       public labTestDropdown: LabTestDropdown,
@@ -65,11 +66,11 @@ export class BillDetails extends BaseComponent implements OnInit, OnDestroy {
         style: { width: '15%', 'text-align': 'center' }
       },
       {
-        field: 'service', header: 'Name', headerKey: 'COMMON.NAME', type: 'string',
+        field: 'serviceName', header: 'Name', headerKey: 'COMMON.NAME', type: 'string',
         style: { width: '15%', 'text-align': 'center' }
       },
-      //{ field: 'doctor', header: 'Doctor', headerKey: 'COMMON.DOCTOR', type: 'string',
-      //                           style: {width: '15%', 'text-align': 'center'} },
+      { field: 'doctor', header: 'Doctor', headerKey: 'COMMON.DOCTOR', type: 'string',
+                                 style: {width: '15%', 'text-align': 'center'} },
       //{ field: 'description', header: 'Description', headerKey: 'COMMON.DESCRIPTION', type: 'string',
       //                            style: {width: '15%', 'text-align': 'center'} },
       {
@@ -243,7 +244,7 @@ export class BillDetails extends BaseComponent implements OnInit, OnDestroy {
       this.bill.billServices = [];
     }
     const bs = new BillService();
-    bs.service = new Service();
+    //bs.patientService = new PatientService();
     bs.doctor = new Employee();
     this.bill.billServices.push(bs);
   }
@@ -289,6 +290,17 @@ export class BillDetails extends BaseComponent implements OnInit, OnDestroy {
     return value !== undefined ? value : 0;
   }
 
+  public setPriceAndCalculate(rowData) {
+    rowData.unitAmount = rowData.investigation.labTest.price;
+    rowData.quantity = 1;
+    rowData.discount = 0;
+    rowData.discountPercentage = 0;
+    rowData.discountAmount = 0;
+    rowData.payerAmount = 0;
+    rowData.patientAmount = rowData.investigation.labTest.price;
+    this.calculateTotal();
+  }
+
   savePayment(rowData) {
     this.messages = [];
     rowData.data.bill = new Bill();
@@ -318,11 +330,11 @@ export class BillDetails extends BaseComponent implements OnInit, OnDestroy {
 
     for (let i in this.bill.billServices) {
       let bs = this.bill.billServices[i];
-      if ((bs.service && bs.service.id > 0)
-        || (bs.pckage && bs.pckage.id > 0)
-        || (bs.product && bs.product.id > 0)
-        || (bs.labTest && bs.labTest.id > 0)
-        || (bs.bed && bs.bed.id > 0)
+      if ((bs.patientService && bs.patientService.id > 0)
+        || (bs.patientPackage && bs.patientPackage.id > 0)
+        || (bs.patientSaleProduct && bs.patientSaleProduct.id > 0)
+        || (bs.investigation && bs.investigation.id > 0)
+        || (bs.bedAssignment && bs.bedAssignment.id > 0)
       ) {
         noProductFound = false;
         if (bs.quantity == null || bs.quantity <= 0)
@@ -359,6 +371,34 @@ export class BillDetails extends BaseComponent implements OnInit, OnDestroy {
       console.log(e);
     }
   }
+
+  deleteBillService(id) {
+
+    if (id === null || id === undefined) {
+      if (id === undefined || id === null) {
+			this.removeItem(this.bill.billServices, +id);
+			return;
+		}
+    }
+
+    this.messages = [];
+    try {
+      this.billingService.deleteBillService(id)
+        .subscribe(result => {
+          if (result.id > 0) {
+            this.bill = result;
+            this.messages.push({ severity: Constants.SUCCESS, summary: Constants.DELETE_LABEL, detail: Constants.DELETE_SUCCESSFUL });
+            this.addEmptyRows();
+          } else {
+            this.messages.push({ severity: Constants.ERROR, summary: Constants.DELETE_LABEL, detail: Constants.DELETE_UNSUCCESSFUL });
+          }
+        });
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  
 
   lookUpVisit(event) {
     this.bill = new Bill();

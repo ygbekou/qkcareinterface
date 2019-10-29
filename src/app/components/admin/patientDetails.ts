@@ -1,5 +1,5 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild, ElementRef, Input } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild, ElementRef } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Constants } from '../../app.constants';
 import { ReportView, Parameter, User, UserGroup, Patient } from '../../models';
 import { CountryDropdown, ReligionDropdown, OccupationDropdown, PayerTypeDropdown, InsuranceDropdown } from '../dropdowns';
@@ -41,13 +41,13 @@ export class PatientDetails extends BaseComponent implements OnInit, OnDestroy {
 			public translate: TranslateService,
 			public confirmationService: ConfirmationService,
 			public tokenStorage: TokenStorage,
-			private countryDropdown: CountryDropdown,
-			private religionDropdown: ReligionDropdown,
-			private occupationDropdown: OccupationDropdown,
-			private payerTypeDropdown: PayerTypeDropdown,
-			private insuranceDropdown: InsuranceDropdown,
-			private changeDetectorRef: ChangeDetectorRef,
-			private route: ActivatedRoute
+			public countryDropdown: CountryDropdown,
+			public religionDropdown: ReligionDropdown,
+			public occupationDropdown: OccupationDropdown,
+			public payerTypeDropdown: PayerTypeDropdown,
+			public insuranceDropdown: InsuranceDropdown,
+			public changeDetectorRef: ChangeDetectorRef,
+			public route: ActivatedRoute
 		) {
 		super(genericService, translate, confirmationService, tokenStorage);
 		this.patient.user = new User();

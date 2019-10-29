@@ -1,7 +1,7 @@
+<p-confirmDialog [style]="{width: '50vw'}"></p-confirmDialog>
 <form name="form" (ngSubmit)="f.form.valid && validate() && save()" #f="ngForm" validate>
 	<div class="ui-g-12 ui-sm-12" style="padding: 15px;">
 		<div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="bill">
-			<p-messages [(value)]="messages"></p-messages>
 			<div class="ui-grid-row">
 				<div class="ui-grid-col-5 ui-sm-12">
 					<app-visitAdm-lookup (visitEmit)="lookUpVisit($event)" (admissionEmit)="lookUpAdmission($event)" (billEmit)="lookUpBill($event)"
@@ -35,10 +35,17 @@
 			<br/>
 			<div class="ui-grid-row">
 				<div class="ui-grid-col-12 ui-sm-12">
-					<p-table [columns]="serviceCols" [value]="bill.billServices" [responsive]="true" (onEditComplete)="calculateTotal()">
+					<p-table [columns]="serviceCols" [value]="bill.billServices"
+						 [style]="{width:'100%'}" (onEditComplete)="calculateTotal()">
 						<ng-template pTemplate="caption">
 					        {{ 'COMMON.SERVICE_LIST' | translate }}
-					    </ng-template>
+						</ng-template>
+						<ng-template pTemplate="colgroup" let-columns>
+							<colgroup>
+								<col *ngFor="let col of columns" [ngStyle]="col.style">
+								<col [ngStyle]="{ width: '10%', 'text-align': 'center' }">
+							</colgroup>
+						</ng-template>
 					    <ng-template pTemplate="header" let-accountCols>
 					        <tr>
 					            <th *ngFor="let col of serviceCols" [pSortableColumn]="col.field" [ngStyle]="col.style">
@@ -79,44 +86,37 @@
 					                    <ng-template pTemplate="output">
 					                        {{rowData[col.field] | date:'dd/MM/yyyy'}}
 					                    </ng-template>
-					                </p-cellEditor>
-									<p-cellEditor *ngIf="col.header == 'Name' && rowData['doctorOrderType'] !== undefined 
-										&& rowData['doctorOrderType'] !== null
-										&& rowData['service'] !== undefined && rowData['service'] !== null ">
+									</p-cellEditor>
+									
+									<p-cellEditor *ngIf="(col.field === 'serviceName' || col.field === 'doctorOrderTypeName')
+										&& rowData['systemGenerated'] === 'Y' ">
 					                    <ng-template pTemplate="input">
-					                        <p-autoComplete [(ngModel)]="rowData.service"
-												(onDropdownClick)="serviceDropdown.handleDropdownClick($event)"
-												[suggestions]="serviceDropdown.filteredServices" [dropdown]="true"
-												(completeMethod)="serviceDropdown.filter($event)"
+					                        {{rowData[col.field]}}
+					                    </ng-template>
+					                    <ng-template pTemplate="output">
+											{{rowData[col.field]}}
+					                    </ng-template>
+									</p-cellEditor>
+									
+									<p-cellEditor *ngIf="col.field === 'doctorOrderTypeName' && rowData.systemGenerated !== 'Y' ">
+					                    <ng-template pTemplate="input">
+					                        <p-autoComplete [(ngModel)]="rowData.doctorOrderType"
+												(onDropdownClick)="doctorOrderTypeDropdown.handleDropdownClick($event)"
+												[suggestions]="doctorOrderTypeDropdown.filteredDoctorOrderTypes" [dropdown]="true"
+												(completeMethod)="doctorOrderTypeDropdown.filter($event)"
 												name="name" field="name" [size]="30" placeholder=""
 												[minLength]="1">
 											</p-autoComplete>
 					                    </ng-template>
 					                    <ng-template pTemplate="output">
-											{{rowData['service'].name}}
+											{{rowData.doctorOrderType.name}}
 					                    </ng-template>
 									</p-cellEditor>
-									<p-cellEditor *ngIf="col.header == 'Name' && rowData['doctorOrderType'] !== undefined 
-										&& rowData['doctorOrderType'] !== null
-										&& rowData['pckage'] !== undefined && rowData['pckage'] !== null ">
+									
+									<p-cellEditor *ngIf="col.field === 'serviceName' && rowData.systemGenerated !== 'Y'
+										 	&& rowData.doctorOrderType.id === 1 ">
 					                    <ng-template pTemplate="input">
-					                        <p-autoComplete [(ngModel)]="rowData.pckage"
-												(onDropdownClick)="packageDropdown.handleDropdownClick($event)"
-												[suggestions]="packageDropdown.filteredPackages" [dropdown]="true"
-												(completeMethod)="packageDropdown.filter($event)"
-												name="name" field="name" [size]="30" placeholder=""
-												[minLength]="1">
-											</p-autoComplete>
-					                    </ng-template>
-					                    <ng-template pTemplate="output">
-											{{rowData['pckage'].name}}
-					                    </ng-template>
-									</p-cellEditor>
-									<p-cellEditor *ngIf="col.header == 'Name' && rowData['doctorOrderType'] !== undefined 
-										&& rowData['doctorOrderType'] !== null
-										&& rowData['product'] !== undefined && rowData['product'] !== null ">
-					                    <ng-template pTemplate="input">
-					                        <p-autoComplete [(ngModel)]="rowData.product"
+					                        <p-autoComplete [(ngModel)]="rowData.serviceName"
 												(onDropdownClick)="productDropdown.handleDropdownClick($event)"
 												[suggestions]="productDropdown.filteredProducts" [dropdown]="true"
 												(completeMethod)="productDropdown.filter($event)"
@@ -125,14 +125,15 @@
 											</p-autoComplete>
 					                    </ng-template>
 					                    <ng-template pTemplate="output">
-											{{rowData['product'].name}}
+											{{rowData.serviceName}}
 					                    </ng-template>
 									</p-cellEditor>
-									<p-cellEditor *ngIf="col.header == 'Name' && rowData['doctorOrderType'] !== undefined 
-										&& rowData['doctorOrderType'] !== null
-										&& rowData['labTest'] !== undefined && rowData['labTest'] !== null ">
+
+									<!-- <p-cellEditor *ngIf="col.field === 'serviceName' && rowData.systemGenerated !== 'Y' 
+											&& rowData.doctorOrderType.id === 2 ">
 					                    <ng-template pTemplate="input">
-					                        <p-autoComplete [(ngModel)]="rowData.labTest"
+											<p-autoComplete [(ngModel)]="rowData.investigation.labTest"
+												(ngModelChange)="setPriceAndCalculate(rowData)"
 												(onDropdownClick)="labTestDropdown.handleDropdownClick($event)"
 												[suggestions]="labTestDropdown.filteredLabTests" [dropdown]="true"
 												(completeMethod)="labTestDropdown.filter($event)"
@@ -141,40 +142,36 @@
 											</p-autoComplete>
 					                    </ng-template>
 					                    <ng-template pTemplate="output">
-											{{rowData['labTest'].name}}
+											{{rowData.investigation.labTest.name}}
+					                    </ng-template>
+									</p-cellEditor> -->
+
+									<p-cellEditor *ngIf="col.field === 'serviceName' && rowData.systemGenerated !== 'Y' 
+											&& rowData.doctorOrderType.id === 2 ">
+					                    <ng-template pTemplate="input">
+											<input type="text" [(ngModel)]="rowData.description" name="description" >
+					                    </ng-template>
+					                    <ng-template pTemplate="output">
+											{{rowData.description}}
 					                    </ng-template>
 									</p-cellEditor>
-									<p-cellEditor *ngIf="col.header == 'Name' && rowData['doctorOrderType'] !== undefined 
-										&& rowData['doctorOrderType'] !== null
-										&& rowData['bed'] !== undefined && rowData['bed'] !== null ">
+
+
+									<p-cellEditor *ngIf="col.field === 'serviceName' && rowData.systemGenerated !== 'Y' && rowData.doctorOrderType.id === 3 ">
 					                    <ng-template pTemplate="input">
-					                        <p-autoComplete [(ngModel)]="rowData.bed"
-												(onDropdownClick)="bedDropdown.handleDropdownClick($event)"
-												[suggestions]="bedDropdown.filteredLabTests" [dropdown]="true"
-												(completeMethod)="bedDropdown.filter($event)"
+					                        <p-autoComplete [(ngModel)]="rowData.serviceName"
+												(onDropdownClick)="serviceDropdown.handleDropdownClick($event)"
+												[suggestions]="serviceDropdown.filteredServices" [dropdown]="true"
+												(completeMethod)="serviceDropdown.filter($event)"
 												name="name" field="name" [size]="30" placeholder=""
 												[minLength]="1">
 											</p-autoComplete>
 					                    </ng-template>
 					                    <ng-template pTemplate="output">
-											{{rowData['bed'].bedNumber}}
+											{{rowData.serviceName}}
 					                    </ng-template>
 									</p-cellEditor>
-									<p-cellEditor *ngIf="col.field == 'doctorOrderTypeName' ">
-					                    <ng-template pTemplate="input">
-					                        <p-autoComplete [(ngModel)]="rowData.product"
-												(onDropdownClick)="bedDropdown.handleDropdownClick($event)"
-												[suggestions]="bedDropdown.filteredLabTests" [dropdown]="true"
-												(completeMethod)="bedDropdown.filter($event)"
-												name="name" field="name" [size]="30" placeholder=""
-												[minLength]="1">
-											</p-autoComplete>
-					                    </ng-template>
-					                    <ng-template pTemplate="output">
-											{{rowData['doctorOrderTypeName']}}
-					                    </ng-template>
-									</p-cellEditor>
-									
+
 					                <p-cellEditor *ngIf="col.field == 'doctor'">
 					                    <ng-template pTemplate="input">
 					                        <p-autoComplete [(ngModel)]="rowData[col.field]"
@@ -193,7 +190,8 @@
 					            <td>
 									<button type="button" pButton icon="fa fa-plus" (click)="addRow()"
 										*ngIf="permitSave(bill.id, 'Add a bill')"></button>&nbsp;&nbsp;
-									<button type="button" pButton icon="fa fa-eraser" ></button>
+									<button type="button" pButton icon="fa fa-eraser" *ngIf="rowData.systemGenerated !== 'Y'"
+										(click)="deleteBillService(rowData.id)"></button>
 					            </td>
 					        </tr>
 					    </ng-template>
@@ -329,6 +327,7 @@
 			<br/>
 			<br />
 			<div>
+				<p-messages [(value)]="messages"></p-messages>
 				<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
 					<button pButton icon="fa fa-check" label="{{ 'COMMON.SAVE' | translate }}" *ngIf="permitSave(bill.id, 'Add a bill')">
 					</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

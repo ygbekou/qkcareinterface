@@ -66,6 +66,22 @@ export class BillingService {
         .catch(this.handleError);
    }
   
+   public deleteBillService = (id: number): Observable<any> => {
+   
+      let actionUrl = Constants.apiServer + '/service/billing/billService/delete/' + id;
+      return this.http.get(actionUrl, { headers: this.headers })
+        .map((response: Response) => {
+            if (response && response.json()) {
+              const error = response.json() && response.json().error;
+              if (error == null) {
+                
+              }
+            }
+            return response.json();
+        })
+        .catch(this.handleError);
+   }
+
   public getPackage = (id: number): Observable<any> => {
    
       let actionUrl = Constants.apiServer + '/service/billing/package/' + id;

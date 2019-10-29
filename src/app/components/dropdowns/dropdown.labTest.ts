@@ -2,12 +2,13 @@ import { Injectable, OnInit } from '@angular/core';
 import { DropdownUtil } from './dropdown.util';
 import { GenericService } from '../../services';
 import { Reference } from '../../models/reference';
+import { LabTest } from 'src/app/models';
  
 @Injectable()
 export class LabTestDropdown {
   
-  filteredLabTests : Reference[];
-  labTests : Reference[] = []; 
+  filteredLabTests : LabTest[];
+  labTests : LabTest[] = []; 
   
   constructor(
     private genericService: GenericService) {
@@ -25,10 +26,16 @@ export class LabTestDropdown {
   }
   
   public getActiveLabTests(): void {
-    this.genericService.getActiveElements('labTest')
-      .subscribe((data: any[]) => this.labTests = data,
+    let parameters: string [] = []; 
+    parameters.push('e.status = |status|0|Integer');
+    
+    this.genericService.getAllByCriteria('LabTest', parameters)
+      .subscribe((data: LabTest[]) => 
+      { 
+        this.labTests = data 
+      },
       error => console.log(error),
-      () => console.log('Get All labTests Complete'));
+      () => console.log('Get all Religions complete'));
   }
   
 }
