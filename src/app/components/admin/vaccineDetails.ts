@@ -1,20 +1,19 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild, Input } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-import { Constants } from '../../app.constants';
-import { GivenVaccine } from '../../models/givenVaccine';
-import { Reference } from '../../models/reference';
-import { Cookie } from 'ng2-cookies/ng2-cookies';
-import { DataTableModule, DialogModule, InputTextareaModule, CheckboxModule, MultiSelectModule, CalendarModule } from 'primeng/primeng';
-import { User } from '../../models/user';  
-import { Visit } from '../../models/visit';
-import { GenericService, GlobalEventsManager, VisitService } from '../../services';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { GenericService, VisitService, TokenStorage } from '../../services';
 import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
 import { VaccineDropdown } from '../dropdowns';
+import { Patient, PatientVaccine } from 'src/app/models';
+import { BaseComponent } from './baseComponent';
+import { ConfirmationService } from 'primeng/api';
  
 @Component({
   selector: 'app-vaccine-details',
   template: ` 
-             <p-table [columns]="vaccineCols" [value]="givenVaccines">
+              <p-messages [(value)]="messages"></p-messages>
+              <button type="button" pButton icon="fa fa-plus" (click)="addNew()"></button>
+              <br/>
+              <p-table [columns]="vaccineCols" [value]="patientVaccines">
                 <ng-template pTemplate="header" let-vaccineCols>
                     <tr>
                         <th *ngFor="let col of vaccineCols" [pSortableColumn]="col.field">
@@ -35,9 +34,9 @@ import { VaccineDropdown } from '../dropdowns';
                                     {{rowData[col.field] | date:'dd/MM/yyyy'}}
                                 </ng-template>
                             </p-cellEditor>
-                            <p-cellEditor *ngIf="col.field == 'vaccine'">
+                            <p-cellEditor *ngIf="col.field == 'vaccineName'">
                                 <ng-template pTemplate="input">
-                                    <p-autoComplete [(ngModel)]="rowData[col.field]"
+                                    <p-autoComplete [(ngModel)]="rowData['vaccine']"
                                     (onDropdownClick)="vaccineDropdown.handleDropdownClick($event)"
                                     [suggestions]="vaccineDropdown.filteredVaccines" [dropdown]="true"
                                     (completeMethod)="vaccineDropdown.filter($event)"
@@ -46,58 +45,63 @@ import { VaccineDropdown } from '../dropdowns';
                                   </p-autoComplete>
                                 </ng-template>
                                 <ng-template pTemplate="output">
-                                    {{rowData[col.field].name}}
+                                    {{rowData['vaccine'].name}}
                                 </ng-template>
                             </p-cellEditor>
                         </td>
                         <td>
-                          <button type="button" pButton icon="fa fa-plus" (click)="addNew()"></button>&nbsp;&nbsp;
-                          <button type="button" pButton icon="fa fa-eraser" (click)="remove(givenVaccines.length)"></button>
+                          <button type="button" pButton icon="fa fa-save" (click)="save(rowData)"></button>&nbsp;&nbsp;
+                          <button type="button" pButton icon="fa fa-eraser" (click)="remove(patientVaccines.length)"></button>
                         </td>
                     </tr>
                 </ng-template>
             </p-table> `,
   providers: [GenericService, VisitService, VaccineDropdown]
 })
-export class VaccineDetails implements OnInit, OnDestroy {
+export class VaccineDetails extends BaseComponent implements OnInit, OnDestroy {
   
     public error: String = '';
     displayDialog: boolean;
-    @Input() givenVaccines: GivenVaccine[] = [];
+
+    @Input() patient: Patient;
+    patientVaccines: PatientVaccine[] = [];
     
     vaccineCols: any[];
    
     constructor
       (
-        private genericService: GenericService,
-        private visitService: VisitService,
-        private translate: TranslateService,
-        private vaccineDropdown: VaccineDropdown,
-        private changeDetectorRef: ChangeDetectorRef,
+        public genericService: GenericService,
+        public translate: TranslateService,
+        public confirmationService: ConfirmationService,
+        public tokenStorage: TokenStorage,
         private route: ActivatedRoute,
-        private router: Router
+        public vaccineDropdown: VaccineDropdown
       ) {
+        super(genericService, translate, confirmationService, tokenStorage);
     }
 
     ngOnInit(): void {
       
       this.vaccineCols = [
-              { field: 'vaccine', header: 'Name', headerKey: 'COMMON.NAME' },
+              { field: 'vaccineName', header: 'Name', headerKey: 'COMMON.NAME' },
               { field: 'givenDate', header: 'Given Date', headerKey: 'COMMON.DATE', type: 'Date' }
           ];
+      
       
       this.updateCols();
       this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
         this.updateCols();
       });
+
+      this.getVaccines();
     }
     
     addNew() {
-      this.givenVaccines.push(new GivenVaccine());
+      this.patientVaccines.push(new PatientVaccine(this.patient.id));
     }
     
     remove(index: number) {
-      this.givenVaccines.splice(index - 1, 1);
+      //this.givenVaccines.splice(index - 1, 1);
     }
   
     ngOnDestroy() {
@@ -110,6 +114,40 @@ export class VaccineDetails implements OnInit, OnDestroy {
       this.translate.get(col.headerKey).subscribe((res: string) => {
         col.header = res;
       });
+    }
+  }
+
+  getVaccines() {
+   
+    const parameters: string [] = [];
+    parameters.push('e.patient.id = |patientId|' + this.patient.id + '|Long');
+    this.genericService.getAllByCriteria('PatientVaccine', parameters, ' ORDER BY e.givenDate ')
+      .subscribe((data: PatientVaccine[]) => {
+        this.patientVaccines = data;
+
+      },
+      error => console.log(error),
+      () => console.log('Get all Vaccine complete'));
+
+    }
+
+
+  save(patientVaccine: PatientVaccine) {
+    try {
+      this.messages = [];
+      
+      this.genericService.save(patientVaccine, 'PatientVaccine')
+        .subscribe(result => {
+          if (result.id > 0) {
+			      this.processResult(result, patientVaccine, this.messages, null);
+            patientVaccine = result;
+            patientVaccine.vaccineName = patientVaccine.vaccine.name;
+          } else {
+            this.processResult(result, patientVaccine, this.messages, null);
+          }
+        })
+    } catch (e) {
+      console.log(e);
     }
   }
   

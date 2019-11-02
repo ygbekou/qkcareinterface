@@ -61,6 +61,7 @@ export class PatientDetails extends BaseComponent implements OnInit, OnDestroy {
 				this.patient.user = new User();
 				this.patient.user.userGroup = new UserGroup();
 				patientId = params['patientId'];
+				
 				if (patientId != null) {
 					this.genericService.getOne(patientId, 'Patient')
 						.subscribe(result => {

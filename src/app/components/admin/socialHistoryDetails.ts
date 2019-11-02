@@ -1,56 +1,87 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild, Input } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-import { Constants } from '../../app.constants';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { Reference } from '../../models/reference';
-import { Cookie } from 'ng2-cookies/ng2-cookies';
-import { DataTableModule, DialogModule, InputTextareaModule, CheckboxModule, MultiSelectModule, CalendarModule } from 'primeng/primeng';
-import { User } from '../../models/user';  
-import { Visit } from '../../models/visit';
-import { GenericService, GlobalEventsManager, VisitService } from '../../services';
+import { GenericService, TokenStorage, VisitService } from '../../services';
+import { Patient } from 'src/app/models';
+import { BaseComponent } from './baseComponent';
+import { TranslateService } from '@ngx-translate/core';
+import { ConfirmationService } from 'primeng/api';
  
 @Component({
   selector: 'app-socialHistory-details',
-  template: `<div class="ui-grid-row">
+  template: `<p-messages [(value)]="messages"></p-messages>
+              <div class="ui-grid-row">
                 <div class="ui-grid-col-11 ui-sm-12" >
                   <p-checkbox id="status" 
-                    [(ngModel)]="visit.selectedSocialHistories" [value]="socialHistory.id"
+                    [(ngModel)]="patient.selectedSocialHistories" [value]="socialHistory.id"
                     label="{{socialHistory.name}}"
                     *ngFor="let socialHistory of socialHistories; let i = index"></p-checkbox>
                 </div>
-              </div>`, 
-  providers: [GenericService, VisitService]
+              </div>
+              <br/>
+              <button type="button" pButton label="{{ 'COMMON.SAVE' | translate }}" icon="fa fa-save" (click)="save()"></button>`,
+  providers: [GenericService]
 })
-export class SocialHistoryDetails implements OnInit, OnDestroy {
+export class SocialHistoryDetails extends BaseComponent implements OnInit, OnDestroy {
   
   public error: String = '';
   displayDialog: boolean;
-  @Input() visit: Visit = new Visit();
+  @Input() patient: Patient = new Patient();
   socialHistories: Reference[] = [];
  
   constructor
     (
-      private genericService: GenericService,
-      private visitService: VisitService,
-      private changeDetectorRef: ChangeDetectorRef,
-      private route: ActivatedRoute,
-      private router: Router
+      public genericService: GenericService,
+			public translate: TranslateService,
+			public confirmationService: ConfirmationService,
+      public tokenStorage: TokenStorage,
+      public visitService: VisitService
     ) {
+      super(genericService, translate, confirmationService, tokenStorage);
   }
 
   ngOnInit(): void {
     
     this.genericService.getActiveElements('socialhistory')
-      .subscribe((data: Reference[]) => 
-      { 
+      .subscribe((data: Reference[]) => { 
         console.info(data)
         if (data.length > 0) {
           this.socialHistories = data;
+          this.getSocialHistories();
         }
       },
       error => console.log(error),
       () => console.log('Get ative socialHistories complete'));
 
   }
+
+  save() {
+
+	  this.messages = [];
+      try { 
+        this.visitService.saveSocialHistories(this.patient)
+          .subscribe(result => {
+            if (result.id > 0) {
+              this.processResult(result, this.patient, this.messages, null);
+              this.patient = result;
+            } else {
+              this.processResult(result, this.patient, this.messages, null);
+            }
+          });
+      } catch (e) {
+        console.log(e);
+      }
+    }
+
+  getSocialHistories() {
+   
+    this.visitService.getPatientEntities(this.patient.id, 'socialHistories')
+      .subscribe((data: Patient) => {
+        this.patient = data;
+      },
+      error => console.log(error),
+      () => console.log('Get all patient social histories complete'));
+
+    }
   
   ngOnDestroy() {
     this.socialHistories = null;

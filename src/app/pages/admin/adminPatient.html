@@ -1,12 +1,32 @@
 <div class="ui-g-12 ui-sm-12" style="padding: 15px;">
   <p-tabView (onChange)="onTabChange($event)">
     <p-tabPanel header="{{ 'COMMON.DETAILS' | translate }}" *ngIf="permitView('Patient Details')">
-      <div *ngIf="activeTab == 0">
+      <div *ngIf="activeTab === 0">
         <app-patient-details></app-patient-details>
       </div>
     </p-tabPanel>
+    <p-tabPanel header="{{ 'COMMON.VACCINE_LIST' | translate }}" *ngIf="patient.id > 0">
+      <div *ngIf="activeTab === 1">
+        <app-vaccine-details [patient]="patient"></app-vaccine-details>
+      </div>
+    </p-tabPanel>
+    <p-tabPanel header="{{ 'COMMON.ALLERGY_LIST' | translate }}" *ngIf="patient.id > 0">
+      <div *ngIf="activeTab === 2">
+        <app-allergy-details [patient]="patient"></app-allergy-details>
+      </div>
+    </p-tabPanel>
+    <p-tabPanel header="{{ 'COMMON.MEDICAL_HISTORY' | translate }}" *ngIf="patient.id > 0">
+      <div *ngIf="activeTab === 3">
+        <app-medicalHistory-details [patient]="patient"></app-medicalHistory-details>
+      </div>
+    </p-tabPanel>
+    <p-tabPanel header="{{ 'COMMON.SOCIAL_HISTORY' | translate }}" *ngIf="patient.id > 0">
+      <div *ngIf="activeTab === 4">
+        <app-socialHistory-details [patient]="patient"></app-socialHistory-details>
+      </div>
+    </p-tabPanel>
     <p-tabPanel header="{{ 'COMMON.APPOINTMENT' | translate }}" *ngIf="patient.id > 0 && permitView('Patient Details')">
-      <div *ngIf="activeTab == 1">
+      <div *ngIf="activeTab == 5">
         <app-appointment-details (aptSavedEvent)="onAptSaved($event)"></app-appointment-details>
         <br />
         <br />

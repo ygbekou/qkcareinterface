@@ -51,8 +51,8 @@ export class VisitDetails extends BaseComponent implements OnInit, OnDestroy {
 			public confirmationService: ConfirmationService,
 			public tokenStorage: TokenStorage,
       private visitService: VisitService,
-      private doctorDropdown: DoctorDropdown,
-      private packageDropdown: PackageDropdown,
+      public doctorDropdown: DoctorDropdown,
+      public packageDropdown: PackageDropdown,
       private globalEventsManager: GlobalEventsManager,
       private route: ActivatedRoute,
     ) {
@@ -78,7 +78,7 @@ export class VisitDetails extends BaseComponent implements OnInit, OnDestroy {
 
           this.visit.patient = new Patient();
           this.visit.patient.user = new User();
-          this.visit.givenVaccines.push(new GivenVaccine());
+          //this.visit.givenVaccines.push(new GivenVaccine());
 
           visitId = params['visitId'];
           if (visitId != null) {
@@ -88,9 +88,9 @@ export class VisitDetails extends BaseComponent implements OnInit, OnDestroy {
                   this.visit = data;
                   this.patient = this.visit.patient;
                   this.visit.visitDatetime = new Date(this.visit.visitDatetime);
-                  if (this.visit.givenVaccines.length === 0) {
-                    this.visit.givenVaccines.push(new GivenVaccine());
-                  }
+                  // if (this.visit.givenVaccines.length === 0) {
+                  //   this.visit.givenVaccines.push(new GivenVaccine());
+                  // }
                 }
               },
               error => console.log(error),
@@ -106,15 +106,15 @@ export class VisitDetails extends BaseComponent implements OnInit, OnDestroy {
     this.visit = null;
   }
 
-  updateAllergy(event) {
-    if (-1 !== this.visit.selectedAllergies.indexOf(event.source.name)) {
-      if (event.checked) {
-        this.visit.selectedAllergies.push(event.source.name);
-      } else {
-        this.visit.selectedAllergies.splice(this.visit.selectedAllergies.indexOf(event.source.name), 1);
-      }
-    }
-  }
+  // updateAllergy(event) {
+  //   if (-1 !== this.visit.selectedAllergies.indexOf(event.source.name)) {
+  //     if (event.checked) {
+  //       this.visit.selectedAllergies.push(event.source.name);
+  //     } else {
+  //       this.visit.selectedAllergies.splice(this.visit.selectedAllergies.indexOf(event.source.name), 1);
+  //     }
+  //   }
+  // }
 
   save() {
 

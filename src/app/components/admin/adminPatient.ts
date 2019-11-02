@@ -10,6 +10,11 @@ import { AppointmentList } from './appointmentList';
 import { BaseComponent } from './baseComponent';
 import { ConfirmationService } from 'primeng/api';
 import { TranslateService } from '@ngx-translate/core';
+import { ActivatedRoute } from '@angular/router';
+import { VaccineDetails } from './vaccineDetails';
+import { AllergyDetails } from './allergyDetails';
+import { MedicalHistoryDetails } from './medicalHistoryDetails';
+import { SocialHistoryDetails } from './socialHistoryDetails';
 
 @Component({
 	selector: 'app-admin-patient',
@@ -20,6 +25,10 @@ export class AdminPatient extends BaseComponent implements OnInit {
 	[x: string]: any;
 
 	@ViewChild(PatientDetails) patientDetails: PatientDetails;
+	@ViewChild(VaccineDetails) vaccineDetails: VaccineDetails;
+	@ViewChild(AllergyDetails) allergyDetails: AllergyDetails;
+	@ViewChild(MedicalHistoryDetails) medicalHistoryDetails: MedicalHistoryDetails;
+	@ViewChild(SocialHistoryDetails) socialHistoryDetails: SocialHistoryDetails;
 	@ViewChild(AppointmentDetails) appointmentDetails: AppointmentDetails;
 	@ViewChild(AppointmentList) appointmentList: AppointmentList;
 	public user: User;
@@ -33,16 +42,24 @@ export class AdminPatient extends BaseComponent implements OnInit {
 		public confirmationService: ConfirmationService,
 		public translate: TranslateService,
 		public tokenStorage: TokenStorage,
-		private globalEventsManager: GlobalEventsManager
+		private globalEventsManager: GlobalEventsManager,
+		public route: ActivatedRoute
 	) {
 		super(genericService, translate, confirmationService, tokenStorage);
 		this.user = new User();
 		this.patient = new Patient();
+		let patientId = null;
+		this.route
+			.queryParams
+			.subscribe(params => {
+				patientId = params['patientId'];
+				this.patient.id = patientId;
+			});
 	}
 
 	ngOnInit() {
-		console.log('AdminPatient Inited: appointmentId=' + this.globalEventsManager.selectedAppointmentId);
-		this.globalEventsManager.currentPatientId.subscribe(patientId => this.patient.id = patientId);
+		
+		
 		if (this.currentUser == null) {
 			this.currentUser = new User();
 		}
@@ -62,6 +79,19 @@ export class AdminPatient extends BaseComponent implements OnInit {
 			this.activeTab = 0;
 		} else if (evt.index === 1) {
 			this.activeTab = 1;
+			//this.vaccineDetails.getVaccines();	
+		} else if (evt.index === 2) {
+			this.activeTab = 2;
+			//this.allergyDetails.getAllergies();
+		} else if (evt.index === 3) {
+			this.activeTab = 3;
+			//this.medicalHistoryDetails.getMedicalHistories();
+		} else if (evt.index === 4) {
+			this.activeTab = 4;
+			//this.socialHistoryDetails.getSocialHistories();
+		} else if (evt.index === 5) {
+			this.activeTab = 5;
+			//this.socialHistoryDetails.getSocialHistories();
 		}
 	}
 }

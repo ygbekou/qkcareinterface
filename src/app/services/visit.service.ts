@@ -7,6 +7,7 @@ import { DoctorOrder } from '../models/doctorOrder';
 import { Reference } from '../models/reference';
 import { Visit } from '../models/visit';
 import { TokenStorage } from './token.storage';
+import { Patient } from '../models';
 
 @Injectable()
 export class VisitService {
@@ -159,6 +160,44 @@ export class VisitService {
 			})
 			.catch(this.handleError);
 	}
+
+    public saveAllergies = (patient: Patient): Observable<Patient> => {
+		const toAdd = JSON.stringify(patient);
+		const actionUrl = Constants.apiServer + '/service/visit/allergies/save';
+		return this.http.post(actionUrl, toAdd, {headers: this.headers})
+		.map((response: Response) => {
+			return response.json();
+		})
+		.catch(this.handleError);
+   }
+
+   public saveMedicalHistories = (patient: Patient): Observable<Patient> => {
+		const toAdd = JSON.stringify(patient);
+		const actionUrl = Constants.apiServer + '/service/visit/medicalHistories/save';
+		return this.http.post(actionUrl, toAdd, {headers: this.headers})
+		.map((response: Response) => {
+			return response.json();
+		})
+		.catch(this.handleError);
+   }
+
+   public saveSocialHistories = (patient: Patient): Observable<Patient> => {
+		const toAdd = JSON.stringify(patient);
+		const actionUrl = Constants.apiServer + '/service/visit/socialHistories/save';
+		return this.http.post(actionUrl, toAdd, {headers: this.headers})
+		.map((response: Response) => {
+			return response.json();
+		})
+		.catch(this.handleError);
+   }
+
+   public getPatientEntities = (patientId: number, type: string): Observable<Patient> => {
+		const actionUrl = Constants.apiServer + '/service/visit/patient/' + type + '/' + patientId;
+		return this.http.get(actionUrl, { headers: this.headers })
+			.map((response: Response) => <any>response.json())
+			.catch(this.handleError);
+	}
+
 	private handleError(error: Response) {
 		console.error(error);
 		return Observable.throw(error.json().error || 'Server error');
