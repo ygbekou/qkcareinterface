@@ -44,7 +44,7 @@
       <div class="ui-grid-row">
         <div class="ui-grid-col-3 ui-sm-12">
           <div class="form-group">
-            <label for="doctor">{{ 'COMMON.DOCTOR' | translate }}<font color="red">*</font></label>
+            <label for="doctor">{{ 'COMMON.DOCTOR' | translate }}</label>
             <p-autoComplete [(ngModel)]="visit.doctor" #doctor="ngModel" required
               (onDropdownClick)="doctorDropdown.handleDropdownClick($event)"
               [suggestions]="doctorDropdown.filteredDoctors" [dropdown]="true"

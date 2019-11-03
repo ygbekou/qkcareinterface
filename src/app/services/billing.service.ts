@@ -6,6 +6,7 @@ import { Bill } from '../models/bill';
 import { Package } from '../models/package';
 import { TokenStorage } from './token.storage';
 import {Cookie} from 'ng2-cookies/ng2-cookies';
+import { PatientService } from '../models';
 
 @Injectable()
 export class BillingService {
@@ -35,7 +36,30 @@ export class BillingService {
         })
         .catch(this.handleError);
    }
-  
+   
+   public saveBillingServiceItem = (object: any, entity: string): Observable<any> => {
+    
+      const toAdd = JSON.stringify(object);
+      const actionUrl = Constants.apiServer + '/service/billing/' + entity + '/save';
+      return this.http.post(actionUrl, toAdd, {headers: this.headers})
+      .map((response: Response) => {
+        return response.json();
+      })
+      .catch(this.handleError);
+   }
+
+   public deleteBillingServiceItem = (object: any, entity: string): Observable<any> => {
+    
+      const toAdd = JSON.stringify(object);
+      const actionUrl = Constants.apiServer + '/service/billing/' + entity + '/delete';
+      return this.http.post(actionUrl, toAdd, {headers: this.headers})
+      .map((response: Response) => {
+        return response.json();
+      })
+      .catch(this.handleError);
+   }
+
+
   public saveBill = (bill : Bill): Observable<Bill> => {
     
       let toAdd = JSON.stringify(bill);

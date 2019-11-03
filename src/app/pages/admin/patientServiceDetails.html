@@ -68,7 +68,7 @@
 		            <td>
 						<button type="button" pButton icon="fa fa-save" (click)="saveService(rowData)" 
 							*ngIf="shoulPermitSave(rowData.id, visit, admission, 'SERVICE')"></button>&nbsp;&nbsp;
-						<button type="button" pButton icon="fa fa-eraser" (click)="deleteItem(patientServices, rowData.id, 'PatientService')" 
+						<button type="button" pButton icon="fa fa-eraser" (click)="deleteService(rowData)" 
 									*ngIf="shoulPermitDelete(visit, admission, 'SERVICE')" [disabled]="!(rowData.id > 0)"></button>
 		            </td>
 		        </tr>
@@ -148,7 +148,7 @@
 						<button type="button" pButton icon="fa fa-save" *ngIf="shoulPermitSave(rowData.id, visit, admission, 'SERVICE')" 
 							(click)="savePackage(rowData)"></button>&nbsp;&nbsp;
 						<button type="button" pButton icon="fa fa-eraser" *ngIf="shoulPermitDelete(visit, admission, 'SERVICE')" 
-							(click)="deleteItem(patientPackages, rowData.id, 'PatientPackage')" [disabled]="!(rowData.id > 0)"></button>
+							(click)="deletePackage(rowData)" [disabled]="!(rowData.id > 0)"></button>
 		            </td>
 		        </tr>
 		    </ng-template>
