@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Constants } from '../../app.constants';
 import { Admission, Visit, PatientService, PatientPackage } from '../../models';
 import { ServiceDropdown, PackageDropdown } from '../dropdowns';
-import { GenericService, GlobalEventsManager, AdmissionService, TokenStorage } from '../../services';
+import { GenericService, GlobalEventsManager, AdmissionService, TokenStorage, BillingService } from '../../services';
 import { Message, ConfirmationService } from 'primeng/api';
 import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
 import { BaseComponent } from './baseComponent';
@@ -39,8 +39,9 @@ export class PatientServiceDetails extends BaseComponent implements OnInit, OnDe
       public confirmationService: ConfirmationService,
       public tokenStorage: TokenStorage,
       public globalEventsManager: GlobalEventsManager,
-      private serviceDropdown: ServiceDropdown,
-      private packageDropdown: PackageDropdown,
+      public serviceDropdown: ServiceDropdown,
+      public packageDropdown: PackageDropdown,
+      private billingService: BillingService,
       private route: ActivatedRoute
     ) {
 		super(genericService, translate, confirmationService, tokenStorage);
@@ -173,7 +174,7 @@ export class PatientServiceDetails extends BaseComponent implements OnInit, OnDe
     rowData.visit = this.visit;
 
     try {
-      this.genericService.save(rowData, 'PatientService')
+      this.billingService.saveBillingServiceItem(rowData, 'patientService')
         .subscribe(result => {
           if (result.id > 0) {
             rowData = result;
@@ -187,6 +188,25 @@ export class PatientServiceDetails extends BaseComponent implements OnInit, OnDe
     }
   }
 
+  deleteService(rowData: PatientService) {
+   
+    rowData.admission = this.admission;
+    rowData.visit = this.visit;
+
+    try {
+      this.billingService.deleteBillingServiceItem(rowData, 'patientService')
+        .subscribe(result => {
+          if (result.id > 0) {
+            rowData = result;
+            this.processResult(result, rowData, this.messages, null);
+          } else {
+            this.processResult(result, rowData, this.messages, null);
+          }
+        });
+    } catch (e) {
+      console.log(e);
+    }
+  }
 
   savePackage(rowData: PatientPackage) {
     if (!rowData.pckage || !(rowData.pckage.id > 0)) {
@@ -204,7 +224,7 @@ export class PatientServiceDetails extends BaseComponent implements OnInit, OnDe
     rowData.visit = this.visit;
 
     try {
-      this.genericService.save(rowData, 'PatientPackage')
+      this.billingService.saveBillingServiceItem(rowData, 'patientPackage')
         .subscribe(result => {
           if (result.id > 0) {
             rowData = result;
@@ -218,22 +238,30 @@ export class PatientServiceDetails extends BaseComponent implements OnInit, OnDe
     }
   }
 
+
+  deletePackage(rowData: PatientPackage) {
+   
+    rowData.admission = this.admission;
+    rowData.visit = this.visit;
+
+    try {
+      this.billingService.deleteBillingServiceItem(rowData, 'patientPackage')
+        .subscribe(result => {
+          if (result.id > 0) {
+            rowData = result;
+            this.processResult(result, rowData, this.messages, null);
+          } else {
+            this.processResult(result, rowData, this.messages, null);
+          }
+        });
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+
   clear() {
   }
 
-//   getServices() {
 
-//     this.admissionService.getDiagnoses(+this.parentId, this.parentEntity)
-//      .subscribe((data: AdmissionDiagnosis[]) => {
-//         this.admissionDiagnoses = data;
-//         if (this.admissionDiagnoses != null
-//               && this.admissionDiagnoses.length === 0) {
-//           const ad = new AdmissionDiagnosis();
-//           ad.diagnosis = new Diagnosis();
-//           this.admissionDiagnoses.push(new AdmissionDiagnosis());
-//         }
-//       },
-//       error => console.log(error),
-//       () => console.log('Get Patient Diagnoses complete'));
-//   }
 }
