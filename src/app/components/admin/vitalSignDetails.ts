@@ -38,6 +38,7 @@ export class VitalSignDetails extends BaseComponent implements OnInit, OnDestroy
     ) {
 		  super(genericService, translate, confirmationService, tokenStorage);
       this.patient.user = new User();
+      
   }
 
   ngOnInit(): void {
@@ -58,7 +59,9 @@ export class VitalSignDetails extends BaseComponent implements OnInit, OnDestroy
                 }
               });
           } else {
-
+            if (this.vitalSign  != null) {
+              this.vitalSign.vitalSignDatetime = new Date(this.vitalSign.vitalSignDatetime);
+            }
           }
      });
 
@@ -77,9 +80,9 @@ export class VitalSignDetails extends BaseComponent implements OnInit, OnDestroy
       this.genericService.save(this.vitalSign, 'VitalSign')
         .subscribe(result => {
           if (result.id > 0) {
-			  this.vitalSign = result;
-			  this.vitalSign.vitalSignDatetime = new Date(this.vitalSign.vitalSignDatetime);
-			  this.vitalSignSaveEvent.emit(this.vitalSign);
+            this.vitalSign = result;
+            this.vitalSign.vitalSignDatetime = new Date(this.vitalSign.vitalSignDatetime);
+            this.vitalSignSaveEvent.emit(this.vitalSign);
           } else {
             this.error = Constants.SAVE_UNSUCCESSFUL;
             this.displayDialog = true;

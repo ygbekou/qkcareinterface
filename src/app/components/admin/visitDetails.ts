@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild } from '@ang
 import { ActivatedRoute } from '@angular/router';
 import { Constants } from '../../app.constants';
 import { GivenVaccine, Patient, Visit, Reference, User } from '../../models';
-import { PackageDropdown, DoctorDropdown } from '../dropdowns';
+import { PackageDropdown, DoctorDropdown, ServiceDropdown } from '../dropdowns';
 import { GenericService, GlobalEventsManager, VisitService, TokenStorage } from '../../services';
 import { AdmissionDiagnoses } from './admissionDiagnoses';
 import { DoctorOrderDetails } from './doctorOrderDetails';
@@ -53,6 +53,7 @@ export class VisitDetails extends BaseComponent implements OnInit, OnDestroy {
       private visitService: VisitService,
       public doctorDropdown: DoctorDropdown,
       public packageDropdown: PackageDropdown,
+      public serviceDropdown: ServiceDropdown,
       private globalEventsManager: GlobalEventsManager,
       private route: ActivatedRoute,
     ) {
@@ -106,15 +107,6 @@ export class VisitDetails extends BaseComponent implements OnInit, OnDestroy {
     this.visit = null;
   }
 
-  // updateAllergy(event) {
-  //   if (-1 !== this.visit.selectedAllergies.indexOf(event.source.name)) {
-  //     if (event.checked) {
-  //       this.visit.selectedAllergies.push(event.source.name);
-  //     } else {
-  //       this.visit.selectedAllergies.splice(this.visit.selectedAllergies.indexOf(event.source.name), 1);
-  //     }
-  //   }
-  // }
 
   save() {
 
@@ -126,6 +118,7 @@ export class VisitDetails extends BaseComponent implements OnInit, OnDestroy {
         .subscribe(result => {
           if (result.id > 0) {
             this.visit = result;
+            this.visit.visitDatetime = new Date(this.visit.visitDatetime);
             this.messages.push({severity: Constants.SUCCESS, summary: Constants.SAVE_LABEL, detail: Constants.SAVE_SUCCESSFUL});
           } else {
             this.messages.push({severity: Constants.ERROR, summary: Constants.SAVE_LABEL, detail: Constants.SAVE_UNSUCCESSFUL});
@@ -169,8 +162,8 @@ export class VisitDetails extends BaseComponent implements OnInit, OnDestroy {
   }
 
   onDoctorOrderSaved($event) {
-	//this.doctorOrderList.updateTable($event);
-	this.doctorOrderList.getList();
+	  //this.doctorOrderList.updateTable($event); 
+	  this.doctorOrderList.getList();
   }
 
   lookUpPatient(event) {

@@ -113,10 +113,11 @@
 					                    </ng-template>
 									</p-cellEditor>
 									
+									<!-- This is for pharmacie and entered on the fly-->
 									<p-cellEditor *ngIf="col.field === 'serviceName' && rowData.systemGenerated !== 'Y'
 										 	&& rowData.doctorOrderType.id === 1 ">
 					                    <ng-template pTemplate="input">
-					                        <p-autoComplete [(ngModel)]="rowData.serviceName"
+					                        <p-autoComplete [(ngModel)]="rowData.product"
 												(onDropdownClick)="productDropdown.handleDropdownClick($event)"
 												[suggestions]="productDropdown.filteredProducts" [dropdown]="true"
 												(completeMethod)="productDropdown.filter($event)"
@@ -125,14 +126,15 @@
 											</p-autoComplete>
 					                    </ng-template>
 					                    <ng-template pTemplate="output">
-											{{rowData.serviceName}}
+											{{rowData.product.name}}
 					                    </ng-template>
 									</p-cellEditor>
 
-									<!-- <p-cellEditor *ngIf="col.field === 'serviceName' && rowData.systemGenerated !== 'Y' 
+									<!-- This is for laboratory and entered on the fly-->
+									<p-cellEditor *ngIf="col.field === 'serviceName' && rowData.systemGenerated !== 'Y' 
 											&& rowData.doctorOrderType.id === 2 ">
 					                    <ng-template pTemplate="input">
-											<p-autoComplete [(ngModel)]="rowData.investigation.labTest"
+											<p-autoComplete [(ngModel)]="rowData.labTest"
 												(ngModelChange)="setPriceAndCalculate(rowData)"
 												(onDropdownClick)="labTestDropdown.handleDropdownClick($event)"
 												[suggestions]="labTestDropdown.filteredLabTests" [dropdown]="true"
@@ -142,24 +144,16 @@
 											</p-autoComplete>
 					                    </ng-template>
 					                    <ng-template pTemplate="output">
-											{{rowData.investigation.labTest.name}}
-					                    </ng-template>
-									</p-cellEditor> -->
-
-									<p-cellEditor *ngIf="col.field === 'serviceName' && rowData.systemGenerated !== 'Y' 
-											&& rowData.doctorOrderType.id === 2 ">
-					                    <ng-template pTemplate="input">
-											<input type="text" [(ngModel)]="rowData.description" name="description" >
-					                    </ng-template>
-					                    <ng-template pTemplate="output">
-											{{rowData.description}}
+											{{rowData.labTest.name}}
 					                    </ng-template>
 									</p-cellEditor>
 
-
-									<p-cellEditor *ngIf="col.field === 'serviceName' && rowData.systemGenerated !== 'Y' && rowData.doctorOrderType.id === 3 ">
+									<!-- This is for Medical and entered on the fly-->
+									<p-cellEditor *ngIf="col.field === 'serviceName' && rowData.systemGenerated !== 'Y' 
+											&& rowData.doctorOrderType.id === 3 ">
 					                    <ng-template pTemplate="input">
-					                        <p-autoComplete [(ngModel)]="rowData.serviceName"
+											<p-autoComplete [(ngModel)]="rowData.service"
+												(ngModelChange)="setPriceAndCalculate(rowData)"
 												(onDropdownClick)="serviceDropdown.handleDropdownClick($event)"
 												[suggestions]="serviceDropdown.filteredServices" [dropdown]="true"
 												(completeMethod)="serviceDropdown.filter($event)"
@@ -168,7 +162,7 @@
 											</p-autoComplete>
 					                    </ng-template>
 					                    <ng-template pTemplate="output">
-											{{rowData.serviceName}}
+											{{rowData.service.name}}
 					                    </ng-template>
 									</p-cellEditor>
 

@@ -126,9 +126,11 @@ export class BaseComponent {
 
   checkPermission(resource: string, accessAttr: string, accessVal: string) {
     const permissions = JSON.parse(this.tokenStorage.getNonMenuPermissions());
+   
     const res: PermissionVO = permissions.find(x => x.name === resource);
 
     if (res !== null && res !== undefined) {
+       
         if (accessAttr === null || accessAttr ===  undefined) {
             return true;
         }
@@ -137,6 +139,7 @@ export class BaseComponent {
             return true;
         }
         if ('CAN_EDIT' === accessAttr && accessVal === res.canEdit) {
+          
             return true;
         }
         if ('CAN_VIEW' === accessAttr && accessVal === res.canView) {

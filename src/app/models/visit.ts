@@ -4,12 +4,14 @@ import { Patient } from './patient';
 import { Reference } from './reference';
 import { VitalSign } from './vitalSign';
 import { Appointment } from './appointment';
+import { Service } from './service';
 
 export class Visit {
   id: number;
   chiefOfComplain: string;
   patient: Patient;
   pckage: Package;
+  service: Service;
   doctor: Employee;
   visitDatetime: Date = new Date();
   status: number = 0;

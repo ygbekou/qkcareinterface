@@ -44,24 +44,11 @@
       <div class="ui-grid-row">
         <div class="ui-grid-col-3 ui-sm-12">
           <div class="form-group">
-            <label for="package">{{ 'COMMON.PACKAGE' | translate }}<font color="red">*</font></label>
-            <p-autoComplete [(ngModel)]="visit.pckage" #package="ngModel" required
-              (onDropdownClick)="packageDropdown.handleDropdownClick($event)"
-              [suggestions]="packageDropdown.filteredPackages" [dropdown]="true"
-              (completeMethod)="packageDropdown.filter($event)" name="name" field="name" [size]="30" placeholder=""
-              [minLength]="1">
-            </p-autoComplete>
-            <p-message *ngIf="f.submitted && package.invalid" severity="error"
-              text="{{ 'COMMON.PACKAGE' | translate }} {{ 'VALIDATION.IS_REQUIRED' | translate }}"></p-message>
-          </div>
-        </div>
-        <div class="ui-grid-col-3 ui-sm-12">
-          <div class="form-group">
             <label for="doctor">{{ 'COMMON.DOCTOR' | translate }}<font color="red">*</font></label>
             <p-autoComplete [(ngModel)]="visit.doctor" #doctor="ngModel" required
               (onDropdownClick)="doctorDropdown.handleDropdownClick($event)"
               [suggestions]="doctorDropdown.filteredDoctors" [dropdown]="true"
-              (completeMethod)="doctorDropdown.filter($event)" name="name" field="name" [size]="30" placeholder=""
+              (completeMethod)="doctorDropdown.filter($event)" name="doctorName" field="name" [size]="30" placeholder=""
               [minLength]="1">
             </p-autoComplete>
             <p-message *ngIf="f.submitted && doctor.invalid" severity="error"
@@ -85,10 +72,11 @@
 
           <p-tabPanel header="{{ 'COMMON.HOME_MEDICATIONS' | translate }}" *ngIf="shouldShow"> </p-tabPanel>
         </p-tabView>
+        <br/>
         <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
           <button type="button" pButton icon="fa fa-close" (click)="delete()"
             label="{{ 'COMMON.DELETE' | translate }}"></button>&nbsp;&nbsp;
-          <button pButton icon="fa fa-check" *ngIf="permitSave(visit.id, 'Add Visit')"
+          <button pButton icon="fa fa-check" *ngIf="permitSave(visit.id, 'Add visit')"
              label="{{ 'COMMON.SAVE' | translate }}"></button>
         </div>
       </p-tabPanel>

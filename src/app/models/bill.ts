@@ -1,10 +1,13 @@
-import { Employee, Reference, PatientService, PatientPackage } from './';
+import { Employee, Reference, PatientService, PatientPackage, Product } from './';
 import { Appointment } from './appointment';
 import { Admission } from './admission';
 import { Visit } from './visit';
 import { PatientSaleProduct } from './stocks/patientSale';
 import { Investigation } from './investigation';
 import { BedAssignment } from './bedAssignment';
+import { Service } from './service';
+import { Package } from './package';
+import { LabTest } from './labTest';
 
 export class Bill {
   id: number;
@@ -42,6 +45,12 @@ export class BillService {
   patientPackage: PatientPackage;
   patientSaleProduct: PatientSaleProduct;
   investigation: Investigation;
+
+  service: Service;
+  pckage: Package;
+  product: Product;
+  labTest: LabTest;
+
   bedAssignment: BedAssignment;
   doctor: Employee;
   serviceDate: Date;

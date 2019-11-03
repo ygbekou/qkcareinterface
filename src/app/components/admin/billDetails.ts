@@ -335,12 +335,14 @@ export class BillDetails extends BaseComponent implements OnInit, OnDestroy {
         || (bs.patientSaleProduct && bs.patientSaleProduct.id > 0)
         || (bs.investigation && bs.investigation.id > 0)
         || (bs.bedAssignment && bs.bedAssignment.id > 0)
+        || (bs.systemGenerated !== 'Y')
       ) {
         noProductFound = false;
         if (bs.quantity == null || bs.quantity <= 0)
           this.messages.push({ severity: Constants.ERROR, summary: Constants.SAVE_LABEL, detail: 'Quantity is required and must be greater than 0.' });
         if (bs.unitAmount == null || bs.unitAmount <= 0)
           this.messages.push({ severity: Constants.ERROR, summary: Constants.SAVE_LABEL, detail: 'Price is required and must be greater than 0.' });
+
 
       }
     }
