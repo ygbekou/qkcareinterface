@@ -74,7 +74,7 @@ export class Register implements OnInit {
 							this.globalEventsManager.showMenu = true;
 							console.log('Navigating to dashboard');
 							this.router.navigate(['/admin/dashboard']);
-							window.location.reload();
+							//window.location.reload();
 
 						} else {
 							console.log('No token');

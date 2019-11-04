@@ -61,6 +61,7 @@ export class AuthenticationService {
   }
 
   private handleError(error: Response) {
+    console.log(error);
     if (error.json()['path'] === '/service/token/generate-token') {
       window.sessionStorage.removeItem(TokenStorage.TOKEN_KEY);
       // window.sessionStorage.clear();
