@@ -100,6 +100,17 @@ export class GenericService {
         .catch(this.handleError);
    }
 
+   public saveAnyWithUrl = (url: string, genericObject: any): Observable<any> => {
+
+      const toAdd = JSON.stringify(genericObject);
+      const actionUrl = Constants.apiServer + url;
+      return this.http.post(actionUrl, toAdd, { headers: this.headers })
+        .map((response: Response) => {
+            return response.json();
+        })
+        .catch(this.handleError);
+   }
+
 
   public saveDoctorOrder = (entity: any): Observable<any> => {
 

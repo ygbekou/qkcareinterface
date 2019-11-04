@@ -29,8 +29,9 @@
 			
 			<br/>
 	
+			<button type="button" pButton icon="fa fa-plus" (click)="addRow()"></button>
 			<div class="ui-grid-row">
-				<div class="ui-grid-col-9 ui-sm-12">					
+				<div class="ui-grid-col-12 ui-sm-12">					
 					<p-table [columns]="saleProductCols" [value]="patientSale.patientSaleProducts" (change)="calculateTotal()">
 						<ng-template pTemplate="caption">
 					        {{ 'COMMON.PRODUCT_LIST' | translate }}
@@ -41,7 +42,7 @@
 					                {{col.header}}
 					                <p-sortIcon [field]="col.field"></p-sortIcon>
 					            </th>
-					            <th *ngIf="!isVisitOrAdmissionPage()">Action</th>
+					            <th>Action</th>
 					        </tr>
 					    </ng-template>
 					    <ng-template pTemplate="body" let-rowData let-columns="columns">
@@ -81,13 +82,28 @@
 					                </p-cellEditor>
 					            </td>
 					            <td *ngIf="!isVisitOrAdmissionPage()">
-					            	<button type="button" pButton icon="fa fa-plus" (click)="addRow()"></button> &nbsp;
-									<button type="button" pButton icon="fa fa-eraser" ></button>
-					            </td>
+									<button type="button" pButton icon="fa fa-minus" (click)="updateStatus(rowData.id, 2)" 
+										*ngIf="rowData.status == 0 || rowData.status == 1" data-toggle="tooltip" title="{{ 'COMMON.REJECT' | translate }}" 
+										tooltipPosition="bottom"></button> &nbsp;
+									<button type="button" pButton icon="fa fa-check" (click)="updateStatus(rowData.id, 1)"
+										*ngIf="rowData.status == 0 || rowData.status == 2" data-toggle="tooltip" title="{{ 'COMMON.APPROVE' | translate }}"
+										tooltipPosition="bottom"></button> &nbsp;
+									<button type="button" pButton icon="fa fa-truck" (click)="updateStatus(rowData.id, 3)"
+										*ngIf="rowData.status == 1" data-toggle="tooltip" title="{{ 'COMMON.DELIVER' | translate }}"
+										tooltipPosition="bottom"></button> &nbsp;
+								</td>
+								<td *ngIf="isVisitOrAdmissionPage()">
+									<button type="button" pButton icon="fas fa-hands" (click)="updateStatus(rowData.id, 4)"
+										*ngIf="rowData.status == 3" data-toggle="tooltip" title="{{ 'COMMON.RECEIVE' | translate }}"
+										tooltipPosition="bottom"></button> &nbsp;
+								</td>
 					        </tr>
 					    </ng-template>
 					</p-table>
 				</div>
+			</div>
+			<br/>
+			<div class="ui-grid-row">
 				<div class="ui-grid-col-3 ui-sm-12">
 					<div class="ui-grid-row">
 						<div class="ui-grid-col-4 ui-sm-12">

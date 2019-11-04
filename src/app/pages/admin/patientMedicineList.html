@@ -15,6 +15,7 @@
         {{col.header}}
         <p-sortIcon [field]="col.field"></p-sortIcon>
       </th>
+      <th>Action</th>
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-rowData let-columns="columns">
@@ -26,6 +27,12 @@
         <div *ngIf="col.type !== 'date_time'">
           {{rowData[col.field]}}
         </div>
+      </td>
+      <td>
+        <button type="button" pButton icon="fas fa-hands" (click)="updateStatus(rowData.id, 4)"
+										*ngIf="rowData.status == 3" data-toggle="tooltip" title="{{ 'COMMON.RECEIVE' | translate }}"
+                    tooltipPosition="bottom">
+        </button>
       </td>
     </tr>
   </ng-template>

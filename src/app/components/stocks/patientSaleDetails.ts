@@ -153,6 +153,27 @@ export class PatientSaleDetails extends BaseComponent implements OnInit, OnDestr
     }
   }
   
+  savePatientSaleProduct(patientSaleProduct: PatientSaleProduct) {
+
+    try {
+      patientSaleProduct.patientSale = new PatientSale();
+      patientSaleProduct.patientSale.id = this.patientSale.id;
+      patientSaleProduct.patientSale.patientSaleProducts = [];
+      this.genericService.save(patientSaleProduct, "com.qkcare.model.stocks.PatientSaleProduct")
+        .subscribe(result => {
+          if (result.id > 0) {
+            patientSaleProduct = result;
+            this.messages.push({severity: Constants.SUCCESS, summary: Constants.SAVE_LABEL, detail: Constants.SAVE_SUCCESSFUL});
+          } else {
+            this.messages.push({severity: Constants.ERROR, summary: Constants.SAVE_LABEL, detail: Constants.SAVE_UNSUCCESSFUL});
+          }
+        });
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+
   getPatientSale(patientSaleId: number) {
     this.messages = [];
     this.purchasingService.getPatientSale(patientSaleId)
@@ -168,6 +189,13 @@ export class PatientSaleDetails extends BaseComponent implements OnInit, OnDestr
     const psp =  new PatientSaleProduct();
     psp.product = new Product();
     this.patientSale.patientSaleProducts.push(psp);
+  }
+
+  updateStatus(id: number, status: number) {
+    
+    const psp = this.patientSale.patientSaleProducts.find(x => x.id === id);
+    psp.status = status;
+    this.savePatientSaleProduct(psp);
   }
   
   calculateGrandTotal() {

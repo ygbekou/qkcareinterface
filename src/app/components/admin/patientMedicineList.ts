@@ -40,7 +40,9 @@ export class PatientMedicineList extends BaseComponent implements OnInit, OnDest
             { field: 'productName', header: 'Type', headerKey: 'COMMON.MEDICINE', type: 'string',
                                         style: {width: '20%', 'text-align': 'center'} },
             { field: 'notes', header: 'Notes', headerKey: 'COMMON.NOTES', type: 'string',
-                                        style: {width: '45%', 'text-align': 'center'} }
+                                        style: {width: '35%', 'text-align': 'center'} },
+            { field: 'statusDesc', header: 'Status', headerKey: 'COMMON.STATUS', type: 'string',
+                                        style: {width: '10%', 'text-align': 'center'} }
         ];
     this.getSaleProducts();
   
@@ -85,5 +87,33 @@ export class PatientMedicineList extends BaseComponent implements OnInit, OnDest
           error => console.log(error),
           () => console.log('Get all PatientSaleProduct complete'));
 	  }
-	  
+    
+    
+  updateStatus(id: number, status: number) {
+    
+    const psp = this.patientSaleProducts.find(x => x.id === id);
+    psp.status = status;
+    this.savePatientSaleProduct(psp, '/service/purchasing/patientSaleProduct/save');
+  }
+
+  savePatientSaleProduct(patientSaleProduct: PatientSaleProduct, url: string) {
+    this.messages = [];
+    try {
+      this.genericService.saveAnyWithUrl(url, patientSaleProduct)
+        .subscribe(result => {
+          if (result.id > 0) {
+            this.processResult(result, patientSaleProduct, this.messages, null);
+            patientSaleProduct = result;
+            const index = this.patientSaleProducts.findIndex(x => x.id === patientSaleProduct.id);
+            this.patientSaleProducts[index] = patientSaleProduct;
+          } else {
+            this.processResult(result, patientSaleProduct, this.messages, null);
+          }
+        });
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+
  }

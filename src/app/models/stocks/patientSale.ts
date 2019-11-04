@@ -32,4 +32,8 @@ export class PatientSaleProduct {
   totalAmount: number;
   discountPercentage: number;
   discountAmount: number;
+  status: number;
+
+  patientSale: PatientSale;
+
 }

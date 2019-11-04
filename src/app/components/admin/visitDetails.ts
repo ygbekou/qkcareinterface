@@ -1,7 +1,7 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Constants } from '../../app.constants';
-import { GivenVaccine, Patient, Visit, Reference, User } from '../../models';
+import { Patient, Visit, Reference, User } from '../../models';
 import { PackageDropdown, DoctorDropdown, ServiceDropdown } from '../dropdowns';
 import { GenericService, GlobalEventsManager, VisitService, TokenStorage } from '../../services';
 import { AdmissionDiagnoses } from './admissionDiagnoses';
