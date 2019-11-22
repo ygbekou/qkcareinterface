@@ -35,7 +35,7 @@
 			<br/>
 			<div class="ui-grid-row">
 				<div class="ui-grid-col-12 ui-sm-12">
-					<p-table [columns]="serviceCols" [value]="bill.billServices"
+					<p-table [columns]="serviceCols" [value]="bill.billServices" responsive="true"
 						 [style]="{width:'100%'}" (onEditComplete)="calculateTotal()">
 						<ng-template pTemplate="caption">
 					        {{ 'COMMON.SERVICE_LIST' | translate }}
