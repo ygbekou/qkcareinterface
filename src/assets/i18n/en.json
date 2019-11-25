@@ -132,6 +132,7 @@
     "PATIENT_AMOUNT": "Patient Amount",
     "AMOUNT": "Amount",
     "PAYMENT_LIST": "Payment list",
+    "BILL_LIST": "Bill list",
     "SERVICE_TYPE": "Service Type",
     "RATE": "Rate",
     "PACKAGE_LIST": "Package List",
@@ -147,6 +148,7 @@
     "DELIVERY_DATE": "Delivery Date",
     "QUANTITY_ORDERED": "Quantity Ordered",
     "QUANTITY_RECEIVED": "Quantity Received",
+    "DATETIME_RECEIVED": "Date Time Received",
     "ORDER_RECEIPT_LIST": "Order Receipt List",
     "SALE_ID": "Sale ID",
     "SALE_DATETIME": "Sale. Date Time",
@@ -377,7 +379,9 @@
     "NEW_REGISTER": "I am new. I want to register",
     "REGISTER": "Register",
     "VALIDATE": "Validate",
-    "TEMP_CODE": "Temporary Code"
+    "TEMP_CODE": "Temporary Code",
+    "APPROVE": "Approve",
+    "RELOAD": "Reload"
   },
   "MESSAGE": {
     "TRANFER_DOCTOR_FAILED": "The transfer doctor should be different from the current doctor.",

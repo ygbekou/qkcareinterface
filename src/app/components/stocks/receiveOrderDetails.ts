@@ -17,12 +17,12 @@ import { BaseComponent } from '../admin/baseComponent';
 export class ReceiveOrderDetails extends BaseComponent implements OnInit, OnDestroy {
   
   receiveOrders: ReceiveOrder[] = [];
+  receiveOrder: ReceiveOrder = new ReceiveOrder();
   orderProductCols: any[];
   messages: Message[] = [];
   supplierDropdown: SupplierDropdown;
   productDropdown: ProductDropdown;
   
-  purchaseOrder: PurchaseOrder = new PurchaseOrder();
   
   constructor
   (

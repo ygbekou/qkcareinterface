@@ -79,6 +79,7 @@ export class InvestigationList extends BaseComponent implements OnInit, OnDestro
     
 		this.updateCols();
 		this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
+      
 		this.updateCols();
 		});
 
@@ -137,22 +138,26 @@ export class InvestigationList extends BaseComponent implements OnInit, OnDestro
 		this.genericService.getAllByCriteria('Investigation', parameters, ' ORDER BY e.investigationDatetime DESC ')
 			.subscribe((data: Investigation[]) => {
 				this.investigations = data;
-				if (this.investigations.length === 0) {
-					this.translate.get('MESSAGE.NO_INVESTIGATION_FOUND').subscribe((res: string) => {
-						this.listMessage = res;
-					});
-				}
+				this.setResponseMessage();
 			},
 			error => console.log(error),
 			() => console.log('Get Investigations complete'));
 	  } else {
-		  this.translate.get('MESSAGE.NO_INVESTIGATION_FOUND').subscribe((res: string) => {
-				this.listMessage = res;
-			});
+		  this.setResponseMessage();
 	  }
         
   }
   
+
+  setResponseMessage() {
+    this.listMessage = '';
+    if (this.investigations.length === 0) {
+      this.translate.get('MESSAGE.NO_INVESTIGATION_FOUND').subscribe((res: string) => {
+        this.listMessage = res;
+      });
+    }
+  }
+
    getInvestigationTests(investigation: Investigation) {
       const parameters: string [] = []; 
       parameters.push('e.investigation.id = |investigationId|' + investigation.id + '|Long');
@@ -228,19 +233,29 @@ export class InvestigationList extends BaseComponent implements OnInit, OnDestro
   }
 
   search() {
+    this.investigations = [];
 		this.searchCriteria.investigationDateEnd = null;
 		this.searchCriteria.investigationDateStart = null;
 
-		if ((this.searchCriteria.investigationDate === undefined || this.searchCriteria.investigationDate === null)
-			&& (this.searchCriteria.visitId === undefined || this.searchCriteria.visitId === null)
-			&& (this.searchCriteria.admissionId === undefined || this.searchCriteria.admissionId === null)
-			&& (this.searchCriteria.medicalRecordNumber === undefined || this.searchCriteria.medicalRecordNumber === '') ) {
-			return;
-		}
+		if (this.isEmptyStr(this.searchCriteria.investigationDate)
+			&& this.isEmptyStr(this.searchCriteria.visitId)
+			&& this.isEmptyStr(this.searchCriteria.admissionId)
+      && this.isEmptyStr(this.searchCriteria.medicalRecordNumber) 
+      && this.isEmptyStr(this.searchCriteria.lastName)
+      && this.isEmptyStr(this.searchCriteria.firstName)
+      ) {
+        let alertMessage = '';
+        this.translate.get('MESSAGE.NO_CRITERIA_SET').subscribe((res: string) => {
+          alertMessage = res;
+        });
+        alert(alertMessage);
+        return;
+    }
 
 		if (this.searchCriteria.investigationDate != null) {
-			const startDate = new Date(new Date().setDate(this.searchCriteria.investigationDate.getDate()));
-			const endDate = new Date(new Date().setDate(this.searchCriteria.investigationDate.getDate() + 1));
+      const startDate = new Date(this.searchCriteria.investigationDate);
+      let endDate = new Date(this.searchCriteria.investigationDate);
+      endDate = new Date(endDate.setDate(this.searchCriteria.investigationDate.getDate() + 1));
 			this.searchCriteria.investigationDateStart = startDate.toLocaleDateString(this.globalEventsManager.LOCALE,
                 Constants.LOCAL_DATE_OPTIONS);
 			this.searchCriteria.investigationDateEnd = endDate.toLocaleDateString(this.globalEventsManager.LOCALE,
@@ -251,7 +266,9 @@ export class InvestigationList extends BaseComponent implements OnInit, OnDestro
 
 		this.investigationService.searchInvestigations(this.searchCriteria)
 			.subscribe((data: Investigation[]) => {
-				this.investigations = data;
+        this.investigations = data;
+        
+        this.setResponseMessage();
 			},
 			error => console.log(error),
 			() => console.log('Get Investigations complete'));

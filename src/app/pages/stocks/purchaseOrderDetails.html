@@ -1,4 +1,5 @@
 <p-confirmDialog [style]="{width: '50vw'}"></p-confirmDialog>
+
 <form name="form" (ngSubmit)="f.form.valid && save()" #f="ngForm" validate>
 	<div class="ui-g-12 ui-sm-12" style="padding: 15px;">
 		<div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="purchaseOrder">
@@ -48,166 +49,182 @@
 						<p-message *ngIf="f.submitted && shipTo.invalid" severity="error" text="Field is required"></p-message>
 					</div>
 				</div>
-				<div class="ui-grid-col-1 ui-sm-12">
+				<div class="ui-grid-col-2 ui-sm-12">
 					<div class="form-group">
 						<label i18n="@@purchaseOrderId" for="purchaseOrderId">{{ 'COMMON.PURCHASE_ORDER_ID' | translate }}</label> 
 						<br/>
 						{{purchaseOrder.id}}
 					</div>
 				</div>
+				<div class="ui-grid-col-2 ui-sm-12">
+					<div class="form-group">
+						<label i18n="@@purchaseOrderStatus" for="purchaseOrderStatus">{{ 'COMMON.STATUS' | translate }}</label> 
+						<br/>
+						<font color="green">{{purchaseOrder.purchaseOrderStatus.name}}</font>
+					</div>
+				</div>
 			</div>
+		</div>
+	</div>
+		<div class="ui-g-12 ui-sm-12">	
+			<button type="button" pButton icon="fa fa-plus" (click)="addRow()" 
+				*ngIf="purchaseOrder.purchaseOrderStatus.id === 1"></button>			
+			<p-table [columns]="orderProductCols" [value]="purchaseOrder.purchaseOrderProducts" (onEditComplete)="calculateGrandTotal()">
+				<ng-template pTemplate="caption">
+					{{ 'COMMON.PRODUCT_LIST' | translate }}
+				</ng-template>
+				<ng-template pTemplate="header" let-orderProductCols>
+					<tr>
+						<th *ngFor="let col of orderProductCols" [pSortableColumn]="col.field" [ngStyle]="col.style">
+							{{col.header}}
+							<p-sortIcon [field]="col.field"></p-sortIcon>
+						</th>
+						<th *ngIf="purchaseOrder.purchaseOrderStatus.id >= 3" [ngStyle]="{width: '10%'}">{{ 'COMMON.QUANTITY_RECEIVED' | translate }}</th>
+						<th *ngIf="purchaseOrder.purchaseOrderStatus.id >= 3" [ngStyle]="{width: '10%'}">{{ 'COMMON.DATETIME_RECEIVED' | translate }}</th>
+						<th [ngStyle]="{width: '10%'}">Action</th>
+					</tr>
+				</ng-template>
+				<ng-template pTemplate="body" let-rowData let-i = "rowIndex" let-columns="columns">
+					<tr>			           
+						<td *ngFor="let col of columns" [pEditableColumn]="rowData" [pEditableColumnField]="rowData[col.field]">
+							<p-cellEditor *ngIf="col.field === 'quantity'">
+								<ng-template pTemplate="input">
+									<input type="text" [(ngModel)]="rowData[col.field]" *ngIf="purchaseOrder.purchaseOrderStatus.id === 1"
+										name="{{col.field}}">
+									<div class="text-right" *ngIf="purchaseOrder.purchaseOrderStatus.id > 1">{{rowData[col.field] | currency: ' ':'symbol':'1.0-0':translate.currentLang}}</div>
+								</ng-template>
+								<ng-template pTemplate="output">
+									<div class="text-right">
+										{{rowData[col.field] | currency: ' ':'symbol':'1.0-0':translate.currentLang}}
+									</div>
+								</ng-template>
+							</p-cellEditor>
+							<p-cellEditor *ngIf="col.field === 'unitPrice'">
+								<ng-template pTemplate="input">
+									<input type="text" [(ngModel)]="rowData[col.field]" *ngIf="purchaseOrder.purchaseOrderStatus.id === 1"
+										name="{{col.field}}">
+									<div class="text-right" *ngIf="purchaseOrder.purchaseOrderStatus.id > 1">{{rowData[col.field] | currency: ' ':'symbol':'1.0-0':translate.currentLang}}</div>
+								</ng-template>
+								<ng-template pTemplate="output">
+									<div class="text-right">
+										{{rowData[col.field] | currency: ' ':'symbol':'1.0-0':translate.currentLang}}
+									</div>
+								</ng-template>
+							</p-cellEditor>
+							<p-cellEditor *ngIf="col.field === 'totalAmount'">
+								<ng-template pTemplate="input">
+									<div class="text-right">
+										{{rowData[col.field] | currency: ' ':'symbol':'1.0-0':translate.currentLang}}
+									</div>
+								</ng-template>
+								<ng-template pTemplate="output">
+									<div class="text-right">
+										{{rowData[col.field] | currency: ' ':'symbol':'1.0-0':translate.currentLang}}
+									</div>
+								</ng-template>
+							</p-cellEditor>
+							<p-cellEditor *ngIf="col.field == 'productDescription'">
+								<ng-template pTemplate="input">
+									<div *ngIf="rowData.product">{{rowData.product.description}}</div>
+								</ng-template>
+								<ng-template pTemplate="output">
+									<div *ngIf="rowData.product">{{rowData.product.description}}</div>
+								</ng-template>
+							</p-cellEditor>
+							<p-cellEditor *ngIf="col.field == 'product'">
+								<ng-template pTemplate="input">
+									<p-autoComplete [(ngModel)]="rowData[col.field]" [disabled]="rowData.status === 1"
+										(onDropdownClick)="productDropdown.handleDropdownClick($event)"
+										[suggestions]="productDropdown.filteredProducts" [dropdown]="true"
+										(completeMethod)="productDropdown.filter($event)"
+										(ngModelChange)="populateDefaultProductValues(rowData)"
+										field="name" [size]="30" placeholder="" [minLength]="1" name="{{col.field}}">
+									</p-autoComplete>
+								</ng-template>
+								<ng-template pTemplate="output">
+									<div *ngIf="rowData[col.field]">{{rowData[col.field].name}}</div>
+								</ng-template>
+							</p-cellEditor>
+						</td>
+						<td *ngIf="purchaseOrder.purchaseOrderStatus.id >= 3" [pEditableColumn]="rowData"
+						 [pEditableColumnField]="rowData['receivedQuantity']">
+							<p-cellEditor>
+								<ng-template pTemplate="input">
+									<input type="text" [(ngModel)]="rowData['receivedQuantity']" *ngIf="rowData.status === 0"
+										name="receivedQuantity">
+									<div class="text-right" *ngIf="rowData.status === 1">{{rowData['receivedQuantity']}}</div>
+								</ng-template>
+								<ng-template pTemplate="output">
+									<div class="text-right">
+										{{rowData['receivedQuantity'] | currency: ' ':'symbol':'1.0-0':translate.currentLang}}
+									</div>
+								</ng-template>
+							</p-cellEditor>
+						</td>
+						<td *ngIf="purchaseOrder.purchaseOrderStatus.id >= 3"
+							 [pEditableColumn]="rowData" [pEditableColumnField]="rowData['receivedDatetime']">
+							<p-cellEditor>
+								<ng-template pTemplate="input">
+									{{rowData['receivedDatetime'] | date: globalEventsManager.DATE_TIME_FORMAT}}
+								</ng-template>
+								<ng-template pTemplate="output">
+									{{rowData['receivedDatetime'] | date: globalEventsManager.DATE_TIME_FORMAT}}
+								</ng-template>
+							</p-cellEditor>
+						</td>
+						<td>
+							<button pButton icon="fa fa-save" *ngIf="permitSave(purchaseOrder.id, 'Add Medication Order') 
+								&& (rowData.status === null || rowData.status === undefined || rowData.status === 0)"></button>
+							&nbsp;&nbsp;&nbsp;
+							<button type="button" pButton icon="fa fa-eraser" (click)="deleteRow(i)" 
+								*ngIf="purchaseOrder.purchaseOrderStatus.id === 1"></button>
+						</td>
+					</tr>
+				</ng-template>
+			</p-table>
 			<br/>
-		</div>
-		
-		<br/>
-		
-		<div class="ui-grid-row">
-			<div class="ui-grid-col-6 ui-sm-12">					
-				<p-table [columns]="orderProductCols" [value]="purchaseOrder.purchaseOrderProducts" (onEditComplete)="calculateGrandTotal()">
-					<ng-template pTemplate="caption">
-				        {{ 'COMMON.PRODUCT_LIST' | translate }}
-				    </ng-template>
-				    <ng-template pTemplate="header" let-orderProductCols>
-				        <tr>
-				            <th *ngFor="let col of orderProductCols" [pSortableColumn]="col.field" [ngStyle]="col.style">
-				                {{col.header}}
-				                <p-sortIcon [field]="col.field"></p-sortIcon>
-				            </th>
-				            <th>Action</th>
-				        </tr>
-				    </ng-template>
-				    <ng-template pTemplate="body" let-rowData let-i = "rowIndex" let-columns="columns">
-				        <tr>			           
-				            <td *ngFor="let col of columns" [pEditableColumn]="rowData" [pEditableColumnField]="rowData[col.field]">
-				                <p-cellEditor *ngIf="col.field === 'quantity'">
-				                    <ng-template pTemplate="input">
-				                        <input type="text" [(ngModel)]="rowData[col.field]" [disabled]="col.isDisabled"
-				                         name="{{col.field}}">
-				                    </ng-template>
-				                    <ng-template pTemplate="output">
-				                        {{rowData[col.field]}}
-				                    </ng-template>
-								</p-cellEditor>
-								<p-cellEditor *ngIf="col.field === 'unitPrice'">
-				                    <ng-template pTemplate="input">
-				                        <input type="text" [(ngModel)]="rowData[col.field]" [disabled]="col.isDisabled"
-				                         name="{{col.field}}">
-				                    </ng-template>
-				                    <ng-template pTemplate="output">
-				                        {{rowData[col.field]}}
-				                    </ng-template>
-								</p-cellEditor>
-								<p-cellEditor *ngIf="col.field === 'totalAmount'">
-				                    <ng-template pTemplate="input">
-				                        <input type="text" [(ngModel)]="rowData[col.field]" [disabled]="col.isDisabled"
-				                         name="{{col.field}}">
-				                    </ng-template>
-				                    <ng-template pTemplate="output">
-				                        {{rowData[col.field]}}
-				                    </ng-template>
-				                </p-cellEditor>
-				                <p-cellEditor *ngIf="col.field == 'productDescription'">
-				                    <ng-template pTemplate="input">
-				                        <div *ngIf="rowData.product">{{rowData.product.description}}</div>
-				                    </ng-template>
-				                    <ng-template pTemplate="output">
-				                        <div *ngIf="rowData.product">{{rowData.product.description}}</div>
-				                    </ng-template>
-				                </p-cellEditor>
-				                <p-cellEditor *ngIf="col.field == 'product'">
-				                    <ng-template pTemplate="input">
-				                        <p-autoComplete [(ngModel)]="rowData[col.field]"
-											(onDropdownClick)="productDropdown.handleDropdownClick($event)"
-											[suggestions]="productDropdown.filteredProducts" [dropdown]="true"
-											(completeMethod)="productDropdown.filter($event)"
-											(ngModelChange)="populateDefaultProductValues(rowData)"
-											field="name" [size]="30" placeholder="" [minLength]="1" name="{{col.field}}">
-										</p-autoComplete>
-				                    </ng-template>
-				                    <ng-template pTemplate="output">
-				                    	<div *ngIf="rowData[col.field]">{{rowData[col.field].name}}</div>
-				                    </ng-template>
-				                </p-cellEditor>
-				            </td>
-				            <td>
-				            	<button type="button" pButton icon="fa fa-plus" (click)="addRow()"></button>
-				            	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-								<button type="button" pButton icon="fa fa-eraser" (click)="deleteRow(i)"></button>
-				            </td>
-				        </tr>
-				    </ng-template>
-				</p-table>
-			</div>
-			<div class="ui-grid-col-1 ui-sm-12"></div>
-			<div class="ui-grid-col-3 ui-sm-12">
-				<div class="ui-grid-row">
-					<div class="ui-grid-col-4 ui-sm-12">
-						<label for="subTotal">{{ 'COMMON.SUBTOTAL' | translate }} </label> 
-					</div>
-					<div class="ui-grid-col-6 ui-sm-12">
-						<input type="text" pInputText id="subTotal" [disabled]="true"
-						[(ngModel)]="purchaseOrder.subTotal" name="subTotal" #subTotal="ngModel">
-					</div>
-				</div>
-				<div class="ui-grid-row">
-					<div class="ui-grid-col-4 ui-sm-12">
-						<label for="taxes">{{ 'COMMON.TAXES' | translate }} </label> 
-					</div>
-					<div class="ui-grid-col-6 ui-sm-12">
-						<input type="text" pInputText id="taxes" (change)="calculateGrandTotal()"
-							[(ngModel)]="purchaseOrder.taxes" name="taxes" #taxes="ngModel">
-					</div>
-				</div>
-				<div class="ui-grid-row">
-					<div class="ui-grid-col-4 ui-sm-12">
-						<label for="discount">{{ 'COMMON.DISCOUNT' | translate }} </label> 
-					</div>
-					<div class="ui-grid-col-6 ui-sm-12">
-						<input type="text" pInputText id="discount" (change)="calculateGrandTotal(); calculateDue()"
-							[(ngModel)]="purchaseOrder.discount" name="discount" #discount="ngModel">
-					</div>
-				</div>
-				<div class="ui-grid-row">
-					<div class="ui-grid-col-4 ui-sm-12">
-						<label for="grandTotal">{{ 'COMMON.GRANDTOTAL' | translate }} </label> 
-					</div>
-					<div class="ui-grid-col-6 ui-sm-12">
-						<input type="text" pInputText id="grandTotal" [disabled]="true"
-							[(ngModel)]="purchaseOrder.grandTotal" name="grandTotal" #grandTotal="ngModel">
-					</div>
-				</div>
-				<br/>
-				<br/>
-				<br/>
-				<div class="ui-grid-row">
-					<div class="ui-grid-col-4 ui-sm-12">
-						<label i18n="@@paid" for="paid">{{ 'COMMON.AMOUNT_PAID' | translate }} </label> 
-					</div>
-					<div class="ui-grid-col-6 ui-sm-12">
-						<input type="text" pInputText id="paid" [disabled]="true"
-							[(ngModel)]="purchaseOrder.paid" name="paid" #paid="ngModel">
-					</div>
-				</div>
-				<div class="ui-grid-row">
-					<div class="ui-grid-col-4 ui-sm-12">
-						<label i18n="@@due" for="due">{{ 'COMMON.AMOUNT_DUE' | translate }} </label> 
-					</div>
-					<div class="ui-grid-col-6 ui-sm-12">
-						<input type="text" pInputText id="due" [disabled]="true"
-							[(ngModel)]="purchaseOrder.due" name="due" #due="ngModel">
-					</div>
-				</div>
+			<div class="ui-grid-row">
+				<label for="subTotal">{{ 'COMMON.SUBTOTAL' | translate }} </label> 
+				&nbsp;
+				<input type="text" pInputText id="subTotal" [disabled]="true"
+				[(ngModel)]="purchaseOrder.subTotal" name="subTotal" #subTotal="ngModel">
+				&nbsp;&nbsp;&nbsp;
+				<label for="taxes">{{ 'COMMON.TAXES' | translate }} </label> 
+				&nbsp;
+				<input type="text" pInputText id="taxes" [disabled]="purchaseOrder.purchaseOrderStatus.id > 1" 
+					(change)="calculateGrandTotal()" [(ngModel)]="purchaseOrder.taxes" name="taxes" #taxes="ngModel">
+				&nbsp;&nbsp;&nbsp;
+				<label for="discount">{{ 'COMMON.DISCOUNT' | translate }} </label> 
+				&nbsp;
+				<input type="text" pInputText id="discount" [disabled]="purchaseOrder.purchaseOrderStatus.id > 1"
+					(change)="calculateGrandTotal(); calculateDue()" [(ngModel)]="purchaseOrder.discount" name="discount" #discount="ngModel">
+				&nbsp;&nbsp;&nbsp;
+				<label for="grandTotal">{{ 'COMMON.GRANDTOTAL' | translate }} </label> 
+				&nbsp;
+				<input type="text" pInputText id="grandTotal" [disabled]="true"
+					[(ngModel)]="purchaseOrder.grandTotal" name="grandTotal" #grandTotal="ngModel">
+				&nbsp;&nbsp;&nbsp;
+				<label i18n="@@paid" for="paid">{{ 'COMMON.AMOUNT_PAID' | translate }} </label> 
+				&nbsp;
+				<input type="text" pInputText id="paid" [disabled]="true"
+					[(ngModel)]="purchaseOrder.paid" name="paid" #paid="ngModel">
+				&nbsp;&nbsp;&nbsp;
+				<label i18n="@@due" for="due">{{ 'COMMON.AMOUNT_DUE' | translate }} </label> 
+				&nbsp;
+				<input type="text" pInputText id="due" [disabled]="true"
+					[(ngModel)]="purchaseOrder.due" name="due" #due="ngModel">
+				
 			</div>
 		</div>
-			
-		<br/>
-		<br />
+		
 		<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
-			<button type="button" pButton icon="fa fa-refresh" (click)="clear()" label="{{ 'COMMON.CLEAR' | translate }}"></button>
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			<button pButton icon="fa fa-save" label="{{ 'COMMON.SAVE' | translate }}" 
-				*ngIf="permitSave(purchaseOrder.id, 'Add Medication Order')"></button>
+			<button type="button" pButton icon="fa fa-refresh" *ngIf="permitSave(purchaseOrder.id, 'Add Medication Order')" 
+				(click)="reload(purchaseOrder.id)" label="{{ 'COMMON.RELOAD' | translate }}"></button>&nbsp;&nbsp;&nbsp;
+			<button type="button" pButton icon="fa fa-save" *ngIf="purchaseOrder.purchaseOrderStatus.id === 1"
+				(click)="updateOrderStatus(2)" label="{{ 'COMMON.SUBMIT' | translate }}"></button>
+			<button type="button" pButton icon="fa fa-save" *ngIf="purchaseOrder.purchaseOrderStatus.id === 2"
+				(click)="updateOrderStatus(3)" label="{{ 'COMMON.APPROVE' | translate }}"></button>
 		</div>
 	
-	</div>
+	
 </form>

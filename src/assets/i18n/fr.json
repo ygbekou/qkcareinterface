@@ -131,6 +131,7 @@
     "PATIENT_AMOUNT": "Montant du patient",
     "AMOUNT": "Montant",
     "PAYMENT_LIST": "Payements",
+    "BILL_LIST": "Factures",
     "SERVICE_TYPE": "Type de Service",
     "RATE": "Taux",
     "PACKAGE_LIST": "Liste des paquets",
@@ -146,6 +147,7 @@
     "DELIVERY_DATE": "Date de livraison",
     "QUANTITY_ORDERED": "Quantité commandé",
     "QUANTITY_RECEIVED": "Quantity recue",
+    "DATETIME_RECEIVED": "Date/Heure reception",
     "ORDER_RECEIPT_LIST": "Réceptions de commande",
     "SALE_ID": "Numéro de Vente",
     "SALE_DATETIME": "Date / Heure de Vente",
@@ -336,7 +338,6 @@
     "LEGEND": "Légende",
     "ERROR": "Erreur",
     "PHARMACY": "Pharmacie",
-    "NEW": "Nouveau",
     "OLD": "Ancien",
     "CREATED_BY": "Créer Par",
     "REOPEN": "Rouvrir",
@@ -378,7 +379,9 @@
     "NEW_REGISTER": "Je suis nouveau. Je veux m'inscrire",
     "REGISTER": "M'inscrire",
     "VALIDATE": "Valider",
-    "TEMP_CODE": "Code temporaire"
+    "TEMP_CODE": "Code temporaire",
+    "APPROVE": "Approver",
+    "RELOAD": "Recharger"
   },
   "MESSAGE": {
     "TRANFER_DOCTOR_FAILED": "Le nouveau docteur assigné doit être différent de l'ancien.",

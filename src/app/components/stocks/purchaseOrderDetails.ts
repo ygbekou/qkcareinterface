@@ -5,10 +5,11 @@ import { Product } from '../../models';
 import { PurchaseOrder, PurchaseOrderProduct } from '../../models/stocks/purchaseOrder';
 import { EmployeeDropdown, SupplierDropdown, ProductDropdown } from '../dropdowns';
 import { ConfirmationService } from 'primeng/primeng';
-import { GenericService, PurchasingService, TokenStorage } from '../../services';
+import { GenericService, PurchasingService, TokenStorage, GlobalEventsManager } from '../../services';
 import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
 import { Message } from 'primeng/api';
 import { BaseComponent } from '../admin/baseComponent';
+import { ReceiveOrder } from 'src/app/models/stocks/receiveOrder';
 
 @Component({  
   selector: 'app-purchaseOrder-details',
@@ -19,7 +20,9 @@ export class PurchaseOrderDetails extends BaseComponent implements OnInit, OnDes
   
   messages: Message[] = [];
   purchaseOrder: PurchaseOrder = new PurchaseOrder();
+  receiveOrders: ReceiveOrder[] = [];
   orderProductCols: any[];
+  displayRecievingBox: false;
   
   constructor
     (
@@ -27,6 +30,7 @@ export class PurchaseOrderDetails extends BaseComponent implements OnInit, OnDes
       private purchaseOrderService: PurchasingService,
       public translate: TranslateService,
       public confirmationService: ConfirmationService,
+      public globalEventsManager: GlobalEventsManager,
       public tokenStorage: TokenStorage,
       public supplierDropdown: SupplierDropdown,
       public productDropdown: ProductDropdown,
@@ -39,17 +43,14 @@ export class PurchaseOrderDetails extends BaseComponent implements OnInit, OnDes
   ngOnInit(): void {
 
      this.orderProductCols = [
-			{ field: 'product', header: 'Name', headerKey: 'COMMON.NAME', 
-					type: 'string', style: {width: '20%', 'text-align': 'center'} },
-			{ field: 'productDescription', header: 'Description', headerKey: 'COMMON.DESCRIPTION',
-					type: 'string', style: {width: '30%', 'text-align': 'center'} },
-			{ field: 'quantity', header: 'Quantity', headerKey: 'COMMON.QUANTITY', 
-					type: 'amount', style: {width: '15%', 'text-align': 'center'}},
-			{ field: 'unitPrice', header: 'Price', headerKey: 'COMMON.PRICE',
-					type: 'amount', style: {width: '10%', 'text-align': 'center'}},
-			{ field: 'totalAmount', header: 'Total', headerKey: 'COMMON.TOTAL',
-					type: 'amount', style: {width: '10%', 'text-align': 'center'}}
-        ]; 
+			{ field: 'product', header: 'Name', headerKey: 'COMMON.NAME', type: 'string', style: {width: '20%', 'text-align': 'center'} },
+			//{ field: 'productDescription', header: 'Description', headerKey: 'COMMON.DESCRIPTION', type: 'string', style: {width: '20%', 'text-align': 'center'} },
+			{ field: 'quantity', header: 'Quantity', headerKey: 'COMMON.QUANTITY', type: 'amount', style: {width: '15%', 'text-align': 'center'}},
+			{ field: 'unitPrice', header: 'Price', headerKey: 'COMMON.PRICE', type: 'amount', style: {width: '10%', 'text-align': 'center'}},
+      { field: 'totalAmount', header: 'Total', headerKey: 'COMMON.TOTAL', type: 'amount', style: {width: '10%', 'text-align': 'center'}},
+      
+			
+    ]; 
     
     let purchaseOrderId = null;
     this.route
@@ -58,19 +59,7 @@ export class PurchaseOrderDetails extends BaseComponent implements OnInit, OnDes
           
           purchaseOrderId = params['purchaseOrderId'];
           
-          if (purchaseOrderId != null) {
-              this.purchaseOrderService.getPurchaseOrder(purchaseOrderId)
-                  .subscribe(result => {
-                if (result.id > 0) {
-                  this.purchaseOrder = result;
-                  if (this.purchaseOrder.purchaseOrderProducts.length === 0) { 
-                    this.addRow();
-                  }
-                }
-              });
-          } else {
-              
-          }
+          this.reload(purchaseOrderId);
      });
    
     this.updateCols();
@@ -92,6 +81,22 @@ export class PurchaseOrderDetails extends BaseComponent implements OnInit, OnDes
   ngOnDestroy() {
     this.purchaseOrder = null;
   }
+
+  reload(purchaseOrderId: number) {
+     if (purchaseOrderId != null) {
+          this.purchaseOrderService.getPurchaseOrder(purchaseOrderId)
+              .subscribe(result => {
+            if (result.id > 0) {
+              this.purchaseOrder = result;
+              if (this.purchaseOrder.purchaseOrderProducts.length === 0) { 
+                this.addRow();
+              }
+            }
+          });
+      } else {
+          
+      }
+  }
   
   addRow() {
     const pop =  new PurchaseOrderProduct();
@@ -100,15 +105,15 @@ export class PurchaseOrderDetails extends BaseComponent implements OnInit, OnDes
   }
   
   deleteRow(rowIndex: number) {
-	const pop = this.purchaseOrder.purchaseOrderProducts[rowIndex];
+    const pop = this.purchaseOrder.purchaseOrderProducts[rowIndex];
 
-	if (pop.id !== null && pop.id !== undefined) {
-		//this.deleteItem(this.purchaseOrder.purchaseOrderProducts, pop.id, 'com.qkcare.model.stocks.PurchaseOrderProduct');
-		pop.status = 9;
-		this.save();
-	} else {
-		this.purchaseOrder.purchaseOrderProducts.splice(rowIndex, 1);
-	}
+    if (pop.id !== null && pop.id !== undefined) {
+      pop.status = 9;
+      //this.calculateGrandTotal();
+      this.save();
+    } else {
+      this.purchaseOrder.purchaseOrderProducts.splice(rowIndex, 1);
+    }
   }
 
   calculateGrandTotal() {
@@ -117,22 +122,25 @@ export class PurchaseOrderDetails extends BaseComponent implements OnInit, OnDes
 						+ +this.getNumber(this.purchaseOrder.taxes)
 						- +this.getNumber(this.purchaseOrder.discount);
 						
-		this.calculateDue();
+		
 		this.purchaseOrder.taxes = +this.getNumber(this.purchaseOrder.taxes);
 		this.purchaseOrder.discount = +this.getNumber(this.purchaseOrder.discount);
-		this.purchaseOrder.paid = +this.getNumber(this.purchaseOrder.paid);
+    this.purchaseOrder.paid = +this.getNumber(this.purchaseOrder.paid);
+    this.purchaseOrder.due = this.purchaseOrder.grandTotal - +this.getNumber(this.purchaseOrder.paid);
+    
   }
   
   calculateDue() {
-	this.purchaseOrder.due = +this.purchaseOrder.grandTotal 
-						- +this.getNumber(this.purchaseOrder.paid);
+	  this.purchaseOrder.due = +this.purchaseOrder.grandTotal - +this.getNumber(this.purchaseOrder.paid);
   }
   
   calculateTotal() {
     this.purchaseOrder.subTotal = 0;
     for (const i in this.purchaseOrder.purchaseOrderProducts) {
-       this.purchaseOrder.subTotal += this.calculateRowTotal(this.purchaseOrder.purchaseOrderProducts[i]);
-	}
+      if (this.purchaseOrder.purchaseOrderProducts[i].status !== 9) {
+        this.purchaseOrder.subTotal += this.calculateRowTotal(this.purchaseOrder.purchaseOrderProducts[i]);
+      }
+	  }
   }
   
   calculateRowTotal(rowData) {
@@ -192,20 +200,53 @@ export class PurchaseOrderDetails extends BaseComponent implements OnInit, OnDes
       this.purchaseOrderService.savePurchaseOrder(this.purchaseOrder)
         .subscribe(result => {
           if (result.id > 0) {
-			this.purchaseOrder = result;
-			this.translate.get(['COMMON.SAVE', 'MESSAGE.SAVE_SUCCESS']).subscribe(res => {
-				this.messages.push({
-					severity: Constants.SUCCESS, summary: res['COMMON.SAVE'],
-					detail: res['MESSAGE.SAVE_SUCCESS']
-				});
-			});
+            this.purchaseOrder = result;
+            this.translate.get(['COMMON.SAVE', 'MESSAGE.SAVE_SUCCESS']).subscribe(res => {
+              this.messages.push({
+                severity: Constants.SUCCESS, summary: res['COMMON.SAVE'],
+                detail: res['MESSAGE.SAVE_SUCCESS']
+              });
+            });
           } else {
             this.translate.get(['COMMON.SAVE', 'MESSAGE.SAVE_UNSUCCESS']).subscribe(res => {
             this.messages.push({
-                severity: Constants.ERROR, summary: res['COMMON.SAVE'],
-                detail: res['MESSAGE.SAVE_UNSUCCESS'] + result
+                    severity: Constants.ERROR, summary: res['COMMON.SAVE'],
+                    detail: res['MESSAGE.SAVE_UNSUCCESS'] + result
+                });
             });
+          }
         });
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  updateOrderStatus(purchaseOrderStatusId: number) {
+    try {
+      this.messages = [];
+      const oldOrderStatusId = this.purchaseOrder.purchaseOrderStatus.id;
+      this.purchaseOrder.purchaseOrderStatus.id = purchaseOrderStatusId;
+      const pops = this.purchaseOrder.purchaseOrderProducts;
+      
+      this.genericService.save(this.purchaseOrder, 'com.qkcare.model.stocks.PurchaseOrder')
+        .subscribe(result => {
+          if (result.id > 0) {
+            this.purchaseOrder = result;
+            this.purchaseOrder.purchaseOrderProducts = pops;
+            this.translate.get(['COMMON.SAVE', 'MESSAGE.SAVE_SUCCESS']).subscribe(res => {
+              this.messages.push({
+                severity: Constants.SUCCESS, summary: res['COMMON.SAVE'],
+                detail: res['MESSAGE.SAVE_SUCCESS']
+              });
+            });
+          } else {
+            this.purchaseOrder.purchaseOrderStatus.id = oldOrderStatusId;
+            this.translate.get(['COMMON.SAVE', 'MESSAGE.SAVE_UNSUCCESS']).subscribe(res => {
+                this.messages.push({
+                    severity: Constants.ERROR, summary: res['COMMON.SAVE'],
+                    detail: res['MESSAGE.SAVE_UNSUCCESS'] + result
+                });
+            });
           }
         });
     } catch (e) {

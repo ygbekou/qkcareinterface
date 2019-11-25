@@ -16,7 +16,7 @@
 		</div>
 	</div>
 	<button type="button" pButton icon="fa fa-check" (click)="saveAction()" 
-		*ngIf="shoulPermitSave(null, visit, admission, 'INVESTIGTION')" label="Save"></button>
+		label="Save"></button>
 </p-dialog>
 
 
@@ -51,6 +51,20 @@
 						<label for="patientId">{{ 'COMMON.PATIENT_ID' | translate }}:</label> 
 						<input type="text" pInputText class="form-control" id="medicalRecordNumber"
 							 [(ngModel)]="searchCriteria.medicalRecordNumber" name="medicalRecordNumber" >
+					</div>
+				</div>
+				<div class="ui-grid-col-2 ui-sm-12">
+					<div class="form-group">
+						<label for="lastName">{{ 'COMMON.LAST_NAME' | translate }}:</label> 
+						<input type="text" pInputText class="form-control" id="lastName"
+							 [(ngModel)]="searchCriteria.lastName" name="lastName" >
+					</div>
+				</div>
+				<div class="ui-grid-col-2 ui-sm-12">
+					<div class="form-group">
+						<label for="firstName">{{ 'COMMON.FIRST_NAME' | translate }}:</label> 
+						<input type="text" pInputText class="form-control" id="firstName"
+							 [(ngModel)]="searchCriteria.firstName" name="firstName">
 					</div>
 				</div>
 			</div>
@@ -110,6 +124,25 @@
 				</tr>
 			</ng-template> 
 			<ng-template pTemplate="rowexpansion" let-parentRowData let-i="rowIndex" let-columns="columns">
+				
+			<tr>
+				<td [attr.colspan]="columns.length + 2">
+					<div class="ui-grid-row">
+						<div class="ui-grid-col-4 ui-sm-12" *ngIf="parentRowData.visit">
+							{{ 'COMMON.PATIENT' | translate }}: {{parentRowData.visit.patient.user.name}}   
+						</div>
+						<div class="ui-grid-col-4 ui-sm-12" *ngIf="parentRowData.visit">
+							{{ 'COMMON.VISIT' | translate }}: {{parentRowData.visit.id}}
+						</div>
+						<div class="ui-grid-col-4 ui-sm-12" *ngIf="parentRowData.admission">
+							{{ 'COMMON.PATIENT' | translate }}: {{parentRowData.admission.patient.user.name}}   
+						</div>
+						<div class="ui-grid-col-4 ui-sm-12" *ngIf="parentRowData.admission">
+							{{ 'COMMON.ADMISSION' | translate }}: {{parentRowData.admission.id}}
+						</div>
+					</div>
+				</td>
+			</tr>
 			<tr>
 				<td [attr.colspan]="columns.length + 2"><p-table
 						[columns]="iTCols" [value]="parentRowData.investigationTests"
@@ -172,10 +205,8 @@
 						</p-cellEditor>
 						</td>
 						<td *ngIf="showActions">
-							<p-button label="Save" (click)="saveResult(childRowData)" 
-								*ngIf="shoulPermitSave(this.selectedInvestigation.id, visit, admission, 'INVESTIGATION')"></p-button> &nbsp;
-							<p-button label="Disp" (click)="saveResult(childRowData)"
-								*ngIf="shoulPermitSave(this.selectedInvestigation.id, visit, admission, 'INVESTIGATION')"></p-button>
+							<p-button label="Save" (click)="saveResult(childRowData)"></p-button> &nbsp;
+							<p-button label="Disp" (click)="saveResult(childRowData)"></p-button>
 						</td>
 					</tr>
 
