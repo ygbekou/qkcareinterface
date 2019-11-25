@@ -49,7 +49,7 @@
 				</div>
 			</td>
 			<td>
-				<button type="button" pButton icon="fa fa-minus" (click)="unAssign(rowData)" *ngIf="permitDelete(rowData.id, 'SECURITY_PERMISSION')"></button>
+				<button type="button" pButton icon="fa fa-minus" (click)="unAssign(rowData)" *ngIf="permitSave(rowData.id, 'Assign Resource')"></button>
 			</td>
 			</tr>
 		</ng-template>

@@ -1,42 +1,40 @@
 <form name="form" (ngSubmit)="f.form.valid && save()" #f="ngForm" validate>
-  	<div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="resource">
-		<p-messages [(value)]="messages"></p-messages>  
-		<div class="ui-grid-row">
-			<div class="ui-grid-col-4 ui-sm-12">
-				<div class="form-group">
-					<label for="urlPath">{{ 'COMMON.URL_PATH' | translate }}</label>
-					<input pInputText id="urlPath" [(ngModel)]="resource.urlPath" name="urlPath" #urlPath="ngModel" />
-				</div>
-			</div>
-			<div class="ui-grid-col-3 ui-sm-12">
-				<div class="form-group">
-					<label for="name">{{ 'COMMON.NAME' | translate }}</label>
-					<input pInputText id="name" [(ngModel)]="resource.name" name="name" #name="ngModel" required />
-					<p-message *ngIf="f.submitted && name.invalid" severity="error" text="Field is required"></p-message>
-				</div>
-			</div>
-			<div class="ui-grid-col-3 ui-sm-12">
-				<div class="form-group">
-					<label for="description">{{ 'COMMON.DESCRIPTION' | translate }}</label>
-					<textarea pInputTextarea id="description" name="description" [(ngModel)]="resource.description"> </textarea>
-				</div>
-			</div>
-			<div class="ui-grid-col-2 ui-sm-12">
-				<div class="form-group">
-					<label for="rank">{{ 'COMMON.STATUS' | translate }}</label>
-					<br />
-					<p-radioButton name="status" value="0" label="Actif" [(ngModel)]="resource.status"></p-radioButton>
-					<p-radioButton name="status" value="1" label="Inactif" [(ngModel)]="resource.status"></p-radioButton>
-				</div>
-			</div>
-		</div>
-	
-	</div>
-	<br />
-	<div>
-	<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
-		<button type="button" pButton icon="fa fa-close" (click)="clear()" label="{{ 'COMMON.CLEAR' | translate }}"></button>&nbsp;&nbsp;
-		<button pButton icon="fa fa-check" label="{{ 'COMMON.SAVE' | translate }}" *ngIf="permitSave(resource.id, 'SECURITY_CONFIG_RESOURCES')"></button>
-	</div>++
-	</div>
+  <div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="resource">
+    <p-messages [(value)]="messages"></p-messages>
+    <div class="ui-grid-row">
+      <div class="ui-grid-col-4 ui-sm-12">
+        <div class="form-group">
+          <label for="urlPath">{{ 'COMMON.URL_PATH' | translate }}</label>
+          <input pInputText id="urlPath" [(ngModel)]="resource.urlPath" name="urlPath" #urlPath="ngModel" />
+        </div>
+      </div>
+      <div class="ui-grid-col-3 ui-sm-12">
+        <div class="form-group">
+          <label for="name">{{ 'COMMON.NAME' | translate }}</label>
+          <input pInputText id="name" [(ngModel)]="resource.name" name="name" #name="ngModel" required />
+          <p-message *ngIf="f.submitted && name.invalid" severity="error" text="Field is required"></p-message>
+        </div>
+      </div>
+      <div class="ui-grid-col-3 ui-sm-12">
+        <div class="form-group">
+          <label for="description">{{ 'COMMON.DESCRIPTION' | translate }}</label>
+          <textarea pInputTextarea id="description" name="description" [(ngModel)]="resource.description"> </textarea>
+        </div>
+      </div>
+      <div class="ui-grid-col-2 ui-sm-12">
+        <div class="form-group">
+          <label for="rank">{{ 'COMMON.STATUS' | translate }}</label>
+          <br />
+          <p-radioButton name="status" value="0" label="Actif" [(ngModel)]="resource.status"></p-radioButton>
+          <p-radioButton name="status" value="1" label="Inactif" [(ngModel)]="resource.status"></p-radioButton>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+    <button type="button" pButton icon="fa fa-close" (click)="clear()"
+      label="{{ 'COMMON.CLEAR' | translate }}"></button>&nbsp;&nbsp;
+    <button pButton icon="fa fa-check" label="{{ 'COMMON.SAVE' | translate }}"
+      *ngIf="permitSave(resource.id, 'SECURITY_CONFIG_RESOURCES')"></button>
+  </div>
 </form>
