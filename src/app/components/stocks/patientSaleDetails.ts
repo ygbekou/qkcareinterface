@@ -33,7 +33,7 @@ export class PatientSaleDetails extends BaseComponent implements OnInit, OnDestr
 
   constructor
     (
-    private globalEventsManager: GlobalEventsManager,
+    public globalEventsManager: GlobalEventsManager,
     public genericService: GenericService,
     private purchasingService: PurchasingService,
     public translate: TranslateService,
@@ -52,7 +52,7 @@ export class PatientSaleDetails extends BaseComponent implements OnInit, OnDestr
             { field: 'productDescription', header: 'Description', headerKey: 'COMMON.DESCRIPTION' },
             { field: 'quantity', header: 'Quantity', headerKey: 'COMMON.QUANTITY', type: 'amount', inputType: 'number'},
             { field: 'unitPrice', header: 'Price', headerKey: 'COMMON.PRICE', type: 'amount', inputType: 'text'},
-            { field: 'discountPercentage', header: 'Discount %', headerKey: 'COMMON.DISCOUNT_PERCENTAGE'},
+            { field: 'discountPercentage', header: 'Discount %', headerKey: 'COMMON.DISCOUNT_PERCENTAGE', type: 'amount'},
             { field: 'discountAmount', header: 'Discount Amt', headerKey: 'COMMON.DISCOUNT_AMOUNT', type: 'amount', inputType: 'text'},
             { field: 'totalAmount', header: 'Total', headerKey: 'COMMON.TOTAL', type: 'amount', inputType: 'text'}
         ]; 

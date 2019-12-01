@@ -9,7 +9,7 @@
 					<p-message *ngIf="f.submitted && !(visit.id > 0)" severity="error" text="Visit is required"></p-message>
 				</div>
 				<div class="ui-grid-col-7 ui-sm-12">
-					<div class="ui-grid-col-3 ui-sm-12">
+					<div class="ui-grid-col-2 ui-sm-12">
 						<div class="form-group">
 							<label for="saleDatetime">{{ 'COMMON.SALE_DATETIME' | translate }}<font color="red">*</font></label> 
 							<p-calendar [(ngModel)]="patientSale.saleDatetime" [showTime]="true"
@@ -17,7 +17,14 @@
 							<p-message *ngIf="f.submitted && saleDatetime.invalid" severity="error" text="Field is required"></p-message>
 						</div>
 					</div>
-					<div class="ui-grid-col-9 ui-sm-12">
+					<div class="ui-grid-col-2 ui-sm-12">
+						<div class="form-group">
+							<label for="patientSaleStatus">{{ 'COMMON.STATUS' | translate }}</label> 
+							<br/>
+							<font color="green">{{patientSale.patientSaleStatus.name}}</font>
+						</div>
+					</div>
+					<div class="ui-grid-col-8 ui-sm-12">
 						<div class="form-group">
 							<label for="notes">{{ 'COMMON.NOTES' | translate }}</label>  
 							<textarea pInputTextarea id="notes" rows="4" cols="40" pInputTextarea maxlength="1000" 
@@ -29,7 +36,8 @@
 			
 			<br/>
 	
-			<button type="button" pButton icon="fa fa-plus" (click)="addRow()"></button>
+			<button type="button" pButton icon="fa fa-plus" (click)="addRow()"
+				*ngIf="patientSale.patientSaleStatus.id === 1"></button>
 			<div class="ui-grid-row">
 				<div class="ui-grid-col-12 ui-sm-12">					
 					<p-table [columns]="saleProductCols" [value]="patientSale.patientSaleProducts" (change)="calculateTotal()">
@@ -41,7 +49,9 @@
 					            <th *ngFor="let col of saleProductCols" [pSortableColumn]="col.field">
 					                {{col.header}}
 					                <p-sortIcon [field]="col.field"></p-sortIcon>
-					            </th>
+								</th>
+								<th *ngIf="patientSale.patientSaleStatus.id >= 3" [ngStyle]="{width: '10%'}">{{ 'COMMON.QUANTITY_DELIVERED' | translate }}</th>
+								<th *ngIf="patientSale.patientSaleStatus.id >= 3" [ngStyle]="{width: '10%'}">{{ 'COMMON.DATETIME_DELIVRED' | translate }}</th>
 					            <th>Action</th>
 					        </tr>
 					    </ng-template>
@@ -50,8 +60,8 @@
 					            <td *ngFor="let col of columns" [pEditableColumn]="rowData" [pEditableColumnField]="rowData[col.field]">
 					                <p-cellEditor *ngIf="col.type == 'amount'">
 					                    <ng-template pTemplate="input">
-					                        <input type="{{col.inputType}}" [(ngModel)]="rowData[col.field]" [disabled]="col.isDisabled" 
-					                        	name="{{col.field}}">				            
+											<input type="text" [(ngModel)]="rowData[col.field]" [disabled]="col.isDisabled" 
+											name="{{col.field}}">				            
 					                    </ng-template>
 					                    <ng-template pTemplate="output">
 					                        {{rowData[col.field]}}
@@ -80,7 +90,33 @@
 					                    	<div *ngIf="rowData[col.field]">{{rowData[col.field].name}}</div>
 					                    </ng-template>
 					                </p-cellEditor>
-					            </td>
+								</td>
+								<td *ngIf="patientSale.patientSaleStatus.id >= 3" [pEditableColumn]="rowData"
+								[pEditableColumnField]="rowData['deliveryQuantity']">
+									<p-cellEditor>
+										<ng-template pTemplate="input">
+											<input type="text" [(ngModel)]="rowData['deliveryQuantity']" *ngIf="rowData.status === 0"
+												name="deliveryQuantity">
+											<div class="text-right" *ngIf="rowData.status === 1">{{rowData['deliveryQuantity']}}</div>
+										</ng-template>
+										<ng-template pTemplate="output">
+											<div class="text-right">
+												{{rowData['deliveryQuantity'] | currency: ' ':'symbol':'1.0-0':translate.currentLang}}
+											</div>
+										</ng-template>
+									</p-cellEditor>
+								</td>
+								<td *ngIf="patientSale.patientSaleStatus.id >= 3"
+									[pEditableColumn]="rowData" [pEditableColumnField]="rowData['deliveredDatetime']">
+									<p-cellEditor>
+										<ng-template pTemplate="input">
+											{{rowData['deliveredDatetime'] | date: globalEventsManager.DATE_TIME_FORMAT}}
+										</ng-template>
+										<ng-template pTemplate="output">
+											{{rowData['deliveredDatetime'] | date: globalEventsManager.DATE_TIME_FORMAT}}
+										</ng-template>
+									</p-cellEditor>
+								</td>
 					            <td *ngIf="!isVisitOrAdmissionPage()">
 									<button type="button" pButton icon="fa fa-minus" (click)="updateStatus(rowData.id, 2)" 
 										*ngIf="rowData.status == 0 || rowData.status == 1" data-toggle="tooltip" title="{{ 'COMMON.REJECT' | translate }}" 

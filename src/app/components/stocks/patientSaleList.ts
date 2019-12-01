@@ -39,14 +39,21 @@ export class PatientSaleList extends BaseComponent implements OnInit, OnDestroy 
 
   ngOnInit(): void {
     this.cols = [
-      { field: 'saleDatetime', header: 'Date time', headerKey: 'COMMON.SALE_DATETIME', type: 'date' },
-      { field: 'patientId', header: 'MRN', headerKey: 'COMMON.PATIENT_ID' },
-      { field: 'patientName', header: 'Patient', headerKey: 'COMMON.PATIENT_NAME' },
-      { field: 'subTotal', header: 'Sub Total', headerKey: 'COMMON.SUBTOTAL' },
-      { field: 'taxes', header: 'Taxes', headerKey: 'COMMON.TAXES' },
-      { field: 'discount', header: 'Discount', headerKey: 'COMMON.DISCOUNT' },
-      { field: 'grandTotal', header: 'Grand Total', headerKey: 'COMMON.GRANDTOTAL' },
-      { field: 'status', header: 'Status', headerKey: 'COMMON.STATUS', type: 'string' }
+            { field: 'saleDatetime', header: 'Date time', headerKey: 'COMMON.SALE_DATETIME', 
+					type: 'date', style: {width: '10%', 'text-align': 'center'} },
+            { field: 'patientName', header: 'Patient', headerKey: 'COMMON.PATIENT_NAME', 
+					type: 'string', style: {width: '30%', 'text-align': 'center'} },
+            { field: 'subTotal', header: 'Sub Total', headerKey: 'COMMON.SUBTOTAL', 
+					type: 'number', style: {width: '10%', 'text-align': 'center'} },
+            { field: 'taxes', header: 'Taxes', headerKey: 'COMMON.TAXES', 
+					type: 'number', style: {width: '10%', 'text-align': 'center'} },
+            { field: 'discount', header: 'Discount', headerKey: 'COMMON.DISCOUNT', 
+					type: 'number', style: {width: '10%', 'text-align': 'center'} },
+            { field: 'grandTotal', header: 'Grand Total', headerKey: 'COMMON.GRANDTOTAL', 
+					type: 'number', style: {width: '10%', 'text-align': 'center'} },
+            { field: 'patientSaleStatusDesc', header: 'Status', headerKey: 'COMMON.STATUS', 
+          type: 'string', style: {width: '10%', 'text-align': 'center'} 
+        }
     ];
 
     this.route
@@ -130,6 +137,9 @@ export class PatientSaleList extends BaseComponent implements OnInit, OnDestroy 
     parameters.push('e.status = |status|0|Integer');
     if (this.searchCriteria.visitId != null) {
       parameters.push('e.visit.id = |visitId|' + this.searchCriteria.visitId + '|Long');
+    }
+    if (this.searchCriteria.admissionId != null) {
+      parameters.push('e.admission.id = |admissionId|' + this.searchCriteria.admissionId + '|Long');
     }
     if (this.searchCriteria.medicalRecordNumber != null && this.searchCriteria.medicalRecordNumber.length > 0) {
       parameters.push('e.visit.patient.medicalRecordNumber = |medicalRecordNumber|' + this.searchCriteria.medicalRecordNumber + '|String');

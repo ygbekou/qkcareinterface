@@ -125,9 +125,12 @@ export class BaseComponent {
 
 
   checkPermission(resource: string, accessAttr: string, accessVal: string) {
+    console.info('Validating ' + resource +  ' for ' + accessAttr + '  =  ' + accessVal);
     const permissions = JSON.parse(this.tokenStorage.getNonMenuPermissions());
+    console.info(permissions)
    
     const res: PermissionVO = permissions.find(x => x.name === resource);
+    console.info(res)
 
     if (res !== null && res !== undefined) {
        
@@ -143,6 +146,7 @@ export class BaseComponent {
             return true;
         }
         if ('CAN_VIEW' === accessAttr && accessVal === res.canView) {
+            console.info("found it")
             return true;
         }
         if ('CAN_DELETE' === accessAttr && accessVal === res.canDelete) {

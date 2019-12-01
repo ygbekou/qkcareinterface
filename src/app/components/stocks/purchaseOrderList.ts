@@ -1,11 +1,9 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild } from '@angular/core';
-import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
-import { Constants } from '../../app.constants';
-import { SearchCriteria, User } from '../../models';
-import { PurchaseOrder, PurchaseOrderProduct } from '../../models/stocks/purchaseOrder';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Router, NavigationExtras } from '@angular/router';
+import { SearchCriteria } from '../../models';
+import { PurchaseOrder } from '../../models/stocks/purchaseOrder';
 import { EmployeeDropdown, SupplierDropdown, ProductDropdown } from '../dropdowns';
-import { Cookie } from 'ng2-cookies/ng2-cookies';
-import { DataTableModule, DialogModule, InputTextareaModule, CheckboxModule, ConfirmationService } from 'primeng/primeng';
+import { ConfirmationService } from 'primeng/primeng';
 import { GenericService, PurchasingService, TokenStorage } from '../../services';
 import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
 import { BaseComponent } from '../admin/baseComponent';
@@ -58,7 +56,7 @@ export class PurchaseOrderList extends BaseComponent implements OnInit, OnDestro
 					type: 'string', style: {width: '8%', 'text-align': 'center'} },
             { field: 'due', header: 'Due', headerKey: 'COMMON.AMOUNT_DUE', 
 					type: 'string', style: {width: '8%', 'text-align': 'center'} },
-            { field: 'statusDesc', header: 'Status', headerKey: 'COMMON.STATUS', 
+            { field: 'purchaseOrderStatusDesc', header: 'Status', headerKey: 'COMMON.STATUS', 
 					type: 'string', style: {width: '6%', 'text-align': 'center'} }
         ];
     

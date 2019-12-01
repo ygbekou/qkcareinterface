@@ -23,7 +23,6 @@ export class ReceiveOrderDetails extends BaseComponent implements OnInit, OnDest
   supplierDropdown: SupplierDropdown;
   productDropdown: ProductDropdown;
   
-  
   constructor
   (
       public genericService: GenericService,
@@ -122,19 +121,7 @@ export class ReceiveOrderDetails extends BaseComponent implements OnInit, OnDest
   }
 
   lookUpPurchaseOrder(event) {
-    this.purchaseOrder = event;
     
-    if (this.purchaseOrder && this.purchaseOrder.id > 0) {
-      this.purchasingService.getNewReceiveOrder(this.purchaseOrder.id)
-      .subscribe((data: ReceiveOrder[]) => { 
-  
-        this.receiveOrders = data;
-        console.info(this.receiveOrders);
-        
-      },
-      error => console.log(error),
-      () => console.log('Get PurchaseOrder complete'));
-    }
   }
 
  }
