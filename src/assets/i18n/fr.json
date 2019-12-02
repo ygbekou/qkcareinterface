@@ -145,6 +145,7 @@
     "TOTAL": "Total",
     "PURCHASE_ORDER_LIST": "Commandes",
     "DELIVERY_DATE": "Date de livraison",
+    "DELIVERY_QUANTITY": "Quantité délivré",
     "QUANTITY_ORDERED": "Quantité commandé",
     "QUANTITY_RECEIVED": "Quantity recue",
     "DATETIME_RECEIVED": "Date/Heure reception",

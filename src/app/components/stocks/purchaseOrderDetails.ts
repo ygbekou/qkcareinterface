@@ -139,15 +139,17 @@ export class PurchaseOrderDetails extends BaseComponent implements OnInit, OnDes
     for (const i in this.purchaseOrder.purchaseOrderProducts) {
       if (this.purchaseOrder.purchaseOrderProducts[i].status !== 9) {
         this.purchaseOrder.subTotal += this.calculateRowTotal(this.purchaseOrder.purchaseOrderProducts[i]);
+        this.purchaseOrder.discount += +this.getNumber(this.purchaseOrder.purchaseOrderProducts[i].discountAmount);
       }
 	  }
   }
   
   calculateRowTotal(rowData) {
-    rowData.totalAmount = (+this.getNumber(rowData.quantity) * +this.getNumber(rowData.unitPrice));
+    rowData.totalAmount = (+this.getNumber(rowData.quantity) * +this.getNumber(rowData.unitPrice) - +this.getNumber(rowData.discount));
     return rowData.totalAmount;
     
   }
+
   
   private getNumber(value: number): number {
     return value !== undefined ? value : 0;

@@ -15,6 +15,8 @@ export class PatientSale {
   taxes: number;
   discount: number;
   grandTotal: number;
+  paid: number;
+  due: number;
   patientSaleStatus: Reference;
   status: number;
   

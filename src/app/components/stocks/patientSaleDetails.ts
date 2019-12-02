@@ -48,13 +48,20 @@ export class PatientSaleDetails extends BaseComponent implements OnInit, OnDestr
   ngOnInit(): void {
 
      this.saleProductCols = [
-            { field: 'product', header: 'Name', headerKey: 'COMMON.NAME' },
-            { field: 'productDescription', header: 'Description', headerKey: 'COMMON.DESCRIPTION' },
-            { field: 'quantity', header: 'Quantity', headerKey: 'COMMON.QUANTITY', type: 'amount', inputType: 'number'},
-            { field: 'unitPrice', header: 'Price', headerKey: 'COMMON.PRICE', type: 'amount', inputType: 'text'},
-            { field: 'discountPercentage', header: 'Discount %', headerKey: 'COMMON.DISCOUNT_PERCENTAGE', type: 'amount'},
-            { field: 'discountAmount', header: 'Discount Amt', headerKey: 'COMMON.DISCOUNT_AMOUNT', type: 'amount', inputType: 'text'},
-            { field: 'totalAmount', header: 'Total', headerKey: 'COMMON.TOTAL', type: 'amount', inputType: 'text'}
+            { field: 'product', header: 'Name', headerKey: 'COMMON.NAME', type: 'string', 
+              style: {width: '15%', 'text-align': 'center'} },
+            { field: 'productDescription', header: 'Description', headerKey: 'COMMON.DESCRIPTION', type: 'string', 
+              style: {width: '15%', 'text-align': 'center'} },
+            { field: 'quantity', header: 'Quantity', headerKey: 'COMMON.QUANTITY', type: 'amount', 
+              style: {width: '8%', 'text-align': 'center'}},
+            { field: 'unitPrice', header: 'Price', headerKey: 'COMMON.PRICE', type: 'amount', 
+              style: {width: '8%', 'text-align': 'center'}},
+            { field: 'discountPercentage', header: 'Discount %', headerKey: 'COMMON.DISCOUNT_PERCENTAGE', type: 'amount', 
+              style: {width: '8%', 'text-align': 'center'}},
+            { field: 'discountAmount', header: 'Discount Amt', headerKey: 'COMMON.DISCOUNT_AMOUNT', type: 'amount', 
+              style: {width: '8%', 'text-align': 'center'}},
+            { field: 'totalAmount', header: 'Total', headerKey: 'COMMON.TOTAL', type: 'amount', 
+              style: {width: '8%', 'text-align': 'center'}}
         ]; 
     
 
@@ -71,6 +78,8 @@ export class PatientSaleDetails extends BaseComponent implements OnInit, OnDestr
                 if (result.id > 0) {
                   this.patientSale = result;
                   this.visit = this.patientSale.visit;
+                  this.admission = this.patientSale.admission;
+                  this.setItemLabel();
                   if (this.patientSale.patientSaleProducts.length === 0) { 
                     this.addRow();
                   }
@@ -105,8 +114,62 @@ export class PatientSaleDetails extends BaseComponent implements OnInit, OnDestr
     this.patientSale = new PatientSale();
   }
   
+  reload(patientSaleId: number) {
+     if (patientSaleId != null) {
+          this.purchasingService.getPatientSale(patientSaleId)
+              .subscribe(result => {
+            if (result.id > 0) {
+              this.patientSale = result;
+              if (this.patientSale.patientSaleProducts.length === 0) { 
+                this.addRow();
+              }
+            }
+          });
+      } else {
+          
+      }
+  }
+
+  updateSaleStatus(patientSaleStatusId: number) {
+    try {
+      this.messages = [];
+      const oldSaleStatusId = this.patientSale.patientSaleStatus.id;
+      this.patientSale.patientSaleStatus.id = patientSaleStatusId;
+      const pops = this.patientSale.patientSaleProducts;
+      
+      this.genericService.save(this.patientSale, 'com.qkcare.model.stocks.PatientSale')
+        .subscribe(result => {
+          if (result.id > 0) {
+            this.patientSale = result;
+            this.patientSale.patientSaleProducts = pops;
+            this.translate.get(['COMMON.SAVE', 'MESSAGE.SAVE_SUCCESS']).subscribe(res => {
+              this.messages.push({
+                severity: Constants.SUCCESS, summary: res['COMMON.SAVE'],
+                detail: res['MESSAGE.SAVE_SUCCESS']
+              });
+            });
+          } else {
+            this.patientSale.patientSaleStatus.id = oldSaleStatusId;
+            this.translate.get(['COMMON.SAVE', 'MESSAGE.SAVE_UNSUCCESS']).subscribe(res => {
+                this.messages.push({
+                    severity: Constants.ERROR, summary: res['COMMON.SAVE'],
+                    detail: res['MESSAGE.SAVE_UNSUCCESS'] + result
+                });
+            });
+          }
+        });
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
   validate() {
     let noProductFound = true;
+
+    if ((this.visit === undefined || this.visit === null) 
+      && (this.admission === undefined || this.admission === null)) {
+      return;
+    }
     
     for (const i in this.patientSale.patientSaleProducts) {
       const pp = this.patientSale.patientSaleProducts[i];
@@ -138,6 +201,7 @@ export class PatientSaleDetails extends BaseComponent implements OnInit, OnDestr
       }
     
       this.patientSale.visit = this.visit;
+      this.patientSale.admission = this.admission;
 
       this.purchasingService.savePatientSale(this.patientSale)
         .subscribe(result => {
@@ -199,15 +263,24 @@ export class PatientSaleDetails extends BaseComponent implements OnInit, OnDestr
   }
   
   calculateGrandTotal() {
+    this.calculateTotal();
     this.patientSale.grandTotal = +this.getNumber(this.patientSale.subTotal) + +this.getNumber(this.patientSale.taxes)
                     - +this.getNumber(this.patientSale.discount);
+
+    this.patientSale.taxes = +this.getNumber(this.patientSale.taxes);
+		this.patientSale.discount = +this.getNumber(this.patientSale.discount);
+    this.patientSale.paid = +this.getNumber(this.patientSale.paid);
+    this.patientSale.due = this.patientSale.grandTotal - +this.getNumber(this.patientSale.paid);
+
   }
   
   
   calculateTotal() {
     this.patientSale.subTotal = 0;
+    this.patientSale.discount = 0;
     for (const i in this.patientSale.patientSaleProducts) {
        this.patientSale.subTotal += this.calculateRowTotal(this.patientSale.patientSaleProducts[i]);
+       this.patientSale.discount += +this.getNumber(this.patientSale.patientSaleProducts[i].discountAmount);
     }
   }
   
@@ -221,16 +294,38 @@ export class PatientSaleDetails extends BaseComponent implements OnInit, OnDestr
     return value !== undefined ? value : 0;
   } 
   
+  deleteRow(rowIndex: number) {
+    const psp = this.patientSale.patientSaleProducts[rowIndex];
+
+    if (psp.id !== null && psp.id !== undefined) {
+      psp.status = 9;
+      //this.calculateGrandTotal();
+      this.save();
+    } else {
+      this.patientSale.patientSaleProducts.splice(rowIndex, 1);
+    }
+  }
 
   populateDefaultProductValues(rowData: PatientSaleProduct) {
     rowData.unitPrice = rowData.product.price;
   }
   
   lookUpVisitAdm(event) {
-    this.visit = event;
-    
+    if (this.itemNumberLabel === 'Visit') {
+      this.visit = event;
+    } else {
+      this.admission = event;
+    }
   }
   
+  setItemLabel() {
+    if (this.visit) {
+      this.itemNumberLabel = 'Visit';
+    } else {
+      this.itemNumberLabel = 'Admission';
+    }
+  }
+
   isVisitOrAdmissionPage() {
     return this.isVisitOrAdmPage;
   }

@@ -1,9 +1,6 @@
-import { Constants } from '../../app.constants';
-import { Patient, Visit, Admission, Bill } from '../../models';
-import { User } from '../../models/user';
+import { Visit, Admission, Bill } from '../../models';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Cookie } from 'ng2-cookies/ng2-cookies';
-import { GenericService, AppointmentService, BillingService } from '../../services';
+import { GenericService, BillingService } from '../../services';
 import { NavigationExtras, Router } from '@angular/router';
 
 @Component({
@@ -14,7 +11,7 @@ import { NavigationExtras, Router } from '@angular/router';
           
                   <div class="ui-grid-row" *ngIf="itemType == 'ALL'">
                     <p-radioButton name="itemLabel" value="Visit" label="Visit" (onClick)="clearSelection()"
-                    [(ngModel)]="itemNumberLabel" #itemLabelr="ngModel" required></p-radioButton>
+                    [(ngModel)]="itemNumberLabel" #itemLabelr="ngModel" required></p-radioButton>&nbsp;&nbsp;&nbsp;
                     <p-radioButton name="itemLabel" value="Admission" label="Admission" (onClick)="clearSelection()"
                     [(ngModel)]="itemNumberLabel" #itemLabelr="ngModel" required></p-radioButton>
                  </div>
@@ -104,7 +101,7 @@ export class VisitAdmLookup implements OnInit {
   @Input() visit: Visit;
   @Input() admission: Admission;
   
-  @Output() visitEmit: EventEmitter<Visit> = new EventEmitter<Visit>();
+  @Output() visitEmit: EventEmitter<any> = new EventEmitter<any>();
   @Output() admissionEmit: EventEmitter<Admission> = new EventEmitter<Admission>();
   @Output() billEmit: EventEmitter<Bill> = new EventEmitter<Bill>();
   @Input() itemNumber: string;
@@ -124,20 +121,20 @@ export class VisitAdmLookup implements OnInit {
   }
   
   openVisitOrAdmSearchPage() {
-	if (this.itemNumber !== undefined && this.itemNumber !== '') {
-			this.lookUpItem();
-	} else {
-		try {
-			const navigationExtras: NavigationExtras = {
-				queryParams: {
-					'originalPage': this.originalPage,    
-				}
-			};
-			this.router.navigate(['/admin/' + this.itemNumberLabel.toLowerCase() + 'List'], navigationExtras);
-		} catch (e) {
-			console.log(e);
-		}
-	}
+    if (this.itemNumber !== undefined && this.itemNumber !== '') {
+        this.lookUpItem();
+    } else {
+      try {
+        const navigationExtras: NavigationExtras = {
+          queryParams: {
+            'originalPage': this.originalPage,    
+          }
+        };
+        this.router.navigate(['/admin/' + this.itemNumberLabel.toLowerCase() + 'List'], navigationExtras);
+      } catch (e) {
+        console.log(e);
+      }
+    }
   }
 
   lookUpItem() {
@@ -161,7 +158,7 @@ export class VisitAdmLookup implements OnInit {
             } 
             if (this.itemNumberLabel === 'Admission') {
               this.admission = data[0];
-              this.admissionEmit.emit(this.admission);
+              this.visitEmit.emit(this.admission);
             }
           }
         },

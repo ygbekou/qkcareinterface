@@ -3,9 +3,11 @@ import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { Admission, Visit, SearchCriteria } from '../../models';
 import { PatientSale } from '../../models/stocks/patientSale';
 import { ToolbarModule, ConfirmationService } from 'primeng/primeng';
-import { GenericService, PurchasingService, TokenStorage } from '../../services';
+import { GenericService, PurchasingService, TokenStorage, GlobalEventsManager } from '../../services';
 import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
 import { BaseComponent } from '../admin/baseComponent';
+import { Constants } from 'src/app/app.constants';
+
 
 @Component({
   selector: 'app-patient-sale-list',
@@ -31,6 +33,7 @@ export class PatientSaleList extends BaseComponent implements OnInit, OnDestroy 
       public translate: TranslateService,
       public confirmationService: ConfirmationService,
       public tokenStorage: TokenStorage,
+      public globalEventsManager: GlobalEventsManager,
       private route: ActivatedRoute,
       private router: Router,
   ) {
@@ -70,6 +73,12 @@ export class PatientSaleList extends BaseComponent implements OnInit, OnDestroy 
           parameters.push('e.admission.id = |admissionId|' + this.admission.id + '|Long');
         }
 
+        parameters.push('e.saleDatetime >= |saleDatetimeStart|' + new Date().toLocaleDateString(this.globalEventsManager.LOCALE, 
+                        Constants.LOCAL_DATE_OPTIONS) + '|Date')
+
+        parameters.push('e.saleDatetime < |saleDatetimeEnd|' + new Date(new Date().setDate(new Date().getDate() + 1))
+              .toLocaleDateString(this.globalEventsManager.LOCALE, Constants.LOCAL_DATE_OPTIONS) + '|Date')
+         
         this.genericService.getAllByCriteria('com.qkcare.model.stocks.PatientSale', parameters)
           .subscribe((data: PatientSale[]) => {
             this.patientSales = data;
