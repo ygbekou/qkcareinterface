@@ -1,19 +1,11 @@
-import {Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild, ElementRef, Input} from '@angular/core';
-import {Router, ActivatedRoute} from '@angular/router';
+import {Component, OnInit, OnDestroy} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
 import {Payment} from '../../models/payment';
 import {Constants} from '../../app.constants';
 import {Account} from '../../models/account';
-import {EditorModule} from 'primeng/editor';
 import {AccountDropdown} from '../dropdowns';
-import {Cookie} from 'ng2-cookies/ng2-cookies';
-import {DataTableModule, DialogModule, InputTextareaModule, CheckboxModule, FileUploadModule} from 'primeng/primeng';
-import {User} from '../../models/user';
-import {GenericService, UserService} from '../../services';
+import {GenericService} from '../../services';
 
-
-import {Observable} from 'rxjs/Rx';
-
-import {Http, Response, Headers} from '@angular/http';
 
 @Component({
   selector: 'app-payment-details',

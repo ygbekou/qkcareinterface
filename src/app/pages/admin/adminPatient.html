@@ -27,10 +27,10 @@
     </p-tabPanel>
     <p-tabPanel header="{{ 'COMMON.APPOINTMENT' | translate }}" *ngIf="patient.id > 0 && permitView('Patient Details')">
       <div *ngIf="activeTab == 5">
-        <app-appointment-details (aptSavedEvent)="onAptSaved($event)"></app-appointment-details>
+        <app-appointment-details [patient]="patient" (aptSavedEvent)="onAptSaved($event)"></app-appointment-details>
         <br />
         <br />
-        <app-appointment-list (appointmentIdEvent)="onAppointmentSelected($event)"></app-appointment-list>
+        <app-appointment-list [patient]="patient" (appointmentIdEvent)="onAppointmentSelected($event)"></app-appointment-list>
       </div>
     </p-tabPanel>
     <p-tabPanel header="{{ 'COMMON.VISIT' | translate }}" *ngIf="patient.id > 0 && shoulShow">

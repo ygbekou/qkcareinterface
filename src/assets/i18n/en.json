@@ -127,6 +127,7 @@
     "AMOUNT_PAID": "Amount Paid",
     "AMOUNT_DUE": "Amount Due",
     "QUANTITY": "Quantity",
+    "QUANTITY_AVAILABLE": "Quantity Available",
     "PRICE": "Price",
     "PAYER_AMOUNT": "Payer Amount",
     "PATIENT_AMOUNT": "Patient Amount",

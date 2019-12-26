@@ -23,14 +23,14 @@ import { ConfirmationService } from 'primeng/api';
 export class AdminBedStatus extends BaseComponent implements OnInit {
   [x: string]: any;
 
-  @ViewChild(ReferenceDetails) referenceDetails: ReferenceDetails;
-  @ViewChild(ReferenceList) referenceList: ReferenceList;
-  @ViewChild(FloorDetails) floorDetails: FloorDetails;
-  @ViewChild(FloorList) floorList: FloorList;
-  @ViewChild(RoomDetails) roomDetails: RoomDetails;
-  @ViewChild(RoomList) roomList: RoomList;
-  @ViewChild(BedDetails) bedDetails: BedDetails;
-  @ViewChild(BedList) bedList: BedList;
+  @ViewChild(ReferenceDetails, {static: false}) referenceDetails: ReferenceDetails;
+  @ViewChild(ReferenceList, {static: false}) referenceList: ReferenceList;
+  @ViewChild(FloorDetails, {static: false}) floorDetails: FloorDetails;
+  @ViewChild(FloorList, {static: false}) floorList: FloorList;
+  @ViewChild(RoomDetails, {static: false}) roomDetails: RoomDetails;
+  @ViewChild(RoomList, {static: false}) roomList: RoomList;
+  @ViewChild(BedDetails, {static: false}) bedDetails: BedDetails;
+  @ViewChild(BedList, {static: false}) bedList: BedList;
   public user: User;
   public patient: Patient;
   public activeTab = 0;

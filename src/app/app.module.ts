@@ -13,6 +13,7 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { ButtonModule } from 'primeng/button';
 import { CalendarModule } from 'primeng/calendar';
+import { FullCalendarModule } from 'primeng/fullcalendar';
 import { CardModule } from 'primeng/card';
 import { CarouselModule } from 'primeng/carousel';
 import { ChartModule } from 'primeng/chart';
@@ -29,13 +30,12 @@ import { EditorModule } from 'primeng/editor';
 import { FieldsetModule } from 'primeng/fieldset';
 import { FileUploadModule } from 'primeng/fileupload';
 import { GalleriaModule } from 'primeng/galleria';
-import { GrowlModule } from 'primeng/growl';
 import { InplaceModule } from 'primeng/inplace';
 import { InputMaskModule } from 'primeng/inputmask';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
-import { LightboxModule } from 'primeng/lightbox';
+//import { LightboxModule } from 'primeng/lightbox';
 import { ListboxModule } from 'primeng/listbox';
 import { MegaMenuModule } from 'primeng/megamenu';
 import { MenuModule } from 'primeng/menu';
@@ -54,7 +54,6 @@ import { PickListModule } from 'primeng/picklist';
 import { ProgressBarModule } from 'primeng/progressbar';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { RatingModule } from 'primeng/rating';
-import { ScheduleModule } from 'primeng/schedule';
 import { ScrollPanelModule } from 'primeng/scrollpanel';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { SlideMenuModule } from 'primeng/slidemenu';
@@ -151,6 +150,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     BreadcrumbModule,
     ButtonModule,
     CalendarModule,
+    FullCalendarModule,
     CardModule,
     CarouselModule,
     ChartModule,
@@ -167,13 +167,12 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     FieldsetModule,
     FileUploadModule,
     GalleriaModule,
-    GrowlModule,
     InplaceModule,
     InputMaskModule,
     InputSwitchModule,
     InputTextModule,
     InputTextareaModule,
-    LightboxModule,
+    //LightboxModule,
     ListboxModule,
     MegaMenuModule,
     MenuModule,
@@ -192,7 +191,6 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     ProgressBarModule,
     RadioButtonModule,
     RatingModule,
-    ScheduleModule,
     ScrollPanelModule,
     SelectButtonModule,
     SlideMenuModule,

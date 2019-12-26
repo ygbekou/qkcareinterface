@@ -33,14 +33,14 @@ export class VisitDetails extends BaseComponent implements OnInit, OnDestroy {
 
   vaccineGroups: Reference[] = [];
 
-  @ViewChild(DoctorOrderDetails) doctorOrderDetails: DoctorOrderDetails;
-  @ViewChild(DoctorOrderList) doctorOrderList: DoctorOrderList;
-  @ViewChild(AdmissionDiagnoses) admissionDiagnoses: AdmissionDiagnoses;
-  @ViewChild(PrescriptionDetails) prescriptionDetails: PrescriptionDetails;
-  @ViewChild(PatientSaleDetails) patientSaleDetails: PatientSaleDetails;
-  @ViewChild(PrescriptionList) prescriptionList: PrescriptionList;
-  @ViewChild(InvestigationList) investigationList: InvestigationList;
-  @ViewChild(PatientMedicineList) patientMedicinList: PatientMedicineList;
+  @ViewChild(DoctorOrderDetails, {static: false}) doctorOrderDetails: DoctorOrderDetails;
+  @ViewChild(DoctorOrderList, {static: false}) doctorOrderList: DoctorOrderList;
+  @ViewChild(AdmissionDiagnoses, {static: false}) admissionDiagnoses: AdmissionDiagnoses;
+  @ViewChild(PrescriptionDetails, {static: false}) prescriptionDetails: PrescriptionDetails;
+  @ViewChild(PatientSaleDetails, {static: false}) patientSaleDetails: PatientSaleDetails;
+  @ViewChild(PrescriptionList, {static: false}) prescriptionList: PrescriptionList;
+  @ViewChild(InvestigationList, {static: false}) investigationList: InvestigationList;
+  @ViewChild(PatientMedicineList, {static: false}) patientMedicinList: PatientMedicineList;
 
   messages: Message[] = [];
 

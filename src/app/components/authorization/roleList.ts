@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, Output, EventEmitter } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Role } from '../../models';
-import { ConfirmationService } from 'primeng/primeng';
+import { ConfirmationService } from 'primeng/api';
 import { GenericService, TokenStorage } from '../../services';
 import { TranslateService } from '@ngx-translate/core';
 import { BaseComponent } from '../admin/baseComponent';

@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, EventEmitter, Output, Input } from '@angu
 import { ActivatedRoute } from '@angular/router';
 import { Floor } from '../../models/floor';
 import { BuildingDropdown } from '../dropdowns';
-import { Message, ConfirmationService } from 'primeng/primeng';
+import { Message, ConfirmationService } from 'primeng';
 import { GenericService, TokenStorage } from '../../services';
 import { BaseComponent } from './baseComponent';
 import { TranslateService } from '@ngx-translate/core';

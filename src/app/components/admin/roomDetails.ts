@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Floor } from '../../models/floor';
 import { Room } from '../../models/room';
 import { BuildingDropdown, FloorDropdown } from '../dropdowns';
-import { ConfirmationService, Message } from 'primeng/primeng';
+import { ConfirmationService, Message } from 'primeng';
 import { GenericService, GlobalEventsManager, TokenStorage } from '../../services';
 import { BaseComponent } from './baseComponent';
 import { TranslateService } from '@ngx-translate/core';

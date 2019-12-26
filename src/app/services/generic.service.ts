@@ -55,10 +55,10 @@ export class GenericService {
 
   public getAllByCriteria = (entityClass: string, parameters: string [], orderBy = ''): Observable<any[]> => {
 
-	const searchAttribute = new SearchAttribute();
-	searchAttribute.parameters = parameters;
-	searchAttribute.orderBy = orderBy
-	const toAdd = JSON.stringify(searchAttribute);
+    const searchAttribute = new SearchAttribute();
+    searchAttribute.parameters = parameters;
+    searchAttribute.orderBy = orderBy
+    const toAdd = JSON.stringify(searchAttribute);
 	
     const actionUrl = Constants.apiServer + '/service/' + entityClass + '/allByCriteriaAndOrderBy';
     return this.http.post(actionUrl, toAdd, {headers: this.headers})

@@ -24,13 +24,13 @@ import { SocialHistoryDetails } from './socialHistoryDetails';
 export class AdminPatient extends BaseComponent implements OnInit {
 	[x: string]: any;
 
-	@ViewChild(PatientDetails) patientDetails: PatientDetails;
-	@ViewChild(VaccineDetails) vaccineDetails: VaccineDetails;
-	@ViewChild(AllergyDetails) allergyDetails: AllergyDetails;
-	@ViewChild(MedicalHistoryDetails) medicalHistoryDetails: MedicalHistoryDetails;
-	@ViewChild(SocialHistoryDetails) socialHistoryDetails: SocialHistoryDetails;
-	@ViewChild(AppointmentDetails) appointmentDetails: AppointmentDetails;
-	@ViewChild(AppointmentList) appointmentList: AppointmentList;
+	@ViewChild(PatientDetails, {static: false}) patientDetails: PatientDetails;
+	@ViewChild(VaccineDetails, {static: false}) vaccineDetails: VaccineDetails;
+	@ViewChild(AllergyDetails, {static: false}) allergyDetails: AllergyDetails;
+	@ViewChild(MedicalHistoryDetails, {static: false}) medicalHistoryDetails: MedicalHistoryDetails;
+	@ViewChild(SocialHistoryDetails, {static: false}) socialHistoryDetails: SocialHistoryDetails;
+	@ViewChild(AppointmentDetails, {static: false}) appointmentDetails: AppointmentDetails;
+	@ViewChild(AppointmentList, {static: false}) appointmentList: AppointmentList;
 	public user: User;
 	public patient: Patient;
 	public activeTab = 0;
@@ -83,7 +83,7 @@ export class AdminPatient extends BaseComponent implements OnInit {
 		} else if (evt.index === 2) {
 			this.activeTab = 2;
 			//this.allergyDetails.getAllergies();
-		} else if (evt.index === 3) {
+		} else if (evt.index === 3) { 
 			this.activeTab = 3;
 			//this.medicalHistoryDetails.getMedicalHistories();
 		} else if (evt.index === 4) {
@@ -91,7 +91,7 @@ export class AdminPatient extends BaseComponent implements OnInit {
 			//this.socialHistoryDetails.getSocialHistories();
 		} else if (evt.index === 5) {
 			this.activeTab = 5;
-			//this.socialHistoryDetails.getSocialHistories();
+			//this.appointmentDetails.patient = this.patient;
 		}
 	}
 }

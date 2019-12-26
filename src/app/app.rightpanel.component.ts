@@ -1,6 +1,6 @@
-import { Component, ViewChild, AfterViewInit, Output, EventEmitter } from '@angular/core';
+import { Component, ViewChild, AfterViewInit } from '@angular/core';
 import { AppComponent } from './app.component';
-import { ScrollPanel } from 'primeng/primeng';
+import { ScrollPanel } from 'primeng';
 import { Router, NavigationExtras } from '@angular/router';
 import { TokenStorage, GenericService, AppointmentService, GlobalEventsManager, VisitService } from './services';
 import { ContactUsMessage } from './models/website';
@@ -13,7 +13,7 @@ import { ScheduleEvent } from './models/scheduleEvent';
 })
 export class AppRightPanelComponent implements AfterViewInit {
 
-	@ViewChild('scrollRightPanel') rightPanelMenuScrollerViewChild: ScrollPanel;
+	@ViewChild('scrollRightPanel', {static: false}) rightPanelMenuScrollerViewChild: ScrollPanel;
 	public activeTab = 0;
 	events: ScheduleEvent[];
 	visits: Visit[];

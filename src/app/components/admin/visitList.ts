@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Visit, SearchCriteria } from '../../models';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
-import { ConfirmationService } from 'primeng/primeng';
+import { ConfirmationService } from 'primeng';
 import { GenericService, GlobalEventsManager, TokenStorage } from '../../services';
 import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
 import { BaseComponent } from './baseComponent';

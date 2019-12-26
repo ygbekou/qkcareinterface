@@ -154,7 +154,7 @@
       </app-prescription-list>
     </p-tabPanel>
     <p-tabPanel header="{{'COMMON.INVESTIGATION_LIST' | translate }}" *ngIf="admission && admission.id > 0 && permitView('ADMISSION_INVESTIGATION')">
-      <app-investigation-list [showActions]="false" [admission]="admission"></app-investigation-list>
+      <app-investigation-list-bydate [showActions]="false" [admission]="admission"></app-investigation-list-bydate>
     </p-tabPanel>
     <p-tabPanel header="{{'COMMON.PHARMACY' | translate }}" *ngIf="admission &&  admission.id > 0 && permitView('ADMISSION_PHARMACY')">
       <app-patientMedicine-list [admission]="admission"></app-patientMedicine-list>

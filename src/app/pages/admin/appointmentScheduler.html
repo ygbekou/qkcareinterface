@@ -1,6 +1,6 @@
 <div class="ui-grid-row">
   <p-messages [(value)]="messages"></p-messages>
-  <p-dialog header="{{ 'COMMON.APPOINTMENT' | translate }}" [(visible)]="displayEdit" [width]="400">
+  <p-dialog header="{{ 'COMMON.APPOINTMENT' | translate }}" [(visible)]="displayEdit" width="400">
     <div class="ui-g-12 ui-sm-12" >
       <div class="ui-grid ui-grid-responsive ui-fluid">
         <div class="ui-grid-row">
@@ -103,8 +103,8 @@
     <button pButton type="button" label="{{'COMMON.CONFIRMED'|translate}}" class="ui-button-danger"></button>
     <button pButton type="button" label="{{'COMMON.AVAILABLE'|translate}}"></button>
 	<br/><br/>
-    <p-schedule [events]="events" [header]="headerConfig" (onDayClick)="addEventClick($event)"
-      (onEventClick)="editEventClick($event)"></p-schedule>
+    <p-fullCalendar [events]="events" [options]="options"  (onDayClick)="addEventClick($event)"
+      (onEventClick)="editEventClick($event)"></p-fullCalendar>
 
   </div>
 </div>

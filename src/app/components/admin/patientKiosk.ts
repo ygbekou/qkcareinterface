@@ -27,7 +27,7 @@ export class PatientKiosk extends BaseComponent implements OnInit, OnDestroy {
 	ROLE: string = Constants.ROLE;
 	SELECT_OPTION: string = Constants.SELECT_OPTION;
 
-	@ViewChild('picture') picture: ElementRef;
+	@ViewChild('picture', {static: false}) picture: ElementRef;
 	formData = new FormData();
 	pictureUrl: any;
 
@@ -44,7 +44,7 @@ export class PatientKiosk extends BaseComponent implements OnInit, OnDestroy {
 	failed = false;
 	navigationLabel = 'Suivant';
 
-	@ViewChild('f') myform: NgForm;
+	@ViewChild('f', {static: false}) myform: NgForm;
 
 	constructor
 		(

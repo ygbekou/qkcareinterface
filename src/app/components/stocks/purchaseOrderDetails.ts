@@ -4,10 +4,9 @@ import { Constants } from '../../app.constants';
 import { Product } from '../../models';
 import { PurchaseOrder, PurchaseOrderProduct } from '../../models/stocks/purchaseOrder';
 import { EmployeeDropdown, SupplierDropdown, ProductDropdown } from '../dropdowns';
-import { ConfirmationService } from 'primeng/primeng';
 import { GenericService, PurchasingService, TokenStorage, GlobalEventsManager } from '../../services';
 import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
-import { Message } from 'primeng/api';
+import { Message, ConfirmationService } from 'primeng/api';
 import { BaseComponent } from '../admin/baseComponent';
 import { ReceiveOrder } from 'src/app/models/stocks/receiveOrder';
 

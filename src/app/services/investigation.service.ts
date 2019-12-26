@@ -49,11 +49,11 @@ export class InvestigationService {
         .catch(this.handleError);
    }
   
-   public searchInvestigations = (searchCriteria: SearchCriteria): Observable<Investigation[]> => {
+   public searchInvestigations = (searchCriteria: SearchCriteria, url: string): Observable<Investigation[]> => {
 
 		const toSend = JSON.stringify(searchCriteria);
 
-		const actionUrl = Constants.apiServer + '/service/laboratory/investigation/search';
+		const actionUrl = Constants.apiServer + (url ? url : '/service/laboratory/investigation/search');
 		return this.http.post(actionUrl, toSend, { headers: this.headers })
 			.map((response: Response) => {
 				return response.json();

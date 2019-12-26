@@ -1,12 +1,11 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild, Input } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Enquiry, User } from '../../models';
+import { Enquiry } from '../../models';
 import { Constants } from '../../app.constants';
-import { FileUploader } from './fileUploader';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
-import { DataTableModule, DialogModule, InputTextareaModule, CheckboxModule, ConfirmationService } from 'primeng/primeng';
-import { GenericService, GlobalEventsManager, TokenStorage } from '../../services';
-import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
+import { ConfirmationService } from 'primeng/api';
+import { GenericService, TokenStorage } from '../../services';
+import { TranslateService} from '@ngx-translate/core';
 import { Message } from 'primeng/api';
 import { BaseComponent } from './baseComponent';
 

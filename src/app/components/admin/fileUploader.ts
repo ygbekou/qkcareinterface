@@ -1,8 +1,7 @@
 import {Component, LOCALE_ID, OnInit, ChangeDetectorRef} from '@angular/core';
 import {Router} from '@angular/router';
 import {Constants} from '../../app.constants';
-import {GrowlModule, Message} from 'primeng/primeng';
-import {FileUploadModule} from 'primeng/primeng';
+import {Message} from 'primeng/primeng';
 
 @Component({
   selector: 'file-uploader',

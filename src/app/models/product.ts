@@ -9,4 +9,5 @@ export class Product {
   description: string;
   price: number;
   status: number;
+  quantityInStock: number;
 }

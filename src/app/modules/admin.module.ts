@@ -80,6 +80,7 @@ import { LabTestDetails } from '../components/admin/labTestDetails';
 import { LabTestList } from '../components/admin/labTestList';
 import { InvestigationDetails } from '../components/admin/investigationDetails';
 import { InvestigationList } from '../components/admin/investigationList';
+import { InvestigationListByDate } from '../components/admin/investigationListByDate';
 import { RadInvestigationDetails } from '../components/admin/radInvestigationDetails';
 import { RadInvestigationList } from '../components/admin/radInvestigationList';
 import { PurchaseOrderDetails } from '../components/stocks/purchaseOrderDetails';
@@ -261,7 +262,7 @@ export function HttpLoaderFactory(http: HttpClient) {
 	  RoomDetails, RoomList, BedDetails, BedList, RadExamDetails, RadExamList, AdminPatient, AdminBedStatus, AdminAuthorization,
 	  AdmissionDiagnoses, PatientServiceDetails, PatientKiosk,
     AdminReference, VisitDetails, VisitList, DischargeDetails, LabTestDetails, LabTestList, InvestigationDetails,
-	  InvestigationList, RadInvestigationDetails, RadInvestigationList, PurchaseOrderDetails, PurchaseOrderList, 
+	  InvestigationList, InvestigationListByDate, RadInvestigationDetails, RadInvestigationList, PurchaseOrderDetails, PurchaseOrderList, 
 	  ReceiveOrderDetails, ReceiveOrderList, AdminRadiologyConfig,
     PatientSaleDetails, PatientSaleList, SaleReturnDetails, SaleReturnList, BirthReportDetails, BirthReportList,
     DeathReportDetails, DeathReportList, HospitalLocationDetails, HospitalLocationList, PatientLookup, VisitAdmLookup,

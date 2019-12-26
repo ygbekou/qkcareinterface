@@ -19,7 +19,7 @@ export class PermissionDetails extends BaseComponent implements OnInit, OnDestro
   cols: any[];
 
 
-  @ViewChild('availableResourceList') availableResourceList: ResourceList;
+  @ViewChild('availableResourceList', {static: false}) availableResourceList: ResourceList;
 
   constructor
     (

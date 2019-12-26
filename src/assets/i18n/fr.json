@@ -126,6 +126,7 @@
     "AMOUNT_PAID": "Montant payé",
     "AMOUNT_DUE": "Montant restant",
     "QUANTITY": "Quantité",
+    "QUANTITY_AVAILABLE": "Quantité Disponible",
     "PRICE": "Prix",
     "PAYER_AMOUNT": "Montant du payeur",
     "PATIENT_AMOUNT": "Montant du patient",

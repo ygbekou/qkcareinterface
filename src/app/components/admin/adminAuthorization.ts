@@ -20,12 +20,12 @@ import { ConfirmationService } from 'primeng/api';
 export class AdminAuthorization extends BaseComponent implements OnInit {
   [x: string]: any;
 
-  @ViewChild(RoleDetails) roleDetails: RoleDetails;
-  @ViewChild(RoleList) roleList: RoleList;
-  @ViewChild(ResourceDetails) resourceDetails: ResourceDetails;
-  @ViewChild(ResourceList) resourceList: ResourceList;
-  @ViewChild(MenuItemDetails) menuItemDetails: MenuItemDetails;
-  @ViewChild(MenuItemList) menuItemList: MenuItemList;
+  @ViewChild(RoleDetails, {static: false}) roleDetails: RoleDetails;
+  @ViewChild(RoleList, {static: false}) roleList: RoleList;
+  @ViewChild(ResourceDetails, {static: false}) resourceDetails: ResourceDetails;
+  @ViewChild(ResourceList, {static: false}) resourceList: ResourceList;
+  @ViewChild(MenuItemDetails, {static: false}) menuItemDetails: MenuItemDetails;
+  @ViewChild(MenuItemList, {static: false}) menuItemList: MenuItemList;
   public user: User;
   public patient: Patient;
   public activeTab = 0;

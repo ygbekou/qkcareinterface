@@ -4,7 +4,7 @@ import { Constants } from '../../app.constants';
 import { Product } from '../../models/product';
 import { Reference } from '../../models/reference';
 import { CategoryDropdown, ManufacturerDropdown } from '../dropdowns';
-import { GenericService, GlobalEventsManager, TokenStorage } from '../../services';
+import { GenericService, GlobalEventsManager, TokenStorage, AppInfoStorage } from '../../services';
 import { TranslateService } from '@ngx-translate/core';
 import { ConfirmationService } from 'primeng/api';
 import { BaseComponent } from './baseComponent';
@@ -28,6 +28,7 @@ export class MedicineDetails extends BaseComponent implements OnInit, OnDestroy 
       public genericService: GenericService,
       public translate: TranslateService,
       public confirmationService: ConfirmationService,
+      public appInfoStorage: AppInfoStorage,
       public tokenStorage: TokenStorage,
       private globalEventsManager: GlobalEventsManager,
       private ctgDropdown: CategoryDropdown,
@@ -55,9 +56,9 @@ export class MedicineDetails extends BaseComponent implements OnInit, OnDestroy 
               this.genericService.getOne(medicineId, 'Medicine')
                   .subscribe(result => {
                 if (result.id > 0) {
-                  this.medicine = result
+                  this.medicine = result;
                 }
-              })
+              });
           } else {
               
           }
@@ -73,14 +74,14 @@ export class MedicineDetails extends BaseComponent implements OnInit, OnDestroy 
     this.genericService.getOne(medicineId, 'Product')
         .subscribe(result => {
       if (result.id > 0) {
-        this.medicine = result
+        this.medicine = result;
       }
-    })
+    });
   }
   
   save() {
     try {
-      this.genericService.save(this.medicine, "Product")
+      this.genericService.save(this.medicine, 'Product')
         .subscribe(result => {
           if (result.id > 0) {
 			this.processResult(result, this.medicine, this.messages, null);
@@ -89,9 +90,8 @@ export class MedicineDetails extends BaseComponent implements OnInit, OnDestroy 
           } else {
             this.processResult(result, this.medicine, this.messages, null);
           }
-        })
-    }
-    catch (e) {
+        });
+    } catch (e) {
       console.log(e);
     }
   }

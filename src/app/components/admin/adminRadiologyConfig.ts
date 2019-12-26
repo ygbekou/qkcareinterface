@@ -19,10 +19,10 @@ import { ConfirmationService } from 'primeng/api';
 export class AdminRadiologyConfig extends BaseComponent implements OnInit {
   [x: string]: any;
 
-  @ViewChild(ReferenceDetails) referenceDetails: ReferenceDetails;
-  @ViewChild(ReferenceList) referenceList: ReferenceList;
-  @ViewChild(RadExamDetails) radExamDetails: RadExamDetails;
-  @ViewChild(RadExamList) radExamList: RadExamList;
+  @ViewChild(ReferenceDetails, {static: false}) referenceDetails: ReferenceDetails;
+  @ViewChild(ReferenceList, {static: false}) referenceList: ReferenceList;
+  @ViewChild(RadExamDetails, {static: false}) radExamDetails: RadExamDetails;
+  @ViewChild(RadExamList, {static: false}) radExamList: RadExamList;
 
   public user: User;
   public patient: Patient;

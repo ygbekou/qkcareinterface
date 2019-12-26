@@ -4,7 +4,7 @@ import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { Constants } from '../../app.constants';
 import { FileUploader } from './fileUploader';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
-import { DataTableModule, DialogModule, InputTextareaModule, CheckboxModule } from 'primeng/primeng';
+import { DialogModule, InputTextareaModule, CheckboxModule } from 'primeng/primeng';
 import { User } from '../../models/user';  
 import { GenericService } from '../../services';
 

@@ -30,8 +30,9 @@
             <div class="ui-grid-col-6 ui-sm-12">
                 <div class="form-group">
                     <label for="description">{{ 'COMMON.DESCRIPTION' | translate }}<font color="red">*</font></label>
-                    <textarea pInputTextarea id="description" [rows]='5' [(ngModel)]="sectionItem.description"
-                        name="description" #description="ngModel"> </textarea>
+                    <p-editor id="description" [(ngModel)]="sectionItem.description" #description="ngModel" [style]="{'height':'320px'}"></p-editor>
+                    <!-- <textarea pInputTextarea id="description" [rows]='5' [(ngModel)]="sectionItem.description"
+                        name="description" #description="ngModel"> </textarea> -->
                 </div>
             </div>
             <div class="ui-grid-col-6 ui-sm-12">

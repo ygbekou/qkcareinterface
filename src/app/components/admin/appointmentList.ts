@@ -1,11 +1,8 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef, Output, EventEmitter, Input } from '@angular/core';
 import { Appointment } from '../../models/appointment';
-import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Constants } from '../../app.constants';
-import { FileUploader } from './fileUploader';
-import { Cookie } from 'ng2-cookies/ng2-cookies';
-import { DataTableModule, DialogModule, InputTextareaModule, CheckboxModule, Message } from 'primeng/primeng';
-import { User } from '../../models/user';
+import { Message } from 'primeng/primeng';
 import { GenericService, GlobalEventsManager } from '../../services';
 import { Patient } from 'src/app/models';
 import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
@@ -27,6 +24,7 @@ export class AppointmentList implements OnInit, OnDestroy {
 	ADD_LABEL: string = Constants.ADD_LABEL;
 
 	@Output() appointmentIdEvent = new EventEmitter<string>();
+	@Input() patient: Patient;
 
 	constructor
 		(

@@ -18,7 +18,7 @@ import { BaseComponent } from './baseComponent';
 // tslint:disable-next-line:component-class-suffix
 export class EmployeeDetails extends BaseComponent implements OnInit, OnDestroy {
 
-  @ViewChild('picture') picture: ElementRef;
+  @ViewChild('picture', {static: false}) picture: ElementRef;
   formData = new FormData();
 
   public error: String = '';

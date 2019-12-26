@@ -28,15 +28,15 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class AdmissionDetails extends BaseComponent implements OnInit, OnDestroy {
 
-	@ViewChild(DoctorOrderDetails) doctorOrderDetails: DoctorOrderDetails;
-	@ViewChild(DoctorOrderList) doctorOrderList: DoctorOrderList;
-	@ViewChild(AdmissionDiagnoses) admissionDiagnoses: AdmissionDiagnoses;
-	@ViewChild(PrescriptionDetails) prescriptionDetails: PrescriptionDetails;
-	@ViewChild(PatientSaleDetails) patientSaleDetails: PatientSaleDetails;
-	@ViewChild(VitalSignDetails) vitalSignDetails: VitalSignDetails;
-	@ViewChild(VitalSignList) vitalSignList: VitalSignList;
-	@ViewChild(PrescriptionList) prescriptionList: PrescriptionList;
-	@ViewChild(PatientMedicineList) patientMedicineList: PatientMedicineList;
+	@ViewChild(DoctorOrderDetails, {static: false}) doctorOrderDetails: DoctorOrderDetails;
+	@ViewChild(DoctorOrderList, {static: false}) doctorOrderList: DoctorOrderList;
+	@ViewChild(AdmissionDiagnoses, {static: false}) admissionDiagnoses: AdmissionDiagnoses;
+	@ViewChild(PrescriptionDetails, {static: false}) prescriptionDetails: PrescriptionDetails;
+	@ViewChild(PatientSaleDetails, {static: false}) patientSaleDetails: PatientSaleDetails;
+	@ViewChild(VitalSignDetails, {static: false}) vitalSignDetails: VitalSignDetails;
+	@ViewChild(VitalSignList, {static: false}) vitalSignList: VitalSignList;
+	@ViewChild(PrescriptionList, {static: false}) prescriptionList: PrescriptionList;
+	@ViewChild(PatientMedicineList, {static: false}) patientMedicineList: PatientMedicineList;
 
 	admission: Admission = new Admission();
 	medicineCols: any[];

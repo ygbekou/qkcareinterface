@@ -17,7 +17,7 @@ export class SliderDetails extends BaseComponent implements OnInit, OnDestroy {
 
   slider: Slider = new Slider();
   messages: Message[] = [];
-  @ViewChild('picture') picture: ElementRef;
+  @ViewChild('picture', {static: false}) picture: ElementRef;
   formData = new FormData();
   pictureUrl: any = '';
 

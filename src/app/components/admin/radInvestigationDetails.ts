@@ -31,7 +31,7 @@ export class RadInvestigationDetails extends BaseComponent implements OnInit, On
 
   newComment: RadInvestigationComment;
 
-  @ViewChild('picture') picture: ElementRef;
+  @ViewChild('picture', {static: false}) picture: ElementRef;
   formData = new FormData();
   pictureUrls: any[];
   displayFileBox = false;

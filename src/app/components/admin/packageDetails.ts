@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Constants } from '../../app.constants';
 import { Package, Service, PackageService } from '../../models';
 import { ServiceDropdown } from '../dropdowns';
-import { ConfirmationService } from 'primeng/primeng';
+import { ConfirmationService } from 'primeng';
 import { GenericService, BillingService, TokenStorage, AppInfoStorage } from '../../services';
 import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
 import { Message } from 'primeng/api';

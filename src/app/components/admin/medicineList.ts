@@ -33,17 +33,19 @@ export class MedicineList extends BaseComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.cols = [
             { field: 'categoryName', header: 'Category', headerKey: 'COMMON.CATEGORY', type: 'string',
-                                        style: {width: '12%', 'text-align': 'center'} },
+                                        style: {width: '10%', 'text-align': 'center'} },
             { field: 'manufacturerName', header: 'Manufacturer', headerKey: 'COMMON.MANUFACTURER', type: 'string',
-                                        style: {width: '12%', 'text-align': 'center'} },
+                                        style: {width: '10%', 'text-align': 'center'} },
             { field: 'name', header: 'Name', headerKey: 'COMMON.NAME', type: 'string',
                                         style: {width: '15%', 'text-align': 'center'} },
             { field: 'description', header: 'Description', headerKey: 'COMMON.DESCRIPTION', type: 'string',
                                         style: {width: '30%', 'text-align': 'center'} },
             { field: 'price', header: 'Price', headerKey: 'COMMON.PRICE', type: 'string',
-                                        style: {width: '10%', 'text-align': 'center'} },
+                                        style: {width: '8%', 'text-align': 'center'} },
+            { field: 'quantityInStock', header: 'Quantity', headerKey: 'COMMON.QUANTITY', type: 'string',
+                                        style: {width: '8%', 'text-align': 'center'} },
             { field: 'statusDesc', header: 'Status', headerKey: 'COMMON.STATUS' , type: 'string',
-                                        style: {width: '10%', 'text-align': 'center'} }
+                                        style: {width: '8%', 'text-align': 'center'} }
         ];
     
     this.route

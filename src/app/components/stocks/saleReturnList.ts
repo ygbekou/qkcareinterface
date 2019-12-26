@@ -1,11 +1,7 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
-import { Constants } from '../../app.constants';
-import { ReceiveOrder, ReceiveOrderProduct } from '../../models/stocks/receiveOrder';
 import { SaleReturn } from '../../models/stocks/saleReturn';
-import { Cookie } from 'ng2-cookies/ng2-cookies';
-import { InputTextareaModule, CheckboxModule, ConfirmationService } from 'primeng/primeng';
-import { User } from '../../models/user';  
+import { ConfirmationService } from 'primeng';
 import { GenericService, PurchasingService, TokenStorage } from '../../services';
 import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
 import { BaseComponent } from '../admin/baseComponent';

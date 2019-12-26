@@ -25,7 +25,7 @@ export class PatientDetails extends BaseComponent implements OnInit, OnDestroy {
 	ROLE: string = Constants.ROLE;
 	SELECT_OPTION: string = Constants.SELECT_OPTION;
 
-	@ViewChild('picture') picture: ElementRef;
+	@ViewChild('picture', {static: false}) picture: ElementRef;
 	formData = new FormData();
 	pictureUrl: any;
 

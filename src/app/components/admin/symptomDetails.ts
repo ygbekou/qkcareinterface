@@ -1,12 +1,8 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild, Input } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef, Input } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Constants } from '../../app.constants';
 import { Reference } from '../../models/reference';
-import { Cookie } from 'ng2-cookies/ng2-cookies';
-import { DataTableModule, DialogModule, InputTextareaModule, CheckboxModule, MultiSelectModule, CalendarModule } from 'primeng/primeng';
-import { User } from '../../models/user';  
 import { Visit } from '../../models/visit';
-import { GenericService, GlobalEventsManager, VisitService } from '../../services';
+import { GenericService, VisitService } from '../../services';
  
 @Component({
   selector: 'app-symptom-details',

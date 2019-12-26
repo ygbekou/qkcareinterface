@@ -1,14 +1,9 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Constants } from '../../app.constants';
 import { CaseStudy } from '../../models/caseStudy';
 import { Patient } from '../../models/patient';
-import { EditorModule } from 'primeng/editor';
-import { DoctorDropdown, WeekdayDropdown } from '../dropdowns';
-import { Cookie } from 'ng2-cookies/ng2-cookies';
-import { DataTableModule, DialogModule, InputTextareaModule, CheckboxModule, MultiSelectModule, CalendarModule } from 'primeng/primeng';
-import { User } from '../../models/user';  
-import { GenericService, UserService } from '../../services';
+import { GenericService } from '../../services';
 
 @Component({
   selector: 'app-caseStudy-details',

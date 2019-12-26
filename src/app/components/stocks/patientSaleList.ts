@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, Input, EventEmitter, Output } from '@angu
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { Admission, Visit, SearchCriteria } from '../../models';
 import { PatientSale } from '../../models/stocks/patientSale';
-import { ToolbarModule, ConfirmationService } from 'primeng/primeng';
+import { ToolbarModule, ConfirmationService } from 'primeng';
 import { GenericService, PurchasingService, TokenStorage, GlobalEventsManager } from '../../services';
 import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
 import { BaseComponent } from '../admin/baseComponent';

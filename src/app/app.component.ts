@@ -1,8 +1,9 @@
 import { GlobalEventsManager } from './services';
 import { TokenStorage } from './services/token.storage';
-import { Component, AfterViewInit, ElementRef, Renderer2, ViewChild, OnDestroy, Input, AfterViewChecked, ChangeDetectorRef } from '@angular/core';
+import { Component, AfterViewInit, ElementRef, Renderer2, ViewChild, OnDestroy, 
+  Input, AfterViewChecked, ChangeDetectorRef } from '@angular/core';
 import { Location } from "@angular/common";
-import { ScrollPanel } from 'primeng/primeng';
+import { ScrollPanel } from 'primeng';
 import { TranslateService } from '@ngx-translate/core';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
@@ -52,7 +53,7 @@ export class AppComponent implements AfterViewInit, AfterViewChecked {
 
   megaMenuClick: boolean;
 
-  @ViewChild('layoutMenuScroller') layoutMenuScrollerViewChild: ScrollPanel;
+  @ViewChild('layoutMenuScroller', {static: false}) layoutMenuScrollerViewChild: ScrollPanel;
 
   constructor(public globalEventsManager: GlobalEventsManager,
     private location: Location,

@@ -127,10 +127,11 @@ export class AdmissionList extends BaseComponent implements OnInit, OnDestroy {
     if (this.searchCriteria.birthDate != null)  {
       parameters.push('e.patient.user.birthDate = |birthDate|' + this.searchCriteria.birthDate.toLocaleDateString() + '|Date');
     }
-    if (this.searchCriteria.admissionId != null)  {
+
+    if (this.searchCriteria.admissionId != null && !isNaN(this.searchCriteria.admissionId))  {
       parameters.push('e.id = |admissionId|' + this.searchCriteria.admissionId + '|Long');
     }
-    if (this.searchCriteria.admissionDate != null)  {
+    if (this.searchCriteria.admissionDate !== null && this.searchCriteria.admissionDate !== undefined)  {
       const startDate = new Date(this.searchCriteria.admissionDate.setDate(this.searchCriteria.admissionDate.getDate()));
       const endDate  = new Date(this.searchCriteria.admissionDate.setDate(this.searchCriteria.admissionDate.getDate() + 1));
       parameters.push('e.admissionDatetime >= |admissionDateStart|' + startDate.toLocaleDateString() + '|Timestamp');

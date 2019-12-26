@@ -1,5 +1,5 @@
 <div class="ui-grid-row">
-    <p-growl [value]="msgs"></p-growl>
+    <!-- <p-growl [value]="msgs"></p-growl> -->
     <div [innerHTML]="errorMessage"></div>
 
 	<p-fileUpload name="file[]" customUpload="true" (uploadHandler)="myUploader($event)" maxFileSize="2000000"  mode="basic" auto="true">

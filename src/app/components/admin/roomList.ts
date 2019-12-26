@@ -1,11 +1,8 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild, Input, Output, EventEmitter } from '@angular/core';
-import { Floor, Room, Reference, User } from '../../models';
+import { Component, OnInit, OnDestroy, Output, EventEmitter } from '@angular/core';
+import { Room } from '../../models';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
-import { Constants } from '../../app.constants';
-import { FileUploader } from './fileUploader';
-import { Cookie } from 'ng2-cookies/ng2-cookies';
-import { DataTableModule, DialogModule, InputTextareaModule, CheckboxModule, ConfirmationService } from 'primeng/primeng';
-import { GenericService, GlobalEventsManager, TokenStorage } from '../../services';
+import { ConfirmationService } from 'primeng';
+import { GenericService, TokenStorage } from '../../services';
 import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
 import { BaseComponent } from './baseComponent';
 

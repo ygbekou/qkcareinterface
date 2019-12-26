@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild, ElementRef, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild, ElementRef, Output, EventEmitter, Input } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Constants } from '../../app.constants';
 import { Appointment } from '../../models/appointment';
@@ -24,8 +24,9 @@ export class AppointmentDetails implements OnInit, OnDestroy {
 	ROLE: string = Constants.ROLE;
 	SELECT_OPTION: string = Constants.SELECT_OPTION;
 	@Output() aptSavedEvent = new EventEmitter<Appointment>();
-	@ViewChild('uploadFile') input: ElementRef;
+	@ViewChild('uploadFile', {static: false}) input: ElementRef;
 	formData = new FormData();
+	@Input() patient: Patient;
 
 	constructor
 		(
@@ -49,7 +50,7 @@ export class AppointmentDetails implements OnInit, OnDestroy {
 			.queryParams
 			.subscribe(params => {
 				this.appointment = new Appointment();
-				this.appointment.patient = new Patient();
+				this.appointment.patient = this.patient;
 				appointmentId = params['appointmentId'];
 				if (appointmentId != null) {
 					this.genericService.getOne(appointmentId, 'Appointment')

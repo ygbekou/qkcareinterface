@@ -15,9 +15,9 @@ export class HospitalDetails implements OnInit, OnDestroy {
   
   hospital: Hospital = new Hospital();
 
-  @ViewChild('logo') logo: ElementRef;
-  @ViewChild('favicon') favicon: ElementRef;
-  @ViewChild('backgroundSlider') backgroundSlider: ElementRef;
+  @ViewChild('logo', {static: false}) logo: ElementRef;
+  @ViewChild('favicon', {static: false}) favicon: ElementRef;
+  @ViewChild('backgroundSlider', {static: false}) backgroundSlider: ElementRef;
   formData = new FormData();
   messages: Message[] = [];
   

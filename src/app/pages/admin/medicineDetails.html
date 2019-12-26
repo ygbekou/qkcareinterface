@@ -3,14 +3,14 @@
 		<div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="medicine">
 			<p-messages [(value)]="messages"></p-messages>
 			<div class="ui-grid-row">
-				<div class="ui-grid-col-4 ui-sm-12">
+				<div class="ui-grid-col-3 ui-sm-12">
 					<div class="form-group">
 						<label for="name">{{ 'COMMON.NAME' | translate }}<font color="red">*</font></label>
 						<input pInputText id="name" name="name" [(ngModel)]="medicine.name" #name="ngModel" required />
 						<p-message *ngIf="f.submitted && name.invalid" severity="error" text="Field is required"></p-message>
 					</div>
 				</div>
-				<div class="ui-grid-col-4 ui-sm-12">
+				<div class="ui-grid-col-3 ui-sm-12">
 					<div class="form-group">
 						<label for="category">{{ 'COMMON.CATEGORY' | translate }}<font
 							color="red">*</font></label>
@@ -24,7 +24,7 @@
 							<p-message *ngIf="f.submitted && category.invalid" severity="error" text="Field is required"></p-message>
 					</div>
 				</div>
-				<div class="ui-grid-col-4 ui-sm-12">
+				<div class="ui-grid-col-3 ui-sm-12">
 					<div class="form-group">
 						<label for="manufacturer">{{ 'COMMON.MANUFACTURER' | translate }}<font
 							color="red">*</font></label>
@@ -38,22 +38,31 @@
 							<p-message *ngIf="f.submitted && manufacturer.invalid" severity="error" text="Field is required"></p-message>
 					</div>
 				</div>
+				<div class="ui-grid-col-3 ui-sm-12">
+					<div class="form-group">
+						<label for="price">{{ 'COMMON.PRICE' | translate }}</label> 
+						<input pInputText id="price" [(ngModel)]="medicine.price" name="price" #price="ngModel" 
+							currencyMask [options]=appInfoStorage.CURRENCY_MASK_DECIMAL required />
+						<p-message *ngIf="f.submitted && price.invalid" severity="error" text="Field is required"></p-message>
+					</div>
+				</div>
 			</div>
 			<div class="ui-grid-row">
-				<div class="ui-grid-col-4 ui-sm-12">
+				
+				<div class="ui-grid-col-6 ui-sm-12">
 					<div class="form-group">
 						<label for="description">{{ 'COMMON.DESCRIPTION' | translate }}</label>
 						<textarea pInputTextarea id="description" name="description" [(ngModel)]="medicine.description"> </textarea>
 					</div>
 				</div>
-				<div class="ui-grid-col-4 ui-sm-12">
+				<div class="ui-grid-col-3 ui-sm-12">
 					<div class="form-group">
-						<label for="price">{{ 'COMMON.PRICE' | translate }}</label> 
-						<input pInputText id="price" [(ngModel)]="medicine.price" name="price" #price="ngModel" required />
-						<p-message *ngIf="f.submitted && manufacturer.invalid" severity="error" text="Field is required"></p-message>
+						<label for="quantityInStock">{{ 'COMMON.QUANTITY' | translate }}</label> 
+						<input pInputText id="quantityInStock" [(ngModel)]="medicine.quantityInStock" readonly="true"
+							name="quantityInStock" #quantityInStock="ngModel" currencyMask [options]=appInfoStorage.CURRENCY_MASK_INTEGER />
 					</div>
 				</div>
-				<div class="ui-grid-col-4 ui-sm-12">
+				<div class="ui-grid-col-3 ui-sm-12">
 					<div class="form-group">	
 						<br/>		
 						<p-radioButton name="status" value="0" label="Actif" [(ngModel)]="medicine.status"></p-radioButton>

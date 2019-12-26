@@ -1,14 +1,11 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Constants } from '../../app.constants';
 import { Patient } from '../../models/patient';
 import { Invoice } from '../../models/invoice';
 import { Account } from '../../models/account';
 import { InvoiceAccount } from '../../models/invoiceAccount';
-import { EditorModule } from 'primeng/editor';
 import { AccountDropdown } from '../dropdowns';
-import { Cookie } from 'ng2-cookies/ng2-cookies';
-import { DataTableModule, DialogModule, InputTextareaModule, CheckboxModule, MultiSelectModule, CalendarModule } from 'primeng/primeng';
 import { User } from '../../models/user';  
 import { GenericService, AccountService } from '../../services';
 

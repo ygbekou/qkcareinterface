@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, Input, EventEmitter, Output } from '@angu
 import { Admission, Investigation, InvestigationTest, Visit, SearchCriteria } from '../../models';
 import { Router, NavigationExtras } from '@angular/router';
 import { Constants } from '../../app.constants';
-import { ToolbarModule, ConfirmationService } from 'primeng/primeng';
+import { ToolbarModule, ConfirmationService } from 'primeng';
 import { GenericService, InvestigationService, GlobalEventsManager, TokenStorage } from '../../services';
 import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
 import { BaseComponent } from './baseComponent';
@@ -264,7 +264,8 @@ export class InvestigationList extends BaseComponent implements OnInit, OnDestro
 
 
 
-		this.investigationService.searchInvestigations(this.searchCriteria)
+    this.investigationService.searchInvestigations(this.searchCriteria, 
+            '/service/laboratory/investigation/search')
 			.subscribe((data: Investigation[]) => {
         this.investigations = data;
         

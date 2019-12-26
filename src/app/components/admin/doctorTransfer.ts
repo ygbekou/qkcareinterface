@@ -1,16 +1,14 @@
-import {Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild, Input} from '@angular/core';
+import {Component, OnInit, OnDestroy, ChangeDetectorRef, Input} from '@angular/core';
 import {Router, ActivatedRoute} from '@angular/router';
 import {Constants} from '../../app.constants';
-import {Bed, BedAssignment, Country, DoctorAssignment, Employee, Floor, Package, Patient, Admission, Reference, Room, User} from '../../models';
-import {EditorModule} from 'primeng/editor';
+import {Bed, BedAssignment, DoctorAssignment, Employee, Floor, 
+  Patient, Admission, Reference, Room, User} from '../../models';
 import {
   DoctorDropdown, PackageDropdown, InsuranceDropdown, BuildingDropdown, FloorDropdown, RoomDropdown,
   CategoryDropdown, BedDropdown
 } from '../dropdowns';
-import {Cookie} from 'ng2-cookies/ng2-cookies';
-import {DataTableModule, DialogModule, InputTextareaModule, CheckboxModule, MultiSelectModule, CalendarModule} from 'primeng/primeng';
-import {GenericService, AppointmentService, GlobalEventsManager, AdmissionService} from '../../services';
-import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
+import { GenericService, GlobalEventsManager, AdmissionService} from '../../services';
+import { TranslateService} from '@ngx-translate/core';
 import { Message } from 'primeng/api';
 
 @Component({

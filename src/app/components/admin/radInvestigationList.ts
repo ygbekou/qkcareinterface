@@ -1,9 +1,9 @@
 import { Component, OnInit, OnDestroy, Input, EventEmitter, Output } from '@angular/core';
-import { Admission, Investigation, InvestigationTest, Visit, SearchCriteria, RadInvestigation } from '../../models';
+import { Admission, Visit, SearchCriteria, RadInvestigation } from '../../models';
 import { Router, NavigationExtras } from '@angular/router';
 import { Constants } from '../../app.constants';
-import { ToolbarModule, ConfirmationService } from 'primeng/primeng';
-import { GenericService, InvestigationService, GlobalEventsManager, RadInvestigationService, TokenStorage } from '../../services';
+import { ConfirmationService } from 'primeng/api';
+import { GenericService, GlobalEventsManager, RadInvestigationService, TokenStorage } from '../../services';
 import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
 import { BaseComponent } from './baseComponent';
 

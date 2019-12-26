@@ -1,13 +1,7 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild } from '@angular/core';
-import { Employee } from '../../models/employee';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { Constants } from '../../app.constants';
 import { CaseStudy } from '../../models/caseStudy';
-import { Schedule } from '../../models/schedule';
-import { FileUploader } from './fileUploader';
-import { Cookie } from 'ng2-cookies/ng2-cookies';
-import { DataTableModule, DialogModule, InputTextareaModule, CheckboxModule } from 'primeng/primeng';
-import { User } from '../../models/user';  
 import { GenericService } from '../../services';
 
 @Component({

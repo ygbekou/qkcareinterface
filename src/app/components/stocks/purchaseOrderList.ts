@@ -3,7 +3,7 @@ import { Router, NavigationExtras } from '@angular/router';
 import { SearchCriteria } from '../../models';
 import { PurchaseOrder } from '../../models/stocks/purchaseOrder';
 import { EmployeeDropdown, SupplierDropdown, ProductDropdown } from '../dropdowns';
-import { ConfirmationService } from 'primeng/primeng';
+import { ConfirmationService } from 'primeng';
 import { GenericService, PurchasingService, TokenStorage } from '../../services';
 import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
 import { BaseComponent } from '../admin/baseComponent';

@@ -22,7 +22,7 @@ export class AdminMain implements OnInit {
   public user: User = new User();
   searchText: string;
   public users: User[];
-  @ViewChild(AdminAppointment) adminAppointment: AdminAppointment;
+  @ViewChild(AdminAppointment, {static: false}) adminAppointment: AdminAppointment;
 
   
   constructor(private baseService: GenericService, private userService: UserService,

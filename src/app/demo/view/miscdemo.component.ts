@@ -1,11 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { TerminalService } from 'primeng/components/terminal/terminalservice';
+//import { TerminalService } from 'primeng/components/terminal/terminalservice';
 import { Subscription } from 'rxjs';
 import { BreadcrumbService } from '../../breadcrumb.service';
 
 @Component({
     templateUrl: './miscdemo.component.html',
-    providers: [TerminalService]
+    providers: []
 })
 export class MiscDemoComponent implements OnInit, OnDestroy {
 
@@ -19,11 +19,11 @@ export class MiscDemoComponent implements OnInit, OnDestroy {
 
     subscription: Subscription;
 
-    constructor(private terminalService: TerminalService, private breadcrumbService: BreadcrumbService) {
-        this.subscription = this.terminalService.commandHandler.subscribe(command => {
-            const response = (command === 'date') ? new Date().toDateString() : 'Unknown command: ' + command;
-            this.terminalService.sendResponse(response);
-        });
+    constructor(private breadcrumbService: BreadcrumbService) {
+        // this.subscription = this.terminalService.commandHandler.subscribe(command => {
+        //     const response = (command === 'date') ? new Date().toDateString() : 'Unknown command: ' + command;
+        //     this.terminalService.sendResponse(response);
+        // });
         this.breadcrumbService.setItems([
             { label: 'Components' },
             { label: 'Misc', routerLink: ['/misc'] }

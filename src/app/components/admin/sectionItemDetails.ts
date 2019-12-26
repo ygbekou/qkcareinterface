@@ -19,7 +19,7 @@ export class SectionItemDetails extends BaseComponent implements OnInit, OnDestr
 
     sectionItem: SectionItem = new SectionItem();
     messages: Message[] = [];
-    @ViewChild('picture') picture: ElementRef;
+    @ViewChild('picture', {static: false}) picture: ElementRef;
     @Output() sectionItemSavedEvent = new EventEmitter<SectionItem>();
     formData = new FormData();
     pictureUrl: any = '';

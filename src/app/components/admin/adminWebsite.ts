@@ -21,17 +21,17 @@ import { Section, SectionItem } from 'src/app/models/website';
 export class AdminWebsite implements OnInit, OnDestroy {
   [x: string]: any;
 
-  @ViewChild(SectionDetails) sectionDetails: SectionDetails;
-  @ViewChild(SectionList) sectionList: SectionList;
-  @ViewChild(SliderDetails) sliderDetails: SliderDetails;
-  @ViewChild(SliderList) sliderList: SliderList;
-  @ViewChild(SliderTextDetails) sliderTextDetails: SliderTextDetails;
-  @ViewChild(SliderTextList) sliderTextList: SliderTextList;
-  @ViewChild(SectionItemDetails) sectionItemDetails: SectionItemDetails;
-  @ViewChild(SectionItemList) sectionItemList: SectionItemList;
-  @ViewChild(EmployeeDetails) employeeDetails: EmployeeDetails;
-  @ViewChild(CompanyDetails) companyDetails: CompanyDetails;
-  @ViewChild(ContactDetails) contactDetails: ContactDetails;
+  @ViewChild(SectionDetails, {static: false}) sectionDetails: SectionDetails;
+  @ViewChild(SectionList, {static: false}) sectionList: SectionList;
+  @ViewChild(SliderDetails, {static: false}) sliderDetails: SliderDetails;
+  @ViewChild(SliderList, {static: false}) sliderList: SliderList;
+  @ViewChild(SliderTextDetails, {static: false}) sliderTextDetails: SliderTextDetails;
+  @ViewChild(SliderTextList, {static: false}) sliderTextList: SliderTextList;
+  @ViewChild(SectionItemDetails, {static: false}) sectionItemDetails: SectionItemDetails;
+  @ViewChild(SectionItemList, {static: false}) sectionItemList: SectionItemList;
+  @ViewChild(EmployeeDetails, {static: false}) employeeDetails: EmployeeDetails;
+  @ViewChild(CompanyDetails, {static: false}) companyDetails: CompanyDetails;
+  @ViewChild(ContactDetails, {static: false}) contactDetails: ContactDetails;
   public activeTab = 0;
   public activeEmployeeTab = 1;
   public activeCompanyTab = 1;

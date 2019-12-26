@@ -3,18 +3,13 @@ import {Router, ActivatedRoute} from '@angular/router';
 import {Document} from '../../models/document';
 import {Constants} from '../../app.constants';
 import { Patient } from '../../models/patient';
-import {FileUploader} from './fileUploader';
-import {EditorModule} from 'primeng/editor';
 import {DoctorDropdown} from '../dropdowns';
-import {Cookie} from 'ng2-cookies/ng2-cookies';
-import {DataTableModule, DialogModule, InputTextareaModule, CheckboxModule, FileUploadModule} from 'primeng/primeng';
-import {User} from '../../models/user';
 import {GenericService, UserService} from '../../services';
 
 
 import {Observable} from 'rxjs/Rx';
 
-import {Http, Response, Headers} from '@angular/http';
+import {Http, Headers} from '@angular/http';
 
 @Component({
   selector: 'app-document-details',
@@ -39,7 +34,7 @@ export class DocumentDetails implements OnInit, OnDestroy {
   DOCTOR: string = Constants.DOCTOR;
   ROLE: string = Constants.ROLE;
 
-  @ViewChild('tasknote') input: ElementRef;
+  @ViewChild('tasknote', {static: false}) input: ElementRef;
   
   constructor
     (

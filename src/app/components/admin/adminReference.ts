@@ -29,18 +29,18 @@ import { ConfirmationService } from 'primeng/api';
 export class AdminReference extends BaseComponent implements OnInit, OnDestroy {
   [x: string]: any;
 
-  @ViewChild(DepartmentDetails) departmentDetails: DepartmentDetails;
-  @ViewChild(DepartmentList) departmentList: DepartmentList;
-  @ViewChild(ReferenceDetails) referenceDetails: ReferenceDetails;
-  @ViewChild(ReferenceList) referenceList: ReferenceList;
-  @ViewChild(ReferenceWithCategoryDetails) referenceWithCategoryDetails: ReferenceWithCategoryDetails;
-  @ViewChild(ReferenceWithCategoryList) referenceWithCategoryList: ReferenceWithCategoryList;
-  @ViewChild(MedicineDetails) medicineDetails: MedicineDetails;
-  @ViewChild(MedicineList) medicineList: MedicineList;
-  @ViewChild(LabTestDetails) labTestDetails: LabTestDetails;
-  @ViewChild(LabTestList) labTestList: LabTestList;
-  @ViewChild(HospitalLocationDetails) hospitalLocationDetails: HospitalLocationDetails;
-  @ViewChild(HospitalLocationList) hospitalLocationtList: HospitalLocationList;
+  @ViewChild(DepartmentDetails, {static: false}) departmentDetails: DepartmentDetails;
+  @ViewChild(DepartmentList, {static: false}) departmentList: DepartmentList;
+  @ViewChild(ReferenceDetails, {static: false}) referenceDetails: ReferenceDetails;
+  @ViewChild(ReferenceList, {static: false}) referenceList: ReferenceList;
+  @ViewChild(ReferenceWithCategoryDetails, {static: false}) referenceWithCategoryDetails: ReferenceWithCategoryDetails;
+  @ViewChild(ReferenceWithCategoryList, {static: false}) referenceWithCategoryList: ReferenceWithCategoryList;
+  @ViewChild(MedicineDetails, {static: false}) medicineDetails: MedicineDetails;
+  @ViewChild(MedicineList, {static: false}) medicineList: MedicineList;
+  @ViewChild(LabTestDetails, {static: false}) labTestDetails: LabTestDetails;
+  @ViewChild(LabTestList, {static: false}) labTestList: LabTestList;
+  @ViewChild(HospitalLocationDetails, {static: false}) hospitalLocationDetails: HospitalLocationDetails;
+  @ViewChild(HospitalLocationList, {static: false}) hospitalLocationtList: HospitalLocationList;
 
   public user: User;
   public patient: Patient;

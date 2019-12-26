@@ -5,8 +5,11 @@ import { Constants } from '../../app.constants';
 import { HospitalLocationDropdown, DoctorDropdown, DepartmentDropdown } from '../dropdowns';
 import { GenericService, AppointmentService, TokenStorage } from '../../services';
 import { TranslateService } from '@ngx-translate/core';
-import { Message, ConfirmationService } from 'primeng/api';
+import { Message, ConfirmationService, FullCalendarModule } from 'primeng';
 import { BaseComponent } from './baseComponent';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import timeGridPlugin from '@fullcalendar/timegrid'; 
+import interactionPlugin from '@fullcalendar/interaction';
 
 @Component({
 	selector: 'app-appointment-scheduler',
@@ -20,6 +23,7 @@ export class AppointmentScheduler extends BaseComponent implements OnInit, OnDes
 	headerConfig: any;
 	dateConfig: any;
 	displayEdit = false;
+	options: any;
 	appointment: Appointment;
 	searchCriteria: SearchCriteria = new SearchCriteria();
 	messages: Message[] = [];
@@ -47,6 +51,24 @@ export class AppointmentScheduler extends BaseComponent implements OnInit, OnDes
 			center: 'title',
 			right: 'month,agendaWeek,agendaDay'
 		};
+
+		this.options = {
+            plugins:[ dayGridPlugin, timeGridPlugin, interactionPlugin ],
+            //defaultDate: '2017-02-01',
+            header: {
+                left: 'prev,next',
+                center: 'title',
+                right: 'dayGridMonth,timeGridWeek,timeGridDay'
+            },
+			editable: true,
+			dateClick: (e) =>  {
+				this.addEventClick(e);
+			},
+			eventClick: (e) =>  {
+				this.editEventClick(e);
+			}
+		};
+		
 
 		this.appointment = new Appointment();
 		this.appointment.department = new Department();
@@ -174,7 +196,8 @@ export class AppointmentScheduler extends BaseComponent implements OnInit, OnDes
 
 	editEventClick(e) {
 		this.displayEdit = true;
-		const eventId = e.calEvent.id;
+		console.info(e)
+		const eventId = e.event.id;
 		if (eventId != null && eventId > 0) {
 			this.genericService.getOne(eventId, 'Appointment')
 				.subscribe(result => {
@@ -189,9 +212,9 @@ export class AppointmentScheduler extends BaseComponent implements OnInit, OnDes
 			console.log('apt id is null');
 			this.appointment.id = null;
 			this.appointment.problem = '';
-			this.appointment.appointmentDate = e.calEvent.start._i.split('T')[0];
-			this.appointment.beginTime = e.calEvent.start._i.split('T')[1];
-			this.appointment.endTime = e.calEvent.end._i.split('T')[1];
+			this.appointment.appointmentDate = new Date(e.event.start);
+			this.appointment.beginTime = e.event.start.toString().substring(16, 21);
+			this.appointment.endTime = e.event.end.toString().substring(16, 21);
 		}
 	}
 

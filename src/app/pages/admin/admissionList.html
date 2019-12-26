@@ -2,9 +2,9 @@
 	<form name="form" (ngSubmit)="f.form.valid && search()" #f="ngForm" validate>
 		<p-fieldset legend="{{ 'COMMON.SEARCH_CRITERIA' | translate }}">
 			<div class="ui-grid-row">
-				<div class="ui-grid-col-1 ui-sm-24">
+				<div class="ui-grid-col-2 ui-sm-24">
 					<div class="form-group">
-						<label for="admissionId">{{ 'COMMON.ADMISSION_NUMBER' | translate }}</label> 
+						<label for="admissionId" nowrap>{{ 'COMMON.ADMISSION_NUMBER' | translate }}</label> 
 						<input type="text" pInputText class="form-control" id="admissionId" size="10"
 							[(ngModel)]="searchCriteria.admissionId" name="admissionId" >
 					</div>
@@ -44,16 +44,17 @@
                             yearNavigator="true" yearRange="1940:2050" name="birthDate" #birthDate="ngModel" date></p-calendar>
 					</div>
 				</div>
+				<div class="ui-grid-col-1 ui-sm-12">
+					<div class="form-group">
+						<br/>
+						<button pButton icon="fa fa-search" label="{{ 'COMMON.SEARCH' | translate }}"></button>
+					</div>
+				</div>
 			</div>
-		<div class="ui-grid-row">
-			<div class="ui-grid-col-1 ui-sm-12">
-				<button pButton icon="fa fa-search" label="{{ 'COMMON.SEARCH' | translate }}"></button>
-			</div>
-		</div>
+		
 		</p-fieldset>
 	 </form>
-	<br/>
-	<br/>
+
 	<p-table [columns]="cols" [value]="admissions">
 		<ng-template pTemplate="caption">
 			{{ 'COMMON.ADMISSION_LIST' | translate }}
