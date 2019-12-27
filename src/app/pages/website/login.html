@@ -1,7 +1,7 @@
 <app-web-header></app-web-header>
 <p-dialog header="First Time Login - Change Password" [(visible)]="display"
-  [style]="{width: '2000px', height: '2000px'}" (onHide)="closePasswordUpdateDialog()" [blockScroll]="true"
-  [draggable]="false">
+  [style]="{width: '2000px', height: '1000px'}" (onHide)="closePasswordUpdateDialog()" [blockScroll]="true"
+  [draggable]="false" positionTop="150">
   <form name="form1" (ngSubmit)="f1.form.valid && changePassword()" #f1="ngForm" validate>
     <div class="form-group">
       <label for="password1">{{ 'COMMON.NEW_PASSWORD' | translate }}:<font color="red">*</font></label>
