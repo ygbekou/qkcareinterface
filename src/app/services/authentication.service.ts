@@ -25,6 +25,7 @@ export class AuthenticationService {
   public attemptAuth = (user: User): Observable<any> => {
     const toAdd = JSON.stringify(user);
     const actionUrl = Constants.apiServer + '/service/token/generate-token';
+
     return this.http.post(actionUrl, toAdd, {headers: this.headers})
       .map((response: Response) => {
         // login successful if there's a jwt token in the response
@@ -32,7 +33,8 @@ export class AuthenticationService {
           const data = response.json();
           this.tokenStorage.saveAuthData(data);
             if (data.token !== '') {
-              this.globalEventsManager.showMenu = true;
+              // This below code was given headache
+              //this.globalEventsManager.showMenu = true;
             }
           return response.json();
 
