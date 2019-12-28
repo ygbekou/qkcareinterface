@@ -66,11 +66,11 @@ export class Register implements OnInit {
 						}
 					});
 			} else {
-				if (this.user.email === null) {
+				if (this.user.email === null || this.user.email === '') {
 					this.translate.get(['VALIDATION.EMAIL_REQUIRED', 'COMMON.LOGIN']).subscribe(res => {
 						this.messages.push({ severity: Constants.ERROR, summary: res['COMMON.LOGIN'], detail: res['MESSAGE.EMAIL_REQUIRED'] });
 					});
-				} else if (this.user.password === null) {
+				} else if (this.user.password === null || this.user.password === '') {
 					this.translate.get(['MESSAGE.PASSWORD_REQUIRED', 'COMMON.LOGIN']).subscribe(res => {
 						this.messages.push({ severity: Constants.ERROR, summary: res['COMMON.LOGIN'], detail: res['MESSAGE.PASSWORD_REQUIRED'] });
 					});
