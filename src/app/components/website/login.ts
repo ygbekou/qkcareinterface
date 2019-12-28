@@ -178,12 +178,13 @@ export class Login implements OnInit {
 				});
 			});
 		}
-
+ 
 	}
-
+ 
 	closePasswordUpdateDialog() {
-		this.router.navigate(['/admin/dashboard']);
+		//this.router.navigate(['/admin/dashboard']);
 		//window.location.reload();
+		this.display = false;
 	}
 
 }

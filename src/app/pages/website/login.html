@@ -8,7 +8,7 @@
       <input type="password" pPassword class="form-control" id="password1" [(ngModel)]="user.password" name="password1"
         #password1="ngModel" required>
       <p-message *ngIf="f1.submitted && password1.invalid" severity="error" text="Field is required"></p-message>
-    </div>
+    </div> 
 
     <div class="form-group">
       <label for="confirmPassword">{{ 'COMMON.CONFIRM_PASSWORD' | translate }}:<font color="red">*</font></label>
@@ -19,9 +19,7 @@
     </div>
 
     <button pButton icon="fa fa-save"
-      label="{{'COMMON.SUBMIT' | translate}}"></button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    <button type="button" pButton icon="fa fa-delete" (click)="closePasswordUpdateDialog()"
-      label="{{'COMMON.CANCEL' | translate}}"></button>
+      label="{{'COMMON.SUBMIT' | translate}}"></button>
   </form>
 </p-dialog>
 <div class="container">

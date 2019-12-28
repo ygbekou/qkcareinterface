@@ -43,6 +43,9 @@ export class InvestigationListByDate extends BaseComponent implements OnInit, On
   
   searchCriteria: SearchCriteria = new SearchCriteria();
   listMessage = '';
+
+  filteredTestName: string;
+  testNames: string[] = [];
   
   
   constructor
@@ -145,35 +148,36 @@ export class InvestigationListByDate extends BaseComponent implements OnInit, On
 
 
     this.iTCols = [];
-    this.iTCols.push({field: 'name', header : 'NAME', 
-        type: 'String'})
+    this.iTCols.push({field: 'name', header : 'NAME', type: 'String', style: {width: '12%', 'text-align': 'center'}})
     
     for (let index in this.investigationTests[0]['attributes']) {
-      this.iTCols.push({field: this.investigationTests[0]['attributes'][index], header : this.investigationTests[0]['attributes'][index], 
-        type: 'number'});
+      this.iTCols.push({field: this.investigationTests[0]['attributes'][index], 
+        header : this.investigationTests[0]['attributes'][index], type: 'number'});
     }
 
+    let names = new Set<string>();
     
-      for (let index in this.investigationTests) {
-        
-        if (index === '0') {
-          continue;
-        }
-        for (let i = 0; i < 10; i++) {
+    for (let index in this.investigationTests) {
+      
+      if (index === '0') {
+        continue;
+      }
+      for (let i = 0; i < 10; i++) {
         this.investigationResults.push(this.investigationTests[index]);
+        names.add(this.investigationTests[index]['name'])
       }
     }
+
+    this.testNames = Array.from(names);
+
   }
 
 
    getInvestigationTests() {
-      const parameters: string [] = []; 
       if (this.visit && this.visit.id > 0)  {
-         //parameters.push('e.investigation.visit.id = |visitId|' + this.visit.id + '|Long');
          this.searchCriteria.visitId = this.visit.id;
       } 
       if (this.admission && this.admission.id > 0)  {
-         //parameters.push('e.investigation.admission.id = |admissionId|' + this.admission.id + '|Long');
          this.searchCriteria.admissionId = this.admission.id;
       } 
     
@@ -191,6 +195,14 @@ export class InvestigationListByDate extends BaseComponent implements OnInit, On
    }
   
   
+  filterByString(event) {
+    if (event.query === '') {
+      this.testNames = this.testNames;
+    }
+    this.testNames = this.testNames.filter(e => e.startsWith(event.query));
+
+   }
+
   showInvestigationDialog(actionType: string, rowData: Investigation) {
     this.actionType = actionType;
 	this.selectedInvestigation = rowData;
