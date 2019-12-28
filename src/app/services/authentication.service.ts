@@ -1,11 +1,11 @@
 import { User } from '../models';
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import {Constants} from '../app.constants';
+import { Constants } from '../app.constants';
 import { GlobalEventsManager } from './globalEventsManager';
 import { TokenStorage } from './token.storage';
-import {Http, Response, Headers} from '@angular/http';
+import { Http, Response, Headers } from '@angular/http';
 
 @Injectable()
 export class AuthenticationService {
@@ -15,8 +15,8 @@ export class AuthenticationService {
   menuMap: Map<String, number[]> = new Map();
 
   constructor(private http: Http,
-              private tokenStorage: TokenStorage,
-              private globalEventsManager: GlobalEventsManager) {
+    private tokenStorage: TokenStorage,
+    private globalEventsManager: GlobalEventsManager) {
     this.headers = new Headers();
     this.headers.append('Content-Type', 'application/json');
     this.headers.append('Accept', 'application/json');
@@ -26,12 +26,13 @@ export class AuthenticationService {
     const toAdd = JSON.stringify(user);
     const actionUrl = Constants.apiServer + '/service/token/generate-token';
 
-    return this.http.post(actionUrl, toAdd, {headers: this.headers})
+    return this.http.post(actionUrl, toAdd, { headers: this.headers })
       .map((response: Response) => {
         // login successful if there's a jwt token in the response
         if (response) {
           const data = response.json();
-          if (data.token !== '' && data.firstTimeLogin === 'N') {
+          if (data.token !== '' && (data.firstTimeLogin === null ||
+            data.firstTimeLogin === '' || data.firstTimeLogin === 'N')) {
             this.tokenStorage.saveAuthData(data);
           }
           return response.json();

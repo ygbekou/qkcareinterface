@@ -57,6 +57,7 @@ export class Login implements OnInit {
 
 	public login() {
 		try {
+			this.messages = [];
 			this.passwordSent = '';
 			console.log(this.button);
 			this.user.lang = this.translate.currentLang;
@@ -70,10 +71,10 @@ export class Login implements OnInit {
 			} else {
 				this.authenticationService.attemptAuth(this.user)
 					.subscribe(data => {
-						if (this.tokenStorage.getFirstTimeLogin() === 'Y') {
+						if (data.firstTimeLogin === 'Y') {
 							this.user.password = '';
 							this.display = true;
-							this.userService.changeToken(data.token);
+							//this.userService.changeToken(data.token);
 							console.log('first time login');
 						} else {
 							if (this.tokenStorage.getToken() !== '' && this.tokenStorage.getToken() !== null) {
@@ -82,11 +83,11 @@ export class Login implements OnInit {
 								console.log('Navigating to dashboard');
 								this.genericService.updateToken();
 								this.router.navigate(['/admin/dashboard']);
-								window.location.reload();
+								//window.location.reload();
 							} else {
 								console.log('No token');
-								this.translate.get(['MESSAGE.INVALID_USER_PASS', 'COMMON.LOGIN']).subscribe(res => {
-									this.messages.push({ severity: Constants.ERROR, summary: res['COMMON.LOGIN'], detail: res['MESSAGE.INVALID_USER_PASS'] });
+								this.translate.get(['MESSAGE.INVALID_USER_PASS', 'COMMON.ERROR']).subscribe(res => {
+									this.messages.push({ severity: Constants.ERROR, summary: res['COMMON.ERROR'], detail: res['MESSAGE.INVALID_USER_PASS'] });
 								});
 							}
 						}
@@ -96,8 +97,8 @@ export class Login implements OnInit {
 			}
 		} catch (e) {
 			console.log('Exception...');
-			this.translate.get(['MESSAGE.INVALID_USER_PASS', 'COMMON.LOGIN']).subscribe(res => {
-				this.messages.push({ severity: Constants.ERROR, summary: res['COMMON.LOGIN'], detail: res['MESSAGE.INVALID_USER_PASS'] });
+			this.translate.get(['MESSAGE.INVALID_USER_PASS', 'COMMON.ERROR']).subscribe(res => {
+				this.messages.push({ severity: Constants.ERROR, summary: res['COMMON.ERROR'], detail: res['MESSAGE.INVALID_USER_PASS'] });
 			});
 		}
 
@@ -119,7 +120,7 @@ export class Login implements OnInit {
 						if (result === true) {
 							this.translate.get(['MESSAGE.PASSWORD_SENT', 'COMMON.SUCCESS']).subscribe(res => {
 								this.messages.push({
-									severity: Constants.SUCCESS, summary: res['COMMON.RSUCCESS'],
+									severity: Constants.SUCCESS, summary: res['COMMON.SUCCESS'],
 									detail: res['MESSAGE.PASSWORD_SENT']
 								});
 							});
@@ -149,9 +150,9 @@ export class Login implements OnInit {
 		try {
 			this.messages = [];
 			if (this.user.confirmPassword !== this.user.password) {
-				this.translate.get(['MESSAGE.PASSWORD_NOT_MATCHED', 'COMMON.READ']).subscribe(res => {
+				this.translate.get(['MESSAGE.PASSWORD_NOT_MATCHED', 'COMMON.ERROR']).subscribe(res => {
 					this.messages.push({
-						severity: Constants.ERROR, summary: res['COMMON.READ'],
+						severity: Constants.ERROR, summary: res['COMMON.ERROR'],
 						detail: res['MESSAGE.PASSWORD_NOT_MATCHED']
 					});
 				});
@@ -160,26 +161,26 @@ export class Login implements OnInit {
 			this.userService.changePassword(this.user)
 				.subscribe(result => {
 					if (result) {
-						this.translate.get(['MESSAGE.PASSWORD_CHANGED', 'COMMON.READ']).subscribe(res => {
+						this.translate.get(['MESSAGE.PASSWORD_CHANGED', 'COMMON.SUCCESS']).subscribe(res => {
 							this.messages.push({
-								severity: Constants.SUCCESS, summary: res['COMMON.READ'],
+								severity: Constants.SUCCESS, summary: res['COMMON.SUCCESS'],
 								detail: res['MESSAGE.PASSWORD_CHANGED']
 							});
 						});
 						this.display = false;
 					} else {
-						this.translate.get(['MESSAGE.PASSWORD_NOT_CHANGED', 'COMMON.READ']).subscribe(res => {
+						this.translate.get(['MESSAGE.PASSWORD_NOT_CHANGED', 'COMMON.ERROR']).subscribe(res => {
 							this.messages.push({
-								severity: Constants.ERROR, summary: res['COMMON.READ'],
+								severity: Constants.ERROR, summary: res['COMMON.ERROR'],
 								detail: res['MESSAGE.PASSWORD_NOT_CHANGED']
 							});
 						});
 					}
 				});
 		} catch (e) {
-			this.translate.get(['MESSAGE.ERROR_OCCURRED', 'COMMON.READ']).subscribe(res => {
+			this.translate.get(['MESSAGE.ERROR_OCCURRED', 'COMMON.ERROR']).subscribe(res => {
 				this.messages.push({
-					severity: Constants.ERROR, summary: res['COMMON.READ'],
+					severity: Constants.ERROR, summary: res['COMMON.ERROR'],
 					detail: res['MESSAGE.ERROR_OCCURRED']
 				});
 			});

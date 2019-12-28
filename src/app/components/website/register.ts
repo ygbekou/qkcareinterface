@@ -49,7 +49,7 @@ export class Register implements OnInit {
 	}
 
 	public login() {
-		try {
+		try { 
 			this.messages = [];
 			console.log(this.button);
 			this.user.lang = this.translate.currentLang;
@@ -60,8 +60,8 @@ export class Register implements OnInit {
 							//this is good
 							this.user = data;
 						} else {
-							this.translate.get(['MESSAGE.NO_MATCHING_RECORD_FOUND', 'COMMON.LOGIN']).subscribe(res => {
-								this.messages.push({ severity: Constants.ERROR, summary: res['COMMON.LOGIN'], detail: res['MESSAGE.NO_MATCHING_RECORD_FOUND'] });
+							this.translate.get(['MESSAGE.NO_MATCHING_RECORD_FOUND', 'COMMON.ERROR']).subscribe(res => {
+								this.messages.push({ severity: Constants.ERROR, summary: res['COMMON.ERROR'], detail: res['MESSAGE.NO_MATCHING_RECORD_FOUND'] });
 							});
 						}
 					});
@@ -69,12 +69,12 @@ export class Register implements OnInit {
 				//console.log('e-mail=' + this.user.email);
 				//console.log('password=' + this.user.password);
 				if (!this.isEmail(this.user.email)) {
-					this.translate.get(['VALIDATION.EMAIL_REQUIRED', 'COMMON.LOGIN']).subscribe(res => {
-						this.messages.push({ severity: Constants.ERROR, summary: res['COMMON.LOGIN'], detail: res['VALIDATION.EMAIL_REQUIRED'] });
+					this.translate.get(['VALIDATION.EMAIL_REQUIRED', 'COMMON.ERROR']).subscribe(res => {
+						this.messages.push({ severity: Constants.ERROR, summary: res['COMMON.ERROR'], detail: res['VALIDATION.EMAIL_REQUIRED'] });
 					});
 				} else if (this.user.password === null || this.user.password === '') {
-					this.translate.get(['VALIDATION.PASSWORD_REQUIRED', 'COMMON.LOGIN']).subscribe(res => {
-						this.messages.push({ severity: Constants.ERROR, summary: res['COMMON.LOGIN'], detail: res['VALIDATION.PASSWORD_REQUIRED'] });
+					this.translate.get(['VALIDATION.PASSWORD_REQUIRED', 'COMMON.ERROR']).subscribe(res => {
+						this.messages.push({ severity: Constants.ERROR, summary: res['COMMON.ERROR'], detail: res['VALIDATION.PASSWORD_REQUIRED'] });
 					});
 				} else {
 					this.userService.saveUserAndLogin(this.user)
@@ -89,8 +89,8 @@ export class Register implements OnInit {
 
 							} else {
 								console.log('No token');
-								this.translate.get(['VALIDATION.EMAIL_USED', 'COMMON.LOGIN']).subscribe(res => {
-									this.messages.push({ severity: Constants.ERROR, summary: res['COMMON.LOGIN'], detail: res['VALIDATION.EMAIL_USED'] });
+								this.translate.get(['VALIDATION.EMAIL_USED', 'COMMON.ERROR']).subscribe(res => {
+									this.messages.push({ severity: Constants.ERROR, summary: res['COMMON.ERROR'], detail: res['VALIDATION.EMAIL_USED'] });
 								});
 							}
 						});
@@ -98,8 +98,8 @@ export class Register implements OnInit {
 			}
 		} catch (e) {
 			console.log('Exception...');
-			this.translate.get(['MESSAGE.INVALID_USER_PASS', 'COMMON.LOGIN']).subscribe(res => {
-				this.messages.push({ severity: Constants.ERROR, summary: res['COMMON.LOGIN'], detail: res['MESSAGE.INVALID_USER_PASS'] });
+			this.translate.get(['MESSAGE.INVALID_USER_PASS', 'COMMON.ERROR']).subscribe(res => {
+				this.messages.push({ severity: Constants.ERROR, summary: res['COMMON.ERROR'], detail: res['MESSAGE.INVALID_USER_PASS'] });
 			});
 		}
 

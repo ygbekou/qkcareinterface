@@ -50,7 +50,7 @@ export class Dashboard implements OnInit, OnDestroy {
 				() => console.log('Get all month data complete - this.admissionService.getByMonths() ')
 			));
 
-		console.log("Before call");
+		console.log('Before call');
 		this.subscription.add(this.visitService.getByMonths()
 			.subscribe((data: any) => { 
 				this.visitItem = this.pullData(data, 'Visites', '#ffc100', '#ffc100');
@@ -113,7 +113,7 @@ export class Dashboard implements OnInit, OnDestroy {
 	}
 
 	getWaitList(topN: number) {
-		console.log("getting top " + topN + " Visits");
+		console.log('getting top ' + topN + ' Visits');
 		this.visits = [];
 		this.visitService.getWaitList(topN)
 			.subscribe(result => {
@@ -125,7 +125,7 @@ export class Dashboard implements OnInit, OnDestroy {
 	}
 
 	getTopN(n: number) {
-		console.log("getting top " + n + " Events");
+		console.log('getting top ' + n + ' Events');
 		this.events = [];
 		this.searchCriteria.topN = n;
 		this.appointmentService.getTodayAppointments(this.searchCriteria)
@@ -176,7 +176,7 @@ export class Dashboard implements OnInit, OnDestroy {
 				break;
 			}
 		}
-		var onTheFly: ScheduleEvent[] = [];
+		const onTheFly: ScheduleEvent[] = [];
 		onTheFly.push(...this.events);
 		this.events = onTheFly;
 	}
