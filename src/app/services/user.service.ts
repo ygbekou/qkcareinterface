@@ -185,10 +185,13 @@ export class UserService {
       })
       .catch(this.handleError);
   }
+  
   public changePassword = (user: User): Observable<Boolean> => {
     let toAdd = JSON.stringify(user);
     toAdd = toAdd.replace(/'/g, '&#039;');
     const actionUrl = Constants.apiServer + '/service/user/forgot/changePassword';
+
+    console.info('HEADER ... '+this.headers);
 
     return this.http.post(actionUrl, toAdd, { headers: this.headers })
       .map((response: Response) => {
@@ -201,6 +204,14 @@ export class UserService {
       })
       .catch(this.handleError);
   }
+
+  public changeToken(token: string) {
+    alert(token)
+    if (token) {
+      this.headers.append('Authorization', 'Bearer ' + token);
+    }
+  }
+
   private handleError(error: Response) {
     console.error(error);
     return Observable.throw(error.json().error || 'Server error');

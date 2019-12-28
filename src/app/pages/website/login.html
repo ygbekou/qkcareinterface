@@ -1,6 +1,6 @@
 <app-web-header></app-web-header>
 <p-dialog header="First Time Login - Change Password" [(visible)]="display"
-  [style]="{width: '350px', height: '350px'}" (onHide)="closePasswordUpdateDialog()" [blockScroll]="true"
+  [style]="{width: '350px', height: '350px'}" [blockScroll]="true"
   [draggable]="false" positionTop="150">
   <form name="form1" (ngSubmit)="f1.form.valid && changePassword()" #f1="ngForm" validate>
     <div class="form-group">
@@ -8,20 +8,18 @@
       <input type="password" pPassword class="form-control" id="password1" [(ngModel)]="user.password" name="password1"
         #password1="ngModel" required>
       <p-message *ngIf="f1.submitted && password1.invalid" severity="error" text="Field is required"></p-message>
-    </div>
+    </div> 
 
     <div class="form-group">
       <label for="confirmPassword">{{ 'COMMON.CONFIRM_PASSWORD' | translate }}:<font color="red">*</font></label>
-      <input type="confirmPassword" pPassword class="form-control" id="confirmPassword"
+      <input type="password" pPassword class="form-control" id="confirmPassword"
         [(ngModel)]="user.confirmPassword" name="confirmPassword" #confirmPassword="ngModel" required>
       <p-message *ngIf="f1.submitted && confirmPassword.invalid" severity="error" text="Field is required">
       </p-message>
     </div>
 
     <button pButton icon="fa fa-save"
-      label="{{'COMMON.SUBMIT' | translate}}"></button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    <button type="button" pButton icon="fa fa-delete" (click)="closePasswordUpdateDialog()"
-      label="{{'COMMON.CANCEL' | translate}}"></button>
+      label="{{'COMMON.SUBMIT' | translate}}"></button>
   </form>
 </p-dialog>
 <div class="container">

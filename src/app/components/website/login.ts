@@ -70,27 +70,28 @@ export class Login implements OnInit {
 			} else {
 				this.authenticationService.attemptAuth(this.user)
 					.subscribe(data => {
-						if (this.tokenStorage.getToken() !== '' && this.tokenStorage.getToken() !== null) {
-							console.log('Token = ' + this.tokenStorage.getToken());
-							if (this.tokenStorage.getFirstTimeLogin() === 'Y') {
-								this.user.password = '';
-								this.display = true;
-								console.log('first time login');
-							} else {
+						if (this.tokenStorage.getFirstTimeLogin() === 'Y') {
+							this.user.password = '';
+							this.display = true;
+							this.userService.changeToken(data.token);
+							console.log('first time login');
+						} else {
+							if (this.tokenStorage.getToken() !== '' && this.tokenStorage.getToken() !== null) {
 								console.log('redirecting to dashboard');
 								this.globalEventsManager.showMenu = true;
 								console.log('Navigating to dashboard');
+								this.genericService.updateToken();
 								this.router.navigate(['/admin/dashboard']);
 								window.location.reload();
+							} else {
+								console.log('No token');
+								this.translate.get(['MESSAGE.INVALID_USER_PASS', 'COMMON.LOGIN']).subscribe(res => {
+									this.messages.push({ severity: Constants.ERROR, summary: res['COMMON.LOGIN'], detail: res['MESSAGE.INVALID_USER_PASS'] });
+								});
 							}
-							this.genericService.updateToken();
-
-						} else {
-							console.log('No token');
-							this.translate.get(['MESSAGE.INVALID_USER_PASS', 'COMMON.LOGIN']).subscribe(res => {
-								this.messages.push({ severity: Constants.ERROR, summary: res['COMMON.LOGIN'], detail: res['MESSAGE.INVALID_USER_PASS'] });
-							});
 						}
+						
+							
 					});
 			}
 		} catch (e) {
@@ -166,7 +167,6 @@ export class Login implements OnInit {
 							});
 						});
 						this.display = false;
-						this.closePasswordUpdateDialog();
 					} else {
 						this.translate.get(['MESSAGE.PASSWORD_NOT_CHANGED', 'COMMON.READ']).subscribe(res => {
 							this.messages.push({
@@ -184,12 +184,13 @@ export class Login implements OnInit {
 				});
 			});
 		}
-
+ 
 	}
-
+ 
 	closePasswordUpdateDialog() {
-		this.router.navigate(['/admin/dashboard']);
+		//this.router.navigate(['/admin/dashboard']);
 		//window.location.reload();
+		this.display = false;
 	}
 
 }
