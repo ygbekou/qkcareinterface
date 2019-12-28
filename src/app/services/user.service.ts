@@ -96,15 +96,15 @@ export class UserService {
   public saveUserAndLogin = (user: User): Observable<Boolean> => {
     const toAdd = JSON.stringify(user);
     const actionUrl = Constants.apiServer + '/service/user/User/saveUserAndLogin';
- return this.http.post(actionUrl, toAdd, {headers: this.headers})
+    return this.http.post(actionUrl, toAdd, { headers: this.headers })
       .map((response: Response) => {
         // login successful if there's a jwt token in the response
         if (response) {
           const data = response.json();
           this.token.saveAuthData(data);
-            if (data.token !== '') {
-              this.globalEventsManager.showMenu = true;
-            }
+          if (data.token !== '') {
+            this.globalEventsManager.showMenu = true;
+          }
           return response.json();
 
         } else {

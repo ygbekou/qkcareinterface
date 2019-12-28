@@ -16,6 +16,5 @@ export class Admission {
   contactAddress: string;
   status: number;
   bedAssignment: BedAssignment;
-  doctorAssignment: DoctorAssignment;
-  
+  doctorAssignment: DoctorAssignment;  
 }

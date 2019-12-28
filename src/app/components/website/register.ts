@@ -66,23 +66,33 @@ export class Register implements OnInit {
 						}
 					});
 			} else {
-				this.userService.saveUserAndLogin(this.user)
-					.subscribe(data => {
-						if (this.tokenStorage.getToken() !== '' && this.tokenStorage.getToken() !== null) {
-							console.log('Token = ' + this.tokenStorage.getToken());
-
-							this.globalEventsManager.showMenu = true;
-							console.log('Navigating to dashboard');
-							this.router.navigate(['/admin/dashboard']);
-							//window.location.reload();
-
-						} else {
-							console.log('No token');
-							this.translate.get(['MESSAGE.INVALID_USER_PASS', 'COMMON.LOGIN']).subscribe(res => {
-								this.messages.push({ severity: Constants.ERROR, summary: res['COMMON.LOGIN'], detail: res['MESSAGE.INVALID_USER_PASS'] });
-							});
-						}
+				if (this.user.email === null || this.user.email === '') {
+					this.translate.get(['VALIDATION.EMAIL_REQUIRED', 'COMMON.LOGIN']).subscribe(res => {
+						this.messages.push({ severity: Constants.ERROR, summary: res['COMMON.LOGIN'], detail: res['MESSAGE.EMAIL_REQUIRED'] });
 					});
+				} else if (this.user.password === null || this.user.password === '') {
+					this.translate.get(['MESSAGE.PASSWORD_REQUIRED', 'COMMON.LOGIN']).subscribe(res => {
+						this.messages.push({ severity: Constants.ERROR, summary: res['COMMON.LOGIN'], detail: res['MESSAGE.PASSWORD_REQUIRED'] });
+					});
+				} else {
+					this.userService.saveUserAndLogin(this.user)
+						.subscribe(data => {
+							if (this.tokenStorage.getToken() !== '' && this.tokenStorage.getToken() !== null) {
+								console.log('Token = ' + this.tokenStorage.getToken());
+
+								this.globalEventsManager.showMenu = true;
+								console.log('Navigating to dashboard');
+								this.router.navigate(['/admin/dashboard']);
+								//window.location.reload();
+
+							} else {
+								console.log('No token');
+								this.translate.get(['MESSAGE.INVALID_USER_PASS', 'COMMON.LOGIN']).subscribe(res => {
+									this.messages.push({ severity: Constants.ERROR, summary: res['COMMON.LOGIN'], detail: res['MESSAGE.INVALID_USER_PASS'] });
+								});
+							}
+						});
+				}
 			}
 		} catch (e) {
 			console.log('Exception...');

@@ -2,7 +2,7 @@
 <div class="container">
   <form name="form" (ngSubmit)="f.form.valid && login()" #f="ngForm" validate>
     <p-messages [(value)]="messages"></p-messages>
-    <div class="ui-grid-row" *ngIf="!user.id>0">
+    <div class="ui-grid-row" *ngIf="!(user.id>0)">
       <div class="form-group">
         <label for="userName">{{ 'COMMON.TEMP_CODE' | translate }}<font color="red">*</font></label>
         <input type="text" pInputText class="form-control" id="userName"   [(ngModel)]="user.userName"
@@ -13,7 +13,7 @@
       </div>
     </div>
 
-    <div class="ui-grid-row" *ngIf="!user.id>0">
+    <div class="ui-grid-row" *ngIf="!(user.id>0)">
       <div class="form-group">
         <label for="birthDate">{{ 'COMMON.BIRTH_DATE' | translate }}<font color="red">*</font>:</label>
         <br />
@@ -26,7 +26,7 @@
           text="{{ 'COMMON.BIRTH_DATE' | translate }} {{ 'VALIDATION.IS_INVALID' | translate }}"></p-message>
       </div>
     </div>
-    <div class="ui-grid-row" *ngIf="!user.id>0">
+    <div class="ui-grid-row" *ngIf="!(user.id>0)">
       <div class="form-group">
         <button pButton (click)="button='validate'" icon="fa fa-check-square-o"
           label="{{'COMMON.VALIDATE' | translate}}"></button>
@@ -36,8 +36,8 @@
     <br />
     <p-card *ngIf="user.id>0">
       <p-header>
-        <h6> <font color="green">{{ 'MESSAGE.MATCHING_RECORD_FOUND' | translate }}</font> 
-        </h6>
+        <h2> <font color="green">{{ 'MESSAGE.MATCHING_RECORD_FOUND' | translate }}</font> 
+        </h2>
       </p-header>
       <div class="ui-grid-row">
         <h6>{{ 'COMMON.PATIENT_NAME' | translate }} :
@@ -59,8 +59,8 @@
     <br />
     <p-card *ngIf="user.id>0">
       <p-header>
-        <h6>  <font color="green">{{ 'MESSAGE.CHOOSE_MAIL_PASSWD' | translate }}</font>
-        </h6>
+        <h2>  <font color="green">{{ 'MESSAGE.CHOOSE_MAIL_PASSWD' | translate }}</font>
+        </h2>
       </p-header>
       <div class="ui-grid-row" *ngIf="user.id>0">
         <div class="form-group">
@@ -87,6 +87,7 @@
         </div>
       </div>
     </p-card>
+    <br/>
   </form>
 </div>
 <app-web-footer></app-web-footer>

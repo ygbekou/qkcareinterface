@@ -51,6 +51,10 @@ export class Login implements OnInit {
 	setDefaults() {
 	}
 
+	popup() {
+		this.display = true;
+	}
+
 	public login() {
 		try {
 			this.passwordSent = '';
@@ -60,7 +64,7 @@ export class Login implements OnInit {
 				console.log('Send password called');
 				this.sendPassword();
 				this.button = '';
-			}if (this.button === 'register') {
+			} if (this.button === 'register') {
 				console.log('register called');
 				this.router.navigate(['/register']);
 			} else {
@@ -71,7 +75,9 @@ export class Login implements OnInit {
 							if (this.tokenStorage.getFirstTimeLogin() === 'Y') {
 								this.user.password = '';
 								this.display = true;
+								console.log('first time login');
 							} else {
+								console.log('redirecting to dashboard');
 								this.globalEventsManager.showMenu = true;
 								console.log('Navigating to dashboard');
 								this.router.navigate(['/admin/dashboard']);
@@ -88,7 +94,7 @@ export class Login implements OnInit {
 					});
 			}
 		} catch (e) {
-				console.log('Exception...');
+			console.log('Exception...');
 			this.translate.get(['MESSAGE.INVALID_USER_PASS', 'COMMON.LOGIN']).subscribe(res => {
 				this.messages.push({ severity: Constants.ERROR, summary: res['COMMON.LOGIN'], detail: res['MESSAGE.INVALID_USER_PASS'] });
 			});
