@@ -9,7 +9,7 @@ import { TokenStorage } from './token.storage';
 import {SelectItem} from 'primeng/api';
 import { ContactUsMessage } from '../models/website';
 import { GenericResponse } from '../models/genericResponse';
-import { SearchAttribute } from '../models';
+import { SearchAttribute, User } from '../models';
 
 @Injectable()
 export class GenericService {
@@ -312,7 +312,7 @@ export class GenericService {
       })
       .catch(this.handleError);
   }
-
+  
   private handleError(error: Response) {
     console.error(error);
     return Observable.throw(error.json().error || 'Server error');
@@ -321,6 +321,12 @@ export class GenericService {
   public updateToken() {
     if (this.token.hasToken()) {
       this.headers.append('Authorization', 'Bearer ' + this.token.getToken());
+    }
+  }
+
+  public changeToken(token: string) {
+    if (token) {
+      this.headers.append('Authorization', 'Bearer ' + token);
     }
   }
 }

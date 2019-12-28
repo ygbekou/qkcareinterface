@@ -31,11 +31,9 @@ export class AuthenticationService {
         // login successful if there's a jwt token in the response
         if (response) {
           const data = response.json();
-          this.tokenStorage.saveAuthData(data);
-            if (data.token !== '') {
-              // This below code was given headache
-              //this.globalEventsManager.showMenu = true;
-            }
+          if (data.token !== '' && data.firstTimeLogin === 'N') {
+            this.tokenStorage.saveAuthData(data);
+          }
           return response.json();
 
         } else {
