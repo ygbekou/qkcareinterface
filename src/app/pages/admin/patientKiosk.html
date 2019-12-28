@@ -147,7 +147,7 @@
 
     <div class="ui-grid-col-6 ui-sm-6">
       <div class="form-group">
-        <label for="contact">{{ 'COMMON.EMERGENCY_CONTACT' | translate }}<font color="red">*</font></label>
+        <label for="contact">{{ 'COMMON.EMERGENCY_CONTACT_NAME' | translate }}<font color="red">*</font></label>
         <input type="text" pInputText class="form-control" id="contact" [(ngModel)]="patient.contact" name="contact"
           #contact="ngModel" style="margin-top: 0px; width: 100%; height: 50px;font-size: 1.85rem;">
         <p-message *ngIf="failed && !patient.contact ||(f.submitted && contact.invalid)" severity="error"
@@ -156,7 +156,7 @@
     </div>
     <div class="ui-grid-col-6 ui-sm-6">
       <div class="form-group">
-        <label for="contactPhone">{{ 'COMMON.CONTACT_PHONE' | translate }}<font color="red">*</font></label>
+        <label for="contactPhone">{{ 'COMMON.EMERGENCY_CONTACT_PHONE' | translate }}<font color="red">*</font></label>
         <input type="text" pInputText class="form-control" id="contactPhone" [(ngModel)]="patient.contactPhone"
           name="contactPhone" #contactPhone="ngModel"
           style="margin-top: 0px; width: 100%; height: 50px;font-size: 1.85rem;">
@@ -164,7 +164,6 @@
           text="{{ 'COMMON.CONTACT_PHONE' | translate }} {{ 'VALIDATION.IS_REQUIRED' | translate }}"></p-message>
       </div>
     </div>
-
   </div>
   <button pButton type="text" (click)="button=1" icon="fa fa fa-play-circle" *ngIf="activeIndex<3"
     style="margin-top: 0px; width: 100%; height: 50px;" label="{{navigationLabel}}"></button>

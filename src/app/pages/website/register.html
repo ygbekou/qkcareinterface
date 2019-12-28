@@ -65,7 +65,7 @@
       <div class="ui-grid-row" *ngIf="user.id>0">
         <div class="form-group">
           <label for="email">{{ 'COMMON.E_MAIL' | translate }}<font color="red">*</font></label>
-          <input type="text" pInputText class="form-control" id="email" required [(ngModel)]="user.email" name="email"
+          <input type="email" pInputText class="form-control" id="email" required [(ngModel)]="user.email" name="email"
             #email="ngModel">
           <p-message *ngIf="f.submitted && email.errors && email.errors.email" severity="error"
             text="{{ 'COMMON.E_MAIL' | translate }} {{ 'VALIDATION.IS_INVALID' | translate }}"></p-message>
@@ -85,6 +85,8 @@
         <div class="form-group">
           <button pButton type="submit" (click)="button='register'" icon="fa fa-sign-in" label="{{ 'COMMON.REGISTER' | translate }}"></button>
         </div>
+
+        <p-messages [(value)]="messages"></p-messages>
       </div>
     </p-card>
     <br/>

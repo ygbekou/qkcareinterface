@@ -66,13 +66,15 @@ export class Register implements OnInit {
 						}
 					});
 			} else {
-				if (this.user.email === null || this.user.email === '') {
+				//console.log('e-mail=' + this.user.email);
+				//console.log('password=' + this.user.password);
+				if (!this.isEmail(this.user.email)) {
 					this.translate.get(['VALIDATION.EMAIL_REQUIRED', 'COMMON.LOGIN']).subscribe(res => {
-						this.messages.push({ severity: Constants.ERROR, summary: res['COMMON.LOGIN'], detail: res['MESSAGE.EMAIL_REQUIRED'] });
+						this.messages.push({ severity: Constants.ERROR, summary: res['COMMON.LOGIN'], detail: res['VALIDATION.EMAIL_REQUIRED'] });
 					});
 				} else if (this.user.password === null || this.user.password === '') {
-					this.translate.get(['MESSAGE.PASSWORD_REQUIRED', 'COMMON.LOGIN']).subscribe(res => {
-						this.messages.push({ severity: Constants.ERROR, summary: res['COMMON.LOGIN'], detail: res['MESSAGE.PASSWORD_REQUIRED'] });
+					this.translate.get(['VALIDATION.PASSWORD_REQUIRED', 'COMMON.LOGIN']).subscribe(res => {
+						this.messages.push({ severity: Constants.ERROR, summary: res['COMMON.LOGIN'], detail: res['VALIDATION.PASSWORD_REQUIRED'] });
 					});
 				} else {
 					this.userService.saveUserAndLogin(this.user)
@@ -87,8 +89,8 @@ export class Register implements OnInit {
 
 							} else {
 								console.log('No token');
-								this.translate.get(['MESSAGE.INVALID_USER_PASS', 'COMMON.LOGIN']).subscribe(res => {
-									this.messages.push({ severity: Constants.ERROR, summary: res['COMMON.LOGIN'], detail: res['MESSAGE.INVALID_USER_PASS'] });
+								this.translate.get(['VALIDATION.EMAIL_USED', 'COMMON.LOGIN']).subscribe(res => {
+									this.messages.push({ severity: Constants.ERROR, summary: res['COMMON.LOGIN'], detail: res['VALIDATION.EMAIL_USED'] });
 								});
 							}
 						});
@@ -104,4 +106,13 @@ export class Register implements OnInit {
 
 	}
 
+	isEmail(search: string): boolean {
+		let serchfind: boolean;
+		// tslint:disable-next-line: max-line-length
+		const regexp = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
+
+		serchfind = regexp.test(search);
+		console.log(serchfind);
+		return serchfind;
+	}
 }

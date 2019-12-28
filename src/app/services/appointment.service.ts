@@ -47,8 +47,8 @@ export class AppointmentService {
 	}
 
 	public cancel = (id: number): Observable<boolean> => {
-		let toAdd = JSON.stringify(id);
-		let actionUrl = Constants.apiServer + '/service/appointment/cancel';
+		const toAdd = JSON.stringify(id);
+		const actionUrl = Constants.apiServer + '/service/appointment/cancel';
 		return this.http.post(actionUrl, toAdd, { headers: this.headers })
 			.map((response: Response) => {
 				console.log(response);
@@ -62,8 +62,8 @@ export class AppointmentService {
 	}
 
 	public confirm = (id: number): Observable<boolean> => {
-		let toAdd = JSON.stringify(id);
-		let actionUrl = Constants.apiServer + '/service/appointment/confirm';
+		const toAdd = JSON.stringify(id);
+		const actionUrl = Constants.apiServer + '/service/appointment/confirm';
 		return this.http.post(actionUrl, toAdd, { headers: this.headers })
 			.map((response: Response) => {
 				console.log(response);

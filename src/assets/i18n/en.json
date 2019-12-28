@@ -27,6 +27,8 @@
     "ZIP_CODE": "Zip Code",
     "CONTACT": "Contact",
     "EMERGENCY_CONTACT": "Emergency contact",
+    "EMERGENCY_CONTACT_NAME": "Emergency contact name",
+    "EMERGENCY_CONTACT_PHONE": "Emergency contact phone",
     "CONTACT_PHONE": "Contact Phone",
     "PAYER_TYPE": "Payer Type",
     "ACCOUNT_NUMBER": "Account Number",
@@ -429,6 +431,7 @@
     "MINIMUM_VALUE": "Minimum value is: ",
     "MAXIMUM_VALUE": "Maximal value is: ",
     "EMAIL_REQUIRED": "E-mail required",
+    "EMAIL_USED":"This E-mail is already used",
     "PASSWORD_REQUIRED": "Password required"
   },
   "DATE": {

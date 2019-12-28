@@ -99,11 +99,13 @@ export class UserService {
     return this.http.post(actionUrl, toAdd, { headers: this.headers })
       .map((response: Response) => {
         // login successful if there's a jwt token in the response
+        console.log(response);
         if (response) {
           const data = response.json();
-          this.token.saveAuthData(data);
+          
           if (data.token !== '') {
-            this.globalEventsManager.showMenu = true;
+            this.token.saveAuthData(data);
+            //this.globalEventsManager.showMenu = true;
           }
           return response.json();
 

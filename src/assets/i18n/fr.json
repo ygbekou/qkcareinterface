@@ -27,6 +27,8 @@
     "ZIP_CODE": "Code Postal",
     "CONTACT": "Contact",
     "EMERGENCY_CONTACT": "Personne à prévenir",
+    "EMERGENCY_CONTACT_NAME": "Nom Personne à prévenir",
+    "EMERGENCY_CONTACT_PHONE": "Tél. Personne à prévenir",
     "CONTACT_PHONE": "Téléphone",
     "PAYER_TYPE": "Type de Payeur",
     "ACCOUNT_NUMBER": "Numéro de compte",
@@ -429,6 +431,7 @@
     "MINIMUM_VALUE": "La valeur minimale est: ",
     "MAXIMUM_VALUE": "La valeur maximale es: ",
     "EMAIL_REQUIRED": "E-mail requis",
+    "EMAIL_USED":"Cet E-mail est déjà utilisé",
     "PASSWORD_REQUIRED": "Mot de passe requis"
   },
   "DATE": {
