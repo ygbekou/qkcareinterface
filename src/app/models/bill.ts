@@ -1,13 +1,9 @@
-import { Employee, Reference, PatientService, PatientPackage, Product } from './';
-import { Appointment } from './appointment';
-import { Admission } from './admission';
-import { Visit } from './visit';
+import {
+  Admission, Visit, Appointment, PatientService, PatientPackage,
+  Investigation, Service, Package, Product, LabTest, BedAssignment, Employee, Reference
+} from '.';
+
 import { PatientSaleProduct } from './stocks/patientSale';
-import { Investigation } from './investigation';
-import { BedAssignment } from './bedAssignment';
-import { Service } from './service';
-import { Package } from './package';
-import { LabTest } from './labTest';
 
 export class Bill {
   id: number;
@@ -24,13 +20,12 @@ export class Bill {
   paid: number;
   due: number;
   status: number;
-  
   billServices: BillService[] = [];
   billPayments: BillPayment[] = [];
-  
+
 }
 
-export class BillPayment                                                                                                                                                {
+export class BillPayment {
   id: number;
   bill: Bill;
   paymentDate: Date;
@@ -66,10 +61,6 @@ export class BillService {
   systemGenerated: string;
 
   constructor() {
-    // this.investigation = new Investigation();
-    // this.patientService = new PatientService();
-    // this.patientSaleProduct = new PatientSaleProduct();
-    // this.patientPackage = new PatientPackage();
     this.doctorOrderType = new Reference();
   }
 }

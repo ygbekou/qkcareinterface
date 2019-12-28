@@ -427,7 +427,9 @@
     "IS_REQUIRED": "is required",
     "FIELD_REQUIRED": "Field required",
     "MINIMUM_VALUE": "Minimum value is: ",
-    "MAXIMUM_VALUE": "Maximal value is: "
+    "MAXIMUM_VALUE": "Maximal value is: ",
+    "EMAIL_REQUIRED": "E-mail required",
+    "PASSWORD_REQUIRED": "Password required"
   },
   "DATE": {
     "1": "Jan",

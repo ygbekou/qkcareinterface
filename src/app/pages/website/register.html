@@ -36,8 +36,8 @@
     <br />
     <p-card *ngIf="user.id>0">
       <p-header>
-        <h6> <font color="green">{{ 'MESSAGE.MATCHING_RECORD_FOUND' | translate }}</font> 
-        </h6>
+        <h2> <font color="green">{{ 'MESSAGE.MATCHING_RECORD_FOUND' | translate }}</font> 
+        </h2>
       </p-header>
       <div class="ui-grid-row">
         <h6>{{ 'COMMON.PATIENT_NAME' | translate }} :
@@ -59,8 +59,8 @@
     <br />
     <p-card *ngIf="user.id>0">
       <p-header>
-        <h6>  <font color="green">{{ 'MESSAGE.CHOOSE_MAIL_PASSWD' | translate }}</font>
-        </h6>
+        <h2>  <font color="green">{{ 'MESSAGE.CHOOSE_MAIL_PASSWD' | translate }}</font>
+        </h2>
       </p-header>
       <div class="ui-grid-row" *ngIf="user.id>0">
         <div class="form-group">
@@ -87,6 +87,7 @@
         </div>
       </div>
     </p-card>
+    <br/>
   </form>
 </div>
 <app-web-footer></app-web-footer>

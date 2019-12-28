@@ -1,6 +1,7 @@
 <app-web-header></app-web-header>
-<p-dialog header="First Time Login - Change Password" [(visible)]="display" [style]="{width: '350px', height: '350px'}"
-  (onHide)="closePasswordUpdateDialog()" [blockScroll]="true" [draggable]="false">
+<p-dialog header="First Time Login - Change Password" [(visible)]="display"
+  [style]="{width: '350px', height: '350px'}" (onHide)="closePasswordUpdateDialog()" [blockScroll]="true"
+  [draggable]="false" positionTop="150">
   <form name="form1" (ngSubmit)="f1.form.valid && changePassword()" #f1="ngForm" validate>
     <div class="form-group">
       <label for="password1">{{ 'COMMON.NEW_PASSWORD' | translate }}:<font color="red">*</font></label>
@@ -29,7 +30,7 @@
     <div class="ui-grid-row">
       <div class="form-group">
         <label for="email">{{ 'COMMON.USERNAME' | translate }}<font color="red">*</font></label>
-        <input type="text" pInputText class="form-control" id="email" [(ngModel)]="user.userName" name="email"
+        <input type="text" pInputText class="form-control" id="email"   [(ngModel)]="user.userName" name="email"
           #email="ngModel">
         <p-message *ngIf="f.submitted && email.invalid" severity="error" text="Field is required">
         </p-message>
@@ -50,15 +51,15 @@
     </div>
 
     <div class="ui-grid-row">
-      <hr />
-      <div class="form-group">
+      <hr/>
+      <div class="form-group"> 
         <button pButton (click)="button='register'" icon="fa fa-user-plus"
           label="{{'COMMON.REGISTER' | translate}}"></button>
       </div>
     </div>
 
     <div class="ui-grid-row">
-      <hr />
+      <hr/>
       <div class="form-group">
         <label for="">{{'MESSAGE.FORGET_PASSWORD' | translate}}</label>
         &nbsp;&nbsp;
