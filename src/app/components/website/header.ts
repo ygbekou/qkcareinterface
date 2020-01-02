@@ -116,11 +116,11 @@ export class Header implements OnInit, OnDestroy {
 
     gotoDashboard() {
         this.globalEventsManager.showMenu = true;
-        console.log("going to dashboard");
+        console.log('going to dashboard');
         this.router.navigate(['/admin/dashboard']);
-        console.log("gone to dashboard");
+        console.log('gone to dashboard');
         // window.location.reload();
-        console.log("after reload to dashboard");
+        console.log('after reload to dashboard');
     }
 
 }

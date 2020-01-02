@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import {NgModule} from '@angular/core';
 import { AppComponent} from './app.component';
 import { GenericService, TokenStorage } from './services';
 import { Hospital } from './models';

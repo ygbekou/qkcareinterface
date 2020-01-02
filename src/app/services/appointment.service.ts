@@ -76,9 +76,8 @@ export class AppointmentService {
 			.catch(this.handleError);
 	}
 
-	public getByMonths = (): Observable<any[]> => {
-
-		const actionUrl = Constants.apiServer + '/service/appointment/list/byMonth';
+	public getByMonths = (id: string): Observable<any[]> => {
+		const actionUrl = Constants.apiServer + '/service/appointment/list/byMonth/' + id;
 		return this.http.get(actionUrl, { headers: this.headers })
 			.map((response: Response) => <any[]>response.json())
 			.catch(this.handleError);

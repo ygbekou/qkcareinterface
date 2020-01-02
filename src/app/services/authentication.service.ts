@@ -36,7 +36,6 @@ export class AuthenticationService {
             this.tokenStorage.saveAuthData(data);
           }
           return response.json();
-
         } else {
           return null;
         }

@@ -1,5 +1,5 @@
 <app-web-header></app-web-header>
-<p-dialog header="First Time Login - Change Password" [(visible)]="display"
+<p-dialog header="{{ 'COMMON.NEW_PASSWORD' | translate }}" [(visible)]="display"
   [style]="{width: '350px', height: '350px'}" [blockScroll]="true"
   [draggable]="false" positionTop="150">
   <form name="form1" (ngSubmit)="f1.form.valid && changePassword()" #f1="ngForm" validate>
