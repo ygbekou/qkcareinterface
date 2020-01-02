@@ -19,6 +19,8 @@ import { DoctorOrderList } from './doctorOrderList';
 import { PatientMedicineList } from './patientMedicineList';
 import { BaseComponent } from './baseComponent';
 import { TranslateService } from '@ngx-translate/core';
+import { SummaryDetails } from './summaryDetails';
+import { SummaryList } from './summaryList';
 
 @Component({
 	selector: 'app-admission-details',
@@ -37,6 +39,8 @@ export class AdmissionDetails extends BaseComponent implements OnInit, OnDestroy
 	@ViewChild(VitalSignList, {static: false}) vitalSignList: VitalSignList;
 	@ViewChild(PrescriptionList, {static: false}) prescriptionList: PrescriptionList;
 	@ViewChild(PatientMedicineList, {static: false}) patientMedicineList: PatientMedicineList;
+	@ViewChild(SummaryDetails, {static: false}) summaryDetails: SummaryDetails;
+	@ViewChild(SummaryList, {static: false}) summaryList: SummaryList;
 
 	admission: Admission = new Admission();
 	medicineCols: any[];
@@ -208,6 +212,11 @@ export class AdmissionDetails extends BaseComponent implements OnInit, OnDestroy
 	onPrescriptionSaved($event) {
 		this.prescriptionList.updateTable($event);
 	}
+	onSummarySaved($event) {
+		this.summaryList.updateTable($event);
+		//alert('Here')
+		this.summaryList.updateRowGroupMetaData();
+	}
 
 	onVitalSignSelected($event) {
 		const vitalSignId = $event;
@@ -230,6 +239,10 @@ export class AdmissionDetails extends BaseComponent implements OnInit, OnDestroy
 	onPatientSaleSelected($event) {
 		const patientSaleId = $event;
 		this.patientSaleDetails.getPatientSale(patientSaleId);
+	}
+	onSummarySelected($event) {
+		const summaryId = $event;
+		this.summaryDetails.getSummary(summaryId);
 	}
 
 	clear() {

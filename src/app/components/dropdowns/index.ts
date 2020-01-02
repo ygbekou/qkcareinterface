@@ -42,3 +42,6 @@ export * from './dropdown.laterality';
 export * from './dropdown.resource';
 export * from './dropdown.role';
 export * from './dropdown.menuItem';
+export * from './dropdown.summaryStatus';
+export * from './dropdown.summaryType';
+export * from './dropdown.medicalTeam';

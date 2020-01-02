@@ -386,7 +386,22 @@
     "VALIDATE": "Validate",
     "TEMP_CODE": "Temporary Code",
     "APPROVE": "Approve",
-    "RELOAD": "Reload"
+    "RELOAD": "Reload",
+    "SELECT_NAME_TO_FILTER": "Select a lab to filter",
+    "SUMMARY_AND_REPORT": "Summary & Report",
+    "TYPE": "Type",
+    "AUTHOR": "Author",
+    "SUBJECT": "Subject",
+    "PE_SYSTEM_TYPE_LIST": "Physical Exam System Types",
+    "PE_SYSTEM_LIST": "Physical Exam Systems",
+    "SUMMARY_TYPE_LIST": "Summary Type List",
+    "SUMMARY_TYPE": "Summary Type",
+    "PHYSICAL_EXAM_TYPE_ASSIGNMENT": "Assign Physical Exam Type",
+    "PHYSICAL_EXAM_TYPE_ASSIGNMENT_LIST": "Physical Exam Type Assignment List",
+    "PHYSICAL_EXAM_TYPE": "Physical Exam Type",
+    "SUMMARY_TYPE_TEMPLATE_LIST": "Summary Type Template List",
+    "SUMMARY_TYPE_TEMPLATE": "Summary Type Template",
+    "TEMPLATE": "Template"
   },
   "MESSAGE": {
     "TRANFER_DOCTOR_FAILED": "The transfer doctor should be different from the current doctor.",

@@ -386,7 +386,22 @@
     "VALIDATE": "Valider",
     "TEMP_CODE": "Code temporaire",
     "APPROVE": "Approver",
-    "RELOAD": "Recharger"
+    "RELOAD": "Recharger",
+    "SELECT_NAME_TO_FILTER": "Selectionner un lab pour filtrer",
+    "SUMMARY_AND_REPORT": "Rapport & sommaire",
+    "TYPE": "Type",
+    "AUTHOR": "Autheur",
+    "SUBJECT": "Subjet",
+    "PE_SYSTEM_TYPE_LIST": "Types de Physical Exam",
+    "PE_SYSTEM_LIST": "Sytems de Physical Exam",
+    "SUMMARY_TYPE_LIST": "Types de rapport",
+    "SUMMARY_TYPE": "Type de Rapport",
+    "PHYSICAL_EXAM_TYPE_ASSIGNMENT": "Assigner Types d'examen physique",
+    "PHYSICAL_EXAM_TYPE_ASSIGNMENT_LIST": "Liste des Type d'examen assigner",
+    "PHYSICAL_EXAM_TYPE": "Physical Exam Type",
+    "SUMMARY_TYPE_TEMPLATE_LIST": "Liste des templates de Type de Rapport",
+    "SUMMARY_TYPE_TEMPLATE": "Template de Type de Rapport",
+    "TEMPLATE": "Modèle"
   },
   "MESSAGE": {
     "TRANFER_DOCTOR_FAILED": "Le nouveau docteur assigné doit être différent de l'ancien.",

@@ -6,6 +6,7 @@ import { Constants } from '../app.constants';
 import { GlobalEventsManager } from './globalEventsManager';
 import { TokenStorage } from './token.storage';
 import { Http, Response, Headers } from '@angular/http';
+import { Cookie } from 'ng2-cookies';
 
 @Injectable()
 export class AuthenticationService {
@@ -34,6 +35,7 @@ export class AuthenticationService {
           if (data.token !== '' && (data.firstTimeLogin === null ||
             data.firstTimeLogin === '' || data.firstTimeLogin === 'N')) {
             this.tokenStorage.saveAuthData(data);
+            Cookie.set('userName', user.userName);
           }
           return response.json();
         } else {
