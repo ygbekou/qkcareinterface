@@ -1,51 +1,55 @@
-<p-autoComplete [(ngModel)]="filteredTestName" [suggestions]="testNames" (completeMethod)="filterByString($event)" [dropdown]="true" ></p-autoComplete>
-	<div class="ui-g-12 ui-sm-12" style="padding: 15px;">
-		<p-table [columns]="iTCols" [value]="investigationTests" 
-			[responsive]="true" *ngIf="investigationTests.length > 0" [scrollable]="true" scrollHeight="100px" [style]="{width:'100%'}"> 
-			<ng-template pTemplate="caption"> 
-		        {{ 'COMMON.INVESTIGATION_LIST' | translate }}
-			</ng-template>
-			<ng-template pTemplate="colgroup" let-columns>
-				<colgroup>
-					<col *ngFor="let col of columns" style="width:120px">
-				</colgroup>
-			</ng-template>
-			<ng-template pTemplate="header" let-columns>
-				<tr>
-					<th *ngFor="let col of columns" [pSortableColumn]="col.field">
-						{{col.header}}
-						<p-sortIcon *ngIf="col.field === 'name'" [field]="col.field"></p-sortIcon>
-					</th>
-					<th style="width: 15%; text-align: center" *ngIf="showActions">Action</th>
-				</tr>
-			</ng-template> 
-			<ng-template pTemplate="body" let-rowData let-expanded="expanded" let-j="rowIndex" let-columns="columns">
-				<tr>
-					<td *ngFor="let col of columns">
-						<div *ngIf="col.type === 'Datetime'">
-							{{rowData[col.field] | date: globalEventsManager.DATE_TIME_FORMAT}}
-						</div>
-						<div *ngIf="col.type !== 'Datetime'">
-							<div *ngIf="col.field == 'statusDesc'">
-								{{getStatusDesc(rowData)}}</div>
-							<div *ngIf="col.field !== 'statusDesc'">
-								{{rowData[col.field]}}</div>
-						</div>
-					</td>
-					<td *ngIf="showActions">
-						<p-button label="Col" (click)="showInvestigationDialog('Collection', rowData)"
-							*ngIf="rowData.status === 0 "></p-button> &nbsp;
-						<p-button label="Rej" (click)="showInvestigationDialog('Rejection', rowData)"
-							*ngIf="rowData.status === 0 || rowData.status === 1 || rowData.status === 3"></p-button> &nbsp;
-						<p-button label="Fin" (click)="showInvestigationDialog('Finalization', rowData)"
-							*ngIf="rowData.status === 1 || rowData.status == 3"></p-button> &nbsp;
-						<button type="button" pButton icon="fa fa-edit" (click)="edit(rowData.id)"></button> &nbsp;
-						<button type="button" pButton icon="fa fa-eraser" *ngIf="rowData.status === 0 || rowData.status === 1"
-							 (click)="deleteItem(investigationTests, rowData.id, 'Investigation')"></button>
-					</td>
-				</tr>
-			</ng-template> 
-			</p-table>
-	</div>
+
+<div class="ui-grid-row">
+	<label for="billDate">{{ 'COMMON.SELECT_NAME_TO_FILTER' | translate }}</label>&nbsp;&nbsp;&nbsp;&nbsp;
+	<p-autoComplete [(ngModel)]="filteredTestName" [suggestions]="testNames" (completeMethod)="filterByString($event)" 
+		(onSelect)="filterResults($event)" [dropdown]="true" ></p-autoComplete>
+</div>	
+<p-table [columns]="iTCols" [value]="investigationResults" 
+	[responsive]="true" *ngIf="investigationResults.length > 0" [scrollable]="true" scrollHeight="100px" [style]="{width:'100%'}"> 
+	<ng-template pTemplate="caption"> 
+		{{ 'COMMON.INVESTIGATION_LIST' | translate }}
+	</ng-template>
+	<ng-template pTemplate="colgroup" let-columns>
+		<colgroup>
+			<col *ngFor="let col of columns" style="width:120px">
+		</colgroup>
+	</ng-template>
+	<ng-template pTemplate="header" let-columns>
+		<tr>
+			<th *ngFor="let col of columns" [pSortableColumn]="col.field">
+				{{col.header}}
+				<p-sortIcon *ngIf="col.field === 'name'" [field]="col.field"></p-sortIcon>
+			</th>
+			<th style="width: 15%; text-align: center" *ngIf="showActions">Action</th>
+		</tr>
+	</ng-template> 
+	<ng-template pTemplate="body" let-rowData let-expanded="expanded" let-j="rowIndex" let-columns="columns">
+		<tr>
+			<td *ngFor="let col of columns">
+				<div *ngIf="col.type === 'Datetime'">
+					{{rowData[col.field] | date: globalEventsManager.DATE_TIME_FORMAT}}
+				</div>
+				<div *ngIf="col.type !== 'Datetime'">
+					<div *ngIf="col.field == 'statusDesc'">
+						{{getStatusDesc(rowData)}}</div>
+					<div *ngIf="col.field !== 'statusDesc'">
+						{{rowData[col.field]}}</div>
+				</div>
+			</td>
+			<td *ngIf="showActions">
+				<p-button label="Col" (click)="showInvestigationDialog('Collection', rowData)"
+					*ngIf="rowData.status === 0 "></p-button> &nbsp;
+				<p-button label="Rej" (click)="showInvestigationDialog('Rejection', rowData)"
+					*ngIf="rowData.status === 0 || rowData.status === 1 || rowData.status === 3"></p-button> &nbsp;
+				<p-button label="Fin" (click)="showInvestigationDialog('Finalization', rowData)"
+					*ngIf="rowData.status === 1 || rowData.status == 3"></p-button> &nbsp;
+				<button type="button" pButton icon="fa fa-edit" (click)="edit(rowData.id)"></button> &nbsp;
+				<button type="button" pButton icon="fa fa-eraser" *ngIf="rowData.status === 0 || rowData.status === 1"
+						(click)="deleteItem(investigationTests, rowData.id, 'Investigation')"></button>
+			</td>
+		</tr>
+	</ng-template> 
+</p-table>
+	
 
 

@@ -64,6 +64,7 @@ export class ReferenceList extends BaseComponent implements OnInit, OnDestroy {
         .queryParams
         .subscribe(params => {
           this.referenceType = params['referenceType'];
+          
           if (this.referenceType == null) {
             this.referenceType = this.globalEventsManager.selectedReferenceType;
             this.hiddenMenu = true;

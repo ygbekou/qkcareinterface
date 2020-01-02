@@ -110,6 +110,11 @@ export class ReferenceDetails extends BaseComponent implements OnInit, OnDestroy
         this.reference.parent.id = this.category.id;
         this.referenceType = 'Category';
       }
+
+      if (this.globalEventsManager.selectedParentId > 0) {
+        this.reference.parent.id = this.globalEventsManager.selectedParentId;
+        this.referenceType = 'Category';
+      }
       
       this.genericService.save(this.reference, this.globalEventsManager.selectedReferenceType)
         .subscribe(result => {

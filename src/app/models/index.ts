@@ -41,4 +41,5 @@ export * from './enquiry';
 export * from './patientService';
 export * from './radiology/radiologyConfig';
 export * from './authorization/auth';
+export * from './summary';
 

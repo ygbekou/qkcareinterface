@@ -45,12 +45,13 @@ export class InvestigationListByDate extends BaseComponent implements OnInit, On
   listMessage = '';
 
   filteredTestName: string;
+  initialTestNames: string[] = [];
   testNames: string[] = [];
   
   
   constructor
     (
-    private globalEventsManager: GlobalEventsManager,
+    public globalEventsManager: GlobalEventsManager,
     public genericService: GenericService,
     private investigationService: InvestigationService,
     public translate: TranslateService,
@@ -146,7 +147,6 @@ export class InvestigationListByDate extends BaseComponent implements OnInit, On
 
     let resultMap = new Map();
 
-
     this.iTCols = [];
     this.iTCols.push({field: 'name', header : 'NAME', type: 'String', style: {width: '12%', 'text-align': 'center'}})
     
@@ -156,19 +156,24 @@ export class InvestigationListByDate extends BaseComponent implements OnInit, On
     }
 
     let names = new Set<string>();
+    names.add(' ');
+    this.investigationResults = [];
     
     for (let index in this.investigationTests) {
       
       if (index === '0') {
         continue;
       }
-      for (let i = 0; i < 10; i++) {
-        this.investigationResults.push(this.investigationTests[index]);
-        names.add(this.investigationTests[index]['name'])
-      }
+     
+      this.investigationResults.push(this.investigationTests[index]);
+      names.add(this.investigationTests[index]['name'])
+      
     }
 
-    this.testNames = Array.from(names);
+    this.testNames = Array.from(names).sort(function(a, b){return b < a ? -1 : 1});
+    this.testNames.unshift('ALL');
+    this.initialTestNames = Array.from(names).sort(function(a, b){return b < a ? -1 : 1});
+    this.initialTestNames.unshift('ALL');
 
   }
 
@@ -196,12 +201,42 @@ export class InvestigationListByDate extends BaseComponent implements OnInit, On
   
   
   filterByString(event) {
-    if (event.query === '') {
-      this.testNames = this.testNames;
-    }
-    this.testNames = this.testNames.filter(e => e.startsWith(event.query));
+    if (event.query === ' ') {
+      this.testNames = this.initialTestNames;
+    } 
+      this.testNames = this.initialTestNames.filter(e => e.startsWith(event.query));
+    
+  }
 
-   }
+  filterResults(event) {
+    if (event === 'ALL') {
+      // this.investigationResults = this.investigationTests;
+      this.generateListHeaders();
+    } else {
+      this.investigationResults = this.investigationTests.filter(e => 
+        
+          e['name'] === event
+        
+      );
+
+
+      this.iTCols = [];
+      this.iTCols.push({field: 'name', header : 'NAME', type: 'String', style: {width: '12%', 'text-align': 'center'}})
+
+      for (let index in this.investigationResults) {
+        let keys = Object.keys(this.investigationResults[index]);
+        keys = keys.sort(function(a, b){return b < a ? -1 : 1});
+        for (let keyIndex in keys) {
+          if ('name' !== keys[keyIndex]) {
+            this.iTCols.push({field: keys[keyIndex], header : keys[keyIndex], type: 'number'});
+          }
+        }
+      }
+    }
+
+    
+
+  }
 
   showInvestigationDialog(actionType: string, rowData: Investigation) {
     this.actionType = actionType;

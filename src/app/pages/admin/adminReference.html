@@ -157,6 +157,45 @@
           <app-hospitalLocation-list (hospitalLocationIdEvent)="onHospitalLocationSelected($event)"></app-hospitalLocation-list>
         </div>
       </p-tabPanel>
+      <p-tabPanel id="summaryType" header="{{'COMMON.SUMMARY_TYPE_LIST' |translate}}">
+        <div *ngIf="activeTab == 20" class="ui-grid-row">
+          <app-summaryType-details (summaryTypeSaveEvent)="onSummaryTypeSaved($event)"></app-summaryType-details>
+          <br/>
+          <app-summaryType-list (summaryTypeIdEvent)="onSummaryTypeSelected($event)"></app-summaryType-list>
+        </div>
+      </p-tabPanel>
+      <p-tabPanel header="{{'COMMON.PE_SYSTEM_TYPE_LIST' |translate}}">
+        <div *ngIf="activeTab == 21" class="ui-grid-row">
+          <app-reference-details [canSave]="permitSave(null, 'Reference Config')" 
+            (referenceSaveEvent)="onReferenceSaved($event)"></app-reference-details>
+          <br/>
+          <app-reference-list [canView]="permitView('Reference Config')" [canDelete]="permitDelete('Reference Config')"
+              (referenceIdEvent)="onReferenceSelected($event, 'Category')"></app-reference-list>
+        </div>
+      </p-tabPanel>
+      <p-tabPanel header="{{'COMMON.PE_SYSTEM_LIST' |translate}}">
+        <div *ngIf="activeTab == 22" class="ui-grid-row">
+          <app-referenceWithCategory-details [canSave]="permitSave(null, 'Reference Config')" 
+            (referenceWithCategorySaveEvent)="onReferenceWithCategorySaved($event)"></app-referenceWithCategory-details>
+          <br/>
+          <app-referenceWithCategory-list [canView]="permitView('Reference Config')" [canDelete]="permitDelete('Reference Config')"
+            (referenceWithCategoryIdEvent)="onReferenceWithCategorySelected($event, 'PhysicalExamSystem')"></app-referenceWithCategory-list>
+        </div>
+      </p-tabPanel>
+      <p-tabPanel id="physicalExamTypeAssignment" header="{{'COMMON.PHYSICAL_EXAM_TYPE_ASSIGNMENT' |translate}}">
+        <div *ngIf="activeTab == 23" class="ui-grid-row">
+          <app-physicalExamTypeAssignment-details (physicalExamTypeAssignmentSaveEvent)="onPhysicalExamTypeAssignmentSaved($event)"></app-physicalExamTypeAssignment-details>
+          <br/>
+          <app-physicalExamTypeAssignment-list (physicalExamTypeAssignmentIdEvent)="onPhysicalExamTypeAssignmentSelected($event)"></app-physicalExamTypeAssignment-list>
+        </div>
+      </p-tabPanel>
+      <p-tabPanel id="summaryTypeTemplate" header="{{'COMMON.SUMMARY_TYPE_TEMPLATE' |translate}}">
+        <div *ngIf="activeTab == 24" class="ui-grid-row">
+          <app-summaryTypeTemplate-details (summaryTypeTemplateSaveEvent)="onSummaryTypeTemplateSaved($event)"></app-summaryTypeTemplate-details>
+          <br/>
+          <app-summaryTypeTemplate-list (summaryTypeTemplateIdEvent)="onSummaryTypeTemplateSelected($event)"></app-summaryTypeTemplate-list>
+        </div>
+      </p-tabPanel>
     </p-tabView>
   </div>
 

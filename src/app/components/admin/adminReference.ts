@@ -19,6 +19,12 @@ import { MedicineList } from './medicineList';
 import { BaseComponent } from './baseComponent';
 import { TranslateService } from '@ngx-translate/core';
 import { ConfirmationService } from 'primeng/api';
+import { SummaryTypeDetails } from './summaryTypeDetails';
+import { SummaryTypeList } from './summaryTypeList';
+import { PhysicalExamTypeAssignmentDetails } from './physicalExamTypeAssignmentDetails';
+import { PhysicalExamTypeAssignmentList } from './physicalExamTypeAssignmentList';
+import { SummaryTypeTemplateDetails } from './summaryTypeTemplateDetails';
+import { SummaryTypeTemplateList } from './summaryTypeTemplateList';
 
 @Component({
   selector: 'app-admin-reference',
@@ -41,6 +47,13 @@ export class AdminReference extends BaseComponent implements OnInit, OnDestroy {
   @ViewChild(LabTestList, {static: false}) labTestList: LabTestList;
   @ViewChild(HospitalLocationDetails, {static: false}) hospitalLocationDetails: HospitalLocationDetails;
   @ViewChild(HospitalLocationList, {static: false}) hospitalLocationtList: HospitalLocationList;
+  @ViewChild(SummaryTypeDetails, {static: false}) summaryTypeDetails: SummaryTypeDetails;
+  @ViewChild(SummaryTypeList, {static: false}) summaryTypeList: SummaryTypeList;
+  @ViewChild(PhysicalExamTypeAssignmentDetails, {static: false}) physicalExamTypeAssignmentDetails: PhysicalExamTypeAssignmentDetails;
+  @ViewChild(PhysicalExamTypeAssignmentList, {static: false}) physicalExamTypeAssignmentList: PhysicalExamTypeAssignmentList;
+  @ViewChild(SummaryTypeTemplateDetails, {static: false}) summaryTypeTemplateDetails: SummaryTypeTemplateDetails;
+  @ViewChild(SummaryTypeTemplateList, {static: false}) summaryTypeTemplateList: SummaryTypeTemplateList;
+  
 
   public user: User;
   public patient: Patient;
@@ -115,7 +128,7 @@ export class AdminReference extends BaseComponent implements OnInit, OnDestroy {
   }
 
   onReferenceWithCategorySaved($event) {
-	this.referenceWithCategoryList.updateTable($event);
+	  this.referenceWithCategoryList.updateTable($event);
   }
 
   onMedicineSelected($event) {
@@ -145,73 +158,107 @@ export class AdminReference extends BaseComponent implements OnInit, OnDestroy {
 	this.hospitalLocationtList.updateTable($event);
   }
 
+  onSummaryTypeSelected($event) {
+    const summaryTypeId = $event;
+    this.summaryTypeDetails.getSummaryType(summaryTypeId);
+  }
+
+  onSummaryTypeSaved($event) {
+	  this.summaryTypeList.updateTable($event);
+  }
+
+  onPhysicalExamTypeAssignmentSelected($event) {
+    const physicalExamTypeAssignmentId = $event;
+    this.physicalExamTypeAssignmentDetails.getPhysicalExamTypeAssignment(physicalExamTypeAssignmentId);
+  }
+
+  onPhysicalExamTypeAssignmentSaved($event) {
+	  this.physicalExamTypeAssignmentList.updateTable($event);
+  }
+
+  onSummaryTypeTemplateSelected($event) {
+    const summaryTypeTemplateId = $event;
+    this.summaryTypeTemplateDetails.getSummaryTypeTemplate(summaryTypeTemplateId);
+  }
+
+  onSummaryTypeTemplateSaved($event) {
+	  this.summaryTypeTemplateList.updateTable($event);
+  }
+
   onTabChange(evt) {
 	this.activeTab = evt.index;
     setTimeout(() => {
 		console.log(this.activeTab);
-        if (evt.index === 0) { 
-		  	this.processReference(Constants.CATEGORY_SYMPTOM, 'Category', 'SYMPTOM_GROUP');
-        } else if (evt.index === 1) {
+    if (evt.index === 0) { 
+		  this.processReference(Constants.CATEGORY_SYMPTOM, 'Category', 'SYMPTOM_GROUP');
+    } else if (evt.index === 1) {
 			this.processReferenceWithCategory(Constants.CATEGORY_SYMPTOM, 'Symptom', 'SYMPTOM');
-        } else if (evt.index === 2) {
+    } else if (evt.index === 2) {
 			this.processReference(Constants.CATEGORY_ALLERGY, 'Category', 'ALLERGY_TYPE');
-        } else if (evt.index === 3) {
+    } else if (evt.index === 3) {
 			this.processReferenceWithCategory(Constants.CATEGORY_ALLERGY, 'Allergy', 'ALLERGY');
-        } else if (evt.index === 4) {
-          	this.processReference(null, 'Vaccine', 'VACCINE');
-        } else if (evt.index === 5) {
+    } else if (evt.index === 4) {
+      this.processReference(null, 'Vaccine', 'VACCINE');
+    } else if (evt.index === 5) {
 			this.processReference(null, 'MedicalHistory', 'MEDICAL_HISTORY');
-        }  else if (evt.index === 6) {
-          	this.processReference(null, 'SocialHistory', 'SOCIAL_HISTORY');
-        } else if (evt.index === 7) {
+    }  else if (evt.index === 6) {
+      this.processReference(null, 'SocialHistory', 'SOCIAL_HISTORY');
+    } else if (evt.index === 7) {
 			this.processReference(null, 'PayerType', 'PAYER_TYPE');
-        } else if (evt.index === 8) {
+    } else if (evt.index === 8) {
 			this.processReference(null, 'DoctorOrderType', 'DOCTOR_ORDER_TYPE');
-        } else if (evt.index === 9) {
+    } else if (evt.index === 9) {
 			this.processReference(null, 'DoctorOrderPriority', 'DOCTOR_ORDER_PRIORITY');
-        } else if (evt.index === 10) {
+    } else if (evt.index === 10) {
 			this.processReference(null, 'DoctorOrderKind', 'DOCTOR_ORDER_KIND');
-        } else if (evt.index === 11) {
+    } else if (evt.index === 11) {
           //  Do Nothing
-        } else if (evt.index === 12) {
+    } else if (evt.index === 12) {
 			this.processReference(null, 'Manufacturer', 'MANUFACTURER');
-        } else if (evt.index === 13) {
-          	this.processReference(Constants.CATEGORY_MEDICINE, 'Category', 'MEDICINE_TYPE');
-        } else if (evt.index === 14) {
+    } else if (evt.index === 13) {
+      this.processReference(Constants.CATEGORY_MEDICINE, 'Category', 'MEDICINE_TYPE');
+    } else if (evt.index === 14) {
 			this.processReferenceWithCategory(Constants.CATEGORY_MEDICINE, 'Product', 'MEDICINE');
-        } else if (evt.index === 15) {
+    } else if (evt.index === 15) {
 			this.processReference(Constants.CATEGORY_SERVICE_TARIF, 'Category', 'TARIF');
-        } else if (evt.index === 16) {
+    } else if (evt.index === 16) {
 			this.processReference(null, 'LabTestMethod', 'LAB_TEST_METHOD');
-        } else if (evt.index === 17) {
+    } else if (evt.index === 17) {
 			this.processReference(null, 'LabTestUnit', 'LAB_TEST_UNIT');
-        } else if (evt.index === 18) {
-          this.labTestList.getAllLabTests();
-        } else if (evt.index === 19) {
-          this.hospitalLocationtList.getAllHospitalLocations();
-        } else if (evt.index === 20) {
-        }
+    } else if (evt.index === 18) {
+      this.labTestList.getAllLabTests();
+    } else if (evt.index === 19) {
+      this.hospitalLocationtList.getAllHospitalLocations();
+    } else if (evt.index === 20) {
+      this.summaryTypeList.getList();
+    } else if (evt.index === 21) {
+      this.processReference(Constants.CATEGORY_PE_SYSTEM, 'Category', 'PE_SYSTEM_TYPE');
+    } else if (evt.index === 22) {
+			this.processReferenceWithCategory(Constants.CATEGORY_PE_SYSTEM, 'PhysicalExamSystem', 'PE_SYSTEM');
+    } else if (evt.index === 23) {
+      this.physicalExamTypeAssignmentList.getList();
+    }
 
      }, 0);
   }
 
 
   processReference(categoryNumber: number, referenceType: string, listLabel: string) {
-	this.globalEventsManager.selectedParentId = categoryNumber;
-	this.globalEventsManager.selectedReferenceType = referenceType;
-	setTimeout(() => {
-		this.referenceList.updateCols(listLabel);
-	}, 0);
-	this.referenceList.getAll();
+    this.globalEventsManager.selectedParentId = categoryNumber;
+    this.globalEventsManager.selectedReferenceType = referenceType;
+    setTimeout(() => {
+      this.referenceList.updateCols(listLabel);
+    }, 0);
+    this.referenceList.getAll();
   }
 
 
   processReferenceWithCategory(categoryNumber: number, referenceType: string, listLabel: string) {
-	this.globalEventsManager.selectedParentId = categoryNumber;
-	this.globalEventsManager.selectedReferenceWithCategoryType = referenceType;
-	this.categoryDropdown.getAllCategories(categoryNumber);
-	this.referenceWithCategoryList.updateCols(listLabel);
-	this.referenceWithCategoryList.getAll();
+    this.globalEventsManager.selectedParentId = categoryNumber;
+    this.globalEventsManager.selectedReferenceWithCategoryType = referenceType;
+    this.categoryDropdown.getAllCategories(categoryNumber);
+    this.referenceWithCategoryList.updateCols(listLabel);
+    this.referenceWithCategoryList.getAll();
   }
 
 }

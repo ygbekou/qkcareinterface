@@ -162,5 +162,17 @@
     <p-tabPanel header="{{'COMMON.DISCHARGE' | translate }}" *ngIf="admission && admission.id > 0 && permitView('ADMISSION_DISCHARGE')">
       <app-discharge-details [admission]="admission"></app-discharge-details>
     </p-tabPanel>
+    <p-tabPanel header="{{'COMMON.SUMMARY_AND_REPORT' | translate }}" *ngIf="admission && admission.id > 0">
+      <div class="ui-grid-row">
+        <div class="ui-grid-col-2 ui-sm-12" >
+          <app-summary-list [admission]="admission" (summaryIdEvent)="onSummarySelected($event)"></app-summary-list>
+        </div>
+        <div class="ui-grid-col-10 ui-sm-12">
+          <app-summary-details (summarySaveEvent)="onSummarySaved($event)" [admission]="admission"></app-summary-details><br />
+        </div>
+      </div>
+      
+      
+    </p-tabPanel>
   </p-tabView>
 </form>
