@@ -64,11 +64,13 @@ import { AdminAuthorization } from '../components/admin/adminAuthorization';
 import { AdmissionDiagnoses } from '../components/admin/admissionDiagnoses';
 import { PatientServiceDetails } from '../components/admin/patientServiceDetails';
 import { AdminReference } from '../components/admin/adminReference';
-import { CategoryDropdown, PackageDropdown, DoctorDropdown, ServiceDropdown, LabTestDropdown, 
-      ProductDropdown, ModalityDropdown, RadExamDropdown, ExamStatusDropdown, RadiologyTechDropdown,
-      RoleDropdown, 
-      SummaryTypeDropdown,
-      UserGroupDropdown} from '../components/dropdowns';
+import {
+  CategoryDropdown, PackageDropdown, DoctorDropdown, ServiceDropdown, LabTestDropdown,
+  ProductDropdown, ModalityDropdown, RadExamDropdown, ExamStatusDropdown, RadiologyTechDropdown,
+  RoleDropdown,
+  SummaryTypeDropdown,
+  UserGroupDropdown
+} from '../components/dropdowns';
 import { AdminPatient } from '../components/admin/adminPatient';
 import { VisitDetails } from '../components/admin/visitDetails';
 import { VisitList } from '../components/admin/visitList';
@@ -149,6 +151,7 @@ import { PhysicalExamTypeAssignmentDetails } from '../components/admin/physicalE
 import { PhysicalExamTypeAssignmentList } from '../components/admin/physicalExamTypeAssignmentList';
 import { SummaryTypeTemplateDetails } from '../components/admin/summaryTypeTemplateDetails';
 import { SummaryTypeTemplateList } from '../components/admin/summaryTypeTemplateList';
+import { PatientDashboard } from '../components/admin/patientDashboard';
 
 const routes: Routes = [
   { path: 'adminMain', component: AdminMain },
@@ -232,6 +235,7 @@ const routes: Routes = [
   { path: 'adminRadiologyConfig', component: AdminRadiologyConfig },
   { path: 'patientKiosk', component: PatientKiosk },
   { path: 'dashboard', component: Dashboard },
+  { path: 'pdashboard', component: PatientDashboard },
   { path: 'roleDetails', component: RoleDetails },
   { path: 'roleList', component: RoleList },
   { path: 'resourceDetails', component: ResourceDetails },
@@ -247,7 +251,7 @@ export function HttpLoaderFactory(http: HttpClient) {
 
 @NgModule({
   imports: [
-    RouterModule.forChild(routes), CommonSharedModule, CurrencyMaskModule, 
+    RouterModule.forChild(routes), CommonSharedModule, CurrencyMaskModule,
     TranslateModule.forChild({
       loader: {
         provide: TranslateLoader,
@@ -269,25 +273,27 @@ export function HttpLoaderFactory(http: HttpClient) {
     ServiceList, PackageDetails, PackageList, BillDetails, BillList, VitalSignDetails, VitalSignList, AllergyDetails,
     MedicalHistoryDetails, SocialHistoryDetails, VaccineDetails, SymptomDetails, AdmissionTransfer,
     DoctorOrderDetails, DoctorOrderList, AdmissionDetails, AdmissionList, FloorDetails, FloorList,
-	  RoomDetails, RoomList, BedDetails, BedList, RadExamDetails, RadExamList, AdminPatient, AdminBedStatus, AdminAuthorization,
-	  AdmissionDiagnoses, PatientServiceDetails, PatientKiosk,
+    RoomDetails, RoomList, BedDetails, BedList, RadExamDetails, RadExamList, AdminPatient, AdminBedStatus, AdminAuthorization,
+    AdmissionDiagnoses, PatientServiceDetails, PatientKiosk,
     AdminReference, VisitDetails, VisitList, DischargeDetails, LabTestDetails, LabTestList, InvestigationDetails,
-	  InvestigationList, InvestigationListByDate, RadInvestigationDetails, RadInvestigationList, PurchaseOrderDetails, PurchaseOrderList, 
-	  ReceiveOrderDetails, ReceiveOrderList, AdminRadiologyConfig,
+    InvestigationList, InvestigationListByDate, RadInvestigationDetails, RadInvestigationList, PurchaseOrderDetails, PurchaseOrderList,
+    ReceiveOrderDetails, ReceiveOrderList, AdminRadiologyConfig,
     PatientSaleDetails, PatientSaleList, SaleReturnDetails, SaleReturnList, BirthReportDetails, BirthReportList,
     DeathReportDetails, DeathReportList, HospitalLocationDetails, HospitalLocationList, PatientLookup, VisitAdmLookup,
     PurchaseOrderLookup, PatientSaleLookup, HospitalDetails, EnquiryDetails, EnquiryList, WaitingList,
     SectionDetails, SectionList, SectionItemDetails, SectionItemList, DepartmentDetails,
     DepartmentList, AdminWebsite, AdminHeader, SliderDetails, SliderList, SliderTextList, SliderTextDetails,
     CompanyDetails, CompanyList, ContactDetails, ContactList, Dashboard, BaseComponent, PatientMedicineList,
-    RoleDetails, RoleList, ResourceDetails, ResourceList, MenuItemDetails, MenuItemList, UserRoleAssignment, UserList, 
-    PermissionDetails, SummaryDetails, SummaryList, SummaryTypeDetails, SummaryTypeList, 
+    RoleDetails, RoleList, ResourceDetails, ResourceList, MenuItemDetails, MenuItemList, UserRoleAssignment, UserList,
+    PermissionDetails, SummaryDetails, SummaryList, SummaryTypeDetails, SummaryTypeList, PatientDashboard,
     PhysicalExamTypeAssignmentDetails, PhysicalExamTypeAssignmentList, SummaryTypeTemplateDetails, SummaryTypeTemplateList],
 
   providers: [
-	CategoryDropdown, PackageDropdown, DoctorDropdown, TokenStorage, AppInfoStorage, BillingService, VisitService, LoggedInGuard, 
-	ConfirmationService, ServiceDropdown, LabTestDropdown, ProductDropdown, ModalityDropdown, RadExamDropdown, 
-	RadInvestigationService, ExamStatusDropdown, RadiologyTechDropdown, RoleDropdown, UserGroupDropdown, SummaryTypeDropdown]
+    CategoryDropdown, PackageDropdown, DoctorDropdown, TokenStorage, AppInfoStorage, BillingService, VisitService, LoggedInGuard,
+    ConfirmationService, ServiceDropdown, LabTestDropdown, ProductDropdown, ModalityDropdown, RadExamDropdown,
+    RadInvestigationService, ExamStatusDropdown, RadiologyTechDropdown, RoleDropdown, UserGroupDropdown, SummaryTypeDropdown]
 })
 
-export class AdminModule { }
+export class AdminModule { 
+
+}

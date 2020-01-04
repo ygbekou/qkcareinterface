@@ -1,0 +1,211 @@
+<div class="dashboard">
+  <div class="ui-g">
+
+    <div class="ui-g-12 ui-md-12 ui-lg-4">
+      <p-card>
+        <p-header>
+          <button pButton type="button" label="Prochaine visite" class="ui-button-secondary"
+            style="width: 100%; font-size: 1.5rem;font-weight:normal;"></button>
+        </p-header>
+        <div class="counter counter-primary"
+          style="font-size: 1.5rem;text-align: center;;font-weight:normal; color: #0088cc;">
+          <i class="fa fa-calendar"></i>
+          <br />
+          <strong>12 Janvier 2020</strong>
+          <br />
+          <strong>14:00</strong>
+          <br />
+          <label>Avec le Docteur Balogou</label>
+        </div>
+        <p-footer>
+          <button pButton type="button" label="Demandez un rendez-vous" class="ui-button-secondary"
+            style="width: 100%; font-size: 15px;color: #0071bc;font-weight:normal;"></button>
+          <hr style="margin-top: 0.1rem; margin-bottom: 0.1rem;" />
+          <button pButton type="button" label="Mes visites passees" class="ui-button-secondary"
+            style="width: 100%; font-size: 15px;color: #0071bc;font-weight:normal;"></button>
+        </p-footer>
+      </p-card>
+    </div>
+    <div class="ui-g-12 ui-md-12 ui-lg-4">
+      <p-card>
+        <p-header>
+          <button pButton type="button" label="Sommaire de mon compte" class="ui-button-secondary"
+            style="width: 100%; font-size: 1.5rem;font-weight:normal;"></button>
+        </p-header>
+        <div class="counter counter-primary"
+          style="font-size: 1.5rem;text-align: center; color: #0088cc;font-weight:normal;">
+          <i class="fa fa-money"></i>
+          <br />
+          <strong>Montant du</strong>
+          <br />
+          <strong>15000 ECO</strong>
+          <br />
+          <button pButton type="button" label="Payer" class="ui-button-success"></button>
+        </div>
+        <p-footer>
+          <button pButton type="button" label="Voir les details" class="ui-button-secondary"
+            style="width: 100%; font-size: 15px;color: #0071bc;font-weight:normal;"></button>
+          <hr style="margin-top: 0.1rem; margin-bottom: 0.1rem;" />
+          <button pButton type="button" label="Imprimer la facture" class="ui-button-secondary"
+            style="width: 100%; font-size: 15px;color: #0071bc;font-weight:normal;"></button>
+        </p-footer>
+      </p-card>
+    </div>
+    <div class="ui-g-12 ui-md-12 ui-lg-4">
+      <p-card>
+        <p-header>
+          <button pButton type="button" label="Mes Prescriptions" class="ui-button-secondary"
+            style="width: 100%; font-size: 1.5rem;font-weight:normal;"></button>
+        </p-header>
+        <div class="counter counter-primary"
+          style="font-size: 1.5rem;text-align: center; color: #e91224;font-weight:normal;">
+          <i class="fa fa-plus-square"></i>
+          <br />
+          <strong>Acetaminophen 5-325 mg</strong>
+          <br />
+          <strong>Prescrit le 01/12/2019</strong>
+          <br />
+          <label>Par le Docteur Balogou</label>
+        </div>
+        <p-footer>
+          <button pButton type="button" label="Renouveller une prescription" class="ui-button-secondary"
+            style="width: 100%; font-size: 15px;color: #0071bc;font-weight:normal;"></button>
+          <hr style="margin-top: 0.1rem; margin-bottom: 0.1rem;" />
+          <button pButton type="button" label="Voir toutes mes prescriptions" class="ui-button-secondary"
+            style="width: 100%; font-size: 15px;color: #0071bc;font-weight:normal;"></button>
+        </p-footer>
+      </p-card>
+    </div>
+    <div class="ui-g-12 ui-md-12 ui-lg-4">
+      <a href="#">
+        <div class="overview-box monthly-sales">
+          <div class="overview-title">{{ 'COMMON.APPOINTMENT' | translate }}</div>
+          <i class="fa fa-arrow-circle-up"></i>
+          <div class="overview-numbers">
+            <strong>Total: {{appointmentItem.itemTotal}}</strong>
+          </div>
+          <p-chart type="bar" [data]="appointmentItem.itemData"></p-chart>
+        </div>
+      </a>
+    </div>
+    <div class="ui-g-12 ui-md-12 ui-lg-4">
+      <a href="#">
+        <div class="overview-box monthly-views">
+          <div class="overview-title">{{ 'COMMON.ADMISSION' | translate }}</div>
+          <i class="fa fa-arrow-circle-up"></i>
+          <div class="overview-numbers">
+            <strong>Total: {{admissionItem.itemTotal}}</strong>
+          </div>
+          <p-chart type="bar" [data]="admissionItem.itemData"></p-chart>
+        </div>
+      </a>
+    </div>
+    <div class="ui-g-12 ui-md-12 ui-lg-4">
+      <a href="#">
+        <div class="overview-box monthly-users">
+          <div class="overview-title">{{ 'COMMON.VISIT' | translate }}</div>
+          <i class="fa fa-arrow-circle-up"></i>
+          <div class="overview-numbers">
+            <strong>Total: {{visitItem.itemTotal}}</strong>
+          </div>
+          <p-chart type="bar" [data]="visitItem.itemData"></p-chart>
+        </div>
+      </a>
+    </div>
+  </div>
+  <div class="ui-g">
+    <div class="ui-g-12 ui-md-12 ui-lg-6">
+      <p-card>
+        <p-header>
+          <button pButton type="button" label="Mes Allergies" class="ui-button-secondary"
+            style="width: 100%; font-size: 1.5rem;font-weight:normal;"></button>
+        </p-header>
+        <div class="counter counter-primary"
+          style="font-size: 10px;text-align: center; color: #0088cc;font-weight:normal;">
+          <div class="ui-g">
+            <div class="ui-g-12 ui-md-12 ui-lg-6">
+              <p-card>
+                <p-header>
+                  <font style="font-size: 20px;text-align: center; color: #0088cc;font-weight:normal;">
+                    Quinine
+                  </font>
+                </p-header>
+                Grattement, Enflement
+                <br />
+                Ajouter le 11/01/18
+                <p-footer>
+                  <button pButton type="button" label="Supprimer" class="ui-button-danger"></button>
+                </p-footer>
+              </p-card>
+            </div>
+            <div class="ui-g-12 ui-md-12 ui-lg-6">
+              <p-card>
+                <p-header>
+                  <font style="font-size: 20px;text-align: center; color: #0088cc;font-weight:normal;">
+                    Arachide
+                  </font>
+                </p-header>
+                Grattement, Enflement 
+                <br />
+                Ajouter le 01/12/18
+                <p-footer>
+                  <button pButton type="button" label="Supprimer" class="ui-button-danger"></button>
+                </p-footer>
+              </p-card>
+            </div>
+          </div>
+        </div>
+        <p-footer>
+          <button pButton type="button" label="Ajouter une allergie" class="ui-button-secondary"
+            style="width: 100%; font-size: 15px;color: #0071bc;font-weight:normal;"></button>
+        </p-footer>
+      </p-card>
+    </div>
+    <div class="ui-g-12 ui-md-12 ui-lg-6">
+      <p-card>
+        <p-header>
+          <button pButton type="button" label="Historique medicale" class="ui-button-secondary"
+            style="width: 100%; font-size: 1.5rem;font-weight:normal;"></button>
+        </p-header>
+          <div class="counter counter-primary"
+          style="font-size: 10px;text-align: center; color: #0088cc;font-weight:normal;">
+          <div class="ui-g">
+            <div class="ui-g-12 ui-md-12 ui-lg-6">
+              <p-card>
+                <p-header>
+                  <font style="font-size: 20px;text-align: center; color: #0088cc;font-weight:normal;">
+                    Historique sociale
+                  </font>
+                </p-header>
+                Fume: Jamais,  Boisson: Occasionnel
+                <p-footer>
+                  <button pButton type="button" label="Editer" class="ui-button-success"></button>
+                </p-footer>
+              </p-card>
+            </div>
+            <div class="ui-g-12 ui-md-12 ui-lg-6">
+              <p-card>
+                <p-header>
+                  <font style="font-size: 20px;text-align: center; color: #0088cc;font-weight:normal;">
+                    Historique  familiale
+                  </font>
+                </p-header>
+                Diabete, Cancer
+
+                <p-footer>
+                  <button pButton type="button" label="Editer" class="ui-button-success"></button>
+                </p-footer>
+              </p-card>
+            </div>
+          </div>
+        </div>
+        <p-footer>
+          <button pButton type="button" label="Voire toute l'historique" class="ui-button-secondary"
+            style="width: 100%; font-size: 15px;color: #0071bc;font-weight:normal;"></button>
+        </p-footer>
+      </p-card>
+
+    </div>
+
+  </div>
+</div>

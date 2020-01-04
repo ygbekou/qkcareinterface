@@ -26,7 +26,7 @@ export class DashboardDemoComponent implements OnInit, OnDestroy {
         private translate: TranslateService
     ) {
 
-
+/* 
         this.subscription = this.appointmentService.getByMonths()
               .subscribe((data: any) => {
                   this.appointmentItem = this.pullData(data, 'Monthly Appointment', '#00ff00', '#00ff00');
@@ -52,7 +52,7 @@ export class DashboardDemoComponent implements OnInit, OnDestroy {
               error => console.log(error),
               () => console.log('Get all month data complete')
         ));
-
+ */
 
         this.subscription.add(this.appointmentService.getUpomings()
                 .subscribe((data: any) => {
