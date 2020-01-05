@@ -7,15 +7,25 @@
           <button pButton type="button" label="Prochaine visite" class="ui-button-secondary"
             style="width: 100%; font-size: 1.5rem;font-weight:normal;"></button>
         </p-header>
-        <div class="counter counter-primary"
+        <div class="counter counter-primary" *ngIf="nextAppointment"
           style="font-size: 1.5rem;text-align: center;;font-weight:normal; color: #0088cc;">
           <i class="fa fa-calendar"></i>
           <br />
-          <strong>12 Janvier 2020</strong>
+          <strong>{{nextAppointment.appointmentDate| date:'dd/MM/yyyy'}}</strong>
           <br />
-          <strong>14:00</strong>
+          <strong>{{nextAppointment.beginTime}}</strong>
           <br />
-          <label>Avec le Docteur Balogou</label>
+          <label>{{nextAppointment.doctorName}}</label>
+        </div>
+
+        <div class="counter counter-primary" *ngIf="!nextAppointment"
+          style="font-size: 1.5rem;text-align: center;;font-weight:normal; color: #0088cc;">
+          <i class="fa fa-calendar"></i>
+          <br />
+          <br />
+          <strong>{{ 'MESSAGE.NO_SCHED_APPOINTMENT' | translate }}</strong>
+          <br />
+          <br />
         </div>
         <p-footer>
           <button pButton type="button" label="Demandez un rendez-vous" class="ui-button-secondary"
@@ -114,10 +124,41 @@
     </div>
   </div>
   <div class="ui-g">
+    <div class="ui-g-12 ui-md-12 ui-lg-12">
+      <p-messages [(value)]="messages"></p-messages>
+    </div>
+  </div>
+  <div class="ui-g">
+
     <div class="ui-g-12 ui-md-12 ui-lg-6">
       <p-card>
         <p-header>
-          <button pButton type="button" label="Mes Allergies" class="ui-button-secondary"
+          <button pButton type="button" label="{{ 'COMMON.ALLERGY_LIST' | translate }}" class="ui-button-secondary"
+            style="width: 100%; font-size: 1.5rem;font-weight:normal;"></button>
+        </p-header>
+        <div class="counter counter-primary"
+          style="font-size: 15px;text-align: left; color: #0088cc;font-weight:normal;">
+          <div class="ui-grid-row" *ngFor="let allergyGroup of allergyGroups">
+            <div class="ui-grid-col-1 ui-sm-12">
+              {{allergyGroup.name}}:
+            </div>
+            <div class="ui-grid-col-11 ui-sm-12">
+              <p-checkbox id="status" [(ngModel)]="patient.selectedAllergies" [value]="allergy.id"
+                label="{{allergy.name}}" *ngFor="let allergy of allergyGroup.childs; let i = index"></p-checkbox>
+            </div>
+          </div>
+
+        </div>
+        <p-footer>
+          <button pButton type="button" label="{{ 'COMMON.SAVE_CHANGE' | translate }}" class="ui-button-secondary"
+            (click)="saveAllergy()" style="width: 100%; font-size: 15px;color: #0071bc;font-weight:normal;"></button>
+        </p-footer>
+      </p-card>
+    </div>
+    <div class="ui-g-12 ui-md-12 ui-lg-6">
+      <p-card>
+        <p-header>
+          <button pButton type="button" label="{{ 'COMMON.MEDICAL_HISTORY' | translate }}" class="ui-button-secondary"
             style="width: 100%; font-size: 1.5rem;font-weight:normal;"></button>
         </p-header>
         <div class="counter counter-primary"
@@ -127,81 +168,39 @@
               <p-card>
                 <p-header>
                   <font style="font-size: 20px;text-align: center; color: #0088cc;font-weight:normal;">
-                    Quinine
+                    {{ 'COMMON.MEDICAL_HISTORY' | translate }}
                   </font>
                 </p-header>
-                Grattement, Enflement
-                <br />
-                Ajouter le 11/01/18
-                <p-footer>
-                  <button pButton type="button" label="Supprimer" class="ui-button-danger"></button>
-                </p-footer>
+                <div class="ui-grid-row">
+                  <div class="ui-grid-col-11 ui-sm-12">
+                    <p-checkbox id="status" [(ngModel)]="patient.selectedMedicalHistories" [value]="medicalHistory.id"
+                      label="{{medicalHistory.name}}" *ngFor="let medicalHistory of medicalHistories; let i = index">
+                    </p-checkbox>
+                  </div>
+                </div>
               </p-card>
             </div>
             <div class="ui-g-12 ui-md-12 ui-lg-6">
               <p-card>
                 <p-header>
                   <font style="font-size: 20px;text-align: center; color: #0088cc;font-weight:normal;">
-                    Arachide
+                    {{ 'COMMON.SOCIAL_HISTORY' | translate }}
                   </font>
                 </p-header>
-                Grattement, Enflement 
-                <br />
-                Ajouter le 01/12/18
-                <p-footer>
-                  <button pButton type="button" label="Supprimer" class="ui-button-danger"></button>
-                </p-footer>
+                <div class="ui-grid-row">
+                  <div class="ui-grid-col-11 ui-sm-12">
+                    <p-checkbox id="status" [(ngModel)]="patient.selectedSocialHistories" [value]="socialHistory.id"
+                      label="{{socialHistory.name}}" *ngFor="let socialHistory of socialHistories; let i = index">
+                    </p-checkbox>
+                  </div>
+                </div>
               </p-card>
             </div>
           </div>
         </div>
         <p-footer>
-          <button pButton type="button" label="Ajouter une allergie" class="ui-button-secondary"
-            style="width: 100%; font-size: 15px;color: #0071bc;font-weight:normal;"></button>
-        </p-footer>
-      </p-card>
-    </div>
-    <div class="ui-g-12 ui-md-12 ui-lg-6">
-      <p-card>
-        <p-header>
-          <button pButton type="button" label="Historique medicale" class="ui-button-secondary"
-            style="width: 100%; font-size: 1.5rem;font-weight:normal;"></button>
-        </p-header>
-          <div class="counter counter-primary"
-          style="font-size: 10px;text-align: center; color: #0088cc;font-weight:normal;">
-          <div class="ui-g">
-            <div class="ui-g-12 ui-md-12 ui-lg-6">
-              <p-card>
-                <p-header>
-                  <font style="font-size: 20px;text-align: center; color: #0088cc;font-weight:normal;">
-                    Historique sociale
-                  </font>
-                </p-header>
-                Fume: Jamais,  Boisson: Occasionnel
-                <p-footer>
-                  <button pButton type="button" label="Editer" class="ui-button-success"></button>
-                </p-footer>
-              </p-card>
-            </div>
-            <div class="ui-g-12 ui-md-12 ui-lg-6">
-              <p-card>
-                <p-header>
-                  <font style="font-size: 20px;text-align: center; color: #0088cc;font-weight:normal;">
-                    Historique  familiale
-                  </font>
-                </p-header>
-                Diabete, Cancer
-
-                <p-footer>
-                  <button pButton type="button" label="Editer" class="ui-button-success"></button>
-                </p-footer>
-              </p-card>
-            </div>
-          </div>
-        </div>
-        <p-footer>
-          <button pButton type="button" label="Voire toute l'historique" class="ui-button-secondary"
-            style="width: 100%; font-size: 15px;color: #0071bc;font-weight:normal;"></button>
+          <button pButton type="button" label="{{ 'COMMON.SAVE_CHANGE' | translate }}" class="ui-button-secondary"
+            (click)="saveHistory()" style="width: 100%; font-size: 15px;color: #0071bc;font-weight:normal;"></button>
         </p-footer>
       </p-card>
 

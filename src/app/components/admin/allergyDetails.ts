@@ -45,8 +45,7 @@ export class AllergyDetails extends BaseComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     
     this.genericService.getActiveElements('allergy')
-      .subscribe((data: Reference[]) => { 
-        
+      .subscribe((data: Reference[]) => {         
         if (data.length > 0) {
           this.allergyGroups = data;
           this.getAllergies();

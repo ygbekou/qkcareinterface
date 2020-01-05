@@ -122,6 +122,14 @@ export class VisitService {
 			.catch(this.handleError);
 	}
 
+	public getByYear = (userId: string): Observable<Visit[]> => {
+		const actionUrl = Constants.apiServer + '/service/visit/list/byYear/' + userId;
+		return this.http.get(actionUrl, { headers: this.headers })
+			.map((response: Response) => {
+				return response.json();
+			})
+			.catch(this.handleError);
+	}
 	public getWaitList = (topN: number): Observable<Visit[]> => {
 		const actionUrl = Constants.apiServer + '/service/visit/getWaitList/' + topN;
 		return this.http.get(actionUrl, { headers: this.headers })
@@ -130,8 +138,8 @@ export class VisitService {
 	}
 
 	public endVisit = (id: number): Observable<boolean> => {
-		let toAdd = JSON.stringify(id);
-		let actionUrl = Constants.apiServer + '/service/visit/endVisit';
+		const toAdd = JSON.stringify(id);
+		const actionUrl = Constants.apiServer + '/service/visit/endVisit';
 		return this.http.post(actionUrl, toAdd, { headers: this.headers })
 			.map((response: Response) => {
 				console.log(response);
@@ -144,8 +152,8 @@ export class VisitService {
 			.catch(this.handleError);
 	}
 	public cancelVisit = (id: number): Observable<boolean> => {
-		let toAdd = JSON.stringify(id);
-		let actionUrl = Constants.apiServer + '/service/visit/cancelVisit';
+		const toAdd = JSON.stringify(id);
+		const actionUrl = Constants.apiServer + '/service/visit/cancelVisit';
 		return this.http.post(actionUrl, toAdd, { headers: this.headers })
 			.map((response: Response) => {
 				console.log(response);

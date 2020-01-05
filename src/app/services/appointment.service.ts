@@ -83,6 +83,19 @@ export class AppointmentService {
 			.catch(this.handleError);
 	}
 
+	public getByYear = (id: string): Observable<any[]> => {
+		const actionUrl = Constants.apiServer + '/service/appointment/list/byYear/' + id;
+		return this.http.get(actionUrl, { headers: this.headers })
+			.map((response: Response) => <any[]>response.json())
+			.catch(this.handleError);
+	}
+
+	public getNextAppointment = (id: string): Observable<Appointment> => {
+		const actionUrl = Constants.apiServer + '/service/appointment/getNextAppointment/' + id;
+		return this.http.get(actionUrl, { headers: this.headers })
+			.map((response: Response) => <Appointment>response.json())
+			.catch(this.handleError);
+	}
 	public getUpomings = (): Observable<any[]> => {
 
 		const actionUrl = Constants.apiServer + '/service/appointment/list/upcomings';

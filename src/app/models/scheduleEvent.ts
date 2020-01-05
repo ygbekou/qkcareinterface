@@ -13,4 +13,5 @@ export class ScheduleEvent {
 	docFirstName: string;
 	docLastName: string;
 	designation: string;
+	location: string;
 }

@@ -157,6 +157,14 @@ export class AdmissionService {
       .catch(this.handleError);
   }
 
+    public getByYear = (userId: string): Observable<Admission[]> => {
+
+    const actionUrl = Constants.apiServer + '/service/admission/list/byYear/' + userId;
+    return this.http.get(actionUrl, { headers: this.headers })
+      .map((response: Response) => <any[]>response.json())
+      .catch(this.handleError);
+  }
+
   private handleError(error: Response) {
     console.error(error);
     return Observable.throw(error.json().error || 'Server error');
