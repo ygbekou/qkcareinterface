@@ -414,7 +414,7 @@
     "TRANFER_BED_FAILED": "Le noueau lit dit être différent de l'ancien.",
     "TRANFER_DATE_FAILED": "La date de transfer doit être plus grande que l'ancienne date.",
     "APPOINTMENT_DISPLAY_FAILED": "Selectionner un Départment et un Doctor pour ajouter un rendez-vous.",
-    "SAVE_SUCCESS": "La sauvegarde a marché",
+    "SAVE_SUCCESS": "Opération effectueé avec succès",
     "NO_SCHED_APPOINTMENT":"Aucun Rensez-vous prochain",
     "SAVE_UNSUCCESS": "La sauvegarde n'a pas marché. Voir les erreurs ci-dessous: ",
     "READ_SUCCESS": "Lecture avec succès",

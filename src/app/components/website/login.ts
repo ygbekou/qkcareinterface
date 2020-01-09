@@ -82,7 +82,7 @@ export class Login implements OnInit {
 								this.globalEventsManager.showMenu = true;
 								console.log('Navigating to dashboard');
 								this.genericService.updateToken();
-								this.router.navigate(['/admin/dashboard']);
+								this.router.navigate(['/admin/pdashboard']);
 								//window.location.reload();
 							} else {
 								console.log('No token');
@@ -91,8 +91,8 @@ export class Login implements OnInit {
 								});
 							}
 						}
-						
-							
+
+
 					});
 			}
 		} catch (e) {
@@ -185,9 +185,9 @@ export class Login implements OnInit {
 				});
 			});
 		}
- 
+
 	}
- 
+
 	closePasswordUpdateDialog() {
 		//this.router.navigate(['/admin/dashboard']);
 		//window.location.reload();
