@@ -396,12 +396,17 @@
     "PE_SYSTEM_LIST": "Sytems de Physical Exam",
     "SUMMARY_TYPE_LIST": "Types de rapport",
     "SUMMARY_TYPE": "Type de Rapport",
-    "PHYSICAL_EXAM_TYPE_ASSIGNMENT": "Assigner Types d'examen physique",
-    "PHYSICAL_EXAM_TYPE_ASSIGNMENT_LIST": "Liste des Type d'examen assigner",
-    "PHYSICAL_EXAM_TYPE": "Physical Exam Type",
+    "PHYSICAL_EXAM": "Examen Physique",
+    "PHYSICAL_EXAM_TYPE_ASSIGNMENT": "Assigner Types d'Examen Physique",
+    "PHYSICAL_EXAM_TYPE_ASSIGNMENT_LIST": "Liste des Type d'Examen assigner",
+    "PHYSICAL_EXAM_TYPE": "Type d'Examen Physique",
     "SUMMARY_TYPE_TEMPLATE_LIST": "Liste des templates de Type de Rapport",
     "SUMMARY_TYPE_TEMPLATE": "Template de Type de Rapport",
-    "TEMPLATE": "Modèle"
+    "TEMPLATE": "Modèle",
+    "SYSTEM_REVIEW_QUESTION_ASSIGNMENT": "Assigner des Questions d'Examen du Système",
+    "SYSTEM_REVIEW_QUESTION_ASSIGNMENT_LIST": "Liste des Questions d'Examen du Système",
+    "SYSTEM_REVIEW_QUESTION_LIST": "Liste des Questions d'Examen du Système",
+    "SYSTEM_REVIEW": "Examen du système"
   },
   "MESSAGE": {
     "TRANFER_DOCTOR_FAILED": "Le nouveau docteur assigné doit être différent de l'ancien.",

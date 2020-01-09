@@ -21,6 +21,10 @@ import { BaseComponent } from './baseComponent';
 import { TranslateService } from '@ngx-translate/core';
 import { SummaryDetails } from './summaryDetails';
 import { SummaryList } from './summaryList';
+import { PhysicalExamDetails } from './physicalExamDetails';
+import { PhysicalExamList } from './physicalExamList';
+import { SystemReviewDetails } from './systemReviewDetails';
+import { SystemReviewList } from './systemReviewList';
 
 @Component({
 	selector: 'app-admission-details',
@@ -41,6 +45,10 @@ export class AdmissionDetails extends BaseComponent implements OnInit, OnDestroy
 	@ViewChild(PatientMedicineList, {static: false}) patientMedicineList: PatientMedicineList;
 	@ViewChild(SummaryDetails, {static: false}) summaryDetails: SummaryDetails;
 	@ViewChild(SummaryList, {static: false}) summaryList: SummaryList;
+	@ViewChild(PhysicalExamDetails, {static: false}) physicalExamDetails: PhysicalExamDetails;
+	@ViewChild(PhysicalExamList, {static: false}) physicalExamList: PhysicalExamList;
+	@ViewChild(SystemReviewDetails, {static: false}) systemReviewDetails: SystemReviewDetails;
+	@ViewChild(SystemReviewList, {static: false}) systemReviewList: SystemReviewList;
 
 	admission: Admission = new Admission();
 	medicineCols: any[];
@@ -192,9 +200,9 @@ export class AdmissionDetails extends BaseComponent implements OnInit, OnDestroy
 	onTabChange(evt) {
 		this.activeTab = evt.index;
 		if (evt.index === 1) {
-			this.vitalSignList.ngOnInit();
+			//this.vitalSignList.ngOnInit();
 		} else if (evt.index === 2) {
-			this.admissionDiagnoses.getDiagnoses();
+			//this.admissionDiagnoses.getDiagnoses();
 		} else if (evt.index === 5) {
 			this.prescriptionDetails.admission = this.admission;
 			this.prescriptionList.admission = this.admission;
@@ -202,7 +210,7 @@ export class AdmissionDetails extends BaseComponent implements OnInit, OnDestroy
 		} else if (evt.index === 7) {
 			this.patientMedicineList.admission = this.admission;
 			this.patientMedicineList.getSaleProducts();
-		}
+		} 
 	}
 
 	onPrescriptionSelected($event) {
@@ -217,7 +225,14 @@ export class AdmissionDetails extends BaseComponent implements OnInit, OnDestroy
 		//alert('Here')
 		this.summaryList.updateRowGroupMetaData();
 	}
-
+	onPhysicalExamSaved($event) {
+		this.physicalExamList.updateTable($event);
+		this.physicalExamList.updateRowGroupMetaData();
+	}
+	onSystemReviewSaved($event) {
+		this.systemReviewList.updateTable($event);
+		this.systemReviewList.updateRowGroupMetaData();
+	}
 	onVitalSignSelected($event) {
 		const vitalSignId = $event;
 		this.vitalSignDetails.getVitalSign(vitalSignId);
@@ -243,6 +258,14 @@ export class AdmissionDetails extends BaseComponent implements OnInit, OnDestroy
 	onSummarySelected($event) {
 		const summaryId = $event;
 		this.summaryDetails.getSummary(summaryId);
+	}
+	onPhysicalExamSelected($event) {
+		const physicalExamId = $event;
+		this.physicalExamDetails.getPhysicalExam(physicalExamId);
+	}
+	onSystemReviewSelected($event) {
+		const systemReviewId = $event;
+		this.systemReviewDetails.getSystemReview(systemReviewId);
 	}
 
 	clear() {

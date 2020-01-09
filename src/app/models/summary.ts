@@ -46,6 +46,18 @@ export class PhysicalExamTypeAssignment {
   }
 }
 
+export class SystemReviewQuestionAssignment {
+  id: number;
+  systemReviewQuestion: Reference;
+  summaryType: SummaryType;
+  description: string;
+  
+  constructor () {
+    this.systemReviewQuestion = new Reference();
+    this.summaryType = new SummaryType();
+  }
+}
+
 export class SummaryTypeTemplate {
   id: number;
   summaryType: SummaryType;
@@ -54,4 +66,59 @@ export class SummaryTypeTemplate {
   constructor () {
     this.summaryType = new SummaryType();
   }
+}
+
+export class PhysicalExam {
+  id: number;
+  admission: Admission;
+  visit: Visit;
+  author: Employee;
+  physicalExamDatetime: Date = new Date();
+  physicalExamDate: string;
+  shortMenu: string;
+  
+  selectedPhysicalExamSystems: number[];
+
+  constructor() {
+  }
+  
+}
+
+
+export class PhysicalExamResult {
+  id: number;
+  physicalExam: PhysicalExam;
+  physicalExamSystem: Reference;
+  
+  constructor() {
+  }
+  
+}
+
+
+export class SystemReview {
+  id: number;
+  admission: Admission;
+  visit: Visit;
+  author: Employee;
+  systemReviewDatetime: Date = new Date();
+  systemReviewDate: string;
+  shortMenu: string;
+  
+  selectedSystemReviewQuestions: number[];
+
+  constructor() {
+  }
+  
+}
+
+
+export class SystemReviewResult {
+  id: number;
+  systemReview: SystemReview;
+  ystemReview: Reference;
+  
+  constructor() {
+  }
+  
 }

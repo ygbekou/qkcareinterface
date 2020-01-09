@@ -29,6 +29,7 @@
                 "node_modules/font-awesome/css/font-awesome.min.css",
                 "node_modules/primeicons/primeicons.css",
                 "src/assets/demo/css/codehighlight.css",
+                "node_modules/primeflex/primeflex.css",
                 "src/styles.css"
             ],
             "scripts": [

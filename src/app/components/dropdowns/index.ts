@@ -45,3 +45,5 @@ export * from './dropdown.menuItem';
 export * from './dropdown.summaryStatus';
 export * from './dropdown.summaryType';
 export * from './dropdown.medicalTeam';
+export * from './dropdown.physicalExamSystem';
+export * from './dropdown.systemReviewQuestion';

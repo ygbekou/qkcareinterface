@@ -1,17 +1,75 @@
-import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
-import { Admission, User, Visit, Summary, Employee, SummaryTypeTemplate } from '../../models';
+import { Component, OnInit, OnDestroy, Input, Output, EventEmitter, ViewEncapsulation } from '@angular/core';
+import {trigger,state,style,transition,animate,AnimationEvent} from '@angular/animations';
+import { Admission, User, Visit, Summary, Employee, SummaryTypeTemplate, Reference } from '../../models';
 import { SummaryStatusDropdown, SummaryTypeDropdown, EmployeeDropdown, MedicalTeamDropdown} from '../dropdowns';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
 import { GenericService, VisitService, TokenStorage } from '../../services';
-import { Message, ConfirmationService } from 'primeng/api';
+import { Message, ConfirmationService, SelectItem } from 'primeng/api';
 import { BaseComponent } from './baseComponent';
 import { TranslateService } from '@ngx-translate/core';
 import { ActivatedRoute } from '@angular/router';
 
+
 @Component({
   selector: 'app-summary-details',
   templateUrl: '../../pages/admin/summaryDetails.html',
-  providers: [GenericService, VisitService, EmployeeDropdown, SummaryStatusDropdown, SummaryTypeDropdown, MedicalTeamDropdown]
+  providers: [GenericService, VisitService, EmployeeDropdown, SummaryStatusDropdown, SummaryTypeDropdown, MedicalTeamDropdown],
+  // styles: [
+  //     "node_modules/primeflex/primeflex.css"
+  //   ],
+  styles:[`
+        .box,
+        .sample-layout > div {
+            background-color: #cce4f7;
+            text-align: center;
+            padding-top: 1em;
+            padding-bottom: 1em;
+            border-radius: 4px;
+        }
+
+        .box-stretched {
+            height: 100%;
+        }
+
+        .sample-layout {
+            margin: 0;
+        }
+
+        .sample-layout > div {
+            border: 1px solid #ffffff;
+        }
+
+        .vertical-container {
+            margin: 0;
+            height: 200px;
+            background: #efefef;
+            border-radius: 4px;
+        }
+
+        .nested-grid .p-col-4 {
+            padding-bottom: 1em;
+        }
+    `],
+  animations: [
+        trigger('animation', [
+            state('visible', style({
+                transform: 'translateX(0)',
+                opacity: 1
+            })),
+            transition('void => *', [
+                style({transform: 'translateX(50%)', opacity: 0}),
+                animate('300ms ease-out')
+            ]),
+            transition('* => void', [
+                animate(('250ms ease-in'), style({
+                    height: 0,
+                    opacity: 0,
+                    transform: 'translateX(50%)'
+                }))
+            ])
+        ])
+    ],
+    encapsulation: ViewEncapsulation.None
 })
 export class SummaryDetails extends BaseComponent implements OnInit, OnDestroy {
 
@@ -24,6 +82,13 @@ export class SummaryDetails extends BaseComponent implements OnInit, OnDestroy {
 
   messages: Message[] = [];
   author: Employee = new Employee();
+  types: SelectItem[] = [];
+  selectedType: string = '';
+
+  physicalExamSystemMap: any = new Map();
+  selectedPhysicalExamSystems: Reference[];
+
+  columns: number[] = [];
 
   constructor
     (
@@ -40,6 +105,12 @@ export class SummaryDetails extends BaseComponent implements OnInit, OnDestroy {
 	    super(genericService, translate, confirmationService, tokenStorage);
       this.user = new User();
       this.summaryTypeDropdown.getSummaryTypeByRole(undefined);
+
+      // this.types = [
+      //       {label: 'Paypal', value: 'PayPal', icon: 'fa fa-fw fa-cc-paypal'},
+      //       {label: 'Visa', value: 'Visa', icon: 'fa fa-fw fa-cc-visa'},
+      //       {label: 'MasterCard', value: 'MasterCard', icon: 'fa fa-fw fa-cc-mastercard'}
+      //   ];
   }
 
   ngOnInit(): void {
@@ -70,6 +141,18 @@ export class SummaryDetails extends BaseComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.summary = null;
   }
+
+  
+
+    
+
+    addColumn() {
+        this.columns.push(this.columns.length);
+    }
+
+    removeColumn() {
+        this.columns.splice(-1, 1);
+    }
 
   save(statusId: number) {
 
@@ -113,16 +196,39 @@ export class SummaryDetails extends BaseComponent implements OnInit, OnDestroy {
   }
 
   findTemplate() {
-      const parameters: string [] = [];
-      parameters.push('e.summaryType.id = |summaryTypeId|' + this.summary.summaryType.id + '|Long');
+    this.summary.description = '';
+    const parameters: string [] = [];
+    parameters.push('e.summaryType.id = |summaryTypeId|' + this.summary.summaryType.id + '|Long');
 
-      this.genericService.getAllByCriteria('SummaryTypeTemplate', parameters, '')
-        .subscribe((data: SummaryTypeTemplate[]) => {
-          if (data.length > 0) {
-            this.summary.description = data[0].template;
+    this.genericService.getAllByCriteria('SummaryTypeTemplate', parameters, '')
+      .subscribe((data: SummaryTypeTemplate[]) => {
+        if (data.length > 0) {
+          this.summary.description = data[0].template;
+        }
+      },
+      error => console.log(error),
+      () => console.log('Get template complete'));
+
+      this.genericService.getObject('/service/admission/physicalExam/list/summaryType/' + this.summary.summaryType.id + '/')
+        .subscribe((data: any) => {
+          console.info(data)
+          this.summary.description = '';
+          this.physicalExamSystemMap = data;
+          let keys = Object.keys(data);
+          this.types = [];
+
+          for (let i = 0; i < keys.length; i++) {
+            this.types.push({label: keys[i].split('|')[1], value: keys[i], icon: ''});
           }
         },
         error => console.log(error),
         () => console.log('Get template complete'));
-  }
+
+    }
+
+
+  setType() {
+    alert(this.selectedType);
+		
+	}
 }

@@ -171,8 +171,26 @@
           <app-summary-details (summarySaveEvent)="onSummarySaved($event)" [admission]="admission"></app-summary-details><br />
         </div>
       </div>
-      
-      
+    </p-tabPanel>
+    <p-tabPanel header="{{'COMMON.PHYSICAL_EXAM' | translate }}" *ngIf="admission && admission.id > 0">
+      <div class="ui-grid-row">
+        <div class="ui-grid-col-2 ui-sm-12" >
+          <app-physicalExam-list [admission]="admission" (physicalExamIdEvent)="onPhysicalExamSelected($event)"></app-physicalExam-list>
+        </div>
+        <div class="ui-grid-col-10 ui-sm-12">
+          <app-physicalExam-details (physicalExamSaveEvent)="onPhysicalExamSaved($event)" [admission]="admission"></app-physicalExam-details><br />
+        </div>
+      </div>
+    </p-tabPanel>
+    <p-tabPanel header="{{'COMMON.SYSTEM_REVIEW' | translate }}" *ngIf="admission && admission.id > 0">
+      <div class="ui-grid-row">
+        <div class="ui-grid-col-2 ui-sm-12" >
+          <app-systemReview-list [admission]="admission" (systemReviewIdEvent)="onSystemReviewSelected($event)"></app-systemReview-list>
+        </div>
+        <div class="ui-grid-col-10 ui-sm-12">
+          <app-systemReview-details (systemReviewSaveEvent)="onSystemReviewSaved($event)" [admission]="admission"></app-systemReview-details><br />
+        </div>
+      </div>
     </p-tabPanel>
   </p-tabView>
 </form>

@@ -11,6 +11,7 @@ import { LabTestList } from './labTestList';
 import { MedicineDetails } from './medicineDetails';
 import { ReferenceDetails } from './referenceDetails';
 import { ReferenceList } from './referenceList';
+import { ReferenceWithChildList } from './referenceWithChildList';
 import { ReferenceWithCategoryDetails } from './referenceWithCategoryDetails';
 import { ReferenceWithCategoryList } from './referenceWithCategoryList';
 import { DepartmentDetails } from './departmentDetails';
@@ -25,6 +26,8 @@ import { PhysicalExamTypeAssignmentDetails } from './physicalExamTypeAssignmentD
 import { PhysicalExamTypeAssignmentList } from './physicalExamTypeAssignmentList';
 import { SummaryTypeTemplateDetails } from './summaryTypeTemplateDetails';
 import { SummaryTypeTemplateList } from './summaryTypeTemplateList';
+import { SystemReviewQuestionAssignmentDetails } from './systemReviewQuestionAssignmentDetails';
+import { SystemReviewQuestionAssignmentList } from './systemReviewQuestionAssignmentList';
 
 @Component({
   selector: 'app-admin-reference',
@@ -39,6 +42,7 @@ export class AdminReference extends BaseComponent implements OnInit, OnDestroy {
   @ViewChild(DepartmentList, {static: false}) departmentList: DepartmentList;
   @ViewChild(ReferenceDetails, {static: false}) referenceDetails: ReferenceDetails;
   @ViewChild(ReferenceList, {static: false}) referenceList: ReferenceList;
+  @ViewChild(ReferenceWithChildList, {static: false}) referenceWithChildList: ReferenceWithChildList;
   @ViewChild(ReferenceWithCategoryDetails, {static: false}) referenceWithCategoryDetails: ReferenceWithCategoryDetails;
   @ViewChild(ReferenceWithCategoryList, {static: false}) referenceWithCategoryList: ReferenceWithCategoryList;
   @ViewChild(MedicineDetails, {static: false}) medicineDetails: MedicineDetails;
@@ -53,6 +57,10 @@ export class AdminReference extends BaseComponent implements OnInit, OnDestroy {
   @ViewChild(PhysicalExamTypeAssignmentList, {static: false}) physicalExamTypeAssignmentList: PhysicalExamTypeAssignmentList;
   @ViewChild(SummaryTypeTemplateDetails, {static: false}) summaryTypeTemplateDetails: SummaryTypeTemplateDetails;
   @ViewChild(SummaryTypeTemplateList, {static: false}) summaryTypeTemplateList: SummaryTypeTemplateList;
+  @ViewChild(SystemReviewQuestionAssignmentDetails, {static: false}) 
+          systemReviewQuestionAssignmentDetails: SystemReviewQuestionAssignmentDetails;
+  @ViewChild(SystemReviewQuestionAssignmentList, {static: false}) 
+          systemReviewQuestionAssignmentList: SystemReviewQuestionAssignmentList;
   
 
   public user: User;
@@ -185,6 +193,15 @@ export class AdminReference extends BaseComponent implements OnInit, OnDestroy {
 	  this.summaryTypeTemplateList.updateTable($event);
   }
 
+  onSystemReviewQuestionAssignmentSelected($event) {
+    const systemReviewQuestionAssignmentId = $event;
+    this.systemReviewQuestionAssignmentDetails.getSystemReviewQuestionAssignment(systemReviewQuestionAssignmentId);
+  }
+
+  onSystemReviewQuestionAssignmentSaved($event) {
+	  this.systemReviewQuestionAssignmentList.updateTable($event);
+  }
+
   onTabChange(evt) {
 	this.activeTab = evt.index;
     setTimeout(() => {
@@ -232,16 +249,29 @@ export class AdminReference extends BaseComponent implements OnInit, OnDestroy {
     } else if (evt.index === 20) {
       this.summaryTypeList.getList();
     } else if (evt.index === 21) {
-      this.processReference(Constants.CATEGORY_PE_SYSTEM, 'Category', 'PE_SYSTEM_TYPE');
+      this.processReferenceWithChild(null, 'PhysicalExamSystem', 'PE_SYSTEM_TYPE');
     } else if (evt.index === 22) {
-			this.processReferenceWithCategory(Constants.CATEGORY_PE_SYSTEM, 'PhysicalExamSystem', 'PE_SYSTEM');
-    } else if (evt.index === 23) {
       this.physicalExamTypeAssignmentList.getList();
+    } else if (evt.index === 23) {
+      
+    } else if (evt.index === 24) {
+      this.processReferenceWithChild(null, 'SystemReviewQuestion', 'SYSTEM_REVIEW_QUESTION');
+    } else if (evt.index === 25) {
+      this.onSystemReviewQuestionList.getList();
     }
 
      }, 0);
   }
 
+
+  processReferenceWithChild(categoryNumber: number, referenceType: string, listLabel: string) {
+    this.globalEventsManager.selectedParentId = categoryNumber;
+    this.globalEventsManager.selectedReferenceType = referenceType;
+    setTimeout(() => {
+      this.referenceWithChildList.updateCols(listLabel);
+    }, 0);
+    this.referenceWithChildList.getAll();
+  }
 
   processReference(categoryNumber: number, referenceType: string, listLabel: string) {
     this.globalEventsManager.selectedParentId = categoryNumber;

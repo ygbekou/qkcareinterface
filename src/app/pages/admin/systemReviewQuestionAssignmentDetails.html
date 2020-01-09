@@ -1,6 +1,6 @@
 <form name="form" (ngSubmit)="f.form.valid && save()" #f="ngForm" validate>
 	<p-messages [(value)]="messages"></p-messages>
-	<div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="physicalExamTypeAssignment">
+	<div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="systemReviewQuestionAssignment">
 	<div class="ui-grid-row">
 		<div class="ui-grid-col-3 ui-sm-12">
 			<div class="form-group">
@@ -18,7 +18,7 @@
 		<div class="ui-grid-col-3 ui-sm-12">
 			<div class="form-group">
 				<label for="summaryType">{{ 'COMMON.SUMMARY_TYPE' | translate }}<font color="red">*</font></label>
-				<p-autoComplete [(ngModel)]="physicalExamTypeAssignment.summaryType"
+				<p-autoComplete [(ngModel)]="systemReviewQuestionAssignment.summaryType"
 					(onDropdownClick)="summaryTypeDropdown.handleDropdownClick($event)"
 					[suggestions]="summaryTypeDropdown.filteredSummaryTypes" [dropdown]="true" id="summaryType"
 					(completeMethod)="summaryTypeDropdown.filter($event)" name="summaryType" field="name" [size]="30"
@@ -29,20 +29,20 @@
 		</div>
 		<div class="ui-grid-col-3 ui-sm-12">
 			<div class="form-group">
-				<label for="physicalExamType">{{ 'COMMON.PHYSICAL_EXAM_TYPE' | translate }}<font color="red">*</font></label>
-				<p-autoComplete [(ngModel)]="physicalExamTypeAssignment.physicalExamType"
-					(onDropdownClick)="physicalExamSystemDropdown.handleDropdownClick($event)"
-					[suggestions]="physicalExamSystemDropdown.filteredItems" [dropdown]="true" id="physicalExamType"
-					(completeMethod)="physicalExamSystemDropdown.filter($event)" name="physicalExamType" field="name" [size]="30"
-					placeholder="" [minLength]="1" #physicalExamType="ngModel" required>
+				<label for="physicalExamType">{{ 'COMMON.SYSTEM_REVIEW_QUESTION' | translate }}<font color="red">*</font></label>
+				<p-autoComplete [(ngModel)]="systemReviewQuestionAssignment.systemReviewQuestion"
+					(onDropdownClick)="systemReviewQuestionDropdown.handleDropdownClick($event)"
+					[suggestions]="systemReviewQuestionDropdown.filteredItems" [dropdown]="true" id="physicalExamType"
+					(completeMethod)="systemReviewQuestionDropdown.filter($event)" name="systemReviewQuestion" field="name" [size]="30"
+					placeholder="" [minLength]="1" #systemReviewQuestion="ngModel" required>
 				</p-autoComplete>
-				<p-message *ngIf="f.submitted && physicalExamType.invalid" severity="error" text="Field is required"></p-message>
+				<p-message *ngIf="f.submitted && systemReviewQuestion.invalid" severity="error" text="Field is required"></p-message>
 			</div>
 		</div>
 		<div class="ui-grid-col-4 ui-sm-12">
 			<div class="form-group">
 				<label for="description">{{ 'COMMON.DESCRIPTION' | translate }}</label>
-				<input pInputText name="description" id="description" [(ngModel)]="physicalExamTypeAssignment.description" />
+				<input pInputText name="description" id="description" [(ngModel)]="systemReviewQuestionAssignment.description" />
 			</div>
 		</div>
 	</div>

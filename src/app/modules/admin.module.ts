@@ -24,6 +24,7 @@ import { CaseStudyDetails } from '../components/admin/caseStudyDetails';
 import { CaseStudyList } from '../components/admin/caseStudyList';
 import { ReferenceDetails } from '../components/admin/referenceDetails';
 import { ReferenceList } from '../components/admin/referenceList';
+import { ReferenceWithChildList } from '../components/admin/referenceWithChildList';
 import { ReferenceWithCategoryDetails } from '../components/admin/referenceWithCategoryDetails';
 import { ReferenceWithCategoryList } from '../components/admin/referenceWithCategoryList';
 import { MedicineDetails } from '../components/admin/medicineDetails';
@@ -66,9 +67,8 @@ import { PatientServiceDetails } from '../components/admin/patientServiceDetails
 import { AdminReference } from '../components/admin/adminReference';
 import { CategoryDropdown, PackageDropdown, DoctorDropdown, ServiceDropdown, LabTestDropdown, 
       ProductDropdown, ModalityDropdown, RadExamDropdown, ExamStatusDropdown, RadiologyTechDropdown,
-      RoleDropdown, 
-      SummaryTypeDropdown,
-      UserGroupDropdown} from '../components/dropdowns';
+      RoleDropdown, SummaryTypeDropdown, UserGroupDropdown, PhysicalExamSystemDropdown, 
+      SystemReviewQuestionDropdown} from '../components/dropdowns';
 import { AdminPatient } from '../components/admin/adminPatient';
 import { VisitDetails } from '../components/admin/visitDetails';
 import { VisitList } from '../components/admin/visitList';
@@ -149,6 +149,13 @@ import { PhysicalExamTypeAssignmentDetails } from '../components/admin/physicalE
 import { PhysicalExamTypeAssignmentList } from '../components/admin/physicalExamTypeAssignmentList';
 import { SummaryTypeTemplateDetails } from '../components/admin/summaryTypeTemplateDetails';
 import { SummaryTypeTemplateList } from '../components/admin/summaryTypeTemplateList';
+import { PhysicalExamDetails } from '../components/admin/physicalExamDetails';
+import { PhysicalExamList } from '../components/admin/physicalExamList';
+
+import { SystemReviewQuestionAssignmentDetails } from '../components/admin/systemReviewQuestionAssignmentDetails';
+import { SystemReviewQuestionAssignmentList } from '../components/admin/systemReviewQuestionAssignmentList';
+import { SystemReviewDetails } from '../components/admin/systemReviewDetails';
+import { SystemReviewList } from '../components/admin/systemReviewList';
 
 const routes: Routes = [
   { path: 'adminMain', component: AdminMain },
@@ -263,7 +270,7 @@ export function HttpLoaderFactory(http: HttpClient) {
   declarations: [SearchComponent, FileUploader, AdminMenu, AdminMain, AdminAppointment, DocumentDetails,
     DocumentList, EmployeeDetails, EmployeeList, PatientDetails, PatientList, ScheduleDetails, ScheduleList,
     AppointmentScheduler, AppointmentDetails, AppointmentList, CaseStudyDetails, CaseStudyList, ReferenceDetails,
-    ReferenceList, ReferenceWithCategoryDetails, ReferenceWithCategoryList, MedicineDetails, MedicineList,
+    ReferenceList, ReferenceWithChildList, ReferenceWithCategoryDetails, ReferenceWithCategoryList, MedicineDetails, MedicineList,
     PrescriptionDetails, PrescriptionList, AccountDetails, AccountList,
     InvoiceDetails, InvoiceList, PaymentDetails, PaymentList, InsuranceDetails, InsuranceList, ServiceDetails,
     ServiceList, PackageDetails, PackageList, BillDetails, BillList, VitalSignDetails, VitalSignList, AllergyDetails,
@@ -282,12 +289,15 @@ export function HttpLoaderFactory(http: HttpClient) {
     CompanyDetails, CompanyList, ContactDetails, ContactList, Dashboard, BaseComponent, PatientMedicineList,
     RoleDetails, RoleList, ResourceDetails, ResourceList, MenuItemDetails, MenuItemList, UserRoleAssignment, UserList, 
     PermissionDetails, SummaryDetails, SummaryList, SummaryTypeDetails, SummaryTypeList, 
-    PhysicalExamTypeAssignmentDetails, PhysicalExamTypeAssignmentList, SummaryTypeTemplateDetails, SummaryTypeTemplateList],
+    PhysicalExamTypeAssignmentDetails, PhysicalExamTypeAssignmentList, SummaryTypeTemplateDetails, SummaryTypeTemplateList,
+    PhysicalExamDetails, PhysicalExamList,  SystemReviewQuestionAssignmentDetails, SystemReviewQuestionAssignmentList, 
+    SystemReviewDetails, SystemReviewList],
 
   providers: [
 	CategoryDropdown, PackageDropdown, DoctorDropdown, TokenStorage, AppInfoStorage, BillingService, VisitService, LoggedInGuard, 
 	ConfirmationService, ServiceDropdown, LabTestDropdown, ProductDropdown, ModalityDropdown, RadExamDropdown, 
-	RadInvestigationService, ExamStatusDropdown, RadiologyTechDropdown, RoleDropdown, UserGroupDropdown, SummaryTypeDropdown]
+  RadInvestigationService, ExamStatusDropdown, RadiologyTechDropdown, RoleDropdown, UserGroupDropdown, SummaryTypeDropdown,
+  PhysicalExamSystemDropdown, SystemReviewQuestionDropdown]
 })
 
 export class AdminModule { }

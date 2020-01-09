@@ -1,0 +1,29 @@
+
+  <p-table [value]="systemReviews" dataKey="systemReviewDate" [rows]="20" [scrollable]="true" scrollHeight="1000px" [style]="{height:'500px'}">
+    <ng-template pTemplate="colgroup" let-columns>
+      <colgroup>
+        <col style="width:1000px">
+      </colgroup>
+    </ng-template>
+    <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex" let-expanded="expanded" let-columns="columns">
+      <tr class="ui-widget-header" *ngIf="rowGroupMetadata[rowData.systemReviewDate].index === rowIndex">
+          <td colspan="1" [ngClass]="'no-border'">
+              <a href="#" [pRowToggler]="rowData">
+                    <i [ngClass]="expanded ? 'fa fa-fw fa-chevron-circle-down' : 'fa fa-fw fa-chevron-circle-right'"></i>
+                    <span>{{rowData.systemReviewDate}}</span>
+                </a>
+          </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="rowexpansion" let-rowData let-rowIndex="rowIndex">
+      <tr>
+        <td [ngClass]="'no-border'">
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <a [href]="rowData.shortMenu" (click)="edit(rowData.id);" data-toggle="tooltip" title="{{rowData.shortMenu}}">
+              <span>{{rowData.shortMenu}}</span>
+          </a>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+

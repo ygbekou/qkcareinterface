@@ -56,9 +56,6 @@ export class ReferenceDetails extends BaseComponent implements OnInit, OnDestroy
             this.hiddenMenu = false;
           }
           this.parentId = params['parentId'];
-          if (this.parentId == null) {
-            this.parentId = this.globalEventsManager.selectedParentId;
-          } 
           
           if (referenceId != null) {
               this.genericService.getOne(referenceId, this.referenceType)
@@ -104,24 +101,26 @@ export class ReferenceDetails extends BaseComponent implements OnInit, OnDestroy
   save() {
     this.messages = [];
     try {
-      this.reference.parent = new Reference();
-      this.reference.parent.id = this.parentId;
-      if (this.category.id > 0) {
-        this.reference.parent.id = this.category.id;
-        this.referenceType = 'Category';
-      }
+      
+      //this.reference.parent.id = this.parentId;
+      // if (this.category.id > 0) {
+      //   this.reference.parent.id = this.category.id;
+      //   this.referenceType = 'Category';
+      // }
 
       if (this.globalEventsManager.selectedParentId > 0) {
+        this.reference.parent = new Reference();
         this.reference.parent.id = this.globalEventsManager.selectedParentId;
-        this.referenceType = 'Category';
+        this.referenceType = this.globalEventsManager.selectedReferenceType;
       }
+
       
       this.genericService.save(this.reference, this.globalEventsManager.selectedReferenceType)
         .subscribe(result => {
           if (result.id > 0) {
-			this.processResult(result, this.reference, this.messages, null);
-			this.reference = result;
-			this.referenceSaveEvent.emit(this.reference);
+            this.processResult(result, this.reference, this.messages, null);
+            this.reference = result;
+            this.referenceSaveEvent.emit(this.reference);
           } else {
             this.processResult(result, this.reference, this.messages, null);
           }

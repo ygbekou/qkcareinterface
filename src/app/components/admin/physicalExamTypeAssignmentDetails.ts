@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, EventEmitter, Output, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { UserGroupDropdown, SummaryTypeDropdown, CategoryDropdown } from '../dropdowns';
+import { UserGroupDropdown, SummaryTypeDropdown, CategoryDropdown, PhysicalExamSystemDropdown } from '../dropdowns';
 import { GenericService, GlobalEventsManager, TokenStorage } from '../../services';
 import { Message, ConfirmationService } from 'primeng/api';
 import { BaseComponent } from './baseComponent';
@@ -31,10 +31,11 @@ export class PhysicalExamTypeAssignmentDetails extends BaseComponent implements 
       public userGroupDropdown: UserGroupDropdown,
       public summaryTypeDropdown: SummaryTypeDropdown,
       public categoryDropdown: CategoryDropdown,
+      public physicalExamSystemDropdown: PhysicalExamSystemDropdown,
       private route: ActivatedRoute
     ) {
       super(genericService, translate, confirmationService, tokenStorage);
-      this.categoryDropdown.getAllCategories(8);
+      this.physicalExamSystemDropdown.getGroupItems();
   }
 
   ngOnInit(): void {

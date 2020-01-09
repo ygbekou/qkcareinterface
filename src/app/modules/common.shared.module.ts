@@ -19,6 +19,8 @@ import {
   PanelModule, UIChart, PickListModule, ToolbarModule, Message, MessageModule, ScrollPanelModule
 } from 'primeng';
 
+//import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
+
 @NgModule({
   declarations: [],
 
@@ -30,7 +32,7 @@ import {
     CalendarModule, RadioButtonModule, DropdownModule, AutoCompleteModule, ProgressBarModule,
     DialogModule, GalleriaModule, MessagesModule, TreeModule, AccordionModule, ConfirmDialogModule,
     PanelModule, TableModule, ToolbarModule, MessageModule,
-    CardModule, ScrollPanelModule
+    CardModule, ScrollPanelModule, //BrowserAnimationsModule, NoopAnimationsModule
   ],
 
   exports: [
@@ -43,7 +45,8 @@ import {
     PasswordModule, CheckboxModule, InputTextModule, InputMaskModule, CarouselModule, OverlayPanelModule,
     CalendarModule, RadioButtonModule, DropdownModule, AutoCompleteModule, UIChart, PickListModule, OrganizationChartModule,
     DialogModule, GalleriaModule, MessagesModule, TreeModule, PanelModule, TableModule,
-    ToolbarModule, MessageModule, ConfirmDialogModule, CardModule, ScrollPanelModule, FullCalendar, FullCalendarModule
+    ToolbarModule, MessageModule, ConfirmDialogModule, CardModule, ScrollPanelModule, FullCalendar, 
+    FullCalendarModule, //BrowserAnimationsModule, NoopAnimationsModule
   ],
 })
 

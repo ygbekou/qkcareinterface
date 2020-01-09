@@ -1,0 +1,67 @@
+<form name="form" (ngSubmit)="f.form.valid && save(1)" #f="ngForm" validate>
+  <div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="physicalExam">
+    <p-messages [(value)]="messages"></p-messages>
+    <div class="ui-grid-row">
+      <div class="ui-grid-col-3 ui-sm-12">
+        <div class="form-group">
+          <label for="physicalExamDatetime">{{ 'COMMON.DATE' | translate }}<font color="red">*</font></label>
+          <p-calendar [(ngModel)]="physicalExam.physicalExamDatetime" [showTime]="true" disabled="true" required
+            name="physicalExamDatetime" #physicalExamDatetime="ngModel"></p-calendar>
+          <p-message *ngIf="f.submitted && physicalExamDatetime.invalid" severity="error" text="Field is required">
+          </p-message>
+        </div>
+      </div>
+      <div class="ui-grid-col-3 ui-sm-12">
+        <div class="form-group">
+          <label for="author">{{ 'COMMON.AUTHOR' | translate }}<font color="red">*</font></label>
+          <p-autoComplete [(ngModel)]="physicalExam.author" required disabled
+            (onDropdownClick)="medicalTeamDropdown.handleDropdownClick($event)"
+            [suggestions]="medicalTeamDropdown.filteredItems" [dropdown]="true"
+            id="author" (completeMethod)="medicalTeamDropdown.filter($event)"
+            name="author" field="name" [size]="30" placeholder="" [minLength]="1"
+            #author="ngModel"></p-autoComplete>
+          <p-message *ngIf="f.submitted && author.invalid" severity="error" text="Field is required">
+          </p-message>
+        </div>
+      </div>
+
+    </div>
+
+
+    
+
+    <div class="ui-grid-row">
+      <p-selectButton [options]="types" [(ngModel)]="selectedType" name="tyoe" #type="ngModel" required></p-selectButton>
+    </div>
+    
+    <div class="ui-grid-row">
+      <div class="ui-grid-col-3 ui-sm-12" *ngFor="let mm of physicalExamSystemMap[selectedType] | keyvalue">
+        <div *ngIf="mm.key !== 'null|'">
+                <br/>
+                <div class="ui-grid-row bg-primary">{{mm.key.split('|')[1]}}</div>
+                <div *ngFor="let system of mm.value; let i = index">
+                  <p-checkbox id="status" name="status"
+                    [(ngModel)]="physicalExam.selectedPhysicalExamSystems" [value]="system.id"
+                    label="{{system.name}}"
+                    >
+                  </p-checkbox>
+                </div>
+            
+          </div>
+        </div>
+      </div>
+  </div>
+    
+
+  <br/>
+  <br/>
+  <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+    <button type="button" pButton icon="fa fa-refresh" (click)="clear()"
+      label="{{ 'COMMON.CLEAR' | translate }}"></button>&nbsp;&nbsp;
+    <button type="button" pButton icon="fa fa-save" label="{{ 'COMMON.SIGNE' | translate }}" (click)="save(2)"
+      [disabled]="!f.form.valid" ></button>&nbsp;&nbsp;
+    <button pButton icon="fa fa-save" label="{{ 'COMMON.SAVE' | translate }}"
+      [disabled]="!f.form.valid" ></button>
+  </div>
+</form>
+

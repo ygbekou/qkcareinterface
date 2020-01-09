@@ -132,7 +132,9 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
 
 @NgModule({
   imports: [
+    BrowserAnimationsModule,
     BrowserModule,
+    
     FormsModule,
     TranslateModule.forRoot({
       loader: {
@@ -144,7 +146,6 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     AppRoutes,
     HttpModule,
     HttpClientModule,
-    BrowserAnimationsModule,
     AccordionModule,
     AutoCompleteModule,
     BreadcrumbModule,
