@@ -65,10 +65,12 @@ import { AdminAuthorization } from '../components/admin/adminAuthorization';
 import { AdmissionDiagnoses } from '../components/admin/admissionDiagnoses';
 import { PatientServiceDetails } from '../components/admin/patientServiceDetails';
 import { AdminReference } from '../components/admin/adminReference';
-import { CategoryDropdown, PackageDropdown, DoctorDropdown, ServiceDropdown, LabTestDropdown, 
-      ProductDropdown, ModalityDropdown, RadExamDropdown, ExamStatusDropdown, RadiologyTechDropdown,
+import { CategoryDropdown, PackageDropdown, DoctorDropdown, ProductDropdown, ModalityDropdown, 
+      RadExamDropdown, ExamStatusDropdown, RadiologyTechDropdown,
       RoleDropdown, SummaryTypeDropdown, UserGroupDropdown, PhysicalExamSystemDropdown, 
-      SystemReviewQuestionDropdown} from '../components/dropdowns';
+      SystemReviewQuestionDropdown,
+      LabTestDropdown,
+      ServiceDropdown} from '../components/dropdowns';
 import { AdminPatient } from '../components/admin/adminPatient';
 import { VisitDetails } from '../components/admin/visitDetails';
 import { VisitList } from '../components/admin/visitList';
@@ -149,6 +151,7 @@ import { PhysicalExamTypeAssignmentDetails } from '../components/admin/physicalE
 import { PhysicalExamTypeAssignmentList } from '../components/admin/physicalExamTypeAssignmentList';
 import { SummaryTypeTemplateDetails } from '../components/admin/summaryTypeTemplateDetails';
 import { SummaryTypeTemplateList } from '../components/admin/summaryTypeTemplateList';
+import { PatientDashboard } from '../components/admin/patientDashboard';
 import { PhysicalExamDetails } from '../components/admin/physicalExamDetails';
 import { PhysicalExamList } from '../components/admin/physicalExamList';
 
@@ -239,6 +242,7 @@ const routes: Routes = [
   { path: 'adminRadiologyConfig', component: AdminRadiologyConfig },
   { path: 'patientKiosk', component: PatientKiosk },
   { path: 'dashboard', component: Dashboard },
+  { path: 'pdashboard', component: PatientDashboard },
   { path: 'roleDetails', component: RoleDetails },
   { path: 'roleList', component: RoleList },
   { path: 'resourceDetails', component: ResourceDetails },
@@ -288,7 +292,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     DepartmentList, AdminWebsite, AdminHeader, SliderDetails, SliderList, SliderTextList, SliderTextDetails,
     CompanyDetails, CompanyList, ContactDetails, ContactList, Dashboard, BaseComponent, PatientMedicineList,
     RoleDetails, RoleList, ResourceDetails, ResourceList, MenuItemDetails, MenuItemList, UserRoleAssignment, UserList, 
-    PermissionDetails, SummaryDetails, SummaryList, SummaryTypeDetails, SummaryTypeList, 
+     
+    PermissionDetails, SummaryDetails, SummaryList, SummaryTypeDetails, SummaryTypeList, PatientDashboard,
     PhysicalExamTypeAssignmentDetails, PhysicalExamTypeAssignmentList, SummaryTypeTemplateDetails, SummaryTypeTemplateList,
     PhysicalExamDetails, PhysicalExamList,  SystemReviewQuestionAssignmentDetails, SystemReviewQuestionAssignmentList, 
     SystemReviewDetails, SystemReviewList],
@@ -299,5 +304,6 @@ export function HttpLoaderFactory(http: HttpClient) {
   RadInvestigationService, ExamStatusDropdown, RadiologyTechDropdown, RoleDropdown, UserGroupDropdown, SummaryTypeDropdown,
   PhysicalExamSystemDropdown, SystemReviewQuestionDropdown]
 })
+export class AdminModule { 
 
-export class AdminModule { }
+}

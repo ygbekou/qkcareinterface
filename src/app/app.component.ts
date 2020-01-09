@@ -2,7 +2,7 @@ import { GlobalEventsManager } from './services';
 import { TokenStorage } from './services/token.storage';
 import { Component, AfterViewInit, ElementRef, Renderer2, ViewChild, OnDestroy, 
   Input, AfterViewChecked, ChangeDetectorRef } from '@angular/core';
-import { Location } from "@angular/common";
+import { Location } from '@angular/common';
 import { ScrollPanel } from 'primeng';
 import { TranslateService } from '@ngx-translate/core';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
@@ -75,13 +75,14 @@ export class AppComponent implements AfterViewInit, AfterViewChecked {
       this.translate.use('fr');
       console.log('Using default lang=fr');
     }
-    registerLocaleData(localeFr)
+    registerLocaleData(localeFr);
   }
 
   ngAfterViewInit() {
     setTimeout(() => {
-      if (this.layoutMenuScrollerViewChild)
+      if (this.layoutMenuScrollerViewChild) {
         this.layoutMenuScrollerViewChild.moveBar();
+      }
     }, 100);
   }
 

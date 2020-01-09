@@ -13,7 +13,7 @@ export class AuthToken {
   authorities: number[];
   menus: MenuVO[];
   nonMenuPermissions: PermissionVO[];
-
+  userId: number;
 
   constructor() {
   }

@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { AdmissionService, AppointmentService, VisitService } from '../../services';
+import { AdmissionService, AppointmentService, VisitService, TokenStorage } from '../../services';
 import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
 // tslint:disable-next-line:import-blacklist
 import { Subscription } from 'rxjs/Rx';
@@ -21,19 +21,21 @@ export class Dashboard implements OnInit, OnDestroy {
 	upcomingAppointmentCols: any[];
 	events: ScheduleEvent[];
 	visits: Visit[];
+	userId = '0';
 	searchCriteria: SearchCriteria = new SearchCriteria();
 
 	constructor(
 		private appointmentService: AppointmentService,
 		private admissionService: AdmissionService,
 		private visitService: VisitService,
-		private translate: TranslateService,
+		private translate: TranslateService,		
+		private tokenStorage: TokenStorage,
 		private globalEventsManager: GlobalEventsManager
 	) {
-
+		this.userId = tokenStorage.getUserId();
 		this.globalEventsManager.showMenu = true;
 		console.log('In dashboard');
-		this.subscription = this.appointmentService.getByMonths()
+		this.subscription = this.appointmentService.getByMonths(this.userId)
 			.subscribe((data: any) => {
 				this.appointmentItem = this.pullData(data, 'Rendez-vous', '#00ff00', '#00ff00');
 			},
@@ -42,7 +44,7 @@ export class Dashboard implements OnInit, OnDestroy {
 			);
 
 
-		this.subscription.add(this.admissionService.getByMonths()
+		this.subscription.add(this.admissionService.getByMonths(this.userId)
 			.subscribe((data: any) => {
 				this.admissionItem = this.pullData(data, 'Admissions', '#c4ffc1', '#c4ffc1');
 			},
@@ -51,7 +53,7 @@ export class Dashboard implements OnInit, OnDestroy {
 			));
 
 		console.log('Before call');
-		this.subscription.add(this.visitService.getByMonths()
+		this.subscription.add(this.visitService.getByMonths(this.userId)
 			.subscribe((data: any) => { 
 				this.visitItem = this.pullData(data, 'Visites', '#ffc100', '#ffc100');
 				console.log(this.visitItem);

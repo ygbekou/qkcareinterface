@@ -667,7 +667,7 @@ export class AppSubMenuComponent {
   }
 
   getMenus() {
-    return this.tokenStorage.getMenus()
+    return this.tokenStorage.getMenus();
   }
 
 }

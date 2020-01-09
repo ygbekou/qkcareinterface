@@ -8,7 +8,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { SummaryType, UserGroup, SummaryTypeTemplate } from 'src/app/models';
 
 @Component({
-  selector: 'app-summaryTypeTemplate-details',
+  selector: 'app-summary-type-template-details',
   templateUrl: '../../pages/admin/summaryTypeTemplateDetails.html',
   providers: [GenericService]
 })

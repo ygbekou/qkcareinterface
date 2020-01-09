@@ -182,7 +182,8 @@
       </p-tabPanel>
       <p-tabPanel id="summaryTypeTemplate" header="{{'COMMON.SUMMARY_TYPE_TEMPLATE' |translate}}">
         <div *ngIf="activeTab == 23" class="ui-grid-row">
-          <app-summaryTypeTemplate-details (summaryTypeTemplateSaveEvent)="onSummaryTypeTemplateSaved($event)"></app-summaryTypeTemplate-details>
+          <app-summary-type-template-details (summaryTypeTemplateSaveEvent)="onSummaryTypeTemplateSaved($event)">
+            </app-summary-type-template-details>
           <br/>
           <app-summaryTypeTemplate-list (summaryTypeTemplateIdEvent)="onSummaryTypeTemplateSelected($event)"></app-summaryTypeTemplate-list>
         </div>

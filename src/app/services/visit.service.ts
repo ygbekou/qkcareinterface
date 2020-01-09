@@ -113,18 +113,23 @@ export class VisitService {
 			.catch(this.handleError);
 	}
 
-	public getByMonths = (): Observable<Visit[]> => {
-		const actionUrl = Constants.apiServer + '/service/visit/list/byMonth';
-		console.log("in GetByMonth");
-		 return this.http.get(actionUrl, { headers: this.headers })
-			.map((response: Response) =>{ 
-				console.log("inside GetByMonth");
-				console.log(response.json());
-				return response.json();			
+	public getByMonths = (userId: string): Observable<Visit[]> => {
+		const actionUrl = Constants.apiServer + '/service/visit/list/byMonth/' + userId;
+		return this.http.get(actionUrl, { headers: this.headers })
+			.map((response: Response) => {
+				return response.json();
 			})
 			.catch(this.handleError);
 	}
 
+	public getByYear = (userId: string): Observable<Visit[]> => {
+		const actionUrl = Constants.apiServer + '/service/visit/list/byYear/' + userId;
+		return this.http.get(actionUrl, { headers: this.headers })
+			.map((response: Response) => {
+				return response.json();
+			})
+			.catch(this.handleError);
+	}
 	public getWaitList = (topN: number): Observable<Visit[]> => {
 		const actionUrl = Constants.apiServer + '/service/visit/getWaitList/' + topN;
 		return this.http.get(actionUrl, { headers: this.headers })
@@ -133,8 +138,8 @@ export class VisitService {
 	}
 
 	public endVisit = (id: number): Observable<boolean> => {
-		let toAdd = JSON.stringify(id);
-		let actionUrl = Constants.apiServer + '/service/visit/endVisit';
+		const toAdd = JSON.stringify(id);
+		const actionUrl = Constants.apiServer + '/service/visit/endVisit';
 		return this.http.post(actionUrl, toAdd, { headers: this.headers })
 			.map((response: Response) => {
 				console.log(response);
@@ -147,8 +152,8 @@ export class VisitService {
 			.catch(this.handleError);
 	}
 	public cancelVisit = (id: number): Observable<boolean> => {
-		let toAdd = JSON.stringify(id);
-		let actionUrl = Constants.apiServer + '/service/visit/cancelVisit';
+		const toAdd = JSON.stringify(id);
+		const actionUrl = Constants.apiServer + '/service/visit/cancelVisit';
 		return this.http.post(actionUrl, toAdd, { headers: this.headers })
 			.map((response: Response) => {
 				console.log(response);
@@ -161,37 +166,37 @@ export class VisitService {
 			.catch(this.handleError);
 	}
 
-    public saveAllergies = (patient: Patient): Observable<Patient> => {
+	public saveAllergies = (patient: Patient): Observable<Patient> => {
 		const toAdd = JSON.stringify(patient);
 		const actionUrl = Constants.apiServer + '/service/visit/allergies/save';
-		return this.http.post(actionUrl, toAdd, {headers: this.headers})
-		.map((response: Response) => {
-			return response.json();
-		})
-		.catch(this.handleError);
-   }
+		return this.http.post(actionUrl, toAdd, { headers: this.headers })
+			.map((response: Response) => {
+				return response.json();
+			})
+			.catch(this.handleError);
+	}
 
-   public saveMedicalHistories = (patient: Patient): Observable<Patient> => {
+	public saveMedicalHistories = (patient: Patient): Observable<Patient> => {
 		const toAdd = JSON.stringify(patient);
 		const actionUrl = Constants.apiServer + '/service/visit/medicalHistories/save';
-		return this.http.post(actionUrl, toAdd, {headers: this.headers})
-		.map((response: Response) => {
-			return response.json();
-		})
-		.catch(this.handleError);
-   }
+		return this.http.post(actionUrl, toAdd, { headers: this.headers })
+			.map((response: Response) => {
+				return response.json();
+			})
+			.catch(this.handleError);
+	}
 
-   public saveSocialHistories = (patient: Patient): Observable<Patient> => {
+	public saveSocialHistories = (patient: Patient): Observable<Patient> => {
 		const toAdd = JSON.stringify(patient);
 		const actionUrl = Constants.apiServer + '/service/visit/socialHistories/save';
-		return this.http.post(actionUrl, toAdd, {headers: this.headers})
-		.map((response: Response) => {
-			return response.json();
-		})
-		.catch(this.handleError);
-   }
+		return this.http.post(actionUrl, toAdd, { headers: this.headers })
+			.map((response: Response) => {
+				return response.json();
+			})
+			.catch(this.handleError);
+	}
 
-   public getPatientEntities = (patientId: number, type: string): Observable<Patient> => {
+	public getPatientEntities = (patientId: number, type: string): Observable<Patient> => {
 		const actionUrl = Constants.apiServer + '/service/visit/patient/' + type + '/' + patientId;
 		return this.http.get(actionUrl, { headers: this.headers })
 			.map((response: Response) => <any>response.json())

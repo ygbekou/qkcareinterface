@@ -38,7 +38,6 @@ export class AuthenticationService {
             Cookie.set('userName', user.userName);
           }
           return response.json();
-
         } else {
           return null;
         }

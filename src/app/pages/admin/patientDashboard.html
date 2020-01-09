@@ -1,0 +1,210 @@
+<div class="dashboard">
+  <div class="ui-g">
+
+    <div class="ui-g-12 ui-md-12 ui-lg-4">
+      <p-card>
+        <p-header>
+          <button pButton type="button" label="Prochaine visite" class="ui-button-secondary"
+            style="width: 100%; font-size: 1.5rem;font-weight:normal;"></button>
+        </p-header>
+        <div class="counter counter-primary" *ngIf="nextAppointment"
+          style="font-size: 1.5rem;text-align: center;;font-weight:normal; color: #0088cc;">
+          <i class="fa fa-calendar"></i>
+          <br />
+          <strong>{{nextAppointment.appointmentDate| date:'dd/MM/yyyy'}}</strong>
+          <br />
+          <strong>{{nextAppointment.beginTime}}</strong>
+          <br />
+          <label>{{nextAppointment.doctorName}}</label>
+        </div>
+
+        <div class="counter counter-primary" *ngIf="!nextAppointment"
+          style="font-size: 1.5rem;text-align: center;;font-weight:normal; color: #0088cc;">
+          <i class="fa fa-calendar"></i>
+          <br />
+          <br />
+          <strong>{{ 'MESSAGE.NO_SCHED_APPOINTMENT' | translate }}</strong>
+          <br />
+          <br />
+        </div>
+        <p-footer>
+          <button pButton type="button" label="Demandez un rendez-vous" class="ui-button-secondary"
+            style="width: 100%; font-size: 15px;color: #0071bc;font-weight:normal;"></button>
+          <hr style="margin-top: 0.1rem; margin-bottom: 0.1rem;" />
+          <button pButton type="button" label="Mes visites passees" class="ui-button-secondary"
+            style="width: 100%; font-size: 15px;color: #0071bc;font-weight:normal;"></button>
+        </p-footer>
+      </p-card>
+    </div>
+    <div class="ui-g-12 ui-md-12 ui-lg-4">
+      <p-card>
+        <p-header>
+          <button pButton type="button" label="Sommaire de mon compte" class="ui-button-secondary"
+            style="width: 100%; font-size: 1.5rem;font-weight:normal;"></button>
+        </p-header>
+        <div class="counter counter-primary"
+          style="font-size: 1.5rem;text-align: center; color: #0088cc;font-weight:normal;">
+          <i class="fa fa-money"></i>
+          <br />
+          <strong>Montant du</strong>
+          <br />
+          <strong>15000 ECO</strong>
+          <br />
+          <button pButton type="button" label="Payer" class="ui-button-success"></button>
+        </div>
+        <p-footer>
+          <button pButton type="button" label="Voir les details" class="ui-button-secondary"
+            style="width: 100%; font-size: 15px;color: #0071bc;font-weight:normal;"></button>
+          <hr style="margin-top: 0.1rem; margin-bottom: 0.1rem;" />
+          <button pButton type="button" label="Imprimer la facture" class="ui-button-secondary"
+            style="width: 100%; font-size: 15px;color: #0071bc;font-weight:normal;"></button>
+        </p-footer>
+      </p-card>
+    </div>
+    <div class="ui-g-12 ui-md-12 ui-lg-4">
+      <p-card>
+        <p-header>
+          <button pButton type="button" label="Mes Prescriptions" class="ui-button-secondary"
+            style="width: 100%; font-size: 1.5rem;font-weight:normal;"></button>
+        </p-header>
+        <div class="counter counter-primary"
+          style="font-size: 1.5rem;text-align: center; color: #e91224;font-weight:normal;">
+          <i class="fa fa-plus-square"></i>
+          <br />
+          <strong>Acetaminophen 5-325 mg</strong>
+          <br />
+          <strong>Prescrit le 01/12/2019</strong>
+          <br />
+          <label>Par le Docteur Balogou</label>
+        </div>
+        <p-footer>
+          <button pButton type="button" label="Renouveller une prescription" class="ui-button-secondary"
+            style="width: 100%; font-size: 15px;color: #0071bc;font-weight:normal;"></button>
+          <hr style="margin-top: 0.1rem; margin-bottom: 0.1rem;" />
+          <button pButton type="button" label="Voir toutes mes prescriptions" class="ui-button-secondary"
+            style="width: 100%; font-size: 15px;color: #0071bc;font-weight:normal;"></button>
+        </p-footer>
+      </p-card>
+    </div>
+    <div class="ui-g-12 ui-md-12 ui-lg-4">
+      <a href="#">
+        <div class="overview-box monthly-sales">
+          <div class="overview-title">{{ 'COMMON.APPOINTMENT' | translate }}</div>
+          <i class="fa fa-arrow-circle-up"></i>
+          <div class="overview-numbers">
+            <strong>Total: {{appointmentItem.itemTotal}}</strong>
+          </div>
+          <p-chart type="bar" [data]="appointmentItem.itemData"></p-chart>
+        </div>
+      </a>
+    </div>
+    <div class="ui-g-12 ui-md-12 ui-lg-4">
+      <a href="#">
+        <div class="overview-box monthly-views">
+          <div class="overview-title">{{ 'COMMON.ADMISSION' | translate }}</div>
+          <i class="fa fa-arrow-circle-up"></i>
+          <div class="overview-numbers">
+            <strong>Total: {{admissionItem.itemTotal}}</strong>
+          </div>
+          <p-chart type="bar" [data]="admissionItem.itemData"></p-chart>
+        </div>
+      </a>
+    </div>
+    <div class="ui-g-12 ui-md-12 ui-lg-4">
+      <a href="#">
+        <div class="overview-box monthly-users">
+          <div class="overview-title">{{ 'COMMON.VISIT' | translate }}</div>
+          <i class="fa fa-arrow-circle-up"></i>
+          <div class="overview-numbers">
+            <strong>Total: {{visitItem.itemTotal}}</strong>
+          </div>
+          <p-chart type="bar" [data]="visitItem.itemData"></p-chart>
+        </div>
+      </a>
+    </div>
+  </div>
+  <div class="ui-g">
+    <div class="ui-g-12 ui-md-12 ui-lg-12">
+      <p-messages [(value)]="messages"></p-messages>
+    </div>
+  </div>
+  <div class="ui-g">
+
+    <div class="ui-g-12 ui-md-12 ui-lg-6">
+      <p-card>
+        <p-header>
+          <button pButton type="button" label="{{ 'COMMON.ALLERGY_LIST' | translate }}" class="ui-button-secondary"
+            style="width: 100%; font-size: 1.5rem;font-weight:normal;"></button>
+        </p-header>
+        <div class="counter counter-primary"
+          style="font-size: 15px;text-align: left; color: #0088cc;font-weight:normal;">
+          <div class="ui-grid-row" *ngFor="let allergyGroup of allergyGroups">
+            <div class="ui-grid-col-1 ui-sm-12">
+              {{allergyGroup.name}}:
+            </div>
+            <div class="ui-grid-col-11 ui-sm-12">
+              <p-checkbox id="status" [(ngModel)]="patient.selectedAllergies" [value]="allergy.id"
+                label="{{allergy.name}}" *ngFor="let allergy of allergyGroup.childs; let i = index"></p-checkbox>
+            </div>
+          </div>
+
+        </div>
+        <p-footer>
+          <button pButton type="button" label="{{ 'COMMON.SAVE_CHANGE' | translate }}" class="ui-button-secondary"
+            (click)="saveAllergy()" style="width: 100%; font-size: 15px;color: #0071bc;font-weight:normal;"></button>
+        </p-footer>
+      </p-card>
+    </div>
+    <div class="ui-g-12 ui-md-12 ui-lg-6">
+      <p-card>
+        <p-header>
+          <button pButton type="button" label="{{ 'COMMON.MEDICAL_HISTORY' | translate }}" class="ui-button-secondary"
+            style="width: 100%; font-size: 1.5rem;font-weight:normal;"></button>
+        </p-header>
+        <div class="counter counter-primary"
+          style="font-size: 10px;text-align: center; color: #0088cc;font-weight:normal;">
+          <div class="ui-g">
+            <div class="ui-g-12 ui-md-12 ui-lg-6">
+              <p-card>
+                <p-header>
+                  <font style="font-size: 20px;text-align: center; color: #0088cc;font-weight:normal;">
+                    {{ 'COMMON.MEDICAL_HISTORY' | translate }}
+                  </font>
+                </p-header>
+                <div class="ui-grid-row">
+                  <div class="ui-grid-col-11 ui-sm-12">
+                    <p-checkbox id="status" [(ngModel)]="patient.selectedMedicalHistories" [value]="medicalHistory.id"
+                      label="{{medicalHistory.name}}" *ngFor="let medicalHistory of medicalHistories; let i = index">
+                    </p-checkbox>
+                  </div>
+                </div>
+              </p-card>
+            </div>
+            <div class="ui-g-12 ui-md-12 ui-lg-6">
+              <p-card>
+                <p-header>
+                  <font style="font-size: 20px;text-align: center; color: #0088cc;font-weight:normal;">
+                    {{ 'COMMON.SOCIAL_HISTORY' | translate }}
+                  </font>
+                </p-header>
+                <div class="ui-grid-row">
+                  <div class="ui-grid-col-11 ui-sm-12">
+                    <p-checkbox id="status" [(ngModel)]="patient.selectedSocialHistories" [value]="socialHistory.id"
+                      label="{{socialHistory.name}}" *ngFor="let socialHistory of socialHistories; let i = index">
+                    </p-checkbox>
+                  </div>
+                </div>
+              </p-card>
+            </div>
+          </div>
+        </div>
+        <p-footer>
+          <button pButton type="button" label="{{ 'COMMON.SAVE_CHANGE' | translate }}" class="ui-button-secondary"
+            (click)="saveHistory()" style="width: 100%; font-size: 15px;color: #0071bc;font-weight:normal;"></button>
+        </p-footer>
+      </p-card>
+
+    </div>
+
+  </div>
+</div>
