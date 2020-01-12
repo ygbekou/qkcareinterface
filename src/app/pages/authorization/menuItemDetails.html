@@ -9,7 +9,7 @@
 					(onDropdownClick)="menuItemDropdown.handleDropdownClick($event)"
 					[suggestions]="menuItemDropdown.filteredMenuItems" [dropdown]="true" id="parent"
 					(completeMethod)="menuItemDropdown.filter($event)" name="parent" field="label" [size]="30"
-					placeholder="{{SELECT_OPTION}}" [minLength]="1" #parent="ngModel">
+					placeholder="{{'COMMON.SELECT_OPTION'|translate}}" [minLength]="1" #parent="ngModel">
 					</p-autoComplete>
 				</div>
 			</div>
@@ -20,7 +20,7 @@
 					(onDropdownClick)="resourceDropdown.handleDropdownClick($event)"
 					[suggestions]="resourceDropdown.filteredResources" [dropdown]="true" id="resource"
 					(completeMethod)="resourceDropdown.filter($event)" name="resource" field="urlPath" [size]="30"
-					placeholder="{{SELECT_OPTION}}" [minLength]="1" #resource="ngModel">
+					placeholder="{{'COMMON.SELECT_OPTION'|translate}}" [minLength]="1" #resource="ngModel">
 					</p-autoComplete>
 				</div>
 			</div>

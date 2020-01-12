@@ -407,7 +407,9 @@
     "SYSTEM_REVIEW_QUESTION_ASSIGNMENT": "Assigner des Questions d'Examen du Système",
     "SYSTEM_REVIEW_QUESTION_ASSIGNMENT_LIST": "Liste des Questions d'Examen du Système",
     "SYSTEM_REVIEW_QUESTION_LIST": "Liste des Questions d'Examen du Système",
-    "SYSTEM_REVIEW": "Examen du système"
+    "SYSTEM_REVIEW": "Examen du système",
+    "SELECT_OPTION":"Sélectionner une option",
+    "HOME_PAGE":"Page d'accueil"
   },
   "MESSAGE": {
     "TRANFER_DOCTOR_FAILED": "Le nouveau docteur assigné doit être différent de l'ancien.",

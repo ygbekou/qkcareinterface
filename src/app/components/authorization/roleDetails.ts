@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, EventEmitter, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { BuildingDropdown } from '../dropdowns';
+import { BuildingDropdown, ResourceDropdown } from '../dropdowns';
 import { Message, ConfirmationService } from 'primeng/api';
 import { GenericService, TokenStorage } from '../../services';
 import { TranslateService } from '@ngx-translate/core';
@@ -10,7 +10,7 @@ import { Role } from 'src/app/models';
 @Component({
   selector: 'app-role-details',
   templateUrl: '../../pages/authorization/roleDetails.html',
-  providers: [GenericService, BuildingDropdown]
+  providers: [GenericService, BuildingDropdown, ResourceDropdown]
   
 })
 export class RoleDetails extends BaseComponent implements OnInit, OnDestroy {
@@ -26,7 +26,8 @@ export class RoleDetails extends BaseComponent implements OnInit, OnDestroy {
 	    public translate: TranslateService,
       public confirmationService: ConfirmationService,
       public tokenStorage: TokenStorage,
-      private route: ActivatedRoute
+      private route: ActivatedRoute,
+      public resourceDropdown: ResourceDropdown
     ) {
 		    super(genericService, translate, confirmationService, tokenStorage);
       	this.role = new Role();

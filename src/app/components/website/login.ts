@@ -82,7 +82,7 @@ export class Login implements OnInit {
 								this.globalEventsManager.showMenu = true;
 								console.log('Navigating to dashboard');
 								this.genericService.updateToken();
-								this.router.navigate(['/admin/pdashboard']);
+								this.router.navigate([this.tokenStorage.getHomePage()]);
 								//window.location.reload();
 							} else {
 								console.log('No token');

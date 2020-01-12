@@ -7,6 +7,16 @@
 					<label for="name">{{ 'COMMON.NAME' | translate }}</label>
 					<input pInputText id="name" name="name" [(ngModel)]="role.name" required />
 				</div>
+				<br/>
+				<div class="form-group">
+					<label for="resource">{{ 'COMMON.HOME_PAGE' | translate }}</label>
+					<p-autoComplete [(ngModel)]="role.homePage"
+					(onDropdownClick)="resourceDropdown.handleDropdownClick($event)"
+					[suggestions]="resourceDropdown.filteredResources" [dropdown]="true" id="resource"
+					(completeMethod)="resourceDropdown.filter($event)" name="resource" field="urlPath" [size]="30"
+					placeholder="{{'COMMON.SELECT_OPTION'|translate}}" [minLength]="1" #resource="ngModel">
+					</p-autoComplete>
+				</div>
 			</div>
 			<div class="ui-grid-col-4 ui-sm-12">
 				<div class="form-group">		

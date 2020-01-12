@@ -16,6 +16,7 @@ export class TokenStorage {
   public static MENUS = 'menus';
   public static NON_MENU_RESOURCES = 'non_menu_resources';
   public static USER_ID = 'user_id';
+  public static HOME_PAGE = 'home_page';
 
 
   constructor() { }
@@ -60,6 +61,9 @@ export class TokenStorage {
 
     window.sessionStorage.removeItem(TokenStorage.USER_ID);
     window.sessionStorage.setItem(TokenStorage.USER_ID, authData.userId + '');
+
+    window.sessionStorage.removeItem(TokenStorage.HOME_PAGE);
+    window.sessionStorage.setItem(TokenStorage.HOME_PAGE, authData.homePage);
   }
 
   public getToken(): string {
@@ -116,4 +120,7 @@ export class TokenStorage {
     return window.sessionStorage.getItem(TokenStorage.USER_ID);
   }
 
+  public getHomePage(): string {
+    return window.sessionStorage.getItem(TokenStorage.HOME_PAGE);
+  }
 }
