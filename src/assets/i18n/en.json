@@ -417,6 +417,7 @@
     "TRANFER_DATE_FAILED": "The Transfer Date should be greater than the current assignment Date.",
     "APPOINTMENT_DISPLAY_FAILED": "Please Select a Department and a Doctor to add an appointment.",
     "NO_SCHED_APPOINTMENT":"No Scheduled Appointment",
+    "NO_PRESCRIPTION":"No prescription",
     "SAVE_SUCCESS": "Save was successful",
     "SAVE_UNSUCCESS": "Save was unsuccessful. See errors below: ",
     "READ_SUCCESS": "Read was successful",

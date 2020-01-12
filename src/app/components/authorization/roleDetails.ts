@@ -56,8 +56,7 @@ export class RoleDetails extends BaseComponent implements OnInit, OnDestroy {
   
   save() {
     try {
-      this.messages = [];
-      
+      this.messages = [];      
       this.genericService.save(this.role, 'com.qkcare.model.authorization.Role')
         .subscribe(result => {
           if (result.id > 0) {
