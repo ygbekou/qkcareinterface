@@ -8,6 +8,7 @@ import { Message, ConfirmationService, SelectItem } from 'primeng/api';
 import { BaseComponent } from './baseComponent';
 import { TranslateService } from '@ngx-translate/core';
 import { ActivatedRoute } from '@angular/router';
+import { stringify } from 'querystring';
 
 
 @Component({
@@ -80,6 +81,9 @@ export class SummaryDetails extends BaseComponent implements OnInit, OnDestroy {
   @Input() visit: Visit;
   @Output() summarySaveEvent = new EventEmitter<Summary>();
 
+  label: string;
+  labelId: number;
+
   messages: Message[] = [];
   author: Employee = new Employee();
   types: SelectItem[] = [];
@@ -115,9 +119,19 @@ export class SummaryDetails extends BaseComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
 
+    if (this.admission) {
+      this.label = 'Admission';
+      this.labelId = this.admission.id;
+    } else if (this.visit) {
+      this.label = 'Visit';
+      this.labelId = this.visit.id;
+    }
+
     this.user = JSON.parse(Cookie.get('user'));
 
     const userName = Cookie.get('userName');
+
+    this.getInitialSummary();
 
     this.route
         .queryParams
@@ -178,9 +192,21 @@ export class SummaryDetails extends BaseComponent implements OnInit, OnDestroy {
   }
 
 
+  getInitialSummary() {
+    this.clear();
+
+    this.genericService.getObject('/service/summary/getByPresence/' + this.label + '/' + this.labelId)
+        .subscribe(result => {
+      if (result) {
+        this.summary = result;
+        this.summary.summaryDatetime = new Date(this.summary.summaryDatetime);
+      }
+    });
+  }
+
   getSummary(summaryId: number) {
 	  this.clear();
-    this.genericService.getOne(summaryId, 'Summary')
+    this.genericService.getNewObject('/service/summary/get/', summaryId)
         .subscribe(result => {
     if (result.id > 0) {
       this.summary = result;
@@ -208,6 +234,10 @@ export class SummaryDetails extends BaseComponent implements OnInit, OnDestroy {
       },
       error => console.log(error),
       () => console.log('Get template complete'));
+
+
+
+
 
       this.genericService.getObject('/service/admission/physicalExam/list/summaryType/' + this.summary.summaryType.id + '/')
         .subscribe((data: any) => {

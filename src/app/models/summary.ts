@@ -16,6 +16,10 @@ export class Summary {
   subject: string;
   summaryDate: string;
   shortMenu: string;
+
+  chiefOfComplain: string;
+  historyOfPresentIllness: string;
+  medicalHistory: string;
   
   constructor() {
 	  this.summaryType = new SummaryType();
