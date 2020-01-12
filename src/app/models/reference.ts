@@ -5,7 +5,5 @@ export class Reference {
   status: number;
   parent: Reference;
   parentId1: number;
-  
-  
   childs: Reference[];
 }
