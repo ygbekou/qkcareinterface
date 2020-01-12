@@ -57,7 +57,7 @@ export class GenericService {
 
     const searchAttribute = new SearchAttribute();
     searchAttribute.parameters = parameters;
-    searchAttribute.orderBy = orderBy
+    searchAttribute.orderBy = orderBy;
     const toAdd = JSON.stringify(searchAttribute);
 
     const actionUrl = Constants.apiServer + '/service/' + entityClass + '/allByCriteriaAndOrderBy';

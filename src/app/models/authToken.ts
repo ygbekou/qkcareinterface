@@ -14,6 +14,7 @@ export class AuthToken {
   menus: MenuVO[];
   nonMenuPermissions: PermissionVO[];
   userId: number;
+  homePage: string;
 
   constructor() {
   }
@@ -23,16 +24,16 @@ export class AuthToken {
 
 export class MenuVO {
   id: number;
-	label: string;
+  label: string;
   routerLink: string[];
   icon: string;
-	
-	items: MenuVO[];
+
+  items: MenuVO[];
 }
 
 export class PermissionVO {
   id: number;
-	name: string;
+  name: string;
   canAdd: string;
   canEdit: string;
   canView: string;

@@ -3,7 +3,7 @@ import { Http, Response, Headers } from '@angular/http';
 // tslint:disable-next-line:import-blacklist
 import { Observable } from 'rxjs/Rx';
 import { Constants } from '../app.constants';
-import { SearchCriteria, Appointment } from '../models';
+import { SearchCriteria, Appointment, Prescription } from '../models';
 import { ScheduleEvent } from '../models/scheduleEvent';
 import { TokenStorage } from './token.storage';
 
@@ -96,6 +96,14 @@ export class AppointmentService {
 			.map((response: Response) => <Appointment>response.json())
 			.catch(this.handleError);
 	}
+
+	public getLastPrescription = (id: string): Observable<Prescription> => {
+		const actionUrl = Constants.apiServer + '/service/appointment/getLastPrescription/' + id;
+		return this.http.get(actionUrl, { headers: this.headers })
+			.map((response: Response) => <Prescription>response.json())
+			.catch(this.handleError);
+	}
+
 	public getUpomings = (): Observable<any[]> => {
 
 		const actionUrl = Constants.apiServer + '/service/appointment/list/upcomings';

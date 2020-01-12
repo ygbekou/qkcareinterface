@@ -1,10 +1,11 @@
-import { User } from "../user";
+import { User } from '../user';
 
 export class Role {
   id: number;
   name: string;
   description: string;
   status: number;
+  homePage: Resource;
 
   permissions: Permission[] = [];
 

@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { AdmissionService, AppointmentService, VisitService, TokenStorage, GenericService } from '../../services';
+import { AdmissionService, AppointmentService, VisitService, TokenStorage, GenericService, BillingService } from '../../services';
 import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
 import { Message, ConfirmationService } from 'primeng/api';
-import { Appointment, Visit, SearchCriteria, Patient, Reference } from '../../models';
+import { Appointment, Visit, SearchCriteria, Patient, Reference, Prescription } from '../../models';
 import { GlobalEventsManager } from '../../services/globalEventsManager';
 import { ScheduleEvent } from 'src/app/models/scheduleEvent';
 import { BaseComponent } from './baseComponent';
@@ -23,16 +23,19 @@ export class PatientDashboard extends BaseComponent implements OnInit, OnDestroy
 	visits: Visit[];
 	userId = '0';
 	patient: Patient;
+	amountDue = 0;
 	allergyGroups: Reference[] = [];
 	socialHistories: Reference[] = [];
 	medicalHistories: Reference[] = [];
 	nextAppointment: Appointment;
 	searchCriteria: SearchCriteria = new SearchCriteria();
+	prescription: Prescription;
 
 	constructor(
 		public appointmentService: AppointmentService,
 		public admissionService: AdmissionService,
 		public visitService: VisitService,
+		public billingService: BillingService,
 		public genericService: GenericService,
 		public translate: TranslateService,
 		public tokenStorage: TokenStorage,
@@ -75,7 +78,18 @@ export class PatientDashboard extends BaseComponent implements OnInit, OnDestroy
 			.subscribe(result => {
 				this.nextAppointment = result;
 			});
-		this.getLastPrescription();
+
+		//get next appointment
+		this.billingService.getPatientBillAmount(this.userId)
+			.subscribe(result => {
+				console.log('getPatientBillAmount=' + result);
+				this.amountDue = result;
+			});
+			//get next appointment
+		this.appointmentService.getLastPrescription(this.userId)
+			.subscribe(result => {
+				this.prescription = result;
+			});
 	}
 
 	getPatient() {
@@ -170,16 +184,7 @@ export class PatientDashboard extends BaseComponent implements OnInit, OnDestroy
 		];
 	}
 
-	getLastPrescription() {
-		this.events = [];
-		//this.searchCriteria.topN = n;
-		/* this.appointmentService.getTodayAppointments(this.searchCriteria)
-			.subscribe(result => {
-				if (result.length > 0) {
-					this.events = result;
-				}
-			}); */
-	}
+ 
 	cancelVisit(id: number) {
 		this.visitService.cancelVisit(id)
 			.subscribe(result => {

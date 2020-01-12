@@ -1,9 +1,7 @@
 import { Product } from './';
-import { Admission } from './admission';
-import { Appointment } from './appointment';
-import { Patient } from './patient';
-import { Diagnosis } from './diagnosis';
+import { Admission } from './admission'; 
 import { Visit } from './visit';
+import { Employee } from './Employee';
 
 export class Prescription {
   id: number;
@@ -12,9 +10,9 @@ export class Prescription {
   prescriptionType: string;
   prescriptionDatetime: Date;
   notes: string;
-  isDischarge: boolean = false;
+  isDischarge = false;
   status: number;
-  
+  doctor: Employee;
   prescriptionMedicines: PrescriptionMedicine[] = [];
   prescriptionDiagnoses: PrescriptionDiagnosis[] = [];
 }
