@@ -1,0 +1,35 @@
+  <button pButton type="button" label="{{ 'COMMON.SCHEDULE_APPOINTMENT' | translate }}" class="ui-button-secondary" 
+          (click)="gotoSchedule()"
+            style="width: 100%; font-size: 15px;color: #0071bc;font-weight:normal;"></button>
+
+ <p-steps  [model]="steps" [(activeIndex)]="activeIndex" [readonly]="false" styleClass="steps-custom">
+  </p-steps>
+
+  <div class="ui-g" *ngIf="appointments">
+
+    <div class="ui-g-12 ui-md-6 ui-lg-3" *ngFor="let apt of appointments[steps[activeIndex].year]">
+      <p-card *ngIf="apt.status!==3">
+        <p-header>
+          <button pButton type="button" label="{{apt.doctorName}}" class="ui-button-secondary"
+            style="width: 100%; font-size: 1rem;font-weight:normal;"></button>
+        </p-header>
+        <div class="counter counter-primary" *ngIf="apt"
+          style="font-size: 1rem;text-align: center;;font-weight:normal; color: #0088cc;">
+          <i class="fa fa-calendar"></i> 
+          <strong>{{apt.appointmentDate| date:'dd/MM/yyyy'}} {{' '+ apt.beginTime}}</strong>
+          <br />
+          <i class="fa fa-map-marker"></i>{{apt.hospitalLocation.name}} <br />
+          {{apt.problem}} 
+        </div>
+        <p-footer>
+          <button pButton type="button" label="{{ 'COMMON.CANCEL' | translate }}" class="ui-button-warning"
+            (click)="cancel(apt)" *ngIf="apt.status===0"
+            style="width: 100%; font-size: 15px;color: #0071bc;font-weight:normal;"></button>
+            <button pButton type="button" label="{{ 'COMMON.CANNOT_CANCEL' | translate }} " class="ui-button-secondary"
+             *ngIf="apt.status!==0"
+            style="width: 100%; font-size: 15px;color: #0071bc;font-weight:normal;"></button>
+          <hr style="margin-top: 0.1rem; margin-bottom: 0.1rem;" />
+        </p-footer>
+      </p-card>
+    </div>
+  </div>

@@ -295,7 +295,7 @@ export class PatientAptScheduler extends BaseComponent implements OnInit, OnDest
 		if (this.appointment.doctor.id != null
 			|| this.appointment.department.id != null
 			|| this.appointment.hospitalLocation.id != null) {
-			
+
 			this.searchCriteria.department = this.appointment.department;
 			this.searchCriteria.hospitalLocation = this.appointment.hospitalLocation;
 			this.searchCriteria.doctor = this.appointment.doctor;
@@ -308,6 +308,12 @@ export class PatientAptScheduler extends BaseComponent implements OnInit, OnDest
 		}
 	}
 
+	gotoSchedule() {
+		this.router.navigate(['/admin/patientAptScheduler']);
+	}
+	gotoScheduleList() {
+		this.router.navigate(['/admin/patientAptSchedList']);
+	}
 	lookUpPatient(event) {
 		console.log('lookup called');
 		console.log(event);

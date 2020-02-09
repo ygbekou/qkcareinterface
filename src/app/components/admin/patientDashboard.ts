@@ -269,6 +269,9 @@ export class PatientDashboard extends BaseComponent implements OnInit, OnDestroy
 	gotoSchedule() {
 		this.router.navigate(['/admin/patientAptScheduler']);
 	}
+	gotoScheduleList() {
+		this.router.navigate(['/admin/patientAptSchedList']);
+	}
 }
 
 

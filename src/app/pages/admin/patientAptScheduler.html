@@ -1,4 +1,8 @@
-  <p-steps *ngIf="!done" [model]="steps" [(activeIndex)]="activeIndex" [readonly]="false" styleClass="steps-custom">
+ <button pButton type="button" label="{{ 'COMMON.VIEW_APPOINTMENTS' | translate }}" class="ui-button-secondary"
+          (click)="gotoScheduleList()"  
+          style="width: 100%; font-size: 15px;color: #0071bc;font-weight:normal;"></button>
+          
+ <p-steps *ngIf="!done" [model]="steps" [(activeIndex)]="activeIndex" [readonly]="false" styleClass="steps-custom">
   </p-steps>
 
   <p-card *ngIf="done" [style]="{'text-align': 'center'}">

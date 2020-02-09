@@ -4,7 +4,7 @@
     <div class="ui-g-12 ui-md-12 ui-lg-4">
       <p-card>
         <p-header>
-          <button pButton type="button" label="Prochaine visite" class="ui-button-secondary"
+          <button pButton type="button" label="{{ 'COMMON.NEXT_APPOINTMENT' | translate }}" class="ui-button-secondary"
             style="width: 100%; font-size: 1.5rem;font-weight:normal;"></button>
         </p-header>
         <div class="counter counter-primary" *ngIf="nextAppointment"
@@ -28,19 +28,20 @@
           <br />
         </div>
         <p-footer>
-          <button pButton type="button" label="Demandez un rendez-vous" class="ui-button-secondary" 
+          <button pButton type="button" label="{{ 'COMMON.SCHEDULE_APPOINTMENT' | translate }}" class="ui-button-secondary" 
           (click)="gotoSchedule()"
             style="width: 100%; font-size: 15px;color: #0071bc;font-weight:normal;"></button>
           <hr style="margin-top: 0.1rem; margin-bottom: 0.1rem;" />
-          <button pButton type="button" label="Mes visites passees" class="ui-button-secondary"
-            style="width: 100%; font-size: 15px;color: #0071bc;font-weight:normal;"></button>
+          <button pButton type="button" label="{{ 'COMMON.VIEW_APPOINTMENTS' | translate }}" class="ui-button-secondary"
+          (click)="gotoScheduleList()"  
+          style="width: 100%; font-size: 15px;color: #0071bc;font-weight:normal;"></button>
         </p-footer>
       </p-card>
     </div>
     <div class="ui-g-12 ui-md-12 ui-lg-4">
       <p-card>
         <p-header>
-          <button pButton type="button" label="Sommaire de mon compte" class="ui-button-secondary"
+          <button pButton type="button" label="{{ 'COMMON.ACCOUNT_SUMMARY' | translate }}" class="ui-button-secondary"
             style="width: 100%; font-size: 1.5rem;font-weight:normal;"></button>
         </p-header>
         <div class="counter counter-primary"
@@ -51,13 +52,13 @@
           <br />
           <strong>{{amountDue|number : '1.0-0'}} ECO</strong>
           <br />
-          <button pButton type="button" label="Payer" class="ui-button-success"></button>
+          <button pButton type="button" label="{{ 'COMMON.PAY' | translate }}" class="ui-button-success"></button>
         </div>
         <p-footer>
-          <button pButton type="button" label="Voir les details" class="ui-button-secondary"
+          <button pButton type="button" label="{{ 'COMMON.ACCOUNT_DETAILS' | translate }}" class="ui-button-secondary"
             style="width: 100%; font-size: 15px;color: #0071bc;font-weight:normal;"></button>
           <hr style="margin-top: 0.1rem; margin-bottom: 0.1rem;" />
-          <button pButton type="button" label="Imprimer la facture" class="ui-button-secondary"
+          <button pButton type="button" label="{{ 'COMMON.PRINT_INVOICE' | translate }}" class="ui-button-secondary"
             style="width: 100%; font-size: 15px;color: #0071bc;font-weight:normal;"></button>
         </p-footer>
       </p-card>
@@ -65,7 +66,7 @@
     <div class="ui-g-12 ui-md-12 ui-lg-4">
       <p-card>
         <p-header>
-          <button pButton type="button" label="Mes Prescriptions" class="ui-button-secondary"
+          <button pButton type="button" label="{{ 'COMMON.MY_PRESCRIPTIONS' | translate }}" class="ui-button-secondary"
             style="width: 100%; font-size: 1.5rem;font-weight:normal;"></button>
         </p-header>
         <div class="counter counter-primary" *ngIf="prescription"
@@ -91,16 +92,16 @@
         </div>
 
         <p-footer>
-          <button pButton type="button" label="Renouveller une prescription" class="ui-button-secondary"
+          <button pButton type="button" label="{{ 'COMMON.RENEW_PRESCRIPTION' | translate }}" class="ui-button-secondary"
             style="width: 100%; font-size: 15px;color: #0071bc;font-weight:normal;"></button>
           <hr style="margin-top: 0.1rem; margin-bottom: 0.1rem;" />
-          <button pButton type="button" label="Voir toutes mes prescriptions" class="ui-button-secondary"
+          <button pButton type="button" label="{{ 'COMMON.VIEW_PRESCRIPTIONS' | translate }}" class="ui-button-secondary"
             style="width: 100%; font-size: 15px;color: #0071bc;font-weight:normal;"></button>
         </p-footer>
       </p-card>
     </div>
     <div class="ui-g-12 ui-md-12 ui-lg-4">
-      <a href="#">
+      <a href="#/admin/patientAptSchedList" >
         <div class="overview-box monthly-sales">
           <div class="overview-title">{{ 'COMMON.APPOINTMENT' | translate }}</div>
           <i class="fa fa-arrow-circle-up"></i>

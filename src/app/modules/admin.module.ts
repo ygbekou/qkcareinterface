@@ -162,6 +162,7 @@ import { SystemReviewQuestionAssignmentList } from '../components/admin/systemRe
 import { SystemReviewDetails } from '../components/admin/systemReviewDetails';
 import { SystemReviewList } from '../components/admin/systemReviewList';
 import { PatientAptScheduler } from '../components/admin/patientAptScheduler';
+import { PatientAptSchedList } from '../components/admin/patientAptSchedList';
 
 const routes: Routes = [
   { path: 'adminMain', component: AdminMain },
@@ -251,7 +252,8 @@ const routes: Routes = [
   { path: 'resourceDetails', component: ResourceDetails },
   { path: 'resourceList', component: ResourceList },
   { path: 'userRoleAssignment', component: UserRoleAssignment },  
-  { path: 'permission', component: PermissionDetails },
+  { path: 'permission', component: PermissionDetails },  
+  { path: 'patientAptSchedList', component: PatientAptSchedList },
   { path: 'patientAptScheduler', component: PatientAptScheduler }
 ];
 
@@ -285,7 +287,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     MedicalHistoryDetails, SocialHistoryDetails, VaccineDetails, SymptomDetails, AdmissionTransfer,
     DoctorOrderDetails, DoctorOrderList, AdmissionDetails, AdmissionList, FloorDetails, FloorList,
 	  RoomDetails, RoomList, BedDetails, BedList, RadExamDetails, RadExamList, AdminPatient, AdminBedStatus, AdminAuthorization,
-	  AdmissionDiagnoses, PatientServiceDetails, PatientKiosk,
+	  AdmissionDiagnoses, PatientServiceDetails, PatientKiosk, PatientAptSchedList,
     AdminReference, VisitDetails, VisitList, DischargeDetails, LabTestDetails, LabTestList, InvestigationDetails,
 	  InvestigationList, InvestigationListByDate, RadInvestigationDetails, RadInvestigationList, PurchaseOrderDetails, PurchaseOrderList, 
 	  ReceiveOrderDetails, ReceiveOrderList, AdminRadiologyConfig,
