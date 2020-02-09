@@ -28,8 +28,7 @@ export class HospitalLocationDropdown {
     this.genericService.getAll('HospitalLocation')
       .subscribe((data: any[]) => {
         this.locations = data
-      },
-        
+      },        
       error => console.log(error),
       () => console.log('Get All Locations Complete'));
   }

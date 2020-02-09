@@ -408,16 +408,16 @@
     "SYSTEM_REVIEW_QUESTION_ASSIGNMENT_LIST": "System Review Question Assignment List",
     "SYSTEM_REVIEW_QUESTION_LIST": "System Review Question List",
     "SYSTEM_REVIEW": "System Review",
-    "SELECT_OPTION":"Select an option",
-    "HOME_PAGE":"Home page"
+    "SELECT_OPTION": "Select an option",
+    "HOME_PAGE": "Home page"
   },
   "MESSAGE": {
     "TRANFER_DOCTOR_FAILED": "The transfer doctor should be different from the current doctor.",
     "TRANFER_BED_FAILED": "The transfer bed should be different from the current bed.",
     "TRANFER_DATE_FAILED": "The Transfer Date should be greater than the current assignment Date.",
     "APPOINTMENT_DISPLAY_FAILED": "Please Select a Department and a Doctor to add an appointment.",
-    "NO_SCHED_APPOINTMENT":"No Scheduled Appointment",
-    "NO_PRESCRIPTION":"No prescription",
+    "NO_SCHED_APPOINTMENT": "No Scheduled Appointment",
+    "NO_PRESCRIPTION": "No prescription",
     "SAVE_SUCCESS": "Save was successful",
     "SAVE_UNSUCCESS": "Save was unsuccessful. See errors below: ",
     "READ_SUCCESS": "Read was successful",
@@ -443,12 +443,20 @@
     "FORM_HAS_ERRORS": "The form has some errors. Please verify and correct.",
     "NO_CRITERIA_SET": "At least one search criteria is required",
     "SELECT_PATIENT": "Select a patient",
+    "SELECT_DOCTOR": "Select a doctor",    
+    "VISIT_REASON":"Reason for visit required",
     "SELECT_LOCATION": "Sélectioner un emplacement",
+    "SELECT_DEPARTMENT": "Select a department",    
+    "SELECT_DATE_TIME": "Select date and time",
+    "SELECT_FUTURE_DATE": "Select future date and time",
+    "DOC_NOT_AVAILABLE": "The selected doctor is not available.",
     "NO_INVESTIGATION_FOUND": "No Investigation ave being done",
     "CHOOSE_MAIL_PASSWD": "Enter your e-mail and choose a password",
     "MATCHING_RECORD_FOUND": "We found a record matching the entered code. If it's not you, please contact us",
     "NO_MATCHING_RECORD_FOUND": "We found no record matching the entered code. Please check the code",
-    "REGISTERED_WAIT": "You're successfully registered! Wait for your turn in the waiting room."
+    "REGISTERED_WAIT": "You're successfully registered! Wait for your turn in the waiting room.",
+        "SCHEDULE_SUCCESSFUL": "Your schedule has been successfully saved! Mark your calendar.",
+    "DOC_DEPT_LOC_REQUIRED": "Select the department, location and doctor to schedule the appointment"
   },
   "VALIDATION": {
     "IS_INVALID": "is invalid",
@@ -457,7 +465,7 @@
     "MINIMUM_VALUE": "Minimum value is: ",
     "MAXIMUM_VALUE": "Maximal value is: ",
     "EMAIL_REQUIRED": "E-mail required",
-    "EMAIL_USED":"This E-mail is already used",
+    "EMAIL_USED": "This E-mail is already used",
     "PASSWORD_REQUIRED": "Password required"
   },
   "DATE": {

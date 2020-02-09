@@ -1,11 +1,12 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AdmissionService, AppointmentService, VisitService, TokenStorage, GenericService, BillingService } from '../../services';
-import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
-import { Message, ConfirmationService } from 'primeng/api';
-import { Appointment, Visit, SearchCriteria, Patient, Reference, Prescription } from '../../models';
+import { TranslateService } from '@ngx-translate/core';
+import { ConfirmationService } from 'primeng/api';
+import { Appointment, Visit, SearchCriteria, Patient, Reference, Prescription, Department, Employee } from '../../models';
 import { GlobalEventsManager } from '../../services/globalEventsManager';
 import { ScheduleEvent } from 'src/app/models/scheduleEvent';
 import { BaseComponent } from './baseComponent';
+import { Router } from '@angular/router';
 
 @Component({
 	templateUrl: '../../pages/admin/patientDashboard.html'
@@ -30,8 +31,11 @@ export class PatientDashboard extends BaseComponent implements OnInit, OnDestroy
 	nextAppointment: Appointment;
 	searchCriteria: SearchCriteria = new SearchCriteria();
 	prescription: Prescription;
+	appointment: Appointment;
+	displayEdit = false;
 
-	constructor(
+	constructor(		
+		private router: Router,
 		public appointmentService: AppointmentService,
 		public admissionService: AdmissionService,
 		public visitService: VisitService,
@@ -85,7 +89,7 @@ export class PatientDashboard extends BaseComponent implements OnInit, OnDestroy
 				console.log('getPatientBillAmount=' + result);
 				this.amountDue = result;
 			});
-			//get next appointment
+		//get next appointment
 		this.appointmentService.getLastPrescription(this.userId)
 			.subscribe(result => {
 				this.prescription = result;
@@ -182,39 +186,11 @@ export class PatientDashboard extends BaseComponent implements OnInit, OnDestroy
 			{ field: 'doctorName', header: 'Doctor' },
 			{ field: 'departmentName', header: 'Department' }
 		];
-	}
 
- 
-	cancelVisit(id: number) {
-		this.visitService.cancelVisit(id)
-			.subscribe(result => {
-				if (result) {
-					this.removeVisitFromTable(id);
-				}
-			});
-	}
-
-	endVisit(id: number) {
-		this.visitService.endVisit(id)
-			.subscribe(result => {
-				if (result) {
-					this.removeVisitFromTable(id);
-				}
-			});
-	}
-
-	removeVisitFromTable(id: number) {
-		let found = false;
-		for (const aSec of this.visits) {
-			if (aSec.id === id) {
-				this.visits.splice(this.visits.indexOf(aSec), 1);
-				found = true;
-				break;
-			}
-		}
-		const onTheFly: Visit[] = [];
-		onTheFly.push(...this.visits);
-		this.visits = onTheFly;
+		this.appointment = new Appointment();
+		this.appointment.department = new Department();
+		this.appointment.doctor = new Employee();
+		this.appointment.patient = new Patient();
 	}
 
 	removeFromTable(id: number) {
@@ -236,23 +212,7 @@ export class PatientDashboard extends BaseComponent implements OnInit, OnDestroy
 		this.globalEventsManager.changeAppointmentId(appointmentId);
 	}
 
-	cancel(id: number) {
-		this.appointmentService.cancel(id)
-			.subscribe(result => {
-				if (result) {
-					this.removeFromTable(id);
-				}
-			});
-	}
 
-	confirm(id: number) {
-		this.appointmentService.confirm(id)
-			.subscribe(result => {
-				if (result) {
-					this.removeFromTable(id);
-				}
-			});
-	}
 	ngOnDestroy() {
 		//this.subscription.unsubscribe();
 	}
@@ -305,7 +265,12 @@ export class PatientDashboard extends BaseComponent implements OnInit, OnDestroy
 		}
 
 	}
+
+	gotoSchedule() {
+		this.router.navigate(['/admin/patientAptScheduler']);
+	}
 }
+
 
 
 export class ChartItem {

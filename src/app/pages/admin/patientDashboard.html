@@ -28,7 +28,8 @@
           <br />
         </div>
         <p-footer>
-          <button pButton type="button" label="Demandez un rendez-vous" class="ui-button-secondary"
+          <button pButton type="button" label="Demandez un rendez-vous" class="ui-button-secondary" 
+          (click)="gotoSchedule()"
             style="width: 100%; font-size: 15px;color: #0071bc;font-weight:normal;"></button>
           <hr style="margin-top: 0.1rem; margin-bottom: 0.1rem;" />
           <button pButton type="button" label="Mes visites passees" class="ui-button-secondary"
@@ -141,7 +142,6 @@
     </div>
   </div>
   <div class="ui-g">
-
     <div class="ui-g-12 ui-md-12 ui-lg-6">
       <p-card>
         <p-header>
@@ -217,6 +217,5 @@
       </p-card>
 
     </div>
-
   </div>
 </div>

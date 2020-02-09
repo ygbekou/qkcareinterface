@@ -444,11 +444,19 @@
     "NO_CRITERIA_SET": "Au moins une critère de recherche est nécessaire",
     "SELECT_PATIENT": "Sélectioner un patient",
     "SELECT_LOCATION": "Sélectioner un emplacement",
+    "SELECT_DATE_TIME": "Sélectioner la date et l'heure",    
+    "SELECT_FUTURE_DATE": "Sélectioner une date et heure dans le future",
+    "DOC_NOT_AVAILABLE": "Le médécin sélectioner n'a pas de disponibilité",
+    "VISIT_REASON":"Renseigner la raison de la visite",    
+    "SELECT_DOCTOR": "Sélectioner un docteur",    
+    "SELECT_DEPARTMENT": "Sélectioner un départment",
     "NO_INVESTIGATION_FOUND": "Aucune investigation n'est faite",
     "CHOOSE_MAIL_PASSWD": "Entrez votre e-mail et choisissez un mot de passe",
     "MATCHING_RECORD_FOUND": "Nous avons trouvé un patient qui correspond au code saisi. Si ce n'est pas vous, veuillez nous le signaler",
     "NO_MATCHING_RECORD_FOUND": "Nous n'avons trouvé aucun patient qui correspond au code saisi. Veuillez verifier votre code",
-    "REGISTERED_WAIT": "Vous êtes enregistré avec succès! Veuillez attendre votre tour dans la salle d’attente."
+    "REGISTERED_WAIT": "Vous êtes enregistré avec succès! Veuillez attendre votre tour dans la salle d’attente.",
+    "SCHEDULE_SUCCESSFUL": "Vous réservation est enregistré avec succès! Veuillez marquer votre calendrier.",
+    "DOC_DEPT_LOC_REQUIRED":"Selectionner le department, l'emplacement et le medecin pour pouvoir choisir la date"
   },
   "VALIDATION": {
     "IS_INVALID": "est invalide",
