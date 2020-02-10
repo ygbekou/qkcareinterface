@@ -139,6 +139,7 @@
     "AMOUNT": "Amount",
     "PAYMENT_LIST": "Payment list",
     "BILL_LIST": "Bill list",
+    "BILL_DETAIL": "Bill detail",
     "SERVICE_TYPE": "Service Type",
     "RATE": "Rate",
     "PACKAGE_LIST": "Package List",

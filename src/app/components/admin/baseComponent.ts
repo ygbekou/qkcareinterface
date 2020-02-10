@@ -114,6 +114,7 @@ export class BaseComponent {
 
 
   updateChildCols(cols: any[]) {
+    // tslint:disable-next-line:forin
     for (const index in cols) {
       const col = cols[index];
       this.translate.get(col.headerKey).subscribe((res: string) => {

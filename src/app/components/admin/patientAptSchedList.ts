@@ -1,15 +1,12 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-import { Appointment, Department, Employee, Patient, SearchCriteria, HospitalLocation } from '../../models';
+import { Router } from '@angular/router';
+import { Appointment, Patient, SearchCriteria } from '../../models';
 import { Constants } from '../../app.constants';
 import { HospitalLocationDropdown, DoctorDropdown, DepartmentDropdown } from '../dropdowns';
 import { GenericService, AppointmentService, TokenStorage } from '../../services';
 import { TranslateService } from '@ngx-translate/core';
-import { Message, ConfirmationService, FullCalendarModule, MenuItem } from 'primeng';
+import { Message, ConfirmationService, MenuItem } from 'primeng';
 import { BaseComponent } from './baseComponent';
-import dayGridPlugin from '@fullcalendar/daygrid';
-import timeGridPlugin from '@fullcalendar/timegrid';
-import interactionPlugin from '@fullcalendar/interaction';
 
 @Component({
 	selector: 'app-appointment-scheduler',
@@ -19,6 +16,7 @@ import interactionPlugin from '@fullcalendar/interaction';
 })
 
 export class PatientAptSchedList extends BaseComponent implements OnInit, OnDestroy {
+
 	events: any[];
 	headerConfig: any;
 	dateConfig: any;
@@ -29,6 +27,7 @@ export class PatientAptSchedList extends BaseComponent implements OnInit, OnDest
 	messages: Message[] = [];
 	steps: MenuItem[];
 	error = '';
+	userId = '0';
 	activeIndex = 0;
 	constructor
 		(
@@ -40,7 +39,6 @@ export class PatientAptSchedList extends BaseComponent implements OnInit, OnDest
 			public doctorDropdown: DoctorDropdown,
 			public hospitalLocationDropdown: HospitalLocationDropdown,
 			public departmentDropdown: DepartmentDropdown,
-			private route: ActivatedRoute,
 			private router: Router
 		) {
 		super(genericService, translate, confirmationService, tokenStorage);
@@ -52,38 +50,29 @@ export class PatientAptSchedList extends BaseComponent implements OnInit, OnDest
 		this.getAppointments();
 
 	}
-
+	ngOnDestroy(): void {
+		throw new Error('Method not implemented.');
+	}
 	setCurrentIndex(i) {
 		this.activeIndex = i;
 	}
 	pullData(data: any) {
 		let i = 0;
-		this.steps = [];
-		// tslint:disable-next-line:forin
+		this.steps = []; 
 		for (const index in data) {
 			this.steps[i] = {
 				label: 'Annee ' + index + '(' + data[index].length + ')',
 				year: index,
-				itemIndex : i,
+				itemIndex: i,
 				command: (event: any) => {
 					this.setCurrentIndex(event.item.itemIndex);
 				}
 			};
-			
+
 			i = i + 1;
 		}
-		console.log(this.steps);
 	}
 
-	getPatient() {
-		const parameters: string[] = [];
-		parameters.push('e.user.id = |userId|' + this.userId + '|Long');
-		this.genericService.getAllByCriteria('Patient', parameters)
-			.subscribe((data: Patient[]) => {
-				this.appointment.patient = data[0];
-			}, error => console.log(error),
-				() => console.log('Get Patient complete'));
-	}
 
 	next() {
 		if (this.activeIndex < 5) {
@@ -120,10 +109,5 @@ export class PatientAptSchedList extends BaseComponent implements OnInit, OnDest
 	}
 	gotoScheduleList() {
 		this.router.navigate(['/admin/patientAptSchedList']);
-	}
-	lookUpPatient(event) {
-		console.log('lookup called');
-		console.log(event);
-		this.appointment.patient = event;
 	}
 }

@@ -53,7 +53,7 @@ export class AppointmentScheduler extends BaseComponent implements OnInit, OnDes
 		};
 
 		this.options = {
-            plugins:[ dayGridPlugin, timeGridPlugin, interactionPlugin ],
+            plugins: [ dayGridPlugin, timeGridPlugin, interactionPlugin ],
             //defaultDate: '2017-02-01',
             header: {
                 left: 'prev,next',
@@ -196,7 +196,7 @@ export class AppointmentScheduler extends BaseComponent implements OnInit, OnDes
 
 	editEventClick(e) {
 		this.displayEdit = true;
-		console.info(e)
+		console.info(e);
 		const eventId = e.event.id;
 		if (eventId != null && eventId > 0) {
 			this.genericService.getOne(eventId, 'Appointment')

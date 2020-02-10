@@ -138,6 +138,7 @@
     "AMOUNT": "Montant",
     "PAYMENT_LIST": "Payements",
     "BILL_LIST": "Factures",
+    "BILL_DETAIL": "Détail de la facture",
     "SERVICE_TYPE": "Type de Service",
     "RATE": "Taux",
     "PACKAGE_LIST": "Liste des paquets",

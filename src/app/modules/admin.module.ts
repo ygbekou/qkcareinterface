@@ -163,6 +163,7 @@ import { SystemReviewDetails } from '../components/admin/systemReviewDetails';
 import { SystemReviewList } from '../components/admin/systemReviewList';
 import { PatientAptScheduler } from '../components/admin/patientAptScheduler';
 import { PatientAptSchedList } from '../components/admin/patientAptSchedList';
+import { PatientBill } from '../components/admin/patientBill';
 
 const routes: Routes = [
   { path: 'adminMain', component: AdminMain },
@@ -253,7 +254,8 @@ const routes: Routes = [
   { path: 'resourceList', component: ResourceList },
   { path: 'userRoleAssignment', component: UserRoleAssignment },  
   { path: 'permission', component: PermissionDetails },  
-  { path: 'patientAptSchedList', component: PatientAptSchedList },
+  { path: 'patientAptSchedList', component: PatientAptSchedList },  
+  { path: 'patientBill', component: PatientBill },
   { path: 'patientAptScheduler', component: PatientAptScheduler }
 ];
 
@@ -290,7 +292,7 @@ export function HttpLoaderFactory(http: HttpClient) {
 	  AdmissionDiagnoses, PatientServiceDetails, PatientKiosk, PatientAptSchedList,
     AdminReference, VisitDetails, VisitList, DischargeDetails, LabTestDetails, LabTestList, InvestigationDetails,
 	  InvestigationList, InvestigationListByDate, RadInvestigationDetails, RadInvestigationList, PurchaseOrderDetails, PurchaseOrderList, 
-	  ReceiveOrderDetails, ReceiveOrderList, AdminRadiologyConfig,
+	  ReceiveOrderDetails, ReceiveOrderList, AdminRadiologyConfig, PatientBill,
     PatientSaleDetails, PatientSaleList, SaleReturnDetails, SaleReturnList, BirthReportDetails, BirthReportList,
     DeathReportDetails, DeathReportList, HospitalLocationDetails, HospitalLocationList, PatientLookup, VisitAdmLookup,
     PurchaseOrderLookup, PatientSaleLookup, HospitalDetails, EnquiryDetails, EnquiryList, WaitingList,
