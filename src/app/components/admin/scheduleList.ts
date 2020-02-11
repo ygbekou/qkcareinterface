@@ -14,7 +14,8 @@ import { BaseComponent } from './baseComponent';
 export class ScheduleList extends BaseComponent implements OnInit, OnDestroy {
   
   schedules: Schedule[] = [];
-  cols: any[];
+  cols: any[];  
+  rowGroupMetadata: any;
   
   constructor
     (
@@ -63,6 +64,7 @@ export class ScheduleList extends BaseComponent implements OnInit, OnDestroy {
   }
  
  updateCols() {
+    // tslint:disable-next-line: forin
     for (const index in this.cols) {
       const col = this.cols[index];
       this.translate.get(col.headerKey).subscribe((res: string) => {
@@ -109,9 +111,6 @@ export class ScheduleList extends BaseComponent implements OnInit, OnDestroy {
       console.log(e);
     }
   }
-  
-  
-  rowGroupMetadata: any;
   
   updateRowGroupMetaData() {
       

@@ -83,7 +83,7 @@ export class ReferenceList extends BaseComponent implements OnInit, OnDestroy {
             parameters.push('e.parent.id = |parentId|' + this.parentId + '|Long');
 		  } 
           
-          this.genericService.getAllByCriteria(this.referenceType, parameters, " ORDER BY e.name")
+          this.genericService.getAllByCriteria(this.referenceType, parameters, ' ORDER BY e.name')
             .subscribe((data: Reference[]) => { 
               this.references = data; 
             },
@@ -94,7 +94,8 @@ export class ReferenceList extends BaseComponent implements OnInit, OnDestroy {
 
 
   updateCols(category: string) {
-    for (let index in this.cols) {
+    // tslint:disable-next-line: forin
+    for (const index in this.cols) {
       const col = this.cols[index];
       this.translate.get(col.headerKey).subscribe((res: string) => {
         col.header = res;

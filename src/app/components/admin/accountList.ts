@@ -42,9 +42,8 @@ export class AccountList implements OnInit, OnDestroy {
         ];
     
     this.genericService.getAll('Account')
-      .subscribe((data: Account[]) => 
-      { 
-        this.accounts = data 
+      .subscribe((data: Account[]) => { 
+        this.accounts = data; 
       },
       error => console.log(error),
       () => console.log('Get all Accounts complete'));
@@ -55,30 +54,28 @@ export class AccountList implements OnInit, OnDestroy {
     this.accounts = null;
   }
   
-  edit(accountId : number) {
+  edit(accountId: number) {
     try {
-      let navigationExtras: NavigationExtras = {
+      const navigationExtras: NavigationExtras = {
         queryParams: {
-          "accountId": accountId,
+          'accountId': accountId,
         }
-      }
-      this.router.navigate(["/admin/accountDetails"], navigationExtras);
-    }
-    catch (e) {
+      };
+      this.router.navigate(['/admin/accountDetails'], navigationExtras);
+    } catch (e) {
       console.log(e);
     }
   }
 
-  delete(accountId : number) {
+  delete(accountId: number) {
     try {
-      let navigationExtras: NavigationExtras = {
+      const navigationExtras: NavigationExtras = {
         queryParams: {
-          "accountId": accountId,
+          'accountId': accountId,
         }
-      }
-      this.router.navigate(["/admin/accountDetails"], navigationExtras);
-    }
-    catch (e) {
+      };
+      this.router.navigate(['/admin/accountDetails'], navigationExtras);
+    } catch (e) {
       console.log(e);
     }
   }

@@ -129,12 +129,14 @@ export class DoctorOrderDetails extends BaseComponent implements OnInit, OnDestr
         this.doctorOrder.doctorOrderDatetime = new Date(this.doctorOrder.doctorOrderDatetime);
 		this.doctorOrder.receivedDatetime = new Date(this.doctorOrder.receivedDatetime);
 
+		// tslint:disable-next-line: forin
 		for (const index in this.doctorOrder.products) {
 			const product: Product = this.doctorOrder.products[index];
 			const ind = this.productDropdown.products.findIndex(x => x.id === product.id);
 			this.productDropdown.products.splice(ind, 1);
 		}
 
+		// tslint:disable-next-line: forin
 		for (const index in this.doctorOrder.labTests) {
 			const labTest: LabTest = this.doctorOrder.labTests[index];
 			const ind = this.labTestDropdown.labTests.findIndex(x => x.id === labTest.id);

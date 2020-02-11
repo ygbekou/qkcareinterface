@@ -5,13 +5,13 @@ import { Admission, VitalSign, Patient, User } from '../../models';
 import { GenericService, TokenStorage } from '../../services';
 import { TranslateService } from '@ngx-translate/core';
 import { Message, ConfirmationService } from 'primeng/api';
-import { CurrencyMaskModule } from "ng2-currency-mask";
-import { CurrencyMaskConfig, CURRENCY_MASK_CONFIG } from "ng2-currency-mask/src/currency-mask.config";
+import { CurrencyMaskModule } from 'ng2-currency-mask';
+import { CurrencyMaskConfig, CURRENCY_MASK_CONFIG } from 'ng2-currency-mask/src/currency-mask.config';
 import { BaseComponent } from './baseComponent';
 
 
 @Component({
-  selector: 'app-vitalSign-details',
+  selector: 'app-vital-sign-details',
   templateUrl: '../../pages/admin/vitalSignDetails.html',
   providers: [GenericService]
 })

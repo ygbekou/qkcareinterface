@@ -5,7 +5,7 @@ import { CaseStudy } from '../../models/caseStudy';
 import { GenericService } from '../../services';
 
 @Component({
-  selector: 'app-caseStudy-list',
+  selector: 'app-case-study-list',
   templateUrl: '../../pages/admin/caseStudyList.html',
   providers: [GenericService]
 })
@@ -44,21 +44,20 @@ export class CaseStudyList implements OnInit, OnDestroy {
             { field: 'currentMedication', header: 'Current Medication' },
             { field: 'healthInsurance', header: 'Health Insurance' },
             { field: 'lowIncome', header: 'Low Income' },
-            { field: 'status', header: 'Status', type:'string' }
+            { field: 'status', header: 'Status', type: 'string' }
         ];
     
     this.route
         .queryParams
         .subscribe(params => {          
           
-            let parameters: string [] = []; 
+            const parameters: string [] = []; 
             
-            parameters.push('e.status = |status|0|Integer')
+            parameters.push('e.status = |status|0|Integer');
             
             this.genericService.getAllByCriteria('CaseStudy', parameters)
-              .subscribe((data: CaseStudy[]) => 
-              { 
-                this.caseStudies = data 
+              .subscribe((data: CaseStudy[]) => { 
+                this.caseStudies = data; 
               },
               error => console.log(error),
               () => console.log('Get all Case study complete'));
@@ -70,30 +69,28 @@ export class CaseStudyList implements OnInit, OnDestroy {
     this.caseStudies = null;
   }
   
-  edit(caseStudyId : number) {
+  edit(caseStudyId: number) {
     try {
-      let navigationExtras: NavigationExtras = {
+      const navigationExtras: NavigationExtras = {
         queryParams: {
-          "caseStudyId": caseStudyId,
+          'caseStudyId': caseStudyId,
         }
-      }
-      this.router.navigate(["/admin/caseStudyDetails"], navigationExtras);
-    }
-    catch (e) {
+      };
+      this.router.navigate(['/admin/caseStudyDetails'], navigationExtras);
+    } catch (e) {
       console.log(e);
     }
   }
 
-  delete(caseStudyId : number) {
+  delete(caseStudyId: number) {
     try {
-      let navigationExtras: NavigationExtras = {
+      const navigationExtras: NavigationExtras = {
         queryParams: {
-          "caseStudyId": caseStudyId,
+          'caseStudyId': caseStudyId,
         }
-      }
-      this.router.navigate(["/admin/caseStudyDetails"], navigationExtras);
-    }
-    catch (e) {
+      };
+      this.router.navigate(['/admin/caseStudyDetails'], navigationExtras);
+    } catch (e) {
       console.log(e);
     }
   }

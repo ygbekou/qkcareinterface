@@ -8,7 +8,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { SummaryType, PhysicalExamTypeAssignment, UserGroup } from 'src/app/models';
 
 @Component({
-  selector: 'app-physicalExamTypeAssignment-details',
+  selector: 'app-physical-exam-type-assignment-details',
   templateUrl: '../../pages/admin/physicalExamTypeAssignmentDetails.html',
   providers: [GenericService]
 })

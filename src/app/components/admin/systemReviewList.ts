@@ -7,7 +7,7 @@ import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
 import { BaseComponent } from './baseComponent';
 
 @Component({
-  selector: 'app-systemReview-list',
+  selector: 'app-system-review-list',
   templateUrl: '../../pages/admin/systemReviewList.html',
   providers: [GenericService, ConfirmationService],
   styles: [`
@@ -69,18 +69,18 @@ export class SystemReviewList extends BaseComponent implements OnInit, OnDestroy
       this.rowGroupMetadata = {};
       if (this.systemReviews) {
           for (let i = 0; i < this.systemReviews.length; i++) {
-              let rowData = this.systemReviews[i];
-              let systemReviewDate = rowData.systemReviewDate;
-              if (i == 0) {
+              const rowData = this.systemReviews[i];
+              const systemReviewDate = rowData.systemReviewDate;
+              if (i === 0) {
                   this.rowGroupMetadata[systemReviewDate] = { index: 0, size: 1 };
-              }
-              else {
-                  let previousRowData = this.systemReviews[i - 1];
-                  let previousRowGroup = previousRowData.systemReviewDate;
-                  if (systemReviewDate === previousRowGroup)
+              } else {
+                  const previousRowData = this.systemReviews[i - 1];
+                  const previousRowGroup = previousRowData.systemReviewDate;
+                  if (systemReviewDate === previousRowGroup) {
                       this.rowGroupMetadata[systemReviewDate].size++;
-                  else
+                  } else {
                       this.rowGroupMetadata[systemReviewDate] = { index: i, size: 1 };
+                  }
               }
           }
       }
@@ -88,7 +88,8 @@ export class SystemReviewList extends BaseComponent implements OnInit, OnDestroy
 
 
   updateCols() {
-    for (let index in this.cols) {
+    // tslint:disable-next-line: forin
+    for (const index in this.cols) {
       const col = this.cols[index];
       this.translate.get(col.headerKey).subscribe((res: string) => {
         col.header = res;

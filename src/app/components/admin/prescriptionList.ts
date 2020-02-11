@@ -54,8 +54,9 @@ export class PrescriptionList extends BaseComponent implements OnInit, OnDestroy
  
   
   updateCols() {
-    for (var index in this.cols) {
-      let col = this.cols[index];
+    // tslint:disable-next-line: forin
+    for (const index in this.cols) {
+      const col = this.cols[index];
       this.translate.get(col.headerKey).subscribe((res: string) => {
         col.header = res;
       });
@@ -70,16 +71,15 @@ export class PrescriptionList extends BaseComponent implements OnInit, OnDestroy
     this.prescriptionIdEvent.emit(prescriptionId);
   }
 
-  delete(prescriptionId : number) {
+  delete(prescriptionId: number) {
     try {
-      let navigationExtras: NavigationExtras = {
+      const navigationExtras: NavigationExtras = {
         queryParams: {
-          "prescriptionId": prescriptionId,
+          'prescriptionId': prescriptionId,
         }
-      }
-      this.router.navigate(["/admin/prescriptionDetails"], navigationExtras);
-    }
-    catch (e) {
+      };
+      this.router.navigate(['/admin/prescriptionDetails'], navigationExtras);
+    } catch (e) {
       console.log(e);
     }
   }
@@ -87,21 +87,20 @@ export class PrescriptionList extends BaseComponent implements OnInit, OnDestroy
   
    getPrescriptions() {
      
-      let parameters: string [] = []; 
+      const parameters: string [] = []; 
             
-        parameters.push('e.status = |status|0|Integer')
+        parameters.push('e.status = |status|0|Integer');
         if (this.visit && this.visit.id > 0)  {
-          parameters.push('e.visit.id = |visitId|' + this.visit.id + '|Long')
+          parameters.push('e.visit.id = |visitId|' + this.visit.id + '|Long');
         } 
         if (this.admission && this.admission.id > 0)  {
-          parameters.push('e.admission.id = |admissionId|' + this.admission.id + '|Long')
+          parameters.push('e.admission.id = |admissionId|' + this.admission.id + '|Long');
         } 
         
         
         this.genericService.getAllByCriteria('Prescription', parameters)
-          .subscribe((data: Prescription[]) => 
-          { 
-            this.prescriptions = data 
+          .subscribe((data: Prescription[]) => { 
+            this.prescriptions = data; 
           },
           error => console.log(error),
           () => console.log('Get all Prescriptions complete'));

@@ -8,7 +8,7 @@ import { BaseComponent } from '../admin/baseComponent';
 import { ConfirmationService } from 'primeng/api';
 
 @Component({ 
-  selector: 'app-deathReport-list',
+  selector: 'app-death-report-list',
   templateUrl: '../../pages/activities/deathReportList.html',
   providers: [GenericService] 
 })
@@ -34,7 +34,7 @@ export class DeathReportList extends BaseComponent implements OnInit, OnDestroy 
 
   ngOnInit(): void {
     this.cols = [
-            { field: 'deathDatetime', header: 'Date time', headerKey: 'COMMON.DEATH_DATETIME', type:'date' },
+            { field: 'deathDatetime', header: 'Date time', headerKey: 'COMMON.DEATH_DATETIME', type: 'date' },
             { field: 'patientName', header: 'Name', headerKey: 'COMMON.NAME' },
             { field: 'comments', header: 'Comments', headerKey: 'COMMON.COMMENTS' }
         ];
@@ -43,20 +43,21 @@ export class DeathReportList extends BaseComponent implements OnInit, OnDestroy 
         .queryParams
         .subscribe(params => {          
           
-            let parameters: string [] = []; 
+            const parameters: string [] = []; 
             
-            let itemNumberLabel = params['itemNumberLabel'];
+            const itemNumberLabel = params['itemNumberLabel'];
           
-            parameters.push('e.status = |status|0|Integer')
-            if (itemNumberLabel == 'Visit') 
-              parameters.push('e.visit.id > |visitId|0|Long')
-            if (itemNumberLabel == 'Admission') 
-              parameters.push('e.admission.id > |admissionId|0|Long')
+            parameters.push('e.status = |status|0|Integer');
+            if (itemNumberLabel === 'Visit') { 
+              parameters.push('e.visit.id > |visitId|0|Long');
+            }
+            if (itemNumberLabel === 'Admission') { 
+              parameters.push('e.admission.id > |admissionId|0|Long');
+            }
           
             this.genericService.getAllByCriteria(Constants.DEATH_REPORT_CLASS, parameters)
-              .subscribe((data: DeathReport[]) => 
-              { 
-                this.deathReports = data 
+              .subscribe((data: DeathReport[]) => { 
+                this.deathReports = data; 
               },
               error => console.log(error),
               () => console.log('Get all DeathReport complete'));
@@ -70,8 +71,9 @@ export class DeathReportList extends BaseComponent implements OnInit, OnDestroy 
  
   
   updateCols() {
-    for (var index in this.cols) {
-      let col = this.cols[index];
+    // tslint:disable-next-line: forin
+    for (const index in this.cols) {
+      const col = this.cols[index];
       this.translate.get(col.headerKey).subscribe((res: string) => {
         col.header = res;
       });
@@ -83,30 +85,28 @@ export class DeathReportList extends BaseComponent implements OnInit, OnDestroy 
     this.deathReports = null;
   }
   
-  edit(deathReportId : number) {
+  edit(deathReportId: number) {
     try {
-      let navigationExtras: NavigationExtras = {
+      const navigationExtras: NavigationExtras = {
         queryParams: {
-          "deathReportId": deathReportId,
+          'deathReportId': deathReportId,
         }
-      }
-      this.router.navigate(["/admin/deathReportDetails"], navigationExtras);
-    }
-    catch (e) {
+      };
+      this.router.navigate(['/admin/deathReportDetails'], navigationExtras);
+    } catch (e) {
       console.log(e);
     }
   }
 
-  delete(deathReportId : number) {
+  delete(deathReportId: number) {
     try {
-      let navigationExtras: NavigationExtras = {
+      const navigationExtras: NavigationExtras = {
         queryParams: {
-          "deathReportId": deathReportId,
+          'deathReportId': deathReportId,
         }
-      }
-      this.router.navigate(["/admin/deathReportDetails"], navigationExtras);
-    }
-    catch (e) {
+      };
+      this.router.navigate(['/admin/deathReportDetails'], navigationExtras);
+    } catch (e) {
       console.log(e);
     }
   }

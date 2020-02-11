@@ -8,7 +8,7 @@ import { BaseComponent } from './baseComponent';
 import { PatientSaleProduct } from 'src/app/models/stocks/patientSale';
 
 @Component({
-  selector: 'app-patientMedicine-list',
+  selector: 'app-patient-medicine-list',
   templateUrl: '../../pages/admin/patientMedicineList.html',
   providers: [GenericService, AdmissionService]
 })
@@ -54,7 +54,8 @@ export class PatientMedicineList extends BaseComponent implements OnInit, OnDest
  
   
   updateCols() {
-    for (let index in this.cols) {
+    // tslint:disable-next-line: forin
+    for (const index in this.cols) {
       const col = this.cols[index];
       this.translate.get(col.headerKey).subscribe((res: string) => {
         col.header = res;

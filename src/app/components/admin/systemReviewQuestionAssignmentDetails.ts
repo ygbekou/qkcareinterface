@@ -8,7 +8,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { SummaryType, SystemReviewQuestionAssignment, UserGroup, PhysicalExamTypeAssignment } from 'src/app/models';
 
 @Component({
-  selector: 'app-systemReviewQuestionAssignment-details',
+  selector: 'app-system-review-question-assignment-details',
   templateUrl: '../../pages/admin/systemReviewQuestionAssignmentDetails.html',
   providers: [GenericService]
 })

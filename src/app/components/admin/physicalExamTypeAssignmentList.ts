@@ -7,7 +7,7 @@ import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
 import { BaseComponent } from './baseComponent';
 
 @Component({
-  selector: 'app-physicalExamTypeAssignment-list',
+  selector: 'app-physical-exam-type-assignment-list',
   templateUrl: '../../pages/admin/physicalExamTypeAssignmentList.html',
   providers: [GenericService, ConfirmationService]
 })
@@ -53,7 +53,8 @@ export class PhysicalExamTypeAssignmentList extends BaseComponent implements OnI
   }
 
   updateCols() {
-    for (let index in this.cols) {
+    // tslint:disable-next-line: forin
+    for (const index in this.cols) {
       const col = this.cols[index];
       this.translate.get(col.headerKey).subscribe((res: string) => {
         col.header = res;

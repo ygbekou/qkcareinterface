@@ -47,12 +47,11 @@ export class ScheduleDetails extends BaseComponent implements OnInit, OnDestroy 
 					this.genericService.getOne(scheduleId, 'Schedule')
 						.subscribe(result => {
 							if (result.id > 0) {
-								this.schedule = result
-							}
-							else {
+								this.schedule = result;
+							} else {
 
 							}
-						})
+						});
 				} else {
 
 				}
@@ -71,10 +70,10 @@ export class ScheduleDetails extends BaseComponent implements OnInit, OnDestroy 
 	save() {
 		this.messages = [];
 		try { 
-			this.genericService.save(this.schedule, "Schedule")
+			this.genericService.save(this.schedule, 'Schedule')
 				.subscribe(result => {
 					console.log(result);
-					if (result.errors===null || result.errors.length === 0) {
+					if (result.errors === null || result.errors.length === 0) {
 						//this.schedule = result
 						this.clear();
 						this.messages.push({ severity: Constants.SUCCESS, summary: Constants.SAVE_LABEL, detail: Constants.SAVE_SUCCESSFUL });
@@ -83,7 +82,7 @@ export class ScheduleDetails extends BaseComponent implements OnInit, OnDestroy 
 							this.messages.push({ severity: Constants.ERROR, summary: res['COMMON.SAVE'], detail: res['MESSAGE.' + result.errors[0]] });
 						});
 					}
-				})
+				});
 		} catch (e) {
 			console.log(e);
 		}

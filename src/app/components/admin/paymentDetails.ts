@@ -54,13 +54,12 @@ export class PaymentDetails implements OnInit, OnDestroy {
           this.genericService.getOne(paymentId, 'Payment')
             .subscribe(result => {
               if (result.id > 0) {
-                this.payment = result
-              }
-              else {
+                this.payment = result;
+              } else {
                 this.error = Constants.SAVE_UNSUCCESSFUL;
                 this.displayDialog = true;
               }
-            })
+            });
         } else {
 
         }
@@ -75,18 +74,16 @@ export class PaymentDetails implements OnInit, OnDestroy {
   save() {
     try {
       this.error = '';
-      this.genericService.save(this.payment, "Payment")
+      this.genericService.save(this.payment, 'Payment')
         .subscribe(result => {
           if (result.id > 0) {
-            this.payment = result
-          }
-          else {
+            this.payment = result;
+          } else {
             this.error = Constants.SAVE_UNSUCCESSFUL;
             this.displayDialog = true;
           }
-        })
-    }
-    catch (e) {
+        });
+    } catch (e) {
       console.log(e);
     }
   }

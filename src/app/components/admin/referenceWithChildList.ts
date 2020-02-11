@@ -7,7 +7,7 @@ import { BaseComponent } from './baseComponent';
 import { ConfirmationService } from 'primeng/api';
 
 @Component({
-  selector: 'app-referenceWithChild-list',
+  selector: 'app-reference-with-child-list',
   templateUrl: '../../pages/admin/referenceWithChildList.html',
   providers: [GenericService]
 })
@@ -78,7 +78,7 @@ export class ReferenceWithChildList extends BaseComponent implements OnInit, OnD
           const parameters: string [] = []; 
           parameters.push('e.parent.id IS NULL |parentId|' + 0 + '|Long');
           
-          this.genericService.getAllByCriteria(this.referenceType, parameters, " ORDER BY e.name")
+          this.genericService.getAllByCriteria(this.referenceType, parameters, ' ORDER BY e.name')
             .subscribe((data: Reference[]) => { 
               this.references = data; 
             },
@@ -89,7 +89,8 @@ export class ReferenceWithChildList extends BaseComponent implements OnInit, OnD
 
 
   updateCols(category: string) {
-    for (let index in this.cols) {
+    // tslint:disable-next-line: forin
+    for (const index in this.cols) {
       const col = this.cols[index];
       this.translate.get(col.headerKey).subscribe((res: string) => {
         col.header = res;

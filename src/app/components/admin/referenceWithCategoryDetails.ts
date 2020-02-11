@@ -10,7 +10,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { Reference } from 'src/app/models';
 
 @Component({
-  selector: 'app-referenceWithCategory-details',
+  selector: 'app-reference-with-category-details',
   templateUrl: '../../pages/admin/referenceWithCategoryDetails.html',
   providers: [GenericService]
 })

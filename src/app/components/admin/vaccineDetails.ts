@@ -109,8 +109,9 @@ export class VaccineDetails extends BaseComponent implements OnInit, OnDestroy {
     }
   
    updateCols() {
-    for (var index in this.vaccineCols) {
-      let col = this.vaccineCols[index];
+    // tslint:disable-next-line: forin
+    for (const index in this.vaccineCols) {
+      const col = this.vaccineCols[index];
       this.translate.get(col.headerKey).subscribe((res: string) => {
         col.header = res;
       });
@@ -145,7 +146,7 @@ export class VaccineDetails extends BaseComponent implements OnInit, OnDestroy {
           } else {
             this.processResult(result, patientVaccine, this.messages, null);
           }
-        })
+        });
     } catch (e) {
       console.log(e);
     }

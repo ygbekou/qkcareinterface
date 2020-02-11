@@ -9,7 +9,7 @@ import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
 import { BaseComponent } from './baseComponent';
 
 @Component({
-  selector: 'app-admissionDiagnoses',
+  selector: 'app-admission-diagnoses',
   templateUrl: '../../pages/admin/admissionDiagnoses.html',
   providers: [GenericService, AdmissionService, DiagnosisDropdown]
 
@@ -79,9 +79,8 @@ export class AdmissionDiagnoses extends BaseComponent implements OnInit, OnDestr
         .queryParams
         .subscribe(params => {
             this.genericService.getAllByCriteria('AdmissionDiagnosis', parameters)
-              .subscribe((data: AdmissionDiagnosis[]) =>
-			{
-				this.admissionDiagnoses = data
+              .subscribe((data: AdmissionDiagnosis[]) => {
+				this.admissionDiagnoses = data;
 			},
 			error => console.log(error),
 			() => console.log('Get all DoctorOrders complete'));
@@ -97,6 +96,7 @@ export class AdmissionDiagnoses extends BaseComponent implements OnInit, OnDestr
 
 
   updateCols() {
+    // tslint:disable-next-line: forin
     for (const index in this.diagnosisCols) {
       const col = this.diagnosisCols[index];
       this.translate.get(col.headerKey).subscribe((res: string) => {

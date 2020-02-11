@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, Input, Output, EventEmitter, ViewEncapsulation } from '@angular/core';
-import {trigger,state,style,transition,animate,AnimationEvent} from '@angular/animations';
+import {trigger, state, style, transition, animate, AnimationEvent} from '@angular/animations';
 import { Admission, User, Visit, Summary, Employee, SummaryTypeTemplate, Reference } from '../../models';
 import { SummaryStatusDropdown, SummaryTypeDropdown, EmployeeDropdown, MedicalTeamDropdown} from '../dropdowns';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
@@ -18,7 +18,7 @@ import { stringify } from 'querystring';
   // styles: [
   //     "node_modules/primeflex/primeflex.css"
   //   ],
-  styles:[`
+  styles: [`
         .box,
         .sample-layout > div {
             background-color: #cce4f7;
@@ -87,7 +87,7 @@ export class SummaryDetails extends BaseComponent implements OnInit, OnDestroy {
   messages: Message[] = [];
   author: Employee = new Employee();
   types: SelectItem[] = [];
-  selectedType: string = '';
+  selectedType = '';
 
   physicalExamSystemMap: any = new Map();
   selectedPhysicalExamSystems: Reference[];
@@ -241,10 +241,10 @@ export class SummaryDetails extends BaseComponent implements OnInit, OnDestroy {
 
       this.genericService.getObject('/service/admission/physicalExam/list/summaryType/' + this.summary.summaryType.id + '/')
         .subscribe((data: any) => {
-          console.info(data)
+          console.info(data);
           this.summary.description = '';
           this.physicalExamSystemMap = data;
-          let keys = Object.keys(data);
+          const keys = Object.keys(data);
           this.types = [];
 
           for (let i = 0; i < keys.length; i++) {

@@ -164,7 +164,7 @@ export class AdminHeader implements OnInit, OnDestroy {
         this.tokenStorage.signOut();
         this.router.navigate(['/login']);
     }
-    goToDashboard(){
+    goToDashboard() {
         this.router.navigate(['/admin/dashboard']);
         window.location.reload();
     }

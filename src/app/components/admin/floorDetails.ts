@@ -18,7 +18,7 @@ export class FloorDetails extends BaseComponent implements OnInit, OnDestroy {
   messages: Message[] = [];
   floor: Floor = new Floor();
   
-  hiddenMenu: boolean = true;
+  hiddenMenu = true;
   buildingDropdown: BuildingDropdown;
   @Input() canSave: boolean;
   @Output() floorSaveEvent = new EventEmitter<Floor>();

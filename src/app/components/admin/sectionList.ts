@@ -121,7 +121,7 @@ export class SectionList extends BaseComponent implements OnInit, OnDestroy {
     if (!found) {
       this.sections.push(aSection);
     }
-    var onTheFly: Section[] = [];
+    const onTheFly: Section[] = [];
     onTheFly.push(...this.sections);
     this.sections = onTheFly;
     this.changeDetectorRef.detectChanges();

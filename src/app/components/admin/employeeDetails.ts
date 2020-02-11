@@ -144,8 +144,8 @@ export class EmployeeDetails extends BaseComponent implements OnInit, OnDestroy 
     if (event.target.files && event.target.files[0]) {
       const reader = new FileReader();
 
-      reader.onload = (event: ProgressEvent) => {
-        this.pictureUrl = (<FileReader>event.target).result;
+      reader.onload = (event1: ProgressEvent) => {
+        this.pictureUrl = (<FileReader>event1.target).result;
       };
 
       reader.readAsDataURL(event.target.files[0]);

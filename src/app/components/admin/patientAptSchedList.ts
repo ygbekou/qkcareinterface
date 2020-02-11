@@ -59,6 +59,7 @@ export class PatientAptSchedList extends BaseComponent implements OnInit, OnDest
 	pullData(data: any) {
 		let i = 0;
 		this.steps = []; 
+		// tslint:disable-next-line: forin
 		for (const index in data) {
 			this.steps[i] = {
 				label: 'Annee ' + index + '(' + data[index].length + ')',

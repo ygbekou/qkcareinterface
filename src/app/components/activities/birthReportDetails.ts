@@ -9,7 +9,7 @@ import { BaseComponent } from '../admin/baseComponent';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
-  selector: 'app-birthReport-details',
+  selector: 'app-birth-report-details',
   templateUrl: '../../pages/activities/birthReportDetails.html',
   providers: [GenericService, GlobalEventsManager]
 })
@@ -70,8 +70,8 @@ export class BirthReportDetails extends BaseComponent implements OnInit, OnDestr
   }
 
   save() {
-    if (this.birthReport.firstName == '' || this.birthReport.lastName == '' 
-      || this.birthReport.motherFirstName == '' || this.birthReport.motherLastName == '') {
+    if (this.birthReport.firstName === '' || this.birthReport.lastName === '' 
+      || this.birthReport.motherFirstName === '' || this.birthReport.motherLastName === '') {
       this.messages.push({severity: Constants.ERROR, summary: Constants.SAVE_LABEL, detail: Constants.MISSING_REQUIRED_FIELD});
       return;
     }

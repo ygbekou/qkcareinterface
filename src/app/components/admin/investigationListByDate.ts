@@ -95,9 +95,9 @@ export class InvestigationListByDate extends BaseComponent implements OnInit, On
     }
   }
   
-  updateCols() {
-    
-    for (let index in this.iTCols) {
+  updateCols() {     
+    // tslint:disable-next-line:forin
+    for (const index in this.iTCols) {
       const col = this.iTCols[index];
       this.translate.get(col.headerKey).subscribe((res: string) => {
         col.header = res;
@@ -145,21 +145,21 @@ export class InvestigationListByDate extends BaseComponent implements OnInit, On
 
   generateListHeaders() {
 
-    let resultMap = new Map();
+    const resultMap = new Map();
 
     this.iTCols = [];
     this.iTCols.push({field: 'name', header : 'NAME', type: 'String', style: {width: '12%', 'text-align': 'center'}})
     
-    for (let index in this.investigationTests[0]['attributes']) {
+    for (const index in this.investigationTests[0]['attributes']) {
       this.iTCols.push({field: this.investigationTests[0]['attributes'][index], 
         header : this.investigationTests[0]['attributes'][index], type: 'number'});
     }
 
-    let names = new Set<string>();
+    const names = new Set<string>();
     names.add(' ');
     this.investigationResults = [];
     
-    for (let index in this.investigationTests) {
+    for (const index in this.investigationTests) {
       
       if (index === '0') {
         continue;
@@ -223,10 +223,10 @@ export class InvestigationListByDate extends BaseComponent implements OnInit, On
       this.iTCols = [];
       this.iTCols.push({field: 'name', header : 'NAME', type: 'String', style: {width: '12%', 'text-align': 'center'}})
 
-      for (let index in this.investigationResults) {
+      for (const index in this.investigationResults) {
         let keys = Object.keys(this.investigationResults[index]);
         keys = keys.sort(function(a, b){return b < a ? -1 : 1});
-        for (let keyIndex in keys) {
+        for (const keyIndex in keys) {
           if ('name' !== keys[keyIndex]) {
             this.iTCols.push({field: keys[keyIndex], header : keys[keyIndex], type: 'number'});
           }

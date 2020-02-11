@@ -8,7 +8,7 @@ import { ConfirmationService } from 'primeng/api';
 import { TranslateService} from '@ngx-translate/core';
 
 @Component({
-  selector: 'app-hospitalLocation-details',
+  selector: 'app-hospital-location-details',
   templateUrl: '../../pages/admin/hospitalLocationDetails.html',
   providers: [GenericService, CountryDropdown]
 })

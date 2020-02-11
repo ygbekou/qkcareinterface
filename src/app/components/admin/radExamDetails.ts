@@ -8,7 +8,7 @@ import { BaseComponent } from './baseComponent';
 import { RadExam } from 'src/app/models/radiology/radiologyConfig';
 
 @Component({
-  selector: 'app-radExam-details',
+  selector: 'app-rad-exam-details',
   templateUrl: '../../pages/admin/radExamDetails.html',
   providers: [ModalityDropdown]
   

@@ -59,12 +59,12 @@ export class PackageDetails extends BaseComponent implements OnInit, OnDestroy {
                   .subscribe(result => {
                 if (result.id > 0) {
                   this.pckage = result;
-                  if (this.pckage.packageServices === null || this.pckage.packageServices.length === 0 ){
+                  if (this.pckage.packageServices === null || this.pckage.packageServices.length === 0 ) {
                     this.pckage.packageServices = [];
                     this.addRow();
                   }
                 }
-              })
+              });
           } else {
             this.addRow();
           }
@@ -78,8 +78,9 @@ export class PackageDetails extends BaseComponent implements OnInit, OnDestroy {
  
   
   updateCols() {
-    for (var index in this.serviceCols) {
-      let col = this.serviceCols[index];
+    // tslint:disable-next-line: forin
+    for (const index in this.serviceCols) {
+      const col = this.serviceCols[index];
       this.translate.get(col.headerKey).subscribe((res: string) => {
         col.header = res;
       });
@@ -96,7 +97,7 @@ export class PackageDetails extends BaseComponent implements OnInit, OnDestroy {
   }
   
   addRow() {
-    let ps =  new PackageService();
+    const ps =  new PackageService();
     ps.service = new Service();
     this.pckage.packageServices.push(ps);
   }
@@ -116,9 +117,8 @@ export class PackageDetails extends BaseComponent implements OnInit, OnDestroy {
 			} else {
 				this.processResult(result, this.pckage, this.messages, null);
 			}
-        })
-    }
-    catch (e) {
+        });
+    } catch (e) {
       console.log(e);
     }
   }
@@ -126,6 +126,7 @@ export class PackageDetails extends BaseComponent implements OnInit, OnDestroy {
 
   validate() {
     let noMedFound = true;
+      // tslint:disable-next-line: forin
       for (const i in this.pckage.packageServices) {
       const ps = this.pckage.packageServices[i];
       if (ps.service.id > 0) {
@@ -164,6 +165,7 @@ export class PackageDetails extends BaseComponent implements OnInit, OnDestroy {
   
   calculateGrandTotal() {
     this.pckage.grandTotal = 0;
+    // tslint:disable-next-line: forin
     for (const i in this.pckage.packageServices) {
        this.pckage.grandTotal += this.calculateRowTotal(this.pckage.packageServices[i]);
     }

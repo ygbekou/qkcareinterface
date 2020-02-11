@@ -42,21 +42,20 @@ export class InvoiceList implements OnInit, OnDestroy {
             { field: 'grandTotal', header: 'Grand Total' },
             { field: 'paid', header: 'Paid' },
             { field: 'due', header: 'Due' },
-            { field: 'status', header: 'Status', type:'string' }
+            { field: 'status', header: 'Status', type: 'string' }
         ];
     
     this.route
         .queryParams
         .subscribe(params => {          
           
-            let parameters: string [] = []; 
+            const parameters: string [] = []; 
             
-            parameters.push('e.status = |status|0|Integer')
+            parameters.push('e.status = |status|0|Integer');
             
             this.genericService.getAllByCriteria('Invoice', parameters)
-              .subscribe((data: Invoice[]) => 
-              { 
-                this.invoices = data 
+              .subscribe((data: Invoice[]) => { 
+                this.invoices = data; 
               },
               error => console.log(error),
               () => console.log('Get all Invoices complete'));
@@ -68,30 +67,28 @@ export class InvoiceList implements OnInit, OnDestroy {
     this.invoices = null;
   }
   
-  edit(invoiceId : number) {
+  edit(invoiceId: number) {
     try {
-      let navigationExtras: NavigationExtras = {
+      const navigationExtras: NavigationExtras = {
         queryParams: {
-          "invoiceId": invoiceId,
+          'invoiceId': invoiceId,
         }
-      }
-      this.router.navigate(["/admin/invoiceDetails"], navigationExtras);
-    }
-    catch (e) {
+      };
+      this.router.navigate(['/admin/invoiceDetails'], navigationExtras);
+    } catch (e) {
       console.log(e);
     }
   }
 
-  delete(invoiceId : number) {
+  delete(invoiceId: number) {
     try {
-      let navigationExtras: NavigationExtras = {
+      const navigationExtras: NavigationExtras = {
         queryParams: {
-          "invoiceId": invoiceId,
+          'invoiceId': invoiceId,
         }
-      }
-      this.router.navigate(["/admin/invoiceDetails"], navigationExtras);
-    }
-    catch (e) {
+      };
+      this.router.navigate(['/admin/invoiceDetails'], navigationExtras);
+    } catch (e) {
       console.log(e);
     }
   }

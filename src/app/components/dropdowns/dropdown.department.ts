@@ -6,8 +6,8 @@ import { Department } from '../../models/department';
 @Injectable()
 export class DepartmentDropdown {
   
-  filteredDepartments : Department[];
-  departments : Department[] = []; 
+  filteredDepartments: Department[];
+  departments: Department[] = []; 
   
   constructor(
     private genericService: GenericService) {
@@ -22,7 +22,7 @@ export class DepartmentDropdown {
     //this.filteredDepartments = [];
     setTimeout(() => {
       this.filteredDepartments = this.departments;
-    }, 10)
+    }, 10);
   }
   
   private getAllDepartments(): void {

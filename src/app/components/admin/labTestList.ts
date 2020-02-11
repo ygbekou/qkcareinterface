@@ -7,7 +7,7 @@ import { BaseComponent } from './baseComponent';
 import { ConfirmationService } from 'primeng/api';
 
 @Component({
-  selector: 'app-labTest-list',
+  selector: 'app-lab-test-list',
   templateUrl: '../../pages/admin/labTestList.html',
   providers: [GenericService]
 })
@@ -69,7 +69,8 @@ export class LabTestList extends BaseComponent implements OnInit, OnDestroy {
  
   
   updateCols() {
-    for (let index in this.cols) {
+    // tslint:disable-next-line: forin
+    for (const index in this.cols) {
       const col = this.cols[index];
       this.translate.get(col.headerKey).subscribe((res: string) => {
         col.header = res;

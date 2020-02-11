@@ -7,7 +7,7 @@ import { BaseComponent } from './baseComponent';
 import { ConfirmationService } from 'primeng/api';
 
 @Component({
-  selector: 'app-hospitalLocation-list',
+  selector: 'app-hospital-location-list',
   templateUrl: '../../pages/admin/hospitalLocationList.html',
   providers: [GenericService]
 })
@@ -52,7 +52,7 @@ export class HospitalLocationList extends BaseComponent implements OnInit, OnDes
             
             parameters.push('e.status = |status|0|Integer');
             
-            this.genericService.getAllByCriteria('HospitalLocation', parameters, " ORDER BY name DESC ")
+            this.genericService.getAllByCriteria('HospitalLocation', parameters, ' ORDER BY name DESC ')
               .subscribe((data: HospitalLocation[]) => { 
                 this.hospitalLocations = data; 
               },
@@ -69,7 +69,8 @@ export class HospitalLocationList extends BaseComponent implements OnInit, OnDes
  
   
   updateCols() {
-    for (let index in this.cols) {
+    // tslint:disable-next-line: forin
+    for (const index in this.cols) {
       const col = this.cols[index];
       this.translate.get(col.headerKey).subscribe((res: string) => {
         col.header = res;

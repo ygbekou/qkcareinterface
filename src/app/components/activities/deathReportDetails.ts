@@ -10,7 +10,7 @@ import { BaseComponent } from '../admin/baseComponent';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
-  selector: 'app-deathReport-details',
+  selector: 'app-death-report-details',
   templateUrl: '../../pages/activities/deathReportDetails.html',
   providers: [GenericService, GlobalEventsManager]
 })
@@ -23,7 +23,7 @@ export class DeathReportDetails extends BaseComponent implements OnInit, OnDestr
 
   patient: Patient = new Patient();
   itemNumber: string;
-  itemNumberLabel: string = 'Admission';
+  itemNumberLabel = 'Admission';
 
   constructor
     (
@@ -50,16 +50,15 @@ export class DeathReportDetails extends BaseComponent implements OnInit, OnDestr
               this.genericService.getOne(deathReportId, Constants.DEATH_REPORT_CLASS)
                   .subscribe(result => {
                 if (result.id > 0) {
-                  this.deathReport = result
+                  this.deathReport = result;
                   this.deathReport.deathDatetime = new Date(this.deathReport.deathDatetime);
                   this.admission = this.deathReport.admission;
                   this.patient = this.admission.patient;
-                }
-                else {
+                } else {
                   
                  
                 }
-              })
+              });
           } else {
               
           }
@@ -74,7 +73,7 @@ export class DeathReportDetails extends BaseComponent implements OnInit, OnDestr
   save() {
     this.messages = [];
     if (this.deathReport.deathDatetime == null) {
-      this.messages.push({severity:Constants.ERROR, summary:Constants.SAVE_LABEL, detail:Constants.MISSING_REQUIRED_FIELD});
+      this.messages.push({severity: Constants.ERROR, summary: Constants.SAVE_LABEL, detail: Constants.MISSING_REQUIRED_FIELD});
       return;
     }
     
@@ -83,15 +82,13 @@ export class DeathReportDetails extends BaseComponent implements OnInit, OnDestr
       this.genericService.save(this.deathReport, Constants.DEATH_REPORT_CLASS)
         .subscribe(result => {
           if (result.id > 0) {
-            this.deathReport = result
-            this.messages.push({severity:Constants.SUCCESS, summary:Constants.SAVE_LABEL, detail:Constants.SAVE_SUCCESSFUL});
+            this.deathReport = result;
+            this.messages.push({severity: Constants.SUCCESS, summary: Constants.SAVE_LABEL, detail: Constants.SAVE_SUCCESSFUL});
+          } else {
+            this.messages.push({severity: Constants.ERROR, summary: Constants.SAVE_LABEL, detail: Constants.SAVE_UNSUCCESSFUL});
           }
-          else {
-            this.messages.push({severity:Constants.ERROR, summary:Constants.SAVE_LABEL, detail:Constants.SAVE_UNSUCCESSFUL});
-          }
-        })
-    }
-    catch (e) {
+        });
+    } catch (e) {
       console.log(e);
     }
   }

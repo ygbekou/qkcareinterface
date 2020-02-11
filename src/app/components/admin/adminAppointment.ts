@@ -2,10 +2,9 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
 import { User } from '../../models/user';
 import { Constants } from '../../app.constants';
-import { GenericService } from '../../services/generic.service';
 import { UserService } from '../../services/user.service';
-import { GlobalEventsManager } from "../../services/globalEventsManager";
-import { Router, ActivatedRoute } from "@angular/router";
+import { GlobalEventsManager } from '../../services/globalEventsManager';
+import { ActivatedRoute } from '@angular/router';
 import { DoctorDropdown, DepartmentDropdown } from '../dropdowns';
 
 @Component({
@@ -35,7 +34,7 @@ export class AdminAppointment implements OnInit {
 			.queryParams
 			.subscribe(params => {
 				this.moduleName = params['moduleName'];
-				this.globalEventsManager.changeModuleName(params['moduleName'])
+				this.globalEventsManager.changeModuleName(params['moduleName']);
 			});
 	}
 

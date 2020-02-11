@@ -29,15 +29,14 @@ export class HospitalDetails implements OnInit, OnDestroy {
 
   ngOnInit(): void {
 
-    let parameters: string [] = []; 
+    const parameters: string [] = []; 
     //parameters.push('e.status = |status|0|Integer');
     
       
     this.genericService.getAllByCriteria('Hospital', parameters)
-       .subscribe((data: Hospital[]) => 
-        { 
+       .subscribe((data: Hospital[]) => { 
           if (data.length > 0) {
-            this.hospital = data[0]
+            this.hospital = data[0];
           } else {
             this.hospital = new Hospital();
           }
@@ -54,30 +53,30 @@ export class HospitalDetails implements OnInit, OnDestroy {
   save() {
     this.formData = new FormData();
     
-    let logoEl = this.logo.nativeElement;
+    const logoEl = this.logo.nativeElement;
     if (logoEl && logoEl.files && (logoEl.files.length > 0)) {
-      let files :FileList = logoEl.files;
-      for(var i = 0; i < files.length; i++){
+      const files: FileList = logoEl.files;
+      for (let i = 0; i < files.length; i++) {
           this.formData.append('logo', files[i], files[i].name);
       }
     } else {
        this.formData.append('logo', null, null);
     }
     
-    let faviconEl = this.favicon.nativeElement;
+    const faviconEl = this.favicon.nativeElement;
     if (faviconEl && faviconEl.files && (faviconEl.files.length > 0)) {
-      let files :FileList = faviconEl.files;
-      for(var i = 0; i < files.length; i++){
+      const files: FileList = faviconEl.files;
+      for (let i = 0; i < files.length; i++) {
           this.formData.append('favicon', files[i], files[i].name);
       }
     } else {
        this.formData.append('favicon', null, null);
     }
     
-    let backgroundSliderEl = this.backgroundSlider.nativeElement;
+    const backgroundSliderEl = this.backgroundSlider.nativeElement;
     if (backgroundSliderEl && backgroundSliderEl.files && (backgroundSliderEl.files.length > 0)) {
-      let files :FileList = backgroundSliderEl.files;
-      for(var i = 0; i < files.length; i++){
+      const files: FileList = backgroundSliderEl.files;
+      for (let i = 0; i < files.length; i++) {
           this.formData.append('backgroundSlider', files[i], files[i].name);
       }
     } else {
@@ -96,27 +95,23 @@ export class HospitalDetails implements OnInit, OnDestroy {
           .subscribe(result => {
             if (result.id > 0) {
               this.hospital = result;
-              this.messages.push({severity:Constants.SUCCESS, summary:Constants.SAVE_LABEL, detail:Constants.SAVE_SUCCESSFUL});
+              this.messages.push({severity: Constants.SUCCESS, summary: Constants.SAVE_LABEL, detail: Constants.SAVE_SUCCESSFUL});
+            } else {
+              this.messages.push({severity: Constants.ERROR, summary: Constants.SAVE_LABEL, detail: Constants.SAVE_UNSUCCESSFUL});
             }
-            else {
-              this.messages.push({severity:Constants.ERROR, summary:Constants.SAVE_LABEL, detail:Constants.SAVE_UNSUCCESSFUL});
-            }
-          })
-      }
-      else {
+          });
+      } else {
         this.genericService.save(this.hospital, 'Hospital')
           .subscribe(result => {
             if (result.id > 0) {
               this.hospital = result;
-              this.messages.push({severity:Constants.SUCCESS, summary:Constants.SAVE_LABEL, detail:Constants.SAVE_SUCCESSFUL});
+              this.messages.push({severity: Constants.SUCCESS, summary: Constants.SAVE_LABEL, detail: Constants.SAVE_SUCCESSFUL});
+            } else {
+              this.messages.push({severity: Constants.ERROR, summary: Constants.SAVE_LABEL, detail: Constants.SAVE_UNSUCCESSFUL});
             }
-            else {
-              this.messages.push({severity:Constants.ERROR, summary:Constants.SAVE_LABEL, detail:Constants.SAVE_UNSUCCESSFUL});
-            }
-          })
+          });
       }
-    }
-    catch (e) {
+    } catch (e) {
       console.log(e);
     }
   }

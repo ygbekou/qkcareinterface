@@ -17,7 +17,7 @@ import { BaseComponent } from './baseComponent';
 export class BedDetails extends BaseComponent implements OnInit, OnDestroy {
   
   bed: Bed = new Bed();
-  hiddenMenu: boolean = true;
+  hiddenMenu = true;
   
   messages: Message[] = [];
   @Output() bedSaveEvent = new EventEmitter<Bed>();

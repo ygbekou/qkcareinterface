@@ -39,9 +39,8 @@ export class SymptomDetails implements OnInit, OnDestroy {
   ngOnInit(): void {
     
     this.genericService.getActiveElements('symptom')
-      .subscribe((data: Reference[]) => 
-      { 
-        console.info(data)
+      .subscribe((data: Reference[]) => { 
+        console.info(data);
         if (data.length > 0) {
           this.symptomGroups = data;
         }

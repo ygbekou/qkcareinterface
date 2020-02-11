@@ -6,8 +6,8 @@ import { HospitalLocation } from '../../models';
 @Injectable()
 export class HospitalLocationDropdown {
   
-  filteredLocations : HospitalLocation[];
-  locations : HospitalLocation[] = []; 
+  filteredLocations: HospitalLocation[];
+  locations: HospitalLocation[] = []; 
   
   constructor(
     private genericService: GenericService) {
@@ -21,13 +21,13 @@ export class HospitalLocationDropdown {
   handleDropdownClick(event) {
     setTimeout(() => {
       this.filteredLocations = this.locations;
-    }, 10)
+    }, 10);
   }
   
   private getAllLocations(): void {
     this.genericService.getAll('HospitalLocation')
       .subscribe((data: any[]) => {
-        this.locations = data
+        this.locations = data;
       },        
       error => console.log(error),
       () => console.log('Get All Locations Complete'));

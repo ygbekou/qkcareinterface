@@ -12,7 +12,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { ConfirmationService } from 'primeng/api';
 
 @Component({
-  selector: 'app-admin-radiologyConfig',
+  selector: 'app-admin-radiology-config',
   templateUrl: '../../pages/admin/adminRadiologyConfig.html',
   providers: [ ]
 })
@@ -44,7 +44,7 @@ export class AdminRadiologyConfig extends BaseComponent implements OnInit {
   
   
   ngOnInit() {
-    this.globalEventsManager.currentPatientId.subscribe(patientId => this.patient.id = patientId)
+    this.globalEventsManager.currentPatientId.subscribe(patientId => this.patient.id = patientId);
     this.globalEventsManager.selectedParentId = 2;
     
     if (this.currentUser == null) {
@@ -80,11 +80,11 @@ export class AdminRadiologyConfig extends BaseComponent implements OnInit {
     } else if (evt.index === 2) {
       this.processReference(null, 'Laterality', 'LATERALITY');
     } else if (evt.index === 3) {
-      this.activeTab = 3
+      this.activeTab = 3;
     } else if (evt.index === 4) {
-      this.activeTab = 4
+      this.activeTab = 4;
     } else if (evt.index === 5) {
-      this.activeTab = 5
+      this.activeTab = 5;
     } 
   }
 
