@@ -64,7 +64,7 @@
       <p-tabPanel header="{{ 'COMMON.VITAL_HISTORY' | translate }}">
         <p-tabView>
           <p-tabPanel header="{{ 'COMMON.VITAL_SIGN_LIST' | translate }}">
-            <app-vitalSign-details [vitalSign]="visit.vitalSign"></app-vitalSign-details>
+            <app-vital-sign-details [vitalSign]="visit.vitalSign"></app-vital-sign-details>
           </p-tabPanel>
           <p-tabPanel header="{{ 'COMMON.SYMPTOMS' | translate }}">
             <app-symptom-details [visit]="visit"></app-symptom-details>
@@ -82,17 +82,17 @@
       </p-tabPanel>
 
       <p-tabPanel header="{{ 'COMMON.DOCTOR_ORDER_LIST' | translate }}" *ngIf="visit.id > 0 && permitView('VISIT_DOCTOR_ORDER')">
-        <app-doctorOrder-details [visit]="visit" (doctorOrderSaveEvent)="onDoctorOrderSaved($event)">
-        </app-doctorOrder-details> 
+        <app-doctor-order-details [visit]="visit" (doctorOrderSaveEvent)="onDoctorOrderSaved($event)">
+        </app-doctor-order-details> 
         <br/>
-        <app-doctorOrder-list [visit]="visit" (doctorOrderIdEvent)="onDoctorOrderSelected($event)">
-        </app-doctorOrder-list> 
+        <app-doctor-order-list [visit]="visit" (doctorOrderIdEvent)="onDoctorOrderSelected($event)">
+        </app-doctor-order-list> 
       </p-tabPanel>
       <p-tabPanel header="{{'COMMON.SERVICE_LIST' | translate }}" *ngIf="visit && visit.id > 0 && permitView('VISIT_SERVICE')">
-          <app-patientServiceDetails [visit]="visit"></app-patientServiceDetails>
+          <app-patient-service-details [visit]="visit"></app-patient-service-details>
       </p-tabPanel>
       <p-tabPanel header="{{ 'COMMON.DIAGNOSIS_LIST' | translate }}" *ngIf="visit.id > 0 && permitView('VISIT_DIAGNOSIS')">
-        <app-admissionDiagnoses [visit]="visit"></app-admissionDiagnoses>
+        <app-admission-diagnoses [visit]="visit"></app-admission-diagnoses>
       </p-tabPanel>
 
       <p-tabPanel header="{{ 'COMMON.PRESCRIPTION_LIST' | translate }}" *ngIf="visit.id > 0 && permitView('VISIT_PRESCRIPTION')">
@@ -107,7 +107,7 @@
       </p-tabPanel>
       
       <p-tabPanel header="{{ 'COMMON.PHARMACY' | translate }}" *ngIf="visit.id > 0 && permitView('VISIT_PHARMACY')">
-          <app-patientMedicine-list [visit]="visit"></app-patientMedicine-list>
+          <app-patient-medicine-list [visit]="visit"></app-patient-medicine-list>
       </p-tabPanel>
 
       <p-tabPanel header="{{ 'COMMON.DISCHARGE' | translate }}" *ngIf="visit.id > 0 && permitView('VISIT_DISCHARGE')">

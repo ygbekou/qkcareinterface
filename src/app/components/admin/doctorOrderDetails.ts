@@ -10,7 +10,7 @@ import { BaseComponent } from './baseComponent';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
-  selector: 'app-doctorOrder-details',
+  selector: 'app-doctor-order-details',
   templateUrl: '../../pages/admin/doctorOrderDetails.html',
   providers: [GenericService, VisitService, DoctorDropdown, DoctorOrderTypeDropdown, ProductDropdown,
     DoctorOrderPriorityDropdown, DoctorOrderKindDropdown, LabTestDropdown]

@@ -11,10 +11,10 @@
       </p-tabPanel>
       <p-tabPanel header="{{'COMMON.SYMPTOMS' |translate}}">
         <div *ngIf="activeTab == 1" class="ui-grid-row">
-          <app-referenceWithCategory-details [canSave]="permitSave(null, 'Reference Config')" (referenceWithCategorySaveEvent)="onReferenceWithCategorySaved($event)"></app-referenceWithCategory-details>
+          <app-reference-with-category-details [canSave]="permitSave(null, 'Reference Config')" (referenceWithCategorySaveEvent)="onReferenceWithCategorySaved($event)"></app-reference-with-category-details>
           <br/>
-          <app-referenceWithCategory-list [canView]="permitView('Reference Config')" [canDelete]="permitDelete('Reference Config')" 
-            (referenceWithCategoryIdEvent)="onReferenceWithCategorySelected($event, 'Symptom')"></app-referenceWithCategory-list>
+          <app-reference-with-category-list [canView]="permitView('Reference Config')" [canDelete]="permitDelete('Reference Config')" 
+            (referenceWithCategoryIdEvent)="onReferenceWithCategorySelected($event, 'Symptom')"></app-reference-with-category-list>
         </div>
       </p-tabPanel>
       <p-tabPanel header="{{'COMMON.ALLERGY_TYPE_LIST' |translate}}">
@@ -27,10 +27,10 @@
       </p-tabPanel>
       <p-tabPanel header="{{'COMMON.ALLERGY_LIST' |translate}}">
         <div *ngIf="activeTab == 3" class="ui-grid-row">
-          <app-referenceWithCategory-details [canSave]="permitSave(null, 'Reference Config')" (referenceWithCategorySaveEvent)="onReferenceWithCategorySaved($event)"></app-referenceWithCategory-details>
+          <app-reference-with-category-details [canSave]="permitSave(null, 'Reference Config')" (referenceWithCategorySaveEvent)="onReferenceWithCategorySaved($event)"></app-reference-with-category-details>
           <br/>
-          <app-referenceWithCategory-list [canView]="permitView('Reference Config')" [canDelete]="permitDelete('Reference Config')"
-            (referenceWithCategoryIdEvent)="onReferenceWithCategorySelected($event, 'Allergy')"></app-referenceWithCategory-list>
+          <app-reference-with-category-list [canView]="permitView('Reference Config')" [canDelete]="permitDelete('Reference Config')"
+            (referenceWithCategoryIdEvent)="onReferenceWithCategorySelected($event, 'Allergy')"></app-reference-with-category-list>
         </div>
       </p-tabPanel>
       <p-tabPanel header="{{'COMMON.VACCINE_LIST' |translate}}">
@@ -145,23 +145,23 @@
       </p-tabPanel>
       <p-tabPanel id="labTest" header="{{'COMMON.LAB_TEST_LIST' |translate}}">
         <div *ngIf="activeTab == 18" class="ui-grid-row">
-          <app-labTest-details (labTestSaveEvent)="onLabTestSaved($event)"></app-labTest-details>
+          <app-lab-test-details (labTestSaveEvent)="onLabTestSaved($event)"></app-lab-test-details>
           <br/>
-          <app-labTest-list (labTestIdEvent)="onLabTestSelected($event)"></app-labTest-list>
+          <app-lab-test-list (labTestIdEvent)="onLabTestSelected($event)"></app-lab-test-list>
         </div>
       </p-tabPanel>
       <p-tabPanel id="hospitalLocation" header="{{'COMMON.LOCATION' |translate}}">
         <div *ngIf="activeTab == 19" class="ui-grid-row">
-          <app-hospitalLocation-details (hospitalLocationSaveEvent)="onHospitalLocationSaved($event)"></app-hospitalLocation-details>
+          <app-hospital-location-details (hospitalLocationSaveEvent)="onHospitalLocationSaved($event)"></app-hospital-location-details>
           <br/>
-          <app-hospitalLocation-list (hospitalLocationIdEvent)="onHospitalLocationSelected($event)"></app-hospitalLocation-list>
+          <app-hospital-location-list (hospitalLocationIdEvent)="onHospitalLocationSelected($event)"></app-hospital-location-list>
         </div>
       </p-tabPanel>
       <p-tabPanel id="summaryType" header="{{'COMMON.SUMMARY_TYPE_LIST' |translate}}">
         <div *ngIf="activeTab == 20" class="ui-grid-row">
-          <app-summaryType-details (summaryTypeSaveEvent)="onSummaryTypeSaved($event)"></app-summaryType-details>
+          <app-summary-type-details (summaryTypeSaveEvent)="onSummaryTypeSaved($event)"></app-summary-type-details>
           <br/>
-          <app-summaryType-list (summaryTypeIdEvent)="onSummaryTypeSelected($event)"></app-summaryType-list>
+          <app-summary-type-list (summaryTypeIdEvent)="onSummaryTypeSelected($event)"></app-summary-type-list>
         </div>
       </p-tabPanel>
       <p-tabPanel header="{{'COMMON.PE_SYSTEM_LIST' |translate}}">
@@ -169,15 +169,15 @@
           <app-reference-details [canSave]="permitSave(null, 'Reference Config')" 
             (referenceSaveEvent)="onReferenceSaved($event)"></app-reference-details>
           <br/> 
-          <app-referenceWithChild-list [canView]="permitView('Reference Config')" [canDelete]="permitDelete('Reference Config')" 
-              (referenceIdEvent)="onReferenceSelected($event, 'PhysicalExamSystem')"></app-referenceWithChild-list>
+          <app-reference-with-child-list [canView]="permitView('Reference Config')" [canDelete]="permitDelete('Reference Config')" 
+              (referenceIdEvent)="onReferenceSelected($event, 'PhysicalExamSystem')"></app-reference-with-child-list>
         </div>
       </p-tabPanel>
       <p-tabPanel id="physicalExamTypeAssignment" header="{{'COMMON.PHYSICAL_EXAM_TYPE_ASSIGNMENT' |translate}}">
         <div *ngIf="activeTab == 22" class="ui-grid-row">
-          <app-physicalExamTypeAssignment-details (physicalExamTypeAssignmentSaveEvent)="onPhysicalExamTypeAssignmentSaved($event)"></app-physicalExamTypeAssignment-details>
+          <app-physical-exam-type-assignment-details (physicalExamTypeAssignmentSaveEvent)="onPhysicalExamTypeAssignmentSaved($event)"></app-physical-exam-type-assignment-details>
           <br/>
-          <app-physicalExamTypeAssignment-list (physicalExamTypeAssignmentIdEvent)="onPhysicalExamTypeAssignmentSelected($event)"></app-physicalExamTypeAssignment-list>
+          <app-physical-exam-type-assignment-list (physicalExamTypeAssignmentIdEvent)="onPhysicalExamTypeAssignmentSelected($event)"></app-physical-exam-type-assignment-list>
         </div>
       </p-tabPanel>
       <p-tabPanel id="summaryTypeTemplate" header="{{'COMMON.SUMMARY_TYPE_TEMPLATE' |translate}}">
@@ -185,7 +185,7 @@
           <app-summary-type-template-details (summaryTypeTemplateSaveEvent)="onSummaryTypeTemplateSaved($event)">
             </app-summary-type-template-details>
           <br/>
-          <app-summaryTypeTemplate-list (summaryTypeTemplateIdEvent)="onSummaryTypeTemplateSelected($event)"></app-summaryTypeTemplate-list>
+          <app-summary-type-template-list (summaryTypeTemplateIdEvent)="onSummaryTypeTemplateSelected($event)"></app-summary-type-template-list>
         </div>
       </p-tabPanel>
       <p-tabPanel header="{{'COMMON.SYSTEM_REVIEW_QUESTION_LIST' |translate}}">
@@ -193,15 +193,15 @@
           <app-reference-details [canSave]="permitSave(null, 'Reference Config')" 
             (referenceSaveEvent)="onReferenceSaved($event)"></app-reference-details>
           <br/> 
-          <app-referenceWithChild-list [canView]="permitView('Reference Config')" [canDelete]="permitDelete('Reference Config')" 
-              (referenceIdEvent)="onReferenceSelected($event, 'PhysicalExamSystem')"></app-referenceWithChild-list>
+          <app-reference-with-child-list [canView]="permitView('Reference Config')" [canDelete]="permitDelete('Reference Config')" 
+              (referenceIdEvent)="onReferenceSelected($event, 'PhysicalExamSystem')"></app-reference-with-child-list>
         </div>
       </p-tabPanel>
       <p-tabPanel id="systemReviewQuestionAssignment" header="{{'COMMON.SYSTEM_REVIEW_QUESTION_ASSIGNMENT' |translate}}">
         <div *ngIf="activeTab == 25" class="ui-grid-row">
-          <app-systemReviewQuestionAssignment-details (systemReviewQuestionAssignmentSaveEvent)="onSystemReviewQuestionAssignmentSaved($event)"></app-systemReviewQuestionAssignment-details>
+          <app-system-review-question-assignment-details (systemReviewQuestionAssignmentSaveEvent)="onSystemReviewQuestionAssignmentSaved($event)"></app-system-review-question-assignment-details>
           <br/>
-          <app-systemReviewQuestionAssignment-list (systemReviewQuestionAssignmentIdEvent)="onSystemReviewQuestionAssignmentSelected($event)"></app-systemReviewQuestionAssignment-list>
+          <app-system-review-question-assignment-list (systemReviewQuestionAssignmentIdEvent)="onSystemReviewQuestionAssignmentSelected($event)"></app-system-review-question-assignment-list>
         </div>
       </p-tabPanel>
     </p-tabView>

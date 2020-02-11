@@ -51,18 +51,19 @@ export class PatientAptSchedList extends BaseComponent implements OnInit, OnDest
 
 	}
 	ngOnDestroy(): void {
-		throw new Error('Method not implemented.');
+		//throw new Error('Method not implemented.');
 	}
 	setCurrentIndex(i) {
 		this.activeIndex = i;
 	}
 	pullData(data: any) {
 		let i = 0;
-		this.steps = []; 
+		this.steps = [];
 		// tslint:disable-next-line: forin
 		for (const index in data) {
 			this.steps[i] = {
-				label: 'Annee ' + index + '(' + data[index].length + ')',
+				//label: 'Année ' + index + '(' + data[index].length + ')',
+				label: index,
 				year: index,
 				itemIndex: i,
 				command: (event: any) => {
