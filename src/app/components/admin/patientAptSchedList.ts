@@ -62,7 +62,7 @@ export class PatientAptSchedList extends BaseComponent implements OnInit, OnDest
 		// tslint:disable-next-line: forin
 		for (const index in data) {
 			this.steps[i] = {
-				//label: 'Année ' + index + '(' + data[index].length + ')',
+				//label: 'Annï¿½e ' + index + '(' + data[index].length + ')',
 				label: index,
 				year: index,
 				itemIndex: i,

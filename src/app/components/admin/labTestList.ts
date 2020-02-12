@@ -99,13 +99,11 @@ export class LabTestList extends BaseComponent implements OnInit, OnDestroy {
 
   updateTable(labTest: LabTest) {
 		const index = this.labTests.findIndex(x => x.id === labTest.id);
-
 		if (index === -1) {
 			this.labTests.push(labTest);
 		} else {
 			this.labTests[index] = labTest;
 		}
-
   }
 
  }
