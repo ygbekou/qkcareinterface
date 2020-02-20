@@ -164,6 +164,8 @@ import { SystemReviewList } from '../components/admin/systemReviewList';
 import { PatientAptScheduler } from '../components/admin/patientAptScheduler';
 import { PatientAptSchedList } from '../components/admin/patientAptSchedList';
 import { PatientBill } from '../components/admin/patientBill';
+import { PatientPrescriptionList } from '../components/admin/patientPrescriptionList';
+import { PatientAdmissionList } from '../components/admin/patientAdmissionList';
 
 const routes: Routes = [
   { path: 'adminMain', component: AdminMain },
@@ -256,6 +258,8 @@ const routes: Routes = [
   { path: 'permission', component: PermissionDetails },  
   { path: 'patientAptSchedList', component: PatientAptSchedList },  
   { path: 'patientBill', component: PatientBill },
+   { path: 'patientAdmissionList', component: PatientAdmissionList },
+  { path: 'patientPrescriptionList', component: PatientPrescriptionList },
   { path: 'patientAptScheduler', component: PatientAptScheduler }
 ];
 
@@ -289,10 +293,10 @@ export function HttpLoaderFactory(http: HttpClient) {
     MedicalHistoryDetails, SocialHistoryDetails, VaccineDetails, SymptomDetails, AdmissionTransfer,
     DoctorOrderDetails, DoctorOrderList, AdmissionDetails, AdmissionList, FloorDetails, FloorList,
 	  RoomDetails, RoomList, BedDetails, BedList, RadExamDetails, RadExamList, AdminPatient, AdminBedStatus, AdminAuthorization,
-	  AdmissionDiagnoses, PatientServiceDetails, PatientKiosk, PatientAptSchedList,
+	  AdmissionDiagnoses, PatientServiceDetails, PatientKiosk, PatientAptSchedList, PatientAdmissionList,
     AdminReference, VisitDetails, VisitList, DischargeDetails, LabTestDetails, LabTestList, InvestigationDetails,
 	  InvestigationList, InvestigationListByDate, RadInvestigationDetails, RadInvestigationList, PurchaseOrderDetails, PurchaseOrderList, 
-	  ReceiveOrderDetails, ReceiveOrderList, AdminRadiologyConfig, PatientBill,
+	  ReceiveOrderDetails, ReceiveOrderList, AdminRadiologyConfig, PatientBill, PatientPrescriptionList,
     PatientSaleDetails, PatientSaleList, SaleReturnDetails, SaleReturnList, BirthReportDetails, BirthReportList,
     DeathReportDetails, DeathReportList, HospitalLocationDetails, HospitalLocationList, PatientLookup, VisitAdmLookup,
     PurchaseOrderLookup, PatientSaleLookup, HospitalDetails, EnquiryDetails, EnquiryList, WaitingList,

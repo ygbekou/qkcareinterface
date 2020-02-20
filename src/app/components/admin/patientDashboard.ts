@@ -275,6 +275,9 @@ export class PatientDashboard extends BaseComponent implements OnInit, OnDestroy
 	gotoBill() {
 		this.router.navigate(['/admin/patientBill']);
 	}
+	gotoPrescription() {
+		this.router.navigate(['/admin/patientPrescriptionList']);
+	}
 }
 
 

@@ -110,7 +110,12 @@ export class AppointmentService {
 			.map((response: Response) => <Prescription>response.json())
 			.catch(this.handleError);
 	}
-
+	public getUserPrescriptions = (id: string): Observable<any[]> => {
+		const actionUrl = Constants.apiServer + '/service/appointment/getUserPrescriptions/' + id;
+		return this.http.get(actionUrl, { headers: this.headers })
+			.map((response: Response) => <any[]>response.json())
+			.catch(this.handleError);
+	}
 	public getUpomings = (): Observable<any[]> => {
 
 		const actionUrl = Constants.apiServer + '/service/appointment/list/upcomings';
