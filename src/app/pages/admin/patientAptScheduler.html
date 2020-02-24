@@ -1,0 +1,204 @@
+ <button pButton type="button" label="{{ 'COMMON.VIEW_APPOINTMENTS' | translate }}" class="ui-button-secondary"
+          (click)="gotoScheduleList()"  
+          style="width: 100%; font-size: 15px;color: #0071bc;font-weight:normal;"></button>
+          
+ <p-steps *ngIf="!done" [model]="steps" [(activeIndex)]="activeIndex" [readonly]="false" styleClass="steps-custom">
+  </p-steps>
+
+  <p-card *ngIf="done" [style]="{'text-align': 'center'}">
+    <p-header>
+      <img class="thumb img-fluid" src="assets/images/company/check.png" style="width:100px;">
+    </p-header>
+    <h1>
+      <font color="green">{{ 'MESSAGE.SCHEDULE_SUCCESSFUL' | translate }}</font>
+    </h1>
+  </p-card>
+
+  <!-- Sconfirmation-->
+  <p-card *ngIf="activeIndex===5 && !done">
+    <p-header>
+      <h1> </h1>
+    </p-header>
+
+    <div class="ui-grid-row">
+      {{ 'COMMON.DATE' | translate }}:&nbsp;&nbsp;
+      <strong>{{appointment.appointmentDate | date:'MM/dd/yyyy'}}</strong>
+    </div>
+    <div class="ui-grid-row"> {{ 'COMMON.PERIOD' | translate }}:&nbsp;&nbsp;
+      <strong>{{appointment.beginTime}}:&nbsp;&nbsp; {{appointment.endTime}}</strong>
+    </div>
+
+    <div class="ui-grid-row">
+      <div class="ui-grid-col-3 ui-sm-12" *ngIf="appointment.hospitalLocation.id>0">
+        <p-card>
+          <p-header>
+            <button pButton type="button" label="{{ appointment.hospitalLocation.name }}" class="ui-button-success"
+              style="width: 100%; font-size: 1.5rem;font-weight:normal;"></button>
+          </p-header>
+          <p class="tel col-md-12 col-sm-12">
+            <i class="fa fa-map-marker"></i>{{appointment.hospitalLocation.address}}<br />
+            {{appointment.hospitalLocation.city +' '+ appointment.hospitalLocation.country.name}}<br />
+            <i class="fa fa-phone"></i>{{appointment.hospitalLocation.phone}}<br />
+          </p>
+        </p-card>
+      </div>
+
+      <div class="ui-grid-col-3 ui-sm-12" *ngIf="appointment.department.id>0">
+        <p-card>
+          <p-header>
+            <button pButton type="button" label="{{ appointment.department.name }}" class="ui-button-info"
+              style="width: 100%; font-size: 1.5rem;font-weight:normal;"></button>
+          </p-header>
+          <p class="tel col-md-12 col-sm-12">
+            {{appointment.department.description}}
+          </p>
+        </p-card>
+      </div>
+
+      <div class="ui-grid-col-3 ui-sm-12" *ngIf="appointment.doctor.id>0">
+        <p-card>
+          <p-header>
+            <button pButton type="button" label="{{ appointment.doctor.name }}" class="ui-button-success"
+              style="width: 100%; font-size: 1rem;font-weight:normal;"></button>
+          </p-header>
+          <div class="feature-box custom-feature-box feature-box-style-2">
+            <div class="feature-box-icon">
+              <img src="assets/images/user/{{appointment.doctor.user.picture}}" alt="">
+            </div>
+            <div class="feature-box-info ml-12">
+              <p class="text-4"><strong>{{appointment.doctor.department.name}}</strong></p>
+            </div>
+          </div>
+        </p-card>
+      </div>
+
+    </div>
+    <div class="ui-grid-row">
+      <div class="form-group">
+        <label for="problem">{{ 'COMMON.PROBLEM' | translate }}<font color="red">*</font></label>
+        {{appointment.problem}}
+      </div>
+    </div>
+  </p-card>
+
+  <!-- raison -->
+  <div class="ui-grid-row" *ngIf="activeIndex===0">
+    <div class="ui-grid-col-12 ui-sm-12">
+      <div class="form-group">
+        <label for="medicalHistory">{{ 'COMMON.REASON' | translate }}<font color="red">*</font></label>
+        <br />
+        <textarea pInputTextarea id="visitReason" rows="5" maxlength="1000" [(ngModel)]="appointment.problem"
+          name="visitReason" #visitReason="ngModel" style="margin-top: 0px; width: 100%; font-size: 1.85rem;"
+          required> </textarea>
+        <br />
+      </div>
+    </div>
+  </div>
+  <!-- Location -->
+  <div class="ui-grid-row" *ngIf="activeIndex===1">
+    <div class="ui-grid-col-3 ui-sm-12" *ngFor="let loc of locations">
+      <a href="#/admin/patientAptScheduler" (click)="appointment.hospitalLocation=loc;next();">
+        <p-card>
+          <p-header>
+            <button pButton type="button" label="{{ loc.name }}" class="ui-button-secondary"
+              style="width: 100%; font-size: 1.5rem;font-weight:normal;"
+              *ngIf="loc.id!==appointment.hospitalLocation.id"></button>
+            <button pButton type="button" label="{{ loc.name }}" class="ui-button-success"
+              style="width: 100%; font-size: 1.5rem;font-weight:normal;"
+              *ngIf="loc.id===appointment.hospitalLocation.id"></button>
+          </p-header>
+          <p class="tel col-md-12 col-sm-12">
+            <i class="fa fa-map-marker"></i>{{loc.address}}<br />
+            {{loc.city +' '+ loc.country.name}}<br />
+            <i class="fa fa-phone"></i>{{loc.phone}}<br />
+          </p>
+          <p-footer>
+            <button pButton type="button" label="{{ 'COMMON.SELECT' | translate }}" class="ui-button-secondary"
+              (click)="appointment.hospitalLocation=loc"
+              style="width: 100%; font-size: 15px;color: #0071bc;font-weight:normal;"></button>
+          </p-footer>
+        </p-card>
+      </a>
+    </div>
+    <br />
+  </div>
+  <!-- Department -->
+  <div class="ui-grid-row" *ngIf="activeIndex===2">
+    <div class="ui-grid-col-3 ui-sm-12" *ngFor="let dept of departments">
+      <a href="#/admin/patientAptScheduler" (click)="appointment.department=dept;next();">
+        <p-card>
+          <p-header>
+            <button pButton type="button" label="{{ dept.name }}" class="ui-button-secondary"
+              style="width: 100%; font-size: 1.5rem;font-weight:normal;"
+              *ngIf="dept.id!==appointment.department.id"></button>
+            <button pButton type="button" label="{{ dept.name }}" class="ui-button-success"
+              style="width: 100%; font-size: 1.5rem;font-weight:normal;"
+              *ngIf="dept.id===appointment.department.id"></button>
+          </p-header>
+          <p class="tel col-md-12 col-sm-12">
+            {{dept.description}}
+          </p>
+          <p-footer>
+            <button pButton type="button" label="{{ 'COMMON.SELECT' | translate }}" class="ui-button-secondary"
+              (click)="appointment.department=dept"
+              style="width: 100%; font-size: 15px;color: #0071bc;font-weight:normal;"></button>
+          </p-footer>
+        </p-card>
+      </a>
+    </div>
+    <br />
+  </div>
+  <!-- medecin -->
+  <div class="ui-grid-row" *ngIf="activeIndex===3">
+    <div class="ui-grid-col-3 ui-sm-12" *ngFor="let doc of doctors">
+      <a href="#/admin/patientAptScheduler" (click)="appointment.doctor=doc;next();"
+        *ngIf="doc.department.id===appointment.department.id">
+        <p-card>
+          <p-header>
+            <button pButton type="button" label="{{ doc.name }}" class="ui-button-secondary"
+              style="width: 100%; font-size: 1rem;font-weight:normal;" *ngIf="doc.id!==appointment.doctor.id"></button>
+            <button pButton type="button" label="{{ doc.name }}" class="ui-button-success"
+              style="width: 100%; font-size: 1rem;font-weight:normal;" *ngIf="doc.id===appointment.doctor.id"></button>
+          </p-header>
+          <div class="feature-box custom-feature-box feature-box-style-2">
+            <div class="feature-box-icon">
+              <img src="assets/images/user/{{doc.user.picture}}" alt="">
+            </div>
+            <div class="feature-box-info ml-12">
+              <p class="text-4"><strong>{{doc.department.name}}</strong></p>
+            </div>
+          </div>
+          <p-footer>
+            <button pButton type="button" label="{{ 'COMMON.SELECT' | translate }}" class="ui-button-secondary"
+              (click)="appointment.doctor=doc"
+              style="width: 100%; font-size: 15px;color: #0071bc;font-weight:normal;"></button>
+          </p-footer>
+        </p-card>
+      </a>
+    </div>
+    <br />
+  </div>
+
+  <div class="ui-grid-row" *ngIf="activeIndex===4">
+    <div class="ui-grid-col-12 ui-sm-12" *ngIf="!aptDocLocSet">
+      <font color="red">{{ 'MESSAGE.DOC_DEPT_LOC_REQUIRED' | translate }}</font>
+      <br />
+    </div>
+    <div class="ui-grid-col-12 ui-sm-12" *ngIf="aptDocLocSet && (!events || events.length===0)">
+      <font color="red">{{ 'MESSAGE.DOC_NOT_AVAILABLE' | translate }}</font>
+      <br />
+    </div>
+    <div class="ui-grid-col-12 ui-sm-12" *ngIf="error">
+       <div *ngIf="error" class="alert alert-danger">{{error}}</div>
+    </div>
+    <div class="ui-grid-col-12 ui-sm-12" *ngIf="aptDocLocSet&&events && events.length>0">
+       <p-fullCalendar [events]="events" [options]="options" (onDayClick)="addEventClick($event)"
+        (onEventClick)="editEventClick($event)"></p-fullCalendar>
+    </div>
+  </div>
+  <button pButton type="text" (click)="next()" icon="fa fa fa-play-circle" *ngIf="activeIndex<5"
+    style="margin-top: 0px; width: 100%; height: 50px;" label="{{navigationLabel}}"></button>
+  <button (click)="save(0)" label="{{ 'COMMON.RESERVE' | translate }}" pButton type="submit" icon="fa fa fa-save"
+    style="margin-top: 0px; width: 100%; height: 50px;" *ngIf=" activeIndex===5 && !done"></button>
+  <br>
+  <div *ngIf="error" class="alert alert-danger">{{error}}</div>

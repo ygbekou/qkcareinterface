@@ -49,14 +49,13 @@ export class InsuranceList implements OnInit, OnDestroy {
         .queryParams
         .subscribe(params => {          
           
-            let parameters: string [] = []; 
+            const parameters: string [] = []; 
             
-            parameters.push('e.status = |status|0|Integer')
+            parameters.push('e.status = |status|0|Integer');
             
             this.genericService.getAllByCriteria('Insurance', parameters)
-              .subscribe((data: Insurance[]) => 
-              { 
-                this.insurances = data 
+              .subscribe((data: Insurance[]) => { 
+                this.insurances = data; 
               },
               error => console.log(error),
               () => console.log('Get all Insurances complete'));
@@ -68,30 +67,28 @@ export class InsuranceList implements OnInit, OnDestroy {
     this.insurances = null;
   }
   
-  edit(insuranceId : number) {
+  edit(insuranceId: number) {
     try {
-      let navigationExtras: NavigationExtras = {
+      const navigationExtras: NavigationExtras = {
         queryParams: {
-          "insuranceId": insuranceId,
+          'insuranceId': insuranceId,
         }
-      }
-      this.router.navigate(["/admin/insuranceDetails"], navigationExtras);
-    }
-    catch (e) {
+      };
+      this.router.navigate(['/admin/insuranceDetails'], navigationExtras);
+    } catch (e) {
       console.log(e);
     }
   }
 
-  delete(insuranceId : number) {
+  delete(insuranceId: number) {
     try {
-      let navigationExtras: NavigationExtras = {
+      const navigationExtras: NavigationExtras = {
         queryParams: {
-          "insuranceId": insuranceId,
+          'insuranceId': insuranceId,
         }
-      }
-      this.router.navigate(["/admin/insuranceDetails"], navigationExtras);
-    }
-    catch (e) {
+      };
+      this.router.navigate(['/admin/insuranceDetails'], navigationExtras);
+    } catch (e) {
       console.log(e);
     }
   }

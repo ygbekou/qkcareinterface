@@ -44,9 +44,9 @@ export class ServiceDetails extends BaseComponent implements OnInit, OnDestroy {
               this.genericService.getOne(serviceId, 'Service')
                   .subscribe(result => {
                 if (result.id > 0) {
-                  this.service = result
+                  this.service = result;
                 }
-               })
+               });
           }
         });
     
@@ -67,9 +67,8 @@ export class ServiceDetails extends BaseComponent implements OnInit, OnDestroy {
           } else {
             this.processResult(result, this.service, this.messages, null);
           }
-        })
-    }
-    catch (e) {
+        });
+    } catch (e) {
       console.log(e);
     }
   }

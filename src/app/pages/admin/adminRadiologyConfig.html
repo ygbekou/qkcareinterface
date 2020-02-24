@@ -28,9 +28,9 @@
 			    </p-tabPanel>
 			    <p-tabPanel header="{{'COMMON.EXAM_LIST' |translate}}">
 			    	<div *ngIf="activeTab == 3" class="ui-grid-row">
-				        <app-radExam-details (examSaveEvent)="onExamSaved($event)"></app-radExam-details> 
+				        <app-rad-exam-details (examSaveEvent)="onExamSaved($event)"></app-rad-exam-details> 
 				        <br/> 
-				        <app-radExam-list (examIdEvent)="onExamSelected($event)"></app-radExam-list>
+				        <app-rad-exam-list (examIdEvent)="onExamSelected($event)"></app-rad-exam-list>
 				    </div>
 			    </p-tabPanel>
 			    

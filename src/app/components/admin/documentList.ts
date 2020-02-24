@@ -40,9 +40,8 @@ export class DocumentList implements OnInit, OnDestroy {
         ];
     
         this.genericService.getAll('Document')
-          .subscribe((data: Document[]) => 
-          { 
-            this.documents = data 
+          .subscribe((data: Document[]) => { 
+            this.documents = data; 
           },
           error => console.log(error),
           () => console.log('Get all documents complete'));
@@ -54,30 +53,28 @@ export class DocumentList implements OnInit, OnDestroy {
     this.documents = null;
   }
   
-  edit(documentId : number) {
+  edit(documentId: number) {
     try {
-      let navigationExtras: NavigationExtras = {
+      const navigationExtras: NavigationExtras = {
         queryParams: {
-          "documentId": documentId,
+          'documentId': documentId,
         }
-      }
-      this.router.navigate(["/admin/documentDetails"], navigationExtras);
-    }
-    catch (e) {
+      };
+      this.router.navigate(['/admin/documentDetails'], navigationExtras);
+    } catch (e) {
       console.log(e);
     }
   }
 
-  delete(documentId : number) {
+  delete(documentId: number) {
     try {
-      let navigationExtras: NavigationExtras = {
+      const navigationExtras: NavigationExtras = {
         queryParams: {
-          "documentId": documentId,
+          'documentId': documentId,
         }
-      }
-      this.router.navigate(["/admin/documentDetails"], navigationExtras);
-    }
-    catch (e) {
+      };
+      this.router.navigate(['/admin/documentDetails'], navigationExtras);
+    } catch (e) {
       console.log(e);
     }
   }

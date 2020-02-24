@@ -77,9 +77,10 @@ export class EmployeeList extends BaseComponent implements OnInit, OnDestroy {
 
 	}
 
-	updateCols() {
-		for (var index in this.cols) {
-			let col = this.cols[index];
+	updateCols() { 
+		// tslint:disable-next-line: forin
+		for (const index in this.cols) {
+			const col = this.cols[index];
 			this.translate.get(col.headerKey).subscribe((res: string) => {
 				col.header = res;
 			});

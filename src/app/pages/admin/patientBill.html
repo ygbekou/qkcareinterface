@@ -1,0 +1,219 @@
+  <div class="ui-grid-row">
+    <div class="ui-grid-col-3 ui-sm-12" *ngFor="let aBill of bills">
+      <a href="#/admin/patientBill" (click)="getBill(aBill);">
+        <p-card>
+          <p-header>
+            <button pButton type="button" *ngIf="bill && bill.id===aBill.id"
+              label="{{ 'No : '+ ( aBill.id|number : '5.0-0') + ' - Date : '+ (aBill.billDate| date:'dd/MM/yyyy')}}"
+              class="ui-button-success" style="width: 100%; font-size: 1rem;font-weight:normal;"></button>
+            <button pButton type="button" *ngIf="!bill || bill.id!==aBill.id"
+              label="{{ 'No :'+ ( aBill.id|number : '5.0-0') + ' - Date : '+ (aBill.billDate| date:'dd/MM/yyyy')}}"
+              class="ui-button-secondary" style="width: 100%; font-size: 1rem;font-weight:normal;"></button>
+          </p-header>
+          <div class="counter counter-primary"
+            style="font-size: 1rem;text-align: left; color: #0088cc;font-weight:normal;">
+            <i class="fa fa-money"></i>
+            {{ 'COMMON.TOTAL' | translate }} : {{aBill.grandTotal|number : '1.0-0'}} ECO
+            <br />
+            <i class="fa fa-money"></i>
+            {{ 'COMMON.AMOUNT_PAID' | translate }} : {{aBill.paid|number : '1.0-0'}} ECO
+            <br />
+            <i class="fa fa-money"></i>
+            {{ 'COMMON.DISCOUNT' | translate }} : {{aBill.discount|number : '1.0-0'}} ECO
+            <br />
+            <i class="fa fa-money"></i>
+            {{ 'COMMON.AMOUNT_DUE' | translate }} : {{aBill.due|number : '1.0-0'}} ECO
+          </div>
+          <p-footer>
+            <button pButton type="button" label="{{ 'COMMON.BILL_DETAIL' | translate }}" class="ui-button-secondary"
+              style="width: 100%; font-size: 15px;color: #0071bc;font-weight:normal;"></button>
+            <hr style="margin-top: 0.1rem; margin-bottom: 0.1rem;" />
+            <button pButton type="button" label="{{ 'COMMON.PAY' | translate }}" class="ui-button-secondary"
+              style="width: 100%; font-size: 15px;color: #0071bc;font-weight:normal;"></button>
+          </p-footer>
+        </p-card>
+      </a>
+    </div>
+    <br />
+  </div>
+  <br />
+  <div class="ui-grid-row" *ngIf="bill">
+
+    <div class="ui-grid-row">
+      <div class="ui-grid-col-12 ui-sm-12">
+        <p-table [columns]="serviceCols" [value]="bill.billServices" responsive="true" [style]="{width:'100%'}">
+          <ng-template pTemplate="caption">
+            {{ 'COMMON.SERVICE_LIST' | translate }}
+          </ng-template>
+          <ng-template pTemplate="header" let-accountCols>
+            <tr>
+              <th *ngFor="let col of serviceCols" [pSortableColumn]="col.field" [ngStyle]="col.style">
+                {{col.header}}
+                <p-sortIcon [field]="col.field"></p-sortIcon>
+              </th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-rowData let-columns="columns">
+            <tr>
+              <td *ngFor="let col of columns">
+                <div *ngIf="col.field == 'quantity' || col.field == 'unitAmount' || col.field == 'totalAmount' 
+											|| col.field == 'netAmount' || col.field == 'discountPercentage' || col.field == 'discountAmount' 
+											|| col.field == 'payerAmount' || col.field == 'patientAmount'">
+
+                  <div class="text-right">
+                    {{rowData[col.field] | currency: ' ':'symbol':'1.0-0':translate.currentLang}}
+                  </div>
+                </div>
+                <div *ngIf="col.field == 'description'">
+
+                  {{rowData[col.field]}}
+                </div>
+                <div *ngIf="col.type == 'date'">
+                  {{rowData[col.field] | date:'dd/MM/yyyy'}}
+                </div>
+
+                <div *ngIf="(col.field === 'serviceName' || col.field === 'doctorOrderTypeName')
+										&& rowData['systemGenerated'] === 'Y' ">
+
+                  {{rowData[col.field]}}
+                </div>
+
+                <div *ngIf="col.field === 'doctorOrderTypeName' && rowData.systemGenerated !== 'Y' ">
+
+                  {{rowData.doctorOrderType.name}}
+                </div>
+
+                <!-- This is for pharmacie and entered on the fly-->
+                <div *ngIf="col.field === 'serviceName' && rowData.systemGenerated !== 'Y'
+										 	&& rowData.doctorOrderType.id === 1 ">
+
+                  {{rowData.product.name}}
+                </div>
+
+                <!-- This is for laboratory and entered on the fly-->
+                <div *ngIf="col.field === 'serviceName' && rowData.systemGenerated !== 'Y' 
+											&& rowData.doctorOrderType.id === 2 ">
+
+                  {{rowData.labTest.name}}
+                </div>
+
+                <!-- This is for Medical and entered on the fly-->
+                <div *ngIf="col.field === 'serviceName' && rowData.systemGenerated !== 'Y' 
+											&& rowData.doctorOrderType.id === 3 ">
+
+                  {{rowData.service.name}}
+                </div>
+
+                <div *ngIf="col.field == 'doctor'">
+                  {{rowData[col.field].name}}
+                </div>
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+    </div>
+
+    <br />
+    <br />
+
+
+    <div class="ui-grid-row">
+      <div class="ui-grid-col-8 ui-sm-12">
+        <p-table [columns]="billPaymentCols" [value]="bill.billPayments" *ngIf="bill.id">
+          <ng-template pTemplate="caption">
+            {{ 'COMMON.PAYMENT_LIST' | translate }}
+          </ng-template>
+          <ng-template pTemplate="header" let-accountCols>
+            <tr>
+              <th *ngFor="let col of billPaymentCols" [pSortableColumn]="col.field">
+                {{col.header}}
+                <p-sortIcon [field]="col.field"></p-sortIcon>
+              </th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-rowData let-columns="columns">
+            <tr>
+              <td *ngFor="let col of columns">
+                <div *ngIf="col.type == 'date'">
+                  {{rowData[col.field] | date:'dd/MM/yyyy'}}
+                </div>
+                <div *ngIf="col.type == 'text'">
+                  {{rowData[col.field]}}
+                </div>
+                <div *ngIf="col.type == 'number'">
+                  <div class="text-right">
+                    {{rowData[col.field] | currency: ' ':'symbol':'1.0-0':translate.currentLang}}
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+      <div class="ui-grid-col-1 ui-sm-12">
+        <div class="form-group"></div>
+      </div>
+      <div class="ui-grid-col-3 ui-sm-12">
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-4 ui-sm-12">
+            <label for="subTotal">{{ 'COMMON.SUBTOTAL' | translate }}</label>
+          </div>
+          <div class="ui-grid-col-6 ui-sm-12">
+            <input type="text" pInputText id="subTotal" readonly currencyMask
+              [options]=appInfoStorage.CURRENCY_MASK_INTEGER [(ngModel)]="bill.subTotal" name="subTotal"
+              #subTotal="ngModel">
+          </div>
+        </div>
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-4 ui-sm-12">
+            <label for="taxes">{{ 'COMMON.TAXES' | translate }}</label>
+          </div>
+          <div class="ui-grid-col-6 ui-sm-12">
+            <input type="text" pInputText id="taxes" readonly currencyMask [options]=appInfoStorage.CURRENCY_MASK_INTEGER
+              [(ngModel)]="bill.taxes" name="taxes" #taxes="ngModel">
+          </div>
+        </div>
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-4 ui-sm-12">
+            <label for="discount">{{ 'COMMON.DISCOUNT' | translate }}</label>
+          </div>
+          <div class="ui-grid-col-6 ui-sm-12">
+            <input type="text" pInputText id="discount" readonly [(ngModel)]="bill.discount" name="discount" #discount="ngModel"
+              currencyMask [options]=appInfoStorage.CURRENCY_MASK_INTEGER>
+          </div>
+        </div>
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-4 ui-sm-12">
+            <label for="grandTotal">{{ 'COMMON.GRANDTOTAL' | translate }}</label>
+          </div>
+          <div class="ui-grid-col-6 ui-sm-12">
+            <input type="text" pInputText id="grandTotal" readonly [(ngModel)]="bill.grandTotal" name="grandTotal"
+              #grandTotal="ngModel" currencyMask [options]=appInfoStorage.CURRENCY_MASK_INTEGER>
+          </div>
+        </div>
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-4 ui-sm-12">
+            <label for="paid">{{ 'COMMON.AMOUNT_PAID' | translate }}</label>
+          </div>
+          <div class="ui-grid-col-6 ui-sm-12">
+            <input type="text" pInputText id="paid" readonly [(ngModel)]="bill.paid" name="paid" #paid="ngModel"
+              currencyMask [options]=appInfoStorage.CURRENCY_MASK_INTEGER>
+          </div>
+        </div>
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-4 ui-sm-12">
+            <font color="red"><label for="due">{{ 'COMMON.AMOUNT_DUE' | translate }}</label></font>
+          </div>
+          <div class="ui-grid-col-6 ui-sm-12">
+            <font color="red">
+              <input type="text" pInputText id="due" readonly [(ngModel)]="bill.due" currencyMask
+                [options]=appInfoStorage.CURRENCY_MASK_INTEGER name="due" #due="ngModel">
+            </font>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br />
+  <br />

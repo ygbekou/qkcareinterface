@@ -6,7 +6,7 @@ import { Patient } from '../../models/patient';
 import { GenericService } from '../../services';
 
 @Component({
-  selector: 'app-caseStudy-details',
+  selector: 'app-case-study-details',
   templateUrl: '../../pages/admin/caseStudyDetails.html',
   providers: [GenericService]
 })
@@ -49,13 +49,12 @@ export class CaseStudyDetails implements OnInit, OnDestroy {
               this.genericService.getOne(caseStudyId, 'CaseStudy')
                   .subscribe(result => {
                 if (result.id > 0) {
-                  this.caseStudy = result
-                }
-                else {
+                  this.caseStudy = result;
+                } else {
                   this.error = Constants.SAVE_UNSUCCESSFUL;
                   this.displayDialog = true;
                 }
-              })
+              });
           } else {
               
           }
@@ -70,18 +69,16 @@ export class CaseStudyDetails implements OnInit, OnDestroy {
   save() {
     try {
       this.error = '';
-      this.genericService.save(this.caseStudy, "CaseStudy")
+      this.genericService.save(this.caseStudy, 'CaseStudy')
         .subscribe(result => {
           if (result.id > 0) {
-            this.caseStudy = result
-          }
-          else {
+            this.caseStudy = result;
+          } else {
             this.error = Constants.SAVE_UNSUCCESSFUL;
             this.displayDialog = true;
           }
-        })
-    }
-    catch (e) {
+        });
+    } catch (e) {
       console.log(e);
     }
   }

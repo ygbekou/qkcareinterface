@@ -7,7 +7,7 @@ import { ConfirmationService } from 'primeng/api';
 import { RadExam } from 'src/app/models/radiology/radiologyConfig';
 
 @Component({
-  selector: 'app-radExam-list',
+  selector: 'app-rad-exam-list',
   templateUrl: '../../pages/admin/radExamList.html',
   providers: [GenericService]
 })
@@ -64,7 +64,8 @@ export class RadExamList extends BaseComponent implements OnInit, OnDestroy {
  
   
   updateCols() {
-    for (let index in this.cols) {
+    // tslint:disable-next-line: forin
+    for (const index in this.cols) {
       const col = this.cols[index];
       this.translate.get(col.headerKey).subscribe((res: string) => {
         col.header = res;

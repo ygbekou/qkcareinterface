@@ -46,13 +46,12 @@ export class InsuranceDetails implements OnInit, OnDestroy {
               this.genericService.getOne(insuranceId, 'Insurance')
                   .subscribe(result => {
                 if (result.id > 0) {
-                  this.insurance = result
-                }
-                else {
+                  this.insurance = result;
+                } else {
                   this.error = Constants.SAVE_UNSUCCESSFUL;
                   this.displayDialog = true;
                 }
-              })
+              });
           } 
         });
     
@@ -65,18 +64,16 @@ export class InsuranceDetails implements OnInit, OnDestroy {
   save() {
     try {
       this.error = '';
-      this.genericService.save(this.insurance, "Insurance")
+      this.genericService.save(this.insurance, 'Insurance')
         .subscribe(result => {
           if (result.id > 0) {
-            this.insurance = result
-          }
-          else {
+            this.insurance = result;
+          } else {
             this.error = Constants.SAVE_UNSUCCESSFUL;
             this.displayDialog = true;
           }
-        })
-    }
-    catch (e) {
+        });
+    } catch (e) {
       console.log(e);
     }
   }

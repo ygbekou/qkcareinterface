@@ -19,7 +19,7 @@ export class RoomDetails extends BaseComponent implements OnInit, OnDestroy {
   room: Room = new Room();
   messages: Message[] = [];
   
-  hiddenMenu: boolean = true;
+  hiddenMenu = true;
   
   buildingDropdown: BuildingDropdown;
   floorDropdown: FloorDropdown;
@@ -56,9 +56,9 @@ export class RoomDetails extends BaseComponent implements OnInit, OnDestroy {
               this.genericService.getOne(roomId, 'Room')
                   .subscribe(result => {
                 if (result.id > 0) {
-                  this.room = result
+                  this.room = result;
                 }
-              })
+              });
           }
         });
     
@@ -72,9 +72,9 @@ export class RoomDetails extends BaseComponent implements OnInit, OnDestroy {
     this.genericService.getOne(roomId, 'Room')
         .subscribe(result => {
       if (result.id > 0) {
-        this.room = result
+        this.room = result;
       }
-    })
+    });
   }
   
   clear() {
@@ -92,13 +92,11 @@ export class RoomDetails extends BaseComponent implements OnInit, OnDestroy {
 			this.processResult(result, this.room, this.messages, null);
 			this.room = result;
             this.roomSaveEvent.emit(this.room);
-          }
-          else {
+          } else {
             this.processResult(result, this.room, this.messages, null);
           }
-        })
-    }
-    catch (e) {
+        });
+    } catch (e) {
       console.log(e);
     }
   }

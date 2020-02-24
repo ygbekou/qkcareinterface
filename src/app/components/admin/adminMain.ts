@@ -6,7 +6,7 @@ import {GenericService} from '../../services/generic.service';
 import {UserService} from '../../services/user.service';
 import { AdminAppointment } from './adminAppointment';
 import {CountryDropdown} from './../dropdowns/dropdown.country';
-import {Router, NavigationExtras} from "@angular/router";
+import {Router, NavigationExtras} from '@angular/router';
 @Component({
   selector: 'admin-main',
   templateUrl: '../../pages/admin/adminMain.html',
@@ -42,14 +42,13 @@ export class AdminMain implements OnInit {
   public navigate(moduleName, moduleLink) {
     
     try {
-      let navigationExtras: NavigationExtras = {
+      const navigationExtras: NavigationExtras = {
         queryParams: {
-          "moduleName": moduleName,
+          'moduleName': moduleName,
         }
-      }
+      };
       this.router.navigate([moduleLink], navigationExtras);
-    }
-    catch (e) {
+    } catch (e) {
       console.log(e);
     }
   }

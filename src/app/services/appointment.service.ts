@@ -23,9 +23,7 @@ export class AppointmentService {
 	}
 
 	public getScheduleAndAppointments = (searchCriteria: SearchCriteria): Observable<ScheduleEvent[]> => {
-
 		const toSend = JSON.stringify(searchCriteria);
-
 		const actionUrl = Constants.apiServer + '/service/appointment/scheduleAndAppointments';
 		return this.http.post(actionUrl, toSend, { headers: this.headers })
 			.map((response: Response) => {
@@ -34,6 +32,15 @@ export class AppointmentService {
 			.catch(this.handleError);
 	}
 
+	public getFutureAvailableSpots = (searchCriteria: SearchCriteria): Observable<ScheduleEvent[]> => {
+		const toSend = JSON.stringify(searchCriteria);
+		const actionUrl = Constants.apiServer + '/service/appointment/getFutureAvailableSpots';
+		return this.http.post(actionUrl, toSend, { headers: this.headers })
+			.map((response: Response) => {
+				return response.json();
+			})
+			.catch(this.handleError);
+	}
 	public getTodayAppointments = (searchCriteria: SearchCriteria): Observable<ScheduleEvent[]> => {
 
 		const toSend = JSON.stringify(searchCriteria);
@@ -103,7 +110,12 @@ export class AppointmentService {
 			.map((response: Response) => <Prescription>response.json())
 			.catch(this.handleError);
 	}
-
+	public getUserPrescriptions = (id: string): Observable<any[]> => {
+		const actionUrl = Constants.apiServer + '/service/appointment/getUserPrescriptions/' + id;
+		return this.http.get(actionUrl, { headers: this.headers })
+			.map((response: Response) => <any[]>response.json())
+			.catch(this.handleError);
+	}
 	public getUpomings = (): Observable<any[]> => {
 
 		const actionUrl = Constants.apiServer + '/service/appointment/list/upcomings';

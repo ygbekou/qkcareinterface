@@ -106,14 +106,16 @@ export class InvestigationList extends BaseComponent implements OnInit, OnDestro
   }
   
   updateCols() {
-    for (let index in this.cols) {
+    // tslint:disable-next-line: forin
+    for (const index in this.cols) {
       const col = this.cols[index];
       this.translate.get(col.headerKey).subscribe((res: string) => {
         col.header = res;
       });
     }
     
-    for (let index in this.iTCols) {
+    // tslint:disable-next-line: forin
+    for (const index in this.iTCols) {
       const col = this.iTCols[index];
       this.translate.get(col.headerKey).subscribe((res: string) => {
         col.header = res;

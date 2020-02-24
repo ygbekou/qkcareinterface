@@ -58,15 +58,15 @@ export class AppointmentDetails implements OnInit, OnDestroy {
 							if (result.id > 0) {
 								this.appointment = result;
 								this.appointment.appointmentDate = new Date(this.appointment.appointmentDate);
-							}
-							else {
+							} else {
 								this.error = Constants.SAVE_UNSUCCESSFUL;
 								this.displayDialog = true;
 							}
-						})
+						});
 				} else {
-					if (this.globalEventsManager.selectedAppointmentId)
+					if (this.globalEventsManager.selectedAppointmentId) {
 						this.getAppointment(this.globalEventsManager.selectedAppointmentId);
+					}
 				}
 			});
 
@@ -78,12 +78,11 @@ export class AppointmentDetails implements OnInit, OnDestroy {
 				if (result.id > 0) {
 					this.appointment = result;
 					this.appointment.appointmentDate = new Date(this.appointment.appointmentDate);
-				}
-				else {
+				} else {
 					this.error = Constants.SAVE_UNSUCCESSFUL;
 					this.displayDialog = true;
 				}
-			})
+			});
 	}
 
 	save(status: number) {
@@ -120,7 +119,7 @@ export class AppointmentDetails implements OnInit, OnDestroy {
 	}
 
 	clear() {
-		let p: Patient = this.appointment.patient;
+		const p: Patient = this.appointment.patient;
 		this.appointment = new Appointment();
 		this.appointment.patient = p;
 	}

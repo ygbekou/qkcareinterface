@@ -9,7 +9,7 @@ import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
 import { BaseComponent } from './baseComponent';
 
 @Component({
-  selector: 'app-patientServiceDetails',
+  selector: 'app-patient-service-details',
   templateUrl: '../../pages/admin/patientServiceDetails.html',
   providers: []
 
@@ -121,6 +121,7 @@ export class PatientServiceDetails extends BaseComponent implements OnInit, OnDe
 
 
   updateCols() {
+    // tslint:disable-next-line: forin
     for (const index in this.serviceCols) {
       const col = this.serviceCols[index];
       this.translate.get(col.headerKey).subscribe((res: string) => {
@@ -128,6 +129,7 @@ export class PatientServiceDetails extends BaseComponent implements OnInit, OnDe
       });
 	}
 	
+	// tslint:disable-next-line: forin
 	for (const index in this.packageCols) {
       const col = this.packageCols[index];
       this.translate.get(col.headerKey).subscribe((res: string) => {

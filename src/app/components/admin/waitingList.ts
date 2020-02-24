@@ -15,7 +15,7 @@ export class WaitingList extends BaseComponent implements OnInit, OnDestroy {
 
 	visits: Visit[] = [];
 	cols: any[];
-	autorefresh: boolean = false;
+	autorefresh = false;
 	searchCriteria: SearchCriteria = new SearchCriteria();
 	interval: any;
 	constructor
@@ -49,9 +49,9 @@ export class WaitingList extends BaseComponent implements OnInit, OnDestroy {
 		});
 
 		this.interval = setInterval(() => {
-			console.log("Refreshed=" + this.autorefresh);
+			console.log('Refreshed=' + this.autorefresh);
 			if (this.autorefresh) {
-				console.log("Refreshing...");
+				console.log('Refreshing...');
 				this.getWaitList(100);
 			}
 		}, 60000);
@@ -59,8 +59,9 @@ export class WaitingList extends BaseComponent implements OnInit, OnDestroy {
 	}
 
 	updateCols() {
-		for (var index in this.cols) {
-			let col = this.cols[index];
+		// tslint:disable-next-line: forin
+		for (const index in this.cols) {
+			const col = this.cols[index];
 			this.translate.get(col.headerKey).subscribe((res: string) => {
 				col.header = res;
 			});
@@ -73,7 +74,7 @@ export class WaitingList extends BaseComponent implements OnInit, OnDestroy {
 	}
 
 	updateStatus(visitId: number, status: number) {
-		let visit = new Visit();
+		const visit = new Visit();
 		visit.id = visitId;
 		visit.status = status;
 		this.visitService.updateStatus(visit)
@@ -81,7 +82,7 @@ export class WaitingList extends BaseComponent implements OnInit, OnDestroy {
 				if (result.id > 0) {
 					this.removeVisitFromTable(result.id);
 				}
-			})
+			});
 	}
 
 
@@ -90,15 +91,15 @@ export class WaitingList extends BaseComponent implements OnInit, OnDestroy {
 			.queryParams
 			.subscribe(params => {
 
-				let parameters: string[] = [];
+				const parameters: string[] = [];
 
-				let endDate = new Date();
-				let startDate = new Date(new Date().setDate(new Date().getDate() - 1));
+				const endDate = new Date();
+				const startDate = new Date(new Date().setDate(new Date().getDate() - 1));
 				parameters.push('e.status = |status|1|Integer');
 
 				this.genericService.getAllByCriteria('Visit', parameters)
 					.subscribe((data: Visit[]) => {
-						this.visits = data
+						this.visits = data;
 					},
 						error => console.log(error),
 						() => console.log('Get all visit complete'));
@@ -106,7 +107,7 @@ export class WaitingList extends BaseComponent implements OnInit, OnDestroy {
 	}
 
 	getWaitList(topN: number) {
-		console.log("getting top " + topN + " Visits");
+		console.log('getting top ' + topN + ' Visits');
 		this.visits = [];
 		this.visitService.getWaitList(topN)
 			.subscribe(result => {
@@ -126,7 +127,7 @@ export class WaitingList extends BaseComponent implements OnInit, OnDestroy {
 				break;
 			}
 		}
-		var onTheFly: Visit[] = [];
+		const onTheFly: Visit[] = [];
 		onTheFly.push(...this.visits);
 		this.visits = onTheFly;
 	}

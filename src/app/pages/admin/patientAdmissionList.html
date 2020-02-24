@@ -1,0 +1,29 @@
+  <p-steps [model]="steps" [(activeIndex)]="activeIndex" [readonly]="false" styleClass="steps-custom">
+  </p-steps>
+  <div class="ui-g" *ngIf="admissions">
+    <div class="ui-g-12 ui-md-6 ui-lg-3" *ngFor="let adm of admissions[steps[activeIndex].year]">
+      <p-card *ngIf="adm.status!==3">
+        <p-header>
+          <button pButton type="button" label="{{'No : '+ ( adm.admissionNumber|number : '5.0-0')}}" class="ui-button-secondary"
+            style="width: 100%; font-size: 1rem;font-weight:normal;"></button>
+        </p-header>
+        <div class="counter counter-primary" *ngIf="adm"
+          style="font-size: 0.75rem;text-align: left;font-weight:normal; color: #0088cc;">
+          <ul class="list list-icons list-primary list-side-borders"
+            style="font-size: 0.75rem;border-left: 3px solid #eaeaea; border-left-width: 5px; border-left-style: solid; border-left-color: rgb(234, 234, 234);  padding-left: 10px;  padding-inline-start: 10px;">
+            <li style="margin-bottom: 0px;"><i class="fas fa-caret-right"></i>{{ 'COMMON.ADMISSION_DATE' | translate }}
+              : {{adm.admissionDatetime| date:'dd/MM/yyyy'}}</li>
+            <li style="margin-bottom: 0px;"><i
+                class="fas fa-caret-right"></i>{{ 'COMMON.PHYSICIAN_APPROVED' | translate }} :
+              {{adm.doctorAssignment===null?'':adm.doctorAssignment.doctor.name}}</li>
+          </ul>
+          <blockquote class="blockquote-secondary">
+           <strong>{{ 'COMMON.ADMITTANCE_REASON' | translate }} </strong> <br/>
+            {{adm.admissionReason}}
+          </blockquote>
+        </div>
+        <p-footer>
+        </p-footer>
+      </p-card>
+    </div>
+  </div>

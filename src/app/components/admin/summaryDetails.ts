@@ -91,7 +91,6 @@ export class SummaryDetails extends BaseComponent implements OnInit, OnDestroy {
   physicalExamTypes: SelectItem[] = [];
   systemReviewSelectedType: string = '';
   physicalExamSelectedType: string = '';
-
   systemReviewQuestionMap: any = new Map();
   physicalExamSystemMap: any = new Map();
 
@@ -319,10 +318,10 @@ export class SummaryDetails extends BaseComponent implements OnInit, OnDestroy {
 
       this.genericService.getObject('/service/admission/physicalExam/list/summaryType/' + this.summary.summaryType.id + '/')
         .subscribe((data: any) => {
-          console.info(data)
+          console.info(data);
           this.summary.description = '';
           this.physicalExamSystemMap = data;
-          let keys = Object.keys(data);
+          const keys = Object.keys(data);
           this.physicalExamTypes = [];
 
           for (let i = 0; i < keys.length; i++) {

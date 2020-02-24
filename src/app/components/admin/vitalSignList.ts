@@ -8,7 +8,7 @@ import { BaseComponent } from './baseComponent';
 
 
 @Component({
-    selector: 'app-vitalSign-list',
+    selector: 'app-vital-sign-list',
     templateUrl: '../../pages/admin/vitalSignList.html',
     providers: [GenericService, ConfirmationService]
 })
@@ -76,7 +76,8 @@ export class VitalSignList extends BaseComponent implements OnInit, OnDestroy {
 
 
     updateCols() {
-        for (let index in this.cols) {
+        // tslint:disable-next-line: forin
+        for (const index in this.cols) {
             const col = this.cols[index];
             this.translate.get(col.headerKey).subscribe((res: string) => {
                 col.header = res;

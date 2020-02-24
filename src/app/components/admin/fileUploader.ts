@@ -32,7 +32,7 @@ export class FileUploader implements OnInit {
 
   onUpload(event) {
     this.errorMessage = event.xhr.response;
-    for (let file of event.files) {
+    for (const file of event.files) {
       this.uploadedFiles.push(file);
     }
 
@@ -42,21 +42,21 @@ export class FileUploader implements OnInit {
 
   showDialogToUploadImage(entity, data) {
     this.displayFileUploaderDialog = true;
-    this.uploadFileUrl = Constants.apiServer + "/service/fileUploader/uploadFile/" + entity + "/" + data.id;
+    this.uploadFileUrl = Constants.apiServer + '/service/fileUploader/uploadFile/' + entity + '/' + data.id;
   }
 
   uploadFile(entity) {
     this.displayFileUploaderDialog = true;
-    this.uploadFileUrl = Constants.apiServer + "/service/fileUploader/load/" + entity;
+    this.uploadFileUrl = Constants.apiServer + '/service/fileUploader/load/' + entity;
   }
 
   myUploader(event) {
     //event.files == files to upload
-    alert('Here')
+    alert('Here');
   }
   
   close() {
-    this.errorMessage = " ";
+    this.errorMessage = ' ';
     this.displayFileUploaderDialog = false;
     this.changeDetectorRef.detectChanges();
     this.uploadedFiles = [];

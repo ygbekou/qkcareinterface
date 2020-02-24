@@ -8,7 +8,7 @@ import { BaseComponent } from '../admin/baseComponent';
 import { ConfirmationService } from 'primeng/api';
 
 @Component({ 
-  selector: 'app-birthReport-list',
+  selector: 'app-birth-report-list',
   templateUrl: '../../pages/activities/birthReportList.html',
   providers: [GenericService] 
 })
@@ -35,7 +35,7 @@ export class BirthReportList extends BaseComponent implements OnInit, OnDestroy 
 
   ngOnInit(): void {
     this.cols = [
-            { field: 'birthDatetime', header: 'Date time', headerKey: 'COMMON.BIRTH_DATE', type:'date' },
+            { field: 'birthDatetime', header: 'Date time', headerKey: 'COMMON.BIRTH_DATE', type: 'date' },
             { field: 'name', header: 'Baby Name', headerKey: 'COMMON.BABY' },
             { field: 'fatherName', header: 'Father Name', headerKey: 'COMMON.FATHER' },
             { field: 'motherName', header: 'Mother Name', headerKey: 'COMMON.MOTHER' },
@@ -46,20 +46,21 @@ export class BirthReportList extends BaseComponent implements OnInit, OnDestroy 
         .queryParams
         .subscribe(params => {          
           
-            let parameters: string [] = []; 
+            const parameters: string [] = []; 
             
-            let itemNumberLabel = params['itemNumberLabel'];
+            const itemNumberLabel = params['itemNumberLabel'];
           
-            parameters.push('e.status = |status|0|Integer')
-            if (itemNumberLabel == 'Visit') 
-              parameters.push('e.visit.id > |visitId|0|Long')
-            if (itemNumberLabel == 'Admission') 
-              parameters.push('e.admission.id > |admissionId|0|Long')
+            parameters.push('e.status = |status|0|Integer');
+            if (itemNumberLabel === 'Visit') { 
+              parameters.push('e.visit.id > |visitId|0|Long');
+            }
+            if (itemNumberLabel === 'Admission') { 
+              parameters.push('e.admission.id > |admissionId|0|Long');
+            }
           
             this.genericService.getAllByCriteria(Constants.BIRTH_REPORT_CLASS, parameters)
-              .subscribe((data: BirthReport[]) => 
-              { 
-                this.birthReports = data 
+              .subscribe((data: BirthReport[]) => { 
+                this.birthReports = data; 
               },
               error => console.log(error),
               () => console.log('Get all BirthReport complete'));
@@ -73,8 +74,9 @@ export class BirthReportList extends BaseComponent implements OnInit, OnDestroy 
  
   
   updateCols() {
-    for (var index in this.cols) {
-      let col = this.cols[index];
+    // tslint:disable-next-line: forin
+    for (const index in this.cols) {
+      const col = this.cols[index];
       this.translate.get(col.headerKey).subscribe((res: string) => {
         col.header = res;
       });
@@ -85,30 +87,28 @@ export class BirthReportList extends BaseComponent implements OnInit, OnDestroy 
     this.birthReports = null;
   }
   
-  edit(birthReportId : number) {
+  edit(birthReportId: number) {
     try {
-      let navigationExtras: NavigationExtras = {
+      const navigationExtras: NavigationExtras = {
         queryParams: {
-          "birthReportId": birthReportId,
+          'birthReportId': birthReportId,
         }
-      }
-      this.router.navigate(["/admin/birthReportDetails"], navigationExtras);
-    }
-    catch (e) {
+      };
+      this.router.navigate(['/admin/birthReportDetails'], navigationExtras);
+    } catch (e) {
       console.log(e);
     }
   }
 
-  delete(birthReportId : number) {
+  delete(birthReportId: number) {
     try {
-      let navigationExtras: NavigationExtras = {
+      const navigationExtras: NavigationExtras = {
         queryParams: {
-          "birthReportId": birthReportId,
+          'birthReportId': birthReportId,
         }
-      }
-      this.router.navigate(["/admin/birthReportDetails"], navigationExtras);
-    }
-    catch (e) {
+      };
+      this.router.navigate(['/admin/birthReportDetails'], navigationExtras);
+    } catch (e) {
       console.log(e);
     }
   }

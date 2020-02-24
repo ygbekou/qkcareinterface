@@ -8,7 +8,7 @@ import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
 import { BaseComponent } from './baseComponent';
 
 @Component({ 
-  selector: 'app-radInvestigation-list',
+  selector: 'app-rad-investigation-list',
   templateUrl: '../../pages/admin/radInvestigationList.html',
   providers: [] 
 })
@@ -80,7 +80,8 @@ export class RadInvestigationList extends BaseComponent implements OnInit, OnDes
   
   
   updateCols() {
-    for (let index in this.cols) {
+    // tslint:disable-next-line: forin
+    for (const index in this.cols) {
       const col = this.cols[index];
       this.translate.get(col.headerKey).subscribe((res: string) => {
         col.header = res;
@@ -164,7 +165,7 @@ export class RadInvestigationList extends BaseComponent implements OnInit, OnDes
 		this.investigationService.searchInvestigations(this.searchCriteria)
 			.subscribe((data: RadInvestigation[]) => {
 				this.investigations = data;
-				console.info(data)
+				console.info(data);
 			},
 			error => console.log(error),
 			() => console.log('Get Investigations complete'));

@@ -82,7 +82,7 @@ export class CompanyDetails extends BaseComponent implements OnInit, OnDestroy {
     }
 
     try {
-      console.log('Nomber of files: '+nbFiles);
+      console.log('Nomber of files: ' + nbFiles);
       console.log(this.formData);
       if (nbFiles > 0) {
         this.company.logo = '';

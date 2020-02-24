@@ -8,7 +8,7 @@ import { ConfirmationService } from 'primeng/api';
 
 
 @Component({
-  selector: 'app-referenceWithCategory-list',
+  selector: 'app-reference-with-category-list',
   templateUrl: '../../pages/admin/referenceWithCategoryList.html',
   providers: [GenericService]
 })
@@ -56,14 +56,15 @@ export class ReferenceWithCategoryList extends BaseComponent implements OnInit, 
  
    
   updateCols(category: string) {
-    for (var index in this.cols) {
-      let col = this.cols[index];
+    // tslint:disable-next-line: forin
+    for (const index in this.cols) {
+      const col = this.cols[index];
       this.translate.get(col.headerKey).subscribe((res: string) => {
         col.header = res;
       });
     }
     
-    let refList = "COMMON." + category + "_LIST";
+    const refList = 'COMMON.' + category + '_LIST';
     this.translate.get(refList).subscribe((res: string) => {
         this.REFERENCE_WITH_CATEGORY_LIST = res;
     });
@@ -79,11 +80,10 @@ export class ReferenceWithCategoryList extends BaseComponent implements OnInit, 
     this.referenceWithCategories = null;
   }
   
-  edit(referenceWithCategoryId : number) {
+  edit(referenceWithCategoryId: number) {
     try {
       this.referenceWithCategoryIdEvent.emit(referenceWithCategoryId + '');
-    }
-    catch (e) {
+    } catch (e) {
       console.log(e);
     }
   }
@@ -94,14 +94,13 @@ export class ReferenceWithCategoryList extends BaseComponent implements OnInit, 
         .queryParams
         .subscribe(() => {          
           
-            let parameters: string [] = []; 
+            const parameters: string [] = []; 
             //parameters.push('e.status = |status|0|Integer')
 			
             this.genericService.getAllByCriteria(this.globalEventsManager.selectedReferenceWithCategoryType, parameters)
-              .subscribe((data: ReferenceWithCategory[]) => 
-              { 
-                this.referenceWithCategories = data 
-                console.info(this.referenceWithCategories)
+              .subscribe((data: ReferenceWithCategory[]) => { 
+                this.referenceWithCategories = data; 
+                console.info(this.referenceWithCategories);
               },
               error => console.log(error),
               () => console.log('Get all Symptoms complete'));

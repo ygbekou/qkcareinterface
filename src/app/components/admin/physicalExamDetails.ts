@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, Input, Output, EventEmitter, ViewEncapsulation } from '@angular/core';
-import {trigger,state,style,transition,animate,AnimationEvent} from '@angular/animations';
+import {trigger, state, style, transition, animate, AnimationEvent} from '@angular/animations';
 import { Admission, User, Visit, Summary, Employee, SummaryTypeTemplate, Reference, PhysicalExam } from '../../models';
 import { SummaryStatusDropdown, SummaryTypeDropdown, EmployeeDropdown, MedicalTeamDropdown} from '../dropdowns';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
@@ -11,7 +11,7 @@ import { ActivatedRoute } from '@angular/router';
 
 
 @Component({
-  selector: 'app-physicalExam-details',
+  selector: 'app-physical-exam-details',
   templateUrl: '../../pages/admin/physicalExamDetails.html',
   providers: [GenericService, VisitService, EmployeeDropdown, SummaryStatusDropdown, SummaryTypeDropdown, MedicalTeamDropdown],
 })
@@ -30,7 +30,7 @@ export class PhysicalExamDetails extends BaseComponent implements OnInit, OnDest
   physicalExamSystemMap: any = new Map();
   selectedPhysicalExamSystems: Reference[];
   types: SelectItem[] = [];
-  selectedType: string = '';
+  selectedType = '';
 
   columns: number[] = [];
 
@@ -120,11 +120,11 @@ export class PhysicalExamDetails extends BaseComponent implements OnInit, OnDest
   }
 
   findTypes() {
-    this.genericService.getObject('/service/summary/physicalExam/list/summaryType/' + 3+ '/')
+    this.genericService.getObject('/service/summary/physicalExam/list/summaryType/' + 3 + '/')
         .subscribe((data: any) => {
-          console.info(data)
+          console.info(data);
           this.physicalExamSystemMap = data;
-          let keys = Object.keys(data);
+          const keys = Object.keys(data);
           this.types = [];
 
           for (let i = 0; i < keys.length; i++) {

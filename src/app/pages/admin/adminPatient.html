@@ -17,12 +17,12 @@
     </p-tabPanel>
     <p-tabPanel header="{{ 'COMMON.MEDICAL_HISTORY' | translate }}" *ngIf="patient.id > 0">
       <div *ngIf="activeTab === 3">
-        <app-medicalHistory-details [patient]="patient"></app-medicalHistory-details>
+        <app-medical-history-details [patient]="patient"></app-medical-history-details>
       </div>
     </p-tabPanel>
     <p-tabPanel header="{{ 'COMMON.SOCIAL_HISTORY' | translate }}" *ngIf="patient.id > 0">
       <div *ngIf="activeTab === 4">
-        <app-socialHistory-details [patient]="patient"></app-socialHistory-details>
+        <app-social-history-details [patient]="patient"></app-social-history-details>
       </div>
     </p-tabPanel>
     <p-tabPanel header="{{ 'COMMON.SURGICAL_HISTORY' | translate }}" *ngIf="patient.id > 0">

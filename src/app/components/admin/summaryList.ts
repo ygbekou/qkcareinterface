@@ -70,18 +70,18 @@ export class SummaryList extends BaseComponent implements OnInit, OnDestroy {
       this.rowGroupMetadata = {};
       if (this.summaries) {
           for (let i = 0; i < this.summaries.length; i++) {
-              let rowData = this.summaries[i];
-              let summaryDate = rowData.summaryDate;
-              if (i == 0) {
+              const rowData = this.summaries[i];
+              const summaryDate = rowData.summaryDate;
+              if (i === 0) {
                   this.rowGroupMetadata[summaryDate] = { index: 0, size: 1 };
-              }
-              else {
-                  let previousRowData = this.summaries[i - 1];
-                  let previousRowGroup = previousRowData.summaryDate;
-                  if (summaryDate === previousRowGroup)
+              } else {
+                  const previousRowData = this.summaries[i - 1];
+                  const previousRowGroup = previousRowData.summaryDate;
+                  if (summaryDate === previousRowGroup) {
                       this.rowGroupMetadata[summaryDate].size++;
-                  else
+                  } else {
                       this.rowGroupMetadata[summaryDate] = { index: i, size: 1 };
+                  }
               }
           }
       }
@@ -89,7 +89,8 @@ export class SummaryList extends BaseComponent implements OnInit, OnDestroy {
 
 
   updateCols() {
-    for (let index in this.cols) {
+    // tslint:disable-next-line: forin
+    for (const index in this.cols) {
       const col = this.cols[index];
       this.translate.get(col.headerKey).subscribe((res: string) => {
         col.header = res;

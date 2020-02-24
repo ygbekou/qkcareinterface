@@ -7,7 +7,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { BaseComponent } from './baseComponent';
  
 @Component({
-  selector: 'app-medicalHistory-details',
+  selector: 'app-medical-history-details',
   template: `<p-messages [(value)]="messages"></p-messages>
              <div class="ui-grid-row">
                 <div class="ui-grid-col-11 ui-sm-12" >
@@ -43,7 +43,7 @@ export class MedicalHistoryDetails extends BaseComponent  implements OnInit, OnD
 
     this.genericService.getActiveElements('medicalhistory')
       .subscribe((data: Reference[]) => { 
-        console.info(data)
+        console.info(data);
         if (data.length > 0) {
           this.medicalHistories = data;
 

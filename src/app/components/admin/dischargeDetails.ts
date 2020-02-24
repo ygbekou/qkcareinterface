@@ -125,6 +125,7 @@ export class DischargeDetails extends BaseComponent implements OnInit, OnDestroy
   }
 
  updateCols() {
+    // tslint:disable-next-line: forin
     for (const index in this.medicineCols) {
       const col = this.medicineCols[index];
       this.translate.get(col.headerKey).subscribe((res: string) => {
@@ -132,6 +133,7 @@ export class DischargeDetails extends BaseComponent implements OnInit, OnDestroy
       });
     }
 
+   // tslint:disable-next-line: forin
    for (const index in this.diagnosisCols) {
       const col = this.diagnosisCols[index];
       this.translate.get(col.headerKey).subscribe((res: string) => {

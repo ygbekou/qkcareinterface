@@ -16,7 +16,7 @@ export class FloorList extends BaseComponent implements OnInit, OnDestroy {
   floors: Floor[] = [];
   cols: any[];
 
-  hiddenMenu: boolean = true;
+  hiddenMenu = true;
   @Output() floorIdEvent = new EventEmitter<string>();
 
   constructor
@@ -61,8 +61,9 @@ export class FloorList extends BaseComponent implements OnInit, OnDestroy {
 
 
   updateCols() {
-    for (var index in this.cols) {
-      let col = this.cols[index];
+    // tslint:disable-next-line: forin
+    for (const index in this.cols) {
+      const col = this.cols[index];
       this.translate.get(col.headerKey).subscribe((res: string) => {
         col.header = res;
       });
@@ -79,15 +80,14 @@ export class FloorList extends BaseComponent implements OnInit, OnDestroy {
       if (this.hiddenMenu) {
         this.floorIdEvent.emit(floorId + '');
       } else {
-        let navigationExtras: NavigationExtras = {
+        const navigationExtras: NavigationExtras = {
           queryParams: {
-            "floorId": floorId
+            'floorId': floorId
           }
-        }
-        this.router.navigate(["/admin/floorDetails"], navigationExtras);
+        };
+        this.router.navigate(['/admin/floorDetails'], navigationExtras);
       }
-    }
-    catch (e) {
+    } catch (e) {
       console.log(e);
     }
 

@@ -7,7 +7,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { ConfirmationService } from 'primeng/api';
  
 @Component({
-  selector: 'app-socialHistory-details',
+  selector: 'app-social-history-details',
   template: `<p-messages [(value)]="messages"></p-messages>
               <div class="ui-grid-row">
                 <div class="ui-grid-col-11 ui-sm-12" >
@@ -43,7 +43,7 @@ export class SocialHistoryDetails extends BaseComponent implements OnInit, OnDes
     
     this.genericService.getActiveElements('socialhistory')
       .subscribe((data: Reference[]) => { 
-        console.info(data)
+        console.info(data);
         if (data.length > 0) {
           this.socialHistories = data;
           this.getSocialHistories();

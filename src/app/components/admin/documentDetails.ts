@@ -64,13 +64,12 @@ export class DocumentDetails implements OnInit, OnDestroy {
           this.genericService.getOne(documentId, 'Document')
             .subscribe(result => {
               if (result.id > 0) {
-                this.document = result
-              }
-              else {
+                this.document = result;
+              } else {
                 this.error = Constants.SAVE_UNSUCCESSFUL;
                 this.displayDialog = true;
               }
-            })
+            });
         } else {
 
         }
@@ -83,10 +82,10 @@ export class DocumentDetails implements OnInit, OnDestroy {
   }
   
   fileChange(event): void {
-        let inputEl = this.input.nativeElement;
-        if (inputEl.files.length == 0) return;
+        const inputEl = this.input.nativeElement;
+        if (inputEl.files.length === 0) { return; }
 
-        let fileList :FileList = inputEl.files;
+        const fileList: FileList = inputEl.files;
     
         if (fileList.length > 0) {
             const file = fileList[0];
@@ -96,7 +95,7 @@ export class DocumentDetails implements OnInit, OnDestroy {
             
             formData.append('id', new Blob([JSON.stringify('1235')],
             {
-                type: "application/json"
+                type: 'application/json'
             }));
 
             const headers = new Headers();
@@ -121,28 +120,26 @@ export class DocumentDetails implements OnInit, OnDestroy {
       this.error = '';
       
       this.formData = new FormData();
-      let inputEl = this.input.nativeElement;
-      if (inputEl.files.length == 0) return;
+      const inputEl = this.input.nativeElement;
+      if (inputEl.files.length === 0) { return; }
 
-      let files :FileList = inputEl.files;
-      for(var i = 0; i < files.length; i++){
-          alert(files[i].name)
+      const files: FileList = inputEl.files;
+      for (let i = 0; i < files.length; i++) {
+          alert(files[i].name);
           this.formData.append('file', files[i], files[i].name);
       }
       
       
-      this.genericService.saveWithFile(this.document, "Document", this.formData, 'saveWithFile')
+      this.genericService.saveWithFile(this.document, 'Document', this.formData, 'saveWithFile')
         .subscribe(result => {
           if (result.id > 0) {
-            this.document = result
-          }
-          else {
+            this.document = result;
+          } else {
             this.error = Constants.SAVE_UNSUCCESSFUL;
             this.displayDialog = true;
           }
-        })
-    }
-    catch (e) {
+        });
+    } catch (e) {
       console.log(e);
     }
   }

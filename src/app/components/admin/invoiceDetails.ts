@@ -66,13 +66,12 @@ export class InvoiceDetails implements OnInit, OnDestroy {
               this.genericService.getOne(invoiceId, 'Invoice')
                   .subscribe(result => {
                 if (result.id > 0) {
-                  this.invoice = result
-                }
-                else {
+                  this.invoice = result;
+                } else {
                   this.error = Constants.SAVE_UNSUCCESSFUL;
                   this.displayDialog = true;
                 }
-              })
+              });
           } else {
               
           }
@@ -85,7 +84,7 @@ export class InvoiceDetails implements OnInit, OnDestroy {
   }
   
   addRow() {
-    let ia =  new InvoiceAccount();
+    const ia =  new InvoiceAccount();
     ia.account = new Account();
     this.invoice.invoiceAccounts.push(ia);
   }
@@ -101,19 +100,20 @@ export class InvoiceDetails implements OnInit, OnDestroy {
   
   calculateTotal() {
     this.invoice.subTotal = 0;
-    for (let i in this.invoice.invoiceAccounts) {
+    // tslint:disable-next-line: forin
+    for (const i in this.invoice.invoiceAccounts) {
        this.invoice.subTotal += this.calculateRowTotal(this.invoice.invoiceAccounts[i]);
     }
   }
   
   calculateRowTotal(rowData) {
-    rowData.total = +this.getNumber(rowData.quantity) * +this.getNumber(rowData.unitPrice)
+    rowData.total = +this.getNumber(rowData.quantity) * +this.getNumber(rowData.unitPrice);
     return rowData.total;
     
   }
   
   private getNumber(value: number): number {
-    return value != undefined ? value : 0;
+    return value !== undefined ? value : 0;
   } 
   
   
@@ -124,29 +124,26 @@ export class InvoiceDetails implements OnInit, OnDestroy {
       this.accountService.saveInvoice(this.invoice)
         .subscribe(result => {
           if (result.id > 0) {
-            this.invoice = result
+            this.invoice = result;
             console.info(this.invoice);
-          }
-          else {
+          } else {
             this.error = Constants.SAVE_UNSUCCESSFUL;
             this.displayDialog = true;
           }
-        })
-    }
-    catch (e) {
+        });
+    } catch (e) {
       console.log(e);
     }
   }
   
   lookUpPatient() {
     
-    let parameters: string [] = []; 
+    const parameters: string [] = []; 
             
-    parameters.push('e.matricule = |matricule|' + this.invoice.patient.medicalRecordNumber + '|String')
+    parameters.push('e.matricule = |matricule|' + this.invoice.patient.medicalRecordNumber + '|String');
     
     this.genericService.getAllByCriteria('Patient', parameters)
-      .subscribe((data: Patient[]) => 
-      { 
+      .subscribe((data: Patient[]) => { 
         if (data.length > 0) {
           this.invoice.patient = data[0];
         }

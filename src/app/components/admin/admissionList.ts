@@ -8,7 +8,7 @@ import { BaseComponent } from './baseComponent';
 import { ConfirmationService } from 'primeng/api';
 
 @Component({
-  selector: 'app-patientAdmission-list',
+  selector: 'app-patient-admission-list',
   templateUrl: '../../pages/admin/admissionList.html',
   providers: [GenericService]
 })

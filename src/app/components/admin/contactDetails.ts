@@ -57,7 +57,7 @@ export class ContactDetails extends BaseComponent implements OnInit, OnDestroy {
   clear() {
     this.contactUsMessage = new ContactUsMessage();
   }
-  delete(){
+  delete() {
     
   }
  }

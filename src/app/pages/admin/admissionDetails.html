@@ -138,22 +138,22 @@
       </div>
     </p-tabPanel>
     <p-tabPanel header="{{'COMMON.VITAL_SIGN_LIST' | translate }}" *ngIf="admission && admission.id > 0 && permitView('ADMISSION_VITAL_SIGN')">
-      <app-vitalSign-details [admission]="admission" (vitalSignSaveEvent)="onVitalSignSaved($event)">
-      </app-vitalSign-details> <br />
-      <app-vitalSign-list [admission]="admission" (vitalSignIdEvent)="onVitalSignSelected($event)">
-      </app-vitalSign-list> 
+      <app-vital-sign-details [admission]="admission" (vitalSignSaveEvent)="onVitalSignSaved($event)">
+      </app-vital-sign-details> <br />
+      <app-vital-sign-list [admission]="admission" (vitalSignIdEvent)="onVitalSignSelected($event)">
+      </app-vital-sign-list> 
     </p-tabPanel>
     <p-tabPanel header="{{'COMMON.DOCTOR_ORDER_LIST' | translate }}" *ngIf="admission && admission.id > 0 && permitView('ADMISSION_DOCTOR_ORDER')">
-      <app-doctorOrder-details [admission]="admission" (doctorOrderSaveEvent)="onDoctorOrderSaved($event)">
-      </app-doctorOrder-details> <br /> <br />
-      <app-doctorOrder-list [admission]="admission" (doctorOrderIdEvent)="onDoctorOrderSelected($event)">
-      </app-doctorOrder-list><br />
+      <app-doctor-order-details [admission]="admission" (doctorOrderSaveEvent)="onDoctorOrderSaved($event)">
+      </app-doctor-order-details> <br /> <br />
+      <app-doctor-order-list [admission]="admission" (doctorOrderIdEvent)="onDoctorOrderSelected($event)">
+      </app-doctor-order-list><br />
     </p-tabPanel>
     <p-tabPanel header="{{'COMMON.DIAGNOSIS_LIST' | translate }}" *ngIf="admission && admission.id > 0 && permitView('ADMISSION_DIAGNOSIS')">
-      <app-admissionDiagnoses [admission]="admission"></app-admissionDiagnoses>
+      <app-admission-diagnoses [admission]="admission"></app-admission-diagnoses>
 	</p-tabPanel>
 	<p-tabPanel header="{{'COMMON.SERVICE_LIST' | translate }}" *ngIf="admission && admission.id > 0 && permitView('ADMISSION_SERVICE')">
-      <app-patientServiceDetails [admission]="admission"></app-patientServiceDetails>
+      <app-patient-service-details [admission]="admission"></app-patient-service-details>
     </p-tabPanel>
     <p-tabPanel header="{{'COMMON.PRESCRIPTION_LIST' | translate }}" *ngIf="admission && admission.id > 0 && permitView('ADMISSION_PRESCRIPTION')">
       <app-prescription-details (prescriptionSaveEvent)="onPrescriptionSaved($event)" [admission]="admission"></app-prescription-details><br />
@@ -164,7 +164,7 @@
       <app-investigation-list-bydate [showActions]="false" [admission]="admission"></app-investigation-list-bydate>
     </p-tabPanel>
     <p-tabPanel header="{{'COMMON.PHARMACY' | translate }}" *ngIf="admission &&  admission.id > 0 && permitView('ADMISSION_PHARMACY')">
-      <app-patientMedicine-list [admission]="admission"></app-patientMedicine-list>
+      <app-patient-medicine-list [admission]="admission"></app-patient-medicine-list>
     </p-tabPanel>
     <p-tabPanel header="{{'COMMON.DISCHARGE' | translate }}" *ngIf="admission && admission.id > 0 && permitView('ADMISSION_DISCHARGE')">
       <app-discharge-details [admission]="admission"></app-discharge-details>
@@ -182,20 +182,20 @@
     <p-tabPanel header="{{'COMMON.PHYSICAL_EXAM' | translate }}" *ngIf="admission && admission.id > 0">
       <div class="ui-grid-row">
         <div class="ui-grid-col-2 ui-sm-12" >
-          <app-physicalExam-list [admission]="admission" (physicalExamIdEvent)="onPhysicalExamSelected($event)"></app-physicalExam-list>
+          <app-physical-exam-list [admission]="admission" (physicalExamIdEvent)="onPhysicalExamSelected($event)"></app-physical-exam-list>
         </div>
         <div class="ui-grid-col-10 ui-sm-12">
-          <app-physicalExam-details (physicalExamSaveEvent)="onPhysicalExamSaved($event)" [admission]="admission"></app-physicalExam-details><br />
+          <app-physical-exam-details (physicalExamSaveEvent)="onPhysicalExamSaved($event)" [admission]="admission"></app-physical-exam-details><br />
         </div>
       </div>
     </p-tabPanel>
     <p-tabPanel header="{{'COMMON.SYSTEM_REVIEW' | translate }}" *ngIf="admission && admission.id > 0">
       <div class="ui-grid-row">
         <div class="ui-grid-col-2 ui-sm-12" >
-          <app-systemReview-list [admission]="admission" (systemReviewIdEvent)="onSystemReviewSelected($event)"></app-systemReview-list>
+          <app-system-review-list [admission]="admission" (systemReviewIdEvent)="onSystemReviewSelected($event)"></app-system-review-list>
         </div>
         <div class="ui-grid-col-10 ui-sm-12">
-          <app-systemReview-details (systemReviewSaveEvent)="onSystemReviewSaved($event)" [admission]="admission"></app-systemReview-details><br />
+          <app-system-review-details (systemReviewSaveEvent)="onSystemReviewSaved($event)" [admission]="admission"></app-system-review-details><br />
         </div>
       </div>
     </p-tabPanel>

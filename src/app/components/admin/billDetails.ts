@@ -69,8 +69,10 @@ export class BillDetails extends BaseComponent implements OnInit, OnDestroy {
         field: 'serviceName', header: 'Name', headerKey: 'COMMON.NAME', type: 'string',
         style: { width: '15%', 'text-align': 'center' }
       },
-      { field: 'doctor', header: 'Doctor', headerKey: 'COMMON.DOCTOR', type: 'string',
-                                 style: {width: '15%', 'text-align': 'center'} },
+      {
+        field: 'doctor', header: 'Doctor', headerKey: 'COMMON.DOCTOR', type: 'string',
+        style: { width: '15%', 'text-align': 'center' }
+      },
       //{ field: 'description', header: 'Description', headerKey: 'COMMON.DESCRIPTION', type: 'string',
       //                            style: {width: '15%', 'text-align': 'center'} },
       {
@@ -201,15 +203,17 @@ export class BillDetails extends BaseComponent implements OnInit, OnDestroy {
   }
 
   updateCols() {
-    for (var index in this.serviceCols) {
-      let col = this.serviceCols[index];
+    // tslint:disable-next-line: forin
+    for (const index in this.serviceCols) {
+      const col = this.serviceCols[index];
       this.translate.get(col.headerKey).subscribe((res: string) => {
         col.header = res;
       });
     }
 
-    for (var index in this.billPaymentCols) {
-      let col = this.billPaymentCols[index];
+    // tslint:disable-next-line: forin
+    for (const index in this.billPaymentCols) {
+      const col = this.billPaymentCols[index];
       this.translate.get(col.headerKey).subscribe((res: string) => {
         col.header = res;
       });
@@ -268,6 +272,7 @@ export class BillDetails extends BaseComponent implements OnInit, OnDestroy {
 
   calculateTotal() {
     this.bill.subTotal = 0;
+    // tslint:disable-next-line: forin
     for (const i in this.bill.billServices) {
       this.bill.subTotal += this.calculateRowTotal(this.bill.billServices[i]);
     }
@@ -328,8 +333,9 @@ export class BillDetails extends BaseComponent implements OnInit, OnDestroy {
       return false;
     }
 
-    for (let i in this.bill.billServices) {
-      let bs = this.bill.billServices[i];
+    // tslint:disable-next-line: forin
+    for (const i in this.bill.billServices) {
+      const bs = this.bill.billServices[i];
       if ((bs.patientService && bs.patientService.id > 0)
         || (bs.patientPackage && bs.patientPackage.id > 0)
         || (bs.patientSaleProduct && bs.patientSaleProduct.id > 0)
@@ -338,10 +344,12 @@ export class BillDetails extends BaseComponent implements OnInit, OnDestroy {
         || (bs.systemGenerated !== 'Y')
       ) {
         noProductFound = false;
-        if (bs.quantity == null || bs.quantity <= 0)
+        if (bs.quantity == null || bs.quantity <= 0) {
           this.messages.push({ severity: Constants.ERROR, summary: Constants.SAVE_LABEL, detail: 'Quantity is required and must be greater than 0.' });
-        if (bs.unitAmount == null || bs.unitAmount <= 0)
+        }
+        if (bs.unitAmount == null || bs.unitAmount <= 0) {
           this.messages.push({ severity: Constants.ERROR, summary: Constants.SAVE_LABEL, detail: 'Price is required and must be greater than 0.' });
+        }
 
 
       }
@@ -378,9 +386,9 @@ export class BillDetails extends BaseComponent implements OnInit, OnDestroy {
 
     if (id === null || id === undefined) {
       if (id === undefined || id === null) {
-			this.removeItem(this.bill.billServices, +id);
-			return;
-		}
+        this.removeItem(this.bill.billServices, +id);
+        return;
+      }
     }
 
     this.messages = [];
@@ -400,7 +408,7 @@ export class BillDetails extends BaseComponent implements OnInit, OnDestroy {
     }
   }
 
-  
+
 
   lookUpVisit(event) {
     this.bill = new Bill();

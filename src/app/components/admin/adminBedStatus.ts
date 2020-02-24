@@ -16,7 +16,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { ConfirmationService } from 'primeng/api';
 
 @Component({
-  selector: 'app-admin-bedStatus',
+  selector: 'app-admin-bed-status',
   templateUrl: '../../pages/admin/adminBedStatus.html',
   providers: [ ]
 })
@@ -51,7 +51,7 @@ export class AdminBedStatus extends BaseComponent implements OnInit {
   
   
   ngOnInit() {
-    this.globalEventsManager.currentPatientId.subscribe(patientId => this.patient.id = patientId)
+    this.globalEventsManager.currentPatientId.subscribe(patientId => this.patient.id = patientId);
     this.globalEventsManager.selectedParentId = 2;
     
     if (this.currentUser == null) {
@@ -62,7 +62,7 @@ export class AdminBedStatus extends BaseComponent implements OnInit {
   }
 
   onReferenceSelected($event, referenceType) {
-    let referenceId = $event;
+    const referenceId = $event;
     this.referenceDetails.getReference(referenceId, referenceType);
   }
   onReferenceSaved($event) {
@@ -70,7 +70,7 @@ export class AdminBedStatus extends BaseComponent implements OnInit {
   }
 
   onFloorSelected($event) {
-    let floorId = $event;
+    const floorId = $event;
     this.floorDetails.getFloor(floorId);
   }
   onFloorSaved($event) {
@@ -78,7 +78,7 @@ export class AdminBedStatus extends BaseComponent implements OnInit {
   }
 
   onRoomSelected($event) {
-    let roomId = $event;
+    const roomId = $event;
     this.roomDetails.getRoom(roomId);
   }
   onRoomSaved($event) {
@@ -86,7 +86,7 @@ export class AdminBedStatus extends BaseComponent implements OnInit {
   }
 
   onBedSelected($event) {
-    let bedId = $event;
+    const bedId = $event;
     this.bedDetails.getBed(bedId);
   }
   onBedSaved($event) {
@@ -102,11 +102,11 @@ export class AdminBedStatus extends BaseComponent implements OnInit {
     } else if (evt.index === 2) {
       this.processReference(null, 'Building', 'BUILDING');
     } else if (evt.index === 3) {
-      this.activeTab = 3
+      this.activeTab = 3;
     } else if (evt.index === 4) {
-      this.activeTab = 4
+      this.activeTab = 4;
     } else if (evt.index === 5) {
-      this.activeTab = 5
+      this.activeTab = 5;
     } 
   }
 

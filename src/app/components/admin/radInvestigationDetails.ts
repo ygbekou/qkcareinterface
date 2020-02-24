@@ -11,7 +11,7 @@ import { BaseComponent } from './baseComponent';
 import { Constants } from 'src/app';
 
 @Component({
-  selector: 'app-radInvestigation-details',
+  selector: 'app-rad-investigation-details',
   templateUrl: '../../pages/admin/radInvestigationDetails.html',
   providers: [ScrollPanelModule]
 })
@@ -218,8 +218,8 @@ save() {
 
 
   read(file, i, urls) {
-      let name = file.name;
-      let reader = new FileReader();  
+      const name = file.name;
+      const reader = new FileReader();  
       reader.onload = function(e) {  
           // get file content  
           urls[i] = (<FileReader>e.target).result;
@@ -231,7 +231,7 @@ save() {
     
     const myFiles = event.files;
 		if (event && myFiles && (myFiles.length > 0)) {
-      let tempFileNames  = [];
+      const tempFileNames  = [];
 			for (let i = 0; i < myFiles.length; i++) {
         this.formData.append('file', myFiles[i], myFiles[i].name);
         tempFileNames.push(myFiles[i].name);

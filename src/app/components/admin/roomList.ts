@@ -16,7 +16,7 @@ export class RoomList extends BaseComponent implements OnInit, OnDestroy {
   rooms: Room[] = [];
   cols: any[];
   
-  hiddenMenu: boolean = true;
+  hiddenMenu = true;
   @Output() roomIdEvent = new EventEmitter<string>();
   
   constructor
@@ -45,12 +45,11 @@ export class RoomList extends BaseComponent implements OnInit, OnDestroy {
         .queryParams
         .subscribe(params => {
           
-          let parameters: string [] = []; 
+          const parameters: string [] = []; 
             
           this.genericService.getAll('Room')
-            .subscribe((data: Room[]) => 
-            { 
-              this.rooms = data 
+            .subscribe((data: Room[]) => { 
+              this.rooms = data; 
             },
             error => console.log(error),
             () => console.log('Get all Rooms complete'));
@@ -65,8 +64,9 @@ export class RoomList extends BaseComponent implements OnInit, OnDestroy {
  
   
   updateCols() {
-    for (var index in this.cols) {
-      let col = this.cols[index];
+    // tslint:disable-next-line: forin
+    for (const index in this.cols) {
+      const col = this.cols[index];
       this.translate.get(col.headerKey).subscribe((res: string) => {
         col.header = res;
       });
@@ -78,20 +78,19 @@ export class RoomList extends BaseComponent implements OnInit, OnDestroy {
     this.rooms = null;
   }
   
-  edit(roomId : number) {
+  edit(roomId: number) {
     try {
       if (this.hiddenMenu) {
         this.roomIdEvent.emit(roomId + '');
       } else {
-        let navigationExtras: NavigationExtras = {
+        const navigationExtras: NavigationExtras = {
           queryParams: {
-            "roomId": roomId
+            'roomId': roomId
           }
-        }
-        this.router.navigate(["/admin/roomDetails"], navigationExtras);
+        };
+        this.router.navigate(['/admin/roomDetails'], navigationExtras);
       }
-    }
-    catch (e) {
+    } catch (e) {
       console.log(e);
     }
     

@@ -90,6 +90,7 @@ export class VisitList extends BaseComponent implements OnInit, OnDestroy {
 	}
 
 	updateCols() {
+		// tslint:disable-next-line: forin
 		for (const index in this.cols) {
 			const col = this.cols[index];
 			this.translate.get(col.headerKey).subscribe((res: string) => {
@@ -100,7 +101,7 @@ export class VisitList extends BaseComponent implements OnInit, OnDestroy {
 
 
 	ngOnDestroy() {
-		console.log("Visit list destroyed");
+		console.log('Visit list destroyed');
 		this.visits = null;
 	}
 

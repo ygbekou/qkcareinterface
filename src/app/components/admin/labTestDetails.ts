@@ -7,7 +7,7 @@ import { ConfirmationService, Message } from 'primeng/api';
 import { BaseComponent } from './baseComponent';
 
 @Component({
-  selector: 'app-labTest-details',
+  selector: 'app-lab-test-details',
   templateUrl: '../../pages/admin/labTestDetails.html',
   providers: [GenericService, LabTestMethodDropdown, LabTestGroupDropdown, LabTestUnitDropdown]
 })
@@ -50,15 +50,15 @@ export class LabTestDetails extends BaseComponent implements OnInit, OnDestroy {
     this.genericService.getOne(labTestId, 'LabTest')
         .subscribe(result => {
       if (result.id > 0) {
-        this.labTest = result
+        this.labTest = result;
       }
-    })
+    });
   }
   
   save() {
     try {
 	  this.messages = [];
-	  console.info(this.labTest)
+	  console.info(this.labTest);
       this.genericService.saveWithUrl('/service/laboratory/investigationTest/labTest/save', this.labTest)
         .subscribe(result => {
           if (result.id > 0) {
@@ -67,9 +67,8 @@ export class LabTestDetails extends BaseComponent implements OnInit, OnDestroy {
           } else {
             this.processResult(result, this.labTest, this.messages, null);
           }
-        })
-    }
-    catch (e) {
+        });
+    } catch (e) {
       console.log(e);
     }
   }

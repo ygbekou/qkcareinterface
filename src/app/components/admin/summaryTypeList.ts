@@ -7,7 +7,7 @@ import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
 import { BaseComponent } from './baseComponent';
 
 @Component({
-  selector: 'app-summaryType-list',
+  selector: 'app-summary-type-list',
   templateUrl: '../../pages/admin/summaryTypeList.html',
   providers: [GenericService, ConfirmationService]
 })
@@ -51,7 +51,8 @@ export class SummaryTypeList extends BaseComponent implements OnInit, OnDestroy 
   }
 
   updateCols() {
-    for (let index in this.cols) {
+    // tslint:disable-next-line: forin
+    for (const index in this.cols) {
       const col = this.cols[index];
       this.translate.get(col.headerKey).subscribe((res: string) => {
         col.header = res;

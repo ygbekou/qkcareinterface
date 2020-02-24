@@ -56,14 +56,14 @@ export class AppointmentList implements OnInit, OnDestroy {
 
 				patientId = params['patientId'];
 
-				let parameters: string[] = [];
+				const parameters: string[] = [];
 
 				if (patientId != null) {
-					parameters.push('e.patient.id = |patientId|' + patientId + '|Long')
+					parameters.push('e.patient.id = |patientId|' + patientId + '|Long');
 				}
 				this.genericService.getAllByCriteria('Appointment', parameters)
 					.subscribe((data: Appointment[]) => {
-						this.appointments = data
+						this.appointments = data;
 					},
 						error => console.log(error),
 						() => console.log('Get all Appointment complete'));
@@ -76,8 +76,9 @@ export class AppointmentList implements OnInit, OnDestroy {
 	}
 
 	updateCols() {
-		for (var index in this.cols) {
-			let col = this.cols[index];
+		// tslint:disable-next-line: forin
+		for (const index in this.cols) {
+			const col = this.cols[index];
 			this.translate.get(col.headerKey).subscribe((res: string) => {
 				col.header = res;
 			});
@@ -116,7 +117,7 @@ export class AppointmentList implements OnInit, OnDestroy {
 		if (!found) {
 			this.appointments.push(apt);
 		}
-		var onTheFly: Appointment[] = [];
+		const onTheFly: Appointment[] = [];
 		onTheFly.push(...this.appointments);
 		this.appointments = onTheFly;
 	}
@@ -128,7 +129,7 @@ export class AppointmentList implements OnInit, OnDestroy {
 				break;
 			}
 		}
-		var onTheFly: Appointment[] = [];
+		const onTheFly: Appointment[] = [];
 		onTheFly.push(...this.appointments);
 		this.appointments = onTheFly;
 	}

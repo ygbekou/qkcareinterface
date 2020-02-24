@@ -43,9 +43,8 @@ export class PaymentList implements OnInit, OnDestroy {
         ];
     
     this.genericService.getAll('Payment')
-      .subscribe((data: Payment[]) => 
-      { 
-        this.payments = data 
+      .subscribe((data: Payment[]) => { 
+        this.payments = data; 
       },
       error => console.log(error),
       () => console.log('Get all Payments complete'));
@@ -56,30 +55,28 @@ export class PaymentList implements OnInit, OnDestroy {
     this.payments = null;
   }
   
-  edit(paymentId : number) {
+  edit(paymentId: number) {
     try {
-      let navigationExtras: NavigationExtras = {
+      const navigationExtras: NavigationExtras = {
         queryParams: {
-          "paymentId": paymentId,
+          'paymentId': paymentId,
         }
-      }
-      this.router.navigate(["/admin/paymentDetails"], navigationExtras);
-    }
-    catch (e) {
+      };
+      this.router.navigate(['/admin/paymentDetails'], navigationExtras);
+    } catch (e) {
       console.log(e);
     }
   }
 
-  delete(paymentId : number) {
+  delete(paymentId: number) {
     try {
-      let navigationExtras: NavigationExtras = {
+      const navigationExtras: NavigationExtras = {
         queryParams: {
-          "paymentId": paymentId,
+          'paymentId': paymentId,
         }
-      }
-      this.router.navigate(["/admin/paymentDetails"], navigationExtras);
-    }
-    catch (e) {
+      };
+      this.router.navigate(['/admin/paymentDetails'], navigationExtras);
+    } catch (e) {
       console.log(e);
     }
   }

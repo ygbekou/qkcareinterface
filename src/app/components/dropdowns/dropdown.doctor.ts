@@ -6,8 +6,8 @@ import { Employee } from '../../models/Employee';
 @Injectable()
 export class DoctorDropdown {
   
-  filteredDoctors : Employee[];
-  doctors : Employee[] = []; 
+  filteredDoctors: Employee[];
+  doctors: Employee[] = []; 
   
   constructor(
     private genericService: GenericService) {
@@ -21,17 +21,16 @@ export class DoctorDropdown {
   handleDropdownClick(event) {
     setTimeout(() => {
       this.filteredDoctors = this.doctors;
-    }, 10)
+    }, 10);
   }
   
   private getAllDoctors(): void {
-    let parameters: string [] = []; 
+    const parameters: string [] = []; 
     parameters.push('e.user.userGroup.id = |userGroupId|2|Long');
     
     this.genericService.getAllByCriteria('Employee', parameters)
-      .subscribe((data: Employee[]) => 
-      { 
-        this.doctors = data 
+      .subscribe((data: Employee[]) => { 
+        this.doctors = data; 
       },
       error => console.log(error),
       () => console.log('Get all Doctors complete'));
