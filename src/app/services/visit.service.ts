@@ -186,6 +186,16 @@ export class VisitService {
 			.catch(this.handleError);
 	}
 
+	public saveFamilyHistories = (patient: Patient): Observable<Patient> => {
+		const toAdd = JSON.stringify(patient);
+		const actionUrl = Constants.apiServer + '/service/visit/familyHistories/save';
+		return this.http.post(actionUrl, toAdd, { headers: this.headers })
+			.map((response: Response) => {
+				return response.json();
+			})
+			.catch(this.handleError);
+	}
+
 	public saveSocialHistories = (patient: Patient): Observable<Patient> => {
 		const toAdd = JSON.stringify(patient);
 		const actionUrl = Constants.apiServer + '/service/visit/socialHistories/save';

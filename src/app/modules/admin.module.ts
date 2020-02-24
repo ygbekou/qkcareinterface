@@ -66,19 +66,19 @@ import { AdmissionDiagnoses } from '../components/admin/admissionDiagnoses';
 import { PatientServiceDetails } from '../components/admin/patientServiceDetails';
 import { AdminReference } from '../components/admin/adminReference';
 import { CategoryDropdown, PackageDropdown, DoctorDropdown, ProductDropdown, ModalityDropdown, 
-      RadExamDropdown, ExamStatusDropdown, RadiologyTechDropdown,
-      RoleDropdown, SummaryTypeDropdown, UserGroupDropdown, PhysicalExamSystemDropdown, 
-      SystemReviewQuestionDropdown,
-      LabTestDropdown,
-      ServiceDropdown} from '../components/dropdowns';
+      RadExamDropdown, ExamStatusDropdown, RadiologyTechDropdown, RoleDropdown, SummaryTypeDropdown, 
+      UserGroupDropdown, PhysicalExamSystemDropdown, SystemReviewQuestionDropdown, LabTestDropdown, 
+      CodeStatusDropdown, ServiceDropdown, SurgicalProcedureDropdown} from '../components/dropdowns';
 import { AdminPatient } from '../components/admin/adminPatient';
 import { VisitDetails } from '../components/admin/visitDetails';
 import { VisitList } from '../components/admin/visitList';
 import { AllergyDetails } from '../components/admin/allergyDetails';
 import { SymptomDetails } from '../components/admin/symptomDetails';
 import { MedicalHistoryDetails } from '../components/admin/medicalHistoryDetails';
+import { FamilyHistoryDetails } from '../components/admin/familyHistoryDetails';
 import { SocialHistoryDetails } from '../components/admin/socialHistoryDetails';
 import { VaccineDetails } from '../components/admin/vaccineDetails';
+import { SurgicalHistoryDetails } from '../components/admin/surgicalHistoryDetails';
 import { DischargeDetails } from '../components/admin/dischargeDetails';
 import { LabTestDetails } from '../components/admin/labTestDetails';
 import { LabTestList } from '../components/admin/labTestList';
@@ -159,6 +159,9 @@ import { SystemReviewQuestionAssignmentDetails } from '../components/admin/syste
 import { SystemReviewQuestionAssignmentList } from '../components/admin/systemReviewQuestionAssignmentList';
 import { SystemReviewDetails } from '../components/admin/systemReviewDetails';
 import { SystemReviewList } from '../components/admin/systemReviewList';
+import { PatientHomeMedicationPage } from '../components/admin/patientHomeMedicationPage';
+
+import { AdminSummary } from '../components/admin/adminSummary';
 
 const routes: Routes = [
   { path: 'adminMain', component: AdminMain },
@@ -249,6 +252,7 @@ const routes: Routes = [
   { path: 'resourceList', component: ResourceList },
   { path: 'userRoleAssignment', component: UserRoleAssignment },
   { path: 'permission', component: PermissionDetails },
+  { path: 'summaryAndReport', component: AdminSummary },
 ];
 
 // AoT requires an exported function for factories
@@ -278,7 +282,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     PrescriptionDetails, PrescriptionList, AccountDetails, AccountList,
     InvoiceDetails, InvoiceList, PaymentDetails, PaymentList, InsuranceDetails, InsuranceList, ServiceDetails,
     ServiceList, PackageDetails, PackageList, BillDetails, BillList, VitalSignDetails, VitalSignList, AllergyDetails,
-    MedicalHistoryDetails, SocialHistoryDetails, VaccineDetails, SymptomDetails, AdmissionTransfer,
+    MedicalHistoryDetails, FamilyHistoryDetails, SocialHistoryDetails, VaccineDetails, SymptomDetails, AdmissionTransfer,
     DoctorOrderDetails, DoctorOrderList, AdmissionDetails, AdmissionList, FloorDetails, FloorList,
 	  RoomDetails, RoomList, BedDetails, BedList, RadExamDetails, RadExamList, AdminPatient, AdminBedStatus, AdminAuthorization,
 	  AdmissionDiagnoses, PatientServiceDetails, PatientKiosk,
@@ -296,13 +300,13 @@ export function HttpLoaderFactory(http: HttpClient) {
     PermissionDetails, SummaryDetails, SummaryList, SummaryTypeDetails, SummaryTypeList, PatientDashboard,
     PhysicalExamTypeAssignmentDetails, PhysicalExamTypeAssignmentList, SummaryTypeTemplateDetails, SummaryTypeTemplateList,
     PhysicalExamDetails, PhysicalExamList,  SystemReviewQuestionAssignmentDetails, SystemReviewQuestionAssignmentList, 
-    SystemReviewDetails, SystemReviewList],
+    SystemReviewDetails, SystemReviewList, SurgicalHistoryDetails, PatientHomeMedicationPage, AdminSummary],
 
   providers: [
 	CategoryDropdown, PackageDropdown, DoctorDropdown, TokenStorage, AppInfoStorage, BillingService, VisitService, LoggedInGuard, 
 	ConfirmationService, ServiceDropdown, LabTestDropdown, ProductDropdown, ModalityDropdown, RadExamDropdown, 
   RadInvestigationService, ExamStatusDropdown, RadiologyTechDropdown, RoleDropdown, UserGroupDropdown, SummaryTypeDropdown,
-  PhysicalExamSystemDropdown, SystemReviewQuestionDropdown]
+  PhysicalExamSystemDropdown, SystemReviewQuestionDropdown, SurgicalProcedureDropdown, CodeStatusDropdown]
 })
 export class AdminModule { 
 

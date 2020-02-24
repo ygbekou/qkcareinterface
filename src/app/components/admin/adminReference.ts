@@ -90,11 +90,7 @@ export class AdminReference extends BaseComponent implements OnInit, OnDestroy {
     if (this.currentUser == null) {
       this.currentUser = new User();
     }
-    this.globalEventsManager.selectedReferenceType = 'Category';
-
-    setTimeout(() => {
-        this.referenceList.updateCols('SYMPTOM_GROUP');
-      }, 0);
+    this.processReference(Constants.CATEGORY_SYMPTOM, 'Category', 'SYMPTOM_GROUP');
 
   }
 
@@ -258,6 +254,8 @@ export class AdminReference extends BaseComponent implements OnInit, OnDestroy {
       this.processReferenceWithChild(null, 'SystemReviewQuestion', 'SYSTEM_REVIEW_QUESTION');
     } else if (evt.index === 25) {
       this.onSystemReviewQuestionList.getList();
+    } else if (evt.index === 26) {
+      this.processReference(null, 'SurgicalProcedure', 'SURGICAL_PROCEDURE');
     }
 
      }, 0);
@@ -269,8 +267,9 @@ export class AdminReference extends BaseComponent implements OnInit, OnDestroy {
     this.globalEventsManager.selectedReferenceType = referenceType;
     setTimeout(() => {
       this.referenceWithChildList.updateCols(listLabel);
+      this.referenceWithChildList.getAll();
     }, 0);
-    this.referenceWithChildList.getAll();
+    
   }
 
   processReference(categoryNumber: number, referenceType: string, listLabel: string) {
@@ -278,8 +277,9 @@ export class AdminReference extends BaseComponent implements OnInit, OnDestroy {
     this.globalEventsManager.selectedReferenceType = referenceType;
     setTimeout(() => {
       this.referenceList.updateCols(listLabel);
+      this.referenceList.getAll();
     }, 0);
-    this.referenceList.getAll();
+    
   }
 
 

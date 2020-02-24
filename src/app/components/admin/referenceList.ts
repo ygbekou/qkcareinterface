@@ -50,7 +50,7 @@ export class ReferenceList extends BaseComponent implements OnInit, OnDestroy {
                                         style: {width: '10%', 'text-align': 'center'} }
         ];
 	
-		this.getAll();
+		//this.getAll();
 	 
 		this.updateCols(this.REFERENCE_LIST_LABEL);
     	this.translate.onLangChange.subscribe(() => {
@@ -63,9 +63,11 @@ export class ReferenceList extends BaseComponent implements OnInit, OnDestroy {
 	   this.route
         .queryParams
         .subscribe(params => {
+          
           this.referenceType = params['referenceType'];
           
-          if (this.referenceType == null) {
+          
+          if (this.referenceType === undefined) {
             this.referenceType = this.globalEventsManager.selectedReferenceType;
             this.hiddenMenu = true;
           } else {
@@ -82,7 +84,6 @@ export class ReferenceList extends BaseComponent implements OnInit, OnDestroy {
           if (this.parentId != null && this.referenceType === 'Category') {
             parameters.push('e.parent.id = |parentId|' + this.parentId + '|Long');
 		  } 
-          
           this.genericService.getAllByCriteria(this.referenceType, parameters, " ORDER BY e.name")
             .subscribe((data: Reference[]) => { 
               this.references = data; 

@@ -1,4 +1,5 @@
 <form name="form" (ngSubmit)="f.form.valid && save()" #f="ngForm" validate>
+  
   <div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="admission">
     <p-messages [(value)]="messages"></p-messages>
     <div class="ui-grid-row">
@@ -8,6 +9,12 @@
         <p-message *ngIf="f.submitted && !(patient.id > 0)" severity="error"
           text="{{ 'COMMON.PATIENT_ID' | translate }} {{ 'VALIDATION.IS_REQUIRED' | translate }}">
         </p-message>
+
+        <div class="ui-grid-row">
+            <button type="button" pButton label="{{ 'COMMON.HISTORY_AND_PHYSICAL' | translate }}" (click)="gotoHistoryAndPhysical()"></button>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <button type="button" pButton label="{{ 'COMMON.PROGRESS_NOTE' | translate }}" (click)="gotoHistoryAndPhysical()"></button>
+        </div>
       </div>
       <div class="ui-grid-col-2 ui-sm-12">
         <div class="form-group">

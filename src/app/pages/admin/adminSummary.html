@@ -1,0 +1,43 @@
+  <p-tabView (onChange)="onTabChange($event)">
+    <p-tabPanel header="{{'COMMON.PHYSICAL_EXAM' | translate }}" *ngIf="admission && admission.id > 0">
+      <div class="ui-grid-row" *ngIf="activeTab === 0">
+        <div class="ui-grid-col-2 ui-sm-12" >
+          <app-physicalExam-list [admission]="admission" (physicalExamIdEvent)="onPhysicalExamSelected($event)"></app-physicalExam-list>
+        </div>
+        <div class="ui-grid-col-10 ui-sm-12">
+          <app-physicalExam-details (physicalExamSaveEvent)="onPhysicalExamSaved($event)" [admission]="admission"></app-physicalExam-details><br />
+        </div>
+      </div>
+    </p-tabPanel>
+    <p-tabPanel header="{{'COMMON.SYSTEM_REVIEW' | translate }}" *ngIf="admission && admission.id > 0">
+      <div class="ui-grid-row" *ngIf="activeTab === 1">
+        <div class="ui-grid-col-2 ui-sm-12" >
+          <app-systemReview-list [admission]="admission" (systemReviewIdEvent)="onSystemReviewSelected($event)"></app-systemReview-list>
+        </div>
+        <div class="ui-grid-col-10 ui-sm-12">
+          <app-systemReview-details (systemReviewSaveEvent)="onSystemReviewSaved($event)" [admission]="admission"></app-systemReview-details><br />
+        </div>
+      </div>
+    </p-tabPanel>
+    <p-tabPanel header="{{'COMMON.HISTORY' | translate }} {{'COMMON.AND' | translate }} {{'COMMON.PHYSICAL' | translate }}" 
+                            *ngIf="admission && admission.id > 0">
+      <div class="ui-grid-row" *ngIf="activeTab === 2">
+        <div class="ui-grid-col-2 ui-sm-12" >
+          <app-summary-list [admission]="admission" (summaryIdEvent)="onSummarySelected($event)" [summaryTypeId]="3"></app-summary-list>
+        </div>
+        <div class="ui-grid-col-10 ui-sm-12">
+          <app-summary-details (summarySaveEvent)="onSummarySaved($event)" [admission]="admission" [summaryTypeId]="3"></app-summary-details><br />
+        </div>
+      </div>
+    </p-tabPanel>
+    <p-tabPanel header="{{'COMMON.PROGRESS_NOTE' | translate }}" *ngIf="admission && admission.id > 0">
+      <div class="ui-grid-row" *ngIf="activeTab === 3">
+        <div class="ui-grid-col-2 ui-sm-12" >
+          <app-summary-list [admission]="admission" (summaryIdEvent)="onSummarySelected($event)" [summaryTypeId]="4"></app-summary-list>
+        </div>
+        <div class="ui-grid-col-10 ui-sm-12">
+          <app-summary-details (summarySaveEvent)="onSummarySaved($event)" [admission]="admission" [summaryTypeId]="4"></app-summary-details><br />
+        </div>
+      </div>
+    </p-tabPanel>
+  </p-tabView>

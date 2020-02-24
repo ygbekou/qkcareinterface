@@ -47,3 +47,5 @@ export * from './dropdown.summaryType';
 export * from './dropdown.medicalTeam';
 export * from './dropdown.physicalExamSystem';
 export * from './dropdown.systemReviewQuestion';
+export * from './dropdown.surgicalProcedure';
+export * from './dropdown.codeStatus';

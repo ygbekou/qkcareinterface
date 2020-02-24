@@ -38,7 +38,7 @@ export class PrescriptionDetails extends BaseComponent implements OnInit, OnDest
       public translate: TranslateService,
       public confirmationService: ConfirmationService,
       public tokenStorage: TokenStorage,
-      private medicineDropdown: MedicineDropdown
+      public medicineDropdown: MedicineDropdown
     ) {
 		  super(genericService, translate, confirmationService, tokenStorage);
   }

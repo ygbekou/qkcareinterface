@@ -120,7 +120,7 @@ export class SystemReviewDetails extends BaseComponent implements OnInit, OnDest
   }
 
   findTypes() {
-    this.genericService.getObject('/service/summary/systemReview/list/summaryType/' + 3+ '/')
+    this.genericService.getObject('/service/summary/systemReview/list/summaryType/' + 3 + '/')
         .subscribe((data: any) => {
           console.info(data)
           this.systemReviewQuestionMap = data;

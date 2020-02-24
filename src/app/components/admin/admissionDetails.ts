@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
 import { Constants } from '../../app.constants';
 import { Admission, Bed, BedAssignment, Country, DoctorAssignment, Floor, Package, Patient, Reference, Room, User } from '../../models';
 import {
@@ -75,7 +75,8 @@ export class AdmissionDetails extends BaseComponent implements OnInit, OnDestroy
 			public roomDropdown: RoomDropdown,
 			public categoryDropdown: CategoryDropdown,
 			public bedDropdown: BedDropdown,
-			private route: ActivatedRoute
+			private route: ActivatedRoute,
+			private router: Router,
 		) {
 
 			super(genericService, translate, confirmationService, tokenStorage);
@@ -273,6 +274,20 @@ export class AdmissionDetails extends BaseComponent implements OnInit, OnDestroy
 		this.initilizePatientAdmissionPatient();
 		this.initilizePatientAdmissionBed();
 		this.initilizePatientAdmissionDoctor();
+	}
+
+
+	gotoHistoryAndPhysical() {
+		try {
+		const navigationExtras: NavigationExtras = {
+			queryParams: {
+			'admissionId': this.admission.id,
+			}
+		};
+		this.router.navigate(['/admin/summaryAndReport'], navigationExtras);
+		} catch (e) {
+		console.log(e);
+		}
 	}
 
 }

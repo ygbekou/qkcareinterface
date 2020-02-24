@@ -35,6 +35,7 @@ export class SummaryTypeDropdown {
       {
         if (data.length > 0) {
           this.summaryTypes = data;
+          console.info(this.summaryTypes)
         }
       },
       error => console.log(error),

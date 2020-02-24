@@ -25,8 +25,23 @@
         <app-socialHistory-details [patient]="patient"></app-socialHistory-details>
       </div>
     </p-tabPanel>
+    <p-tabPanel header="{{ 'COMMON.SURGICAL_HISTORY' | translate }}" *ngIf="patient.id > 0">
+      <div *ngIf="activeTab === 5">
+        <app-surgicalHistory-details [patient]="patient"></app-surgicalHistory-details>
+      </div>
+    </p-tabPanel>
+    <p-tabPanel header="{{ 'COMMON.FAMILY_HISTORY' | translate }}" *ngIf="patient.id > 0">
+      <div *ngIf="activeTab === 6">
+        <app-familyHistory-details [patient]="patient"></app-familyHistory-details>
+      </div>
+    </p-tabPanel>
+    <p-tabPanel header="{{ 'COMMON.HOME_MEDICATIONS' | translate }}" *ngIf="patient.id > 0">
+      <div *ngIf="activeTab === 7">
+        <app-patientHomeMedication-page [patient]="patient"></app-patientHomeMedication-page>
+      </div>
+    </p-tabPanel>
     <p-tabPanel header="{{ 'COMMON.APPOINTMENT' | translate }}" *ngIf="patient.id > 0 && permitView('Patient Details')">
-      <div *ngIf="activeTab == 5">
+      <div *ngIf="activeTab ==8">
         <app-appointment-details [patient]="patient" (aptSavedEvent)="onAptSaved($event)"></app-appointment-details>
         <br />
         <br />

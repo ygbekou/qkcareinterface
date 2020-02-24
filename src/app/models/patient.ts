@@ -4,7 +4,7 @@ import { Reference } from './reference';
 import { User } from './user';
 import { VitalSign } from './vitalSign';
 import { GivenVaccine } from './givenVaccine';
-import { VaccineDetails } from '../components/admin/vaccineDetails';
+import { Product } from './product';
 
 export class Patient {
   id: number;
@@ -44,6 +44,7 @@ export class Patient {
   
   selectedAllergies: Reference[];
   selectedMedicalHistories: Reference[];
+  selectedFamilyHistories: Reference[];
   selectedSocialHistories: Reference[];
   givenVaccines: GivenVaccine[] = [];
   
@@ -56,6 +57,7 @@ export class Patient {
     
     this.selectedAllergies = [];
     this.selectedMedicalHistories = [];
+    this.selectedFamilyHistories = [];
     this.selectedSocialHistories = [];
     this.givenVaccines = [];
   }
@@ -66,6 +68,40 @@ export class PatientVaccine {
   patient: Patient;
   vaccine: Reference;
   vaccineName: string;
+
+  constructor(patientId: number) {
+    this.patient = new Patient();
+    this.patient.id = patientId;
+  }
+}
+
+
+export class PatientSurgicalHistory {
+  patient: Patient;
+  surgicalProcedure: Reference;
+  surgicalProcedureName: string;
+  surgeryDate: Date;
+
+  constructor(patientId: number) {
+    this.patient = new Patient();
+    this.patient.id = patientId;
+  }
+}
+
+export class PatientHomeMedication {
+  patient: Patient;
+  id: number;
+  medicine: Product;
+  medType: string;
+  dosage: string;
+  quantity: number;
+  frequency: string;
+  startDate: Date;
+  endDate: Date;
+  numberOfDays: number;
+
+  // Transient
+  medicineName: string;
 
   constructor(patientId: number) {
     this.patient = new Patient();

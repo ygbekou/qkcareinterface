@@ -19,7 +19,7 @@ export class AdmissionDiagnoses extends BaseComponent implements OnInit, OnDestr
   admissionDiagnosis: AdmissionDiagnosis = new AdmissionDiagnosis();
 
   diagnosisCols: any[];
-  admissionDiagnoses: AdmissionDiagnosis[] = [];
+  @Input() admissionDiagnoses: AdmissionDiagnosis[] = [];
   parentId: number;
   parentEntity: string;
   entity: string;
@@ -64,16 +64,16 @@ export class AdmissionDiagnoses extends BaseComponent implements OnInit, OnDestr
     if (this.visit && this.visit.id > 0) {
       this.parentId = this.visit.id;
       this.parentEntity = 'visit';
-	  this.entity = 'VisitDiagnosis';
-	  parameters.push('e.visit.id = |visitId|' + this.visit.id + '|Long');
+	    this.entity = 'VisitDiagnosis';
+	    parameters.push('e.visit.id = |visitId|' + this.visit.id + '|Long');
     }
     if (this.admission && this.admission.id > 0) {
       this.parentId = this.admission.id;
       this.parentEntity = 'admission';
-	  this.entity = 'AdmissionDiagnosis';
-	  parameters.push('e.admission.id = |admissionId|' + this.admission.id + '|Long');
+      this.entity = 'AdmissionDiagnosis';
+      parameters.push('e.admission.id = |admissionId|' + this.admission.id + '|Long');
 
-	}
+	  }
 
 	this.route
         .queryParams

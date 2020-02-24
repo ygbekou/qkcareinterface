@@ -1,108 +1,369 @@
 <form name="form" (ngSubmit)="f.form.valid && save(1)" #f="ngForm" validate>
   <div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="summary">
     <p-messages [(value)]="messages"></p-messages>
-    <div class="ui-grid-row">
-      <div class="ui-grid-col-3 ui-sm-12">
-        <div class="form-group">
-          <label for="summaryType">{{ 'COMMON.TYPE' | translate }}<font color="red">*</font></label>
-          <p-autoComplete [(ngModel)]="summary.summaryType" required
-            (ngModelChange)="findTemplate($event)"
-            (onDropdownClick)="summaryTypeDropdown.handleDropdownClick($event)"
-            [suggestions]="summaryTypeDropdown.filteredSummaryTypes" [dropdown]="true"
-            id="summaryType" (completeMethod)="summaryTypeDropdown.filter($event)"
-            name="summaryType" field="name" [size]="30" placeholder="" [minLength]="1"
-            #summaryType="ngModel"></p-autoComplete>
-          <p-message *ngIf="f.submitted && summaryType.invalid" severity="error" text="Field is required">
-          </p-message>
-        </div>
-      </div>
-      <div class="ui-grid-col-3 ui-sm-12">
-        <div class="form-group">
-          <label for="summaryDatetime">{{ 'COMMON.DATE' | translate }}<font color="red">*</font></label>
-          <p-calendar [(ngModel)]="summary.summaryDatetime" [showTime]="true" disabled="true" required
-            name="summaryDatetime" #summaryDatetime="ngModel"></p-calendar>
-          <p-message *ngIf="f.submitted && summaryDatetime.invalid" severity="error" text="Field is required">
-          </p-message>
-        </div>
-      </div>
-      <div class="ui-grid-col-3 ui-sm-12">
-        <div class="form-group">
-          <label for="summaryStatus">{{ 'COMMON.STATUS' | translate }}<font color="red">*</font></label>
-          <p-autoComplete [(ngModel)]="summary.summaryStatus" required
-            (onDropdownClick)="summaryStatusDropdown.handleDropdownClick($event)"
-            [suggestions]="summaryStatusDropdown.filteredSummaryStatuses" [dropdown]="true"
-            id="summaryStatus" (completeMethod)="summaryStatusDropdown.filter($event)"
-            name="summaryStatus" field="name" [size]="30" placeholder="" [minLength]="1"
-            #summaryStatus="ngModel"></p-autoComplete>
-          <p-message *ngIf="f.submitted && summaryStatus.invalid" severity="error" text="Field is required">
-          </p-message>
-        </div>
-      </div>
-      <div class="ui-grid-col-3 ui-sm-12">
-        <div class="form-group">
-          <label for="author">{{ 'COMMON.AUTHOR' | translate }}<font color="red">*</font></label>
-          <p-autoComplete [(ngModel)]="summary.author" required disabled
-            (onDropdownClick)="medicalTeamDropdown.handleDropdownClick($event)"
-            [suggestions]="medicalTeamDropdown.filteredItems" [dropdown]="true"
-            id="author" (completeMethod)="medicalTeamDropdown.filter($event)"
-            name="author" field="name" [size]="30" placeholder="" [minLength]="1"
-            #author="ngModel"></p-autoComplete>
-          <p-message *ngIf="f.submitted && author.invalid" severity="error" text="Field is required">
-          </p-message>
-        </div>
-      </div>
-    </div>
-    <div class="ui-grid-row"></div>
-      <div class="ui-grid-col-12 ui-sm-12">
-          <div class="form-group">
-              <label for="subject">{{ 'COMMON.SUBJECT' | translate }}</label>
-              <input pInputText id="subject" [(ngModel)]="summary.subject" name="subject" #subject="ngModel" required />
-              <p-message *ngIf="f.submitted && subject.invalid" severity="error" text="Field is required">
-              </p-message>
-          </div>
-      </div>
-    </div>
-    <div class="ui-grid-row">
-      <div class="ui-grid-col-12 ui-sm-12">
-        <div class="form-group">
-          <label for="chiefOfComplain">{{ 'COMMON.CHIEF_OF_COMPLAIN' | translate }}</label>
-          <p-editor [(ngModel)]="summary.chiefOfComplain" [style]="{'height':'60px'}" name="chiefOfComplain" #chiefOfComplain="ngModel"></p-editor>
-        </div>
-      </div>
-    </div>
-    <div class="ui-grid-row">
-      <div class="ui-grid-col-12 ui-sm-12">
-        <div class="form-group">
-          <label for="historyOfPresentIllness">{{ 'COMMON.HISTORY_OF_PRESENT_ILLNESS' | translate }}</label>
-          <p-editor [(ngModel)]="summary.historyOfPresentIllness" [style]="{'height':'60px'}" name="historyOfPresentIllness" #historyOfPresentIllness="ngModel"></p-editor>
-        </div>
-      </div>
-    </div>
-    <div class="ui-grid-row">
-      <div class="ui-grid-col-12 ui-sm-12">
-        <div class="form-group">
-          <label for="medicalHistory">{{ 'COMMON.MEDICAL_HISTORY' | translate }}</label>
-          <p-editor [(ngModel)]="summary.medicalHistory" [style]="{'height':'60px'}" name="medicalHistory" #medicalHistory="ngModel"></p-editor>
-        </div>
-      </div>
-    </div>
-    <div class="ui-grid-row">
-      <div class="ui-grid-col-12 ui-sm-12">
-        <div class="form-group">
-          <label for="pastDiagnosis">{{ 'COMMON.PAST_DIAGNOSIS' | translate }}</label>
-        </div>
-      </div>
-    </div>
 
+    <p-accordion>
+      <p-accordionTab header="{{ 'COMMON.GENERAL' | translate }}" selected="true">
+        <div class="ui-grid-row">
+          <!-- <div class="ui-grid-col-3 ui-sm-12">
+            <div class="form-group">
+              <label for="summaryType">{{ 'COMMON.TYPE' | translate }}<font color="red">*</font></label>
+              <p-autoComplete [(ngModel)]="summary.summaryType" required
+                (ngModelChange)="findTemplate($event)"
+                (onDropdownClick)="summaryTypeDropdown.handleDropdownClick($event)"
+                [suggestions]="summaryTypeDropdown.filteredSummaryTypes" [dropdown]="true"
+                id="summaryType" (completeMethod)="summaryTypeDropdown.filter($event)"
+                name="summaryType" field="name" [size]="30" placeholder="" [minLength]="1"
+                #summaryType="ngModel" ></p-autoComplete>
+              <p-message *ngIf="f.submitted && summaryType.invalid" severity="error" text="Field is required">
+              </p-message>
+            </div>
+          </div> -->
+          <div class="ui-grid-col-3 ui-sm-12">
+            <div class="form-group">
+              <label for="summaryDatetime">{{ 'COMMON.DATE' | translate }}:</label>&nbsp;&nbsp;&nbsp;&nbsp;
+              <label for="author">{{summary.summaryDatetime | date: globalEventsManager.DATE_TIME_FORMAT}}</label>
+              <!-- <p-calendar [(ngModel)]="summary.summaryDatetime" [showTime]="true" disabled="true" required
+                name="summaryDatetime" #summaryDatetime="ngModel"></p-calendar>
+              <p-message *ngIf="f.submitted && summaryDatetime.invalid" severity="error" text="Field is required">
+              </p-message> -->
+            </div>
+          </div>
+          <div class="ui-grid-col-2 ui-sm-12">
+            <div class="form-group">
+              <label for="summaryStatus">{{ 'COMMON.STATUS' | translate }}:</label>&nbsp;&nbsp;&nbsp;&nbsp;
+              <label for="summaryStatus">{{summary.summaryStatus.name}}</label>
+              <!-- <p-autoComplete [(ngModel)]="summary.summaryStatus" required
+                (onDropdownClick)="summaryStatusDropdown.handleDropdownClick($event)"
+                [suggestions]="summaryStatusDropdown.filteredSummaryStatuses" [dropdown]="true"
+                id="summaryStatus" (completeMethod)="summaryStatusDropdown.filter($event)"
+                name="summaryStatus" field="name" [size]="30" placeholder="" [minLength]="1"
+                #summaryStatus="ngModel" readonly="true"></p-autoComplete>
+              <p-message *ngIf="f.submitted && summaryStatus.invalid" severity="error" text="Field is required">
+              </p-message> -->
+            </div>
+          </div>
+          <div class="ui-grid-col-5 ui-sm-12">
+            <div class="form-group">
+              <label for="author">{{ 'COMMON.AUTHOR' | translate }}:</label>&nbsp;&nbsp;&nbsp;&nbsp;
+              <label for="author">{{summary.author.name}}</label>
+              <!-- <p-autoComplete [(ngModel)]="summary.author" required disabled
+                (onDropdownClick)="medicalTeamDropdown.handleDropdownClick($event)"
+                [suggestions]="medicalTeamDropdown.filteredItems" [dropdown]="true"
+                id="author" (completeMethod)="medicalTeamDropdown.filter($event)"
+                name="author" field="name" [size]="30" placeholder="" [minLength]="1"
+                #author="ngModel"></p-autoComplete>
+              <p-message *ngIf="f.submitted && author.invalid" severity="error" text="Field is required">
+              </p-message> -->
+            </div>
+          </div>
+        
+          <div class="ui-grid-col-6 ui-sm-12" *ngIf="summaryTypeId === 1 || summaryTypeId === 2">
+              <div class="form-group">
+                  <label for="subject">{{ 'COMMON.SUBJECT' | translate }}</label>
+                  <input pInputText id="subject" [(ngModel)]="summary.subject" name="subject" #subject="ngModel" required />
+                  <p-message *ngIf="f.submitted && subject.invalid" severity="error" text="Field is required">
+                  </p-message>
+              </div>
+          </div>
+          <div class="ui-grid-col-2 ui-sm-12" *ngIf="summaryTypeId === 3">
+            <div class="form-group">
+              <label for="codeStatus">{{ 'COMMON.CODE_STATUS' | translate }}<font color="red">*</font></label>
+              <p-autoComplete [(ngModel)]="summary.codeStatus" required
+                (onDropdownClick)="codeStatusDropdown.handleDropdownClick($event)"
+                [suggestions]="codeStatusDropdown.filteredCodeStatuses" [dropdown]="true"
+                id="codeStatus" (completeMethod)="codeStatusDropdown.filter($event)"
+                name="codeStatus" field="name" [size]="30" placeholder="" [minLength]="1"
+                #codeStatus="ngModel"></p-autoComplete>
+              <p-message *ngIf="f.submitted && codeStatus.invalid" severity="error" text="Field is required">
+              </p-message>
+            </div>
+          </div>
+        </div>
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-6 ui-sm-12" *ngIf="summaryTypeId === 4">
+              <div class="form-group">
+                  <label for="subjective">{{ 'COMMON.SUBJECTIVE' | translate }}</label>
+                  <input pInputText id="subjective" [(ngModel)]="summary.subjective" name="subjective" #subjective="ngModel" required />
+                  <p-message *ngIf="f.submitted && subjective.invalid" severity="error" text="Field is required">
+                  </p-message>
+              </div>
+          </div>
+          <div class="ui-grid-col-6 ui-sm-12" *ngIf="summaryTypeId === 4">
+              <div class="form-group">
+                  <label for="objective">{{ 'COMMON.OBJECTIVE' | translate }}</label>
+                  <input pInputText id="objective" [(ngModel)]="summary.objective" name="objective" #objective="ngModel" required />
+                  <p-message *ngIf="f.submitted && objective.invalid" severity="error" text="Field is required">
+                  </p-message>
+              </div>
+          </div>
+        </div>
+      
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-6 ui-sm-12">
+            <div class="form-group">
+              <label for="chiefOfComplain">{{ 'COMMON.CHIEF_OF_COMPLAIN' | translate }}</label>
+              <textarea pInputTextarea id="chiefOfComplain" [(ngModel)]="summary.chiefOfComplain" readonly="true"
+                name="chiefOfComplain" #chiefOfComplain="ngModel" rows="6" cols="40"> </textarea>
+            </div>
+          </div>
+          <div class="ui-grid-col-6 ui-sm-12">
+            <div class="form-group">
+              <label for="historyOfPresentIllness">{{ 'COMMON.HISTORY_OF_PRESENT_ILLNESS' | translate }}</label>
+              <p-editor [(ngModel)]="summary.historyOfPresentIllness" [style]="{'height':'60px'}" name="historyOfPresentIllness" #historyOfPresentIllness="ngModel"></p-editor>
+            </div>
+          </div>
+        </div>
+        
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-12 ui-sm-12">
+              <label for="historyOfPresentIllness">{{ 'COMMON.VITALS_BETWEEN' | translate }} 
+                {{summary.summaryDatetime | date: globalEventsManager.DATE_TIME_FORMAT}} - 
+                {{summaryDatetimeStart | date: globalEventsManager.DATE_TIME_FORMAT}}</label>
+              <p-table [columns]="vitalSignCols" [value]="summary.summaryVitalSigns" 
+                [responsive]="true" [scrollable]="true" scrollHeight="100px" [style]="{width:'100%'}"> 
+                <ng-template pTemplate="header" let-columns>
+                  <tr>
+                    <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+                      {{col.header}}
+                      <p-sortIcon *ngIf="col.field === 'name'" [field]="col.field"></p-sortIcon>
+                    </th>
+                  </tr>
+                </ng-template> 
+                <ng-template pTemplate="body" let-rowData let-expanded="expanded" let-j="rowIndex" let-columns="columns">
+                  <tr>
+                    <td *ngFor="let col of columns">
+                      {{rowData[col.field]}}
+                    </td>
+                  </tr>
+                </ng-template> 
+              </p-table>
+          </div>
+        </div>
+      </p-accordionTab>
+      <br/>
+      <p-accordionTab header="{{ 'COMMON.HISTORY' | translate }}" selected="true">
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-6 ui-sm-12">
+            <div class="form-group">
+              <label for="medicalHistory">{{ 'COMMON.PAST_MEDICAL_HISTORY' | translate }}</label>
+              <textarea pInputTextarea id="pastMedicalHistory" [(ngModel)]="summary.pastMedicalHistory" readonly="true"
+                name="pastMedicalHistory" #pastMedicalHistory="ngModel" rows="6" cols="40"> </textarea>
+              </div>
+          </div>
+          <div class="ui-grid-col-6 ui-sm-12">
+            <div class="form-group">
+              <label for="familyHistory">{{ 'COMMON.SURGICAL_HISTORY' | translate }}</label>
+              <textarea pInputTextarea id="surgicalHistory" [(ngModel)]="summary.surgicalHistory" readonly="true"
+                name="surgicalHistory" #surgicalHistory="ngModel" rows="6" cols="40"> </textarea>
+            </div>
+          </div>
+        </div>
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-6 ui-sm-12">
+            <div class="form-group">
+              <label for="familyHistory">{{ 'COMMON.FAMILY_HISTORY' | translate }}</label>
+              <textarea pInputTextarea id="familyHistory" [(ngModel)]="summary.familyHistory" readonly="true"
+                name="familyHistory" #familyHistory="ngModel" rows="6" cols="40"> </textarea>
+            </div>
+          </div>
+          <div class="ui-grid-col-6 ui-sm-12">
+            <div class="form-group">
+              <label for="familyHistory">{{ 'COMMON.SOCIAL_HISTORY' | translate }}</label>
+              <textarea pInputTextarea id="socialHistory" [(ngModel)]="summary.socialHistory" readonly="true"
+                name="socialHistory" #socialHistory="ngModel" rows="6" cols="40"> </textarea>
+            </div>
+          </div>
+        </div>
+      </p-accordionTab>
+      <br/>
+      <p-accordionTab header="{{ 'COMMON.MEDICATIONS' | translate }}" selected="true">
+          <div class="ui-grid-row">
+            <div class="ui-grid-col-6 ui-sm-12">
+              <div class="form-group">
+                <label for="homeMedications">{{ 'COMMON.HOME_MEDICATIONS' | translate }} Active</label>
+                <textarea pInputTextarea id="homeMedications" [(ngModel)]="summary.homeMedications" readonly="true"
+                name="homeMedications" #homeMedications="ngModel" rows="6" cols="40"> </textarea>
+              </div>
+            </div>
+
+            <div class="ui-grid-col-6 ui-sm-12">
+              <div class="form-group">
+                <label for="medications">{{ 'COMMON.MEDICATIONS' | translate }} Active</label>
+                <textarea pInputTextarea id="medications" [(ngModel)]="summary.medications" readonly="true"
+                name="medications" #medications="ngModel" rows="6" cols="40"> </textarea>
+              </div>
+            </div>
+          </div>
+      </p-accordionTab>
+      <br/>
+      <p-accordionTab header="{{ 'COMMON.ALLERGY_LIST' | translate }}" selected="true">
+          <div class="ui-grid-row">
+            <div class="ui-grid-col-6 ui-sm-12">
+              <div class="form-group">
+                <label for="allergies">{{ 'COMMON.ALLERGY_LIST' | translate }} Active</label>
+                <textarea pInputTextarea id="allergies" [(ngModel)]="summary.allergies" readonly="true"
+                  name="allergies" #allergies="ngModel" rows="6" cols="40"> </textarea>
+              </div>
+            </div>
+            <div class="ui-grid-col-6 ui-sm-12">
+              <div class="form-group">
+                <label for="medications">{{ 'COMMON.IMMUNIZATIONS' | translate }} Active</label>
+                <textarea pInputTextarea id="immunizations" [(ngModel)]="summary.immunizations" readonly="true"
+                  name="immunizations" #immunizations="ngModel" rows="6" cols="40"> </textarea>
+              </div>
+            </div>
+          </div>
+      </p-accordionTab>
+      <br/>
+      <p-accordionTab header="{{ 'COMMON.DIAGNOSIS' | translate }}" selected="true">
+          <div class="ui-grid-row">
+            <div class="ui-grid-col-12 ui-sm-12">
+              <app-admissionDiagnoses [admissionDiagnoses]="summary.admissionDiagnoses"></app-admissionDiagnoses>
+            </div>
+          </div>
+      </p-accordionTab>
     
-    <div class="ui-grid-row">
-      <div class="ui-grid-col-12 ui-sm-12">
-        <div class="form-group">
-          <label for="description">{{ 'COMMON.DESCRIPTION' | translate }}</label>
-          <p-editor [(ngModel)]="summary.description" [style]="{'height':'600px'}" name="description" #description="ngModel"></p-editor>
+      <br/>
+      <p-accordionTab header="{{ 'COMMON.SYSTEM_REVIEW' | translate }}" selected="true">
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-12 ui-sm-12 ">
+            <p-selectButton [options]="systemReviewTypes" [(ngModel)]="systemReviewSelectedType"
+             name="systemReviewSelectedType" #type="ngModel" required></p-selectButton>
+          </div>
+        </div>
+      
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-3 ui-sm-12" *ngFor="let mm of systemReviewQuestionMap[systemReviewSelectedType] | keyvalue">
+            <div *ngIf="mm.key !== 'null|'">
+                    <br/>
+                    <div class="ui-grid-row bg-primary">{{mm.key.split('|')[1]}}</div>
+                    <div *ngFor="let system of mm.value; let i = index">
+                      <p-checkbox id="status" name="status"
+                        [(ngModel)]="summary.selectedSystemReviewQuestionIds" [value]="system.id"
+                        label="{{system.name}}"
+                        >
+                      </p-checkbox>
+                    </div>
+                
+              </div>
+          </div>
+        </div>
+      </p-accordionTab>
+      <br/>
+      <p-accordionTab header="{{ 'COMMON.PHYSICAL_EXAM' | translate }}" selected="true">
+
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-12 ui-sm-12">
+            <p-selectButton [options]="physicalExamTypes" [(ngModel)]="physicalExamSelectedType" name="physicalExamSelectedType" #type="ngModel" required></p-selectButton>
+          </div>
+        </div>
+        
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-3 ui-sm-12" *ngFor="let mm of physicalExamSystemMap[physicalExamSelectedType] | keyvalue">
+            <div *ngIf="mm.key !== 'null|'">
+                    <br/>
+                    <div class="ui-grid-row bg-primary">{{mm.key.split('|')[1]}}</div>
+                    <div *ngFor="let system of mm.value; let i = index">
+                      <p-checkbox id="status" name="status"
+                        [(ngModel)]="summary.selectedPhysicalExamSystemIds" [value]="system.id"
+                        label="{{system.name}}"
+                        >
+                      </p-checkbox>
+                    </div>
+                
+              </div>
+          </div>
+        </div>
+      </p-accordionTab>
+
+    <p-accordionTab header="{{ 'COMMON.LABS_BETWEEN' | translate }}" selected="true">
+      <div class="ui-grid-row">
+        <div class="ui-grid-col-12 ui-sm-12">
+          <div *ngFor="let investigationResult of investigationResults; let i = index">
+            <p-table [columns]="iTCols[i]" [value]="investigationResult" 
+              [responsive]="true" *ngIf="investigationResult.length > 0" [scrollable]="true" scrollHeight="100px" [style]="{width:'100%'}"> 
+              <ng-template pTemplate="colgroup" let-columns>
+                <colgroup>
+                  <col *ngFor="let col of columns" style="width:120px">
+                </colgroup>
+              </ng-template>
+              <ng-template pTemplate="header" let-columns>
+                <tr>
+                  <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+                    {{col.header}}
+                    <p-sortIcon *ngIf="col.field === 'name'" [field]="col.field"></p-sortIcon>
+                  </th>
+                </tr>
+              </ng-template> 
+              <ng-template pTemplate="body" let-rowData let-expanded="expanded" let-j="rowIndex" let-columns="columns">
+                <tr>
+                  <td *ngFor="let col of columns">
+                    <div *ngIf="col.type === 'Datetime'">
+                      {{rowData[col.field] | date: globalEventsManager.DATE_TIME_FORMAT}}
+                    </div>
+                    <div *ngIf="col.type !== 'Datetime'">
+                        {{rowData[col.field]}}
+                    </div>
+                  </td>
+                </tr>
+              </ng-template> 
+            </p-table>
+            <br/>
+          </div>
         </div>
       </div>
-    </div>
+    </p-accordionTab>
+
+    <p-accordionTab header="{{ 'COMMON.PLAN' | translate }} {{ 'COMMON.AND' | translate }} {{ 'COMMON.ASSESSMENT' | translate }} " selected="true">
+      <div class="ui-grid-row">
+        <div class="ui-grid-col-6 ui-sm-12">
+          <div class="form-group">
+            <label for="assessment">{{ 'COMMON.ASSESSMENT' | translate }}</label>
+            <p-editor [(ngModel)]="summary.assessment" [style]="{'height':'300px'}" name="assessment" #assessment="ngModel"></p-editor>
+          </div>
+        </div>
+        <div class="ui-grid-col-6 ui-sm-12">
+          <div class="form-group">
+            <label for="plan">{{ 'COMMON.PLAN' | translate }}</label>
+            <p-editor [(ngModel)]="summary.plan" [style]="{'height':'300px'}" name="plan" #plan="ngModel"></p-editor>
+          </div>
+        </div>
+        <div class="ui-grid-col-6 ui-sm-12"  *ngIf="summaryTypeId === 4">
+          <div class="form-group">
+            <label for="description">{{ 'COMMON.DISPOSITION' | translate }}</label>
+            <p-editor [(ngModel)]="summary.disposition" [style]="{'height':'300px'}" name="disposition" #disposition="ngModel"></p-editor>
+          </div>
+        </div>
+      </div>
+
+      <div class="ui-grid-row">
+        <div class="ui-grid-col-6 ui-sm-12">
+            <div class="form-group">
+                <label for="primaryCarePhysician">{{ 'COMMON.PRIMARY_CARE_PHYSICIAN' | translate }}</label>
+                <input pInputText id="primaryCarePhysician" [(ngModel)]="summary.primaryCarePhysician" 
+                  name="primaryCarePhysician" #primaryCarePhysician="ngModel" />
+            </div>
+        </div>
+        <div class="ui-grid-col-6 ui-sm-12">
+            <div class="form-group">
+                <label for="powerOfAttorney">{{ 'COMMON.POWER_OF_ATTORNEY' | translate }}</label>
+                <input pInputText id="powerOfAttorney" [(ngModel)]="summary.powerOfAttorney" 
+                  name="powerOfAttorney" #powerOfAttorney="ngModel" />
+            </div>
+        </div>
+      </div>
+      </p-accordionTab>
+      <div class="ui-grid-row" *ngIf="summaryTypeId === 1 || summaryTypeId === 2">
+        <div class="ui-grid-col-12 ui-sm-12">
+          <div class="form-group">
+            <label for="description">{{ 'COMMON.DESCRIPTION' | translate }}</label>
+            <p-editor [(ngModel)]="summary.description" [style]="{'height':'600px'}" name="description" #description="ngModel"></p-editor>
+          </div>
+        </div>
+      </div>
+    </p-accordion>
+  </div>
   <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
     <button type="button" pButton icon="fa fa-refresh" (click)="clear()"
       label="{{ 'COMMON.CLEAR' | translate }}"></button>&nbsp;&nbsp;

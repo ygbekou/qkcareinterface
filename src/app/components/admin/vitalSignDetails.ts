@@ -119,7 +119,8 @@ export class VitalSignDetails extends BaseComponent implements OnInit, OnDestroy
   validate() {
     this.messages = [];
     if (this.vitalSign.temperature == null && this.vitalSign.pulse == null
-      && this.vitalSign.respiration == null && this.vitalSign.bloodPressure == null
+      && this.vitalSign.respiratoryRate == null && this.vitalSign.diastolicBloodPressure == null
+      && this.vitalSign.systolicBloodPressure == null && this.vitalSign.meanBloodPressure == null
       && this.vitalSign.bloodSugar == null && this.vitalSign.pain == null
       && this.vitalSign.weight == null && this.vitalSign.height == null) {
       this.messages.push({severity: Constants.ERROR, summary: Constants.SAVE_LABEL, detail: 'At least 1 vital sign. '});

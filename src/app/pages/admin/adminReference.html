@@ -204,6 +204,14 @@
           <app-systemReviewQuestionAssignment-list (systemReviewQuestionAssignmentIdEvent)="onSystemReviewQuestionAssignmentSelected($event)"></app-systemReviewQuestionAssignment-list>
         </div>
       </p-tabPanel>
+      <p-tabPanel header="{{'COMMON.SURGICAL_PROCEDURE_LIST' |translate}}">
+        <div *ngIf="activeTab == 26" class="ui-grid-row">
+          <app-reference-details [canSave]="permitSave(null, 'Reference Config')" (referenceSaveEvent)="onReferenceSaved($event)"></app-reference-details>
+          <br/>
+          <app-reference-list [canView]="permitView('Reference Config')" [canDelete]="permitDelete('Reference Config')" 
+            (referenceIdEvent)="onReferenceSelected($event, 'SurgicalProcedure')"></app-reference-list>
+        </div>
+      </p-tabPanel>
     </p-tabView>
   </div>
 

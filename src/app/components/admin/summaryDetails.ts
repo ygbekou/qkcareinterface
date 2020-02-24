@@ -1,9 +1,9 @@
 import { Component, OnInit, OnDestroy, Input, Output, EventEmitter, ViewEncapsulation } from '@angular/core';
 import {trigger,state,style,transition,animate,AnimationEvent} from '@angular/animations';
-import { Admission, User, Visit, Summary, Employee, SummaryTypeTemplate, Reference } from '../../models';
-import { SummaryStatusDropdown, SummaryTypeDropdown, EmployeeDropdown, MedicalTeamDropdown} from '../dropdowns';
+import { Admission, User, Visit, Summary, Employee, SummaryTypeTemplate, Reference, SummaryType } from '../../models';
+import { SummaryStatusDropdown, SummaryTypeDropdown, EmployeeDropdown, MedicalTeamDropdown, CodeStatusDropdown} from '../dropdowns';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
-import { GenericService, VisitService, TokenStorage } from '../../services';
+import { GenericService, VisitService, TokenStorage, GlobalEventsManager } from '../../services';
 import { Message, ConfirmationService, SelectItem } from 'primeng/api';
 import { BaseComponent } from './baseComponent';
 import { TranslateService } from '@ngx-translate/core';
@@ -81,18 +81,28 @@ export class SummaryDetails extends BaseComponent implements OnInit, OnDestroy {
   @Input() visit: Visit;
   @Output() summarySaveEvent = new EventEmitter<Summary>();
 
+  @Input() summaryTypeId: number;
   label: string;
   labelId: number;
 
   messages: Message[] = [];
   author: Employee = new Employee();
-  types: SelectItem[] = [];
-  selectedType: string = '';
+  systemReviewTypes: SelectItem[] = [];
+  physicalExamTypes: SelectItem[] = [];
+  systemReviewSelectedType: string = '';
+  physicalExamSelectedType: string = '';
 
+  systemReviewQuestionMap: any = new Map();
   physicalExamSystemMap: any = new Map();
-  selectedPhysicalExamSystems: Reference[];
 
   columns: number[] = [];
+
+  iTCols: any[];
+  vitalSignCols: any[];
+  investigationResults: any[] = [];
+
+  summaryDatetimeStart: Date = new Date();
+
 
   constructor
     (
@@ -104,17 +114,13 @@ export class SummaryDetails extends BaseComponent implements OnInit, OnDestroy {
       public summaryTypeDropdown: SummaryTypeDropdown,
       public summaryStatusDropdown: SummaryStatusDropdown,
       public medicalTeamDropdown: MedicalTeamDropdown,
+      public codeStatusDropdown: CodeStatusDropdown,
+      public globalEventsManager: GlobalEventsManager,
       private route: ActivatedRoute
     ) {
 	    super(genericService, translate, confirmationService, tokenStorage);
       this.user = new User();
       this.summaryTypeDropdown.getSummaryTypeByRole(undefined);
-
-      // this.types = [
-      //       {label: 'Paypal', value: 'PayPal', icon: 'fa fa-fw fa-cc-paypal'},
-      //       {label: 'Visa', value: 'Visa', icon: 'fa fa-fw fa-cc-visa'},
-      //       {label: 'MasterCard', value: 'MasterCard', icon: 'fa fa-fw fa-cc-mastercard'}
-      //   ];
   }
 
   ngOnInit(): void {
@@ -150,13 +156,57 @@ export class SummaryDetails extends BaseComponent implements OnInit, OnDestroy {
               error => console.log(error),
               () => console.log('Get all user\'s employee record complete'));
           });
+
+
+      this.findSystemReviewTypes();
+      this.findPhysicalExamTypes();
+
+      this.vitalSignCols = [
+      { field: 'name', header: '', headerKey: '' },
+      { field: 'lastResult', header: 'LAST RESULT', headerKey: 'COMMON.LAST_RESULT' },
+      { field: 'minimum', header: 'MINIMUM', headerKey: 'COMMON.MINIMUM' },
+      { field: 'maximum', header: 'MAXIMUM', headerKey: 'COMMON.MAXIMUM' }
+    ];
   }
 
   ngOnDestroy() {
     this.summary = null;
   }
 
-  
+  generateListHeaders() {
+
+    let resultMap = new Map();
+
+    this.iTCols = [];
+    this.investigationResults = [];
+
+    console.info('JSON OBJECTS ....')
+    console.info(this.summary.investigationJsonObjects)
+    
+    for (let i in this.summary.investigationJsonObjects) {
+      let iTCol = [];
+      let investigationResult = [];
+
+      for (let index in this.summary.investigationJsonObjects[i][0]['attributes']) {
+        iTCol.push({field: this.summary.investigationJsonObjects[i][0]['attributes'][index], 
+          header : this.summary.investigationJsonObjects[i][0]['attributes'][index], type: 'number'});
+      }
+      this.iTCols.push(iTCol);
+      
+      for (let index in this.summary.investigationJsonObjects[i]) {
+        
+        if (index === '0') {
+          continue;
+        }
+      
+        investigationResult.push(this.summary.investigationJsonObjects[i][index]);
+        
+      }
+
+      this.investigationResults.push(investigationResult);
+    }
+  }
+
 
     
 
@@ -176,7 +226,7 @@ export class SummaryDetails extends BaseComponent implements OnInit, OnDestroy {
     this.summary.summaryStatus.id = statusId;
 
     try {
-      this.genericService.save(this.summary, 'Summary')
+      this.genericService.saveWithUrl('/service/summary/summary/save', this.summary)
         .subscribe(result => {
           if (result.id > 0) {
             this.processResult(result, this.summary, this.messages, null);
@@ -200,6 +250,18 @@ export class SummaryDetails extends BaseComponent implements OnInit, OnDestroy {
       if (result) {
         this.summary = result;
         this.summary.summaryDatetime = new Date(this.summary.summaryDatetime);
+        this.summary.author = this.author;
+        this.summaryDatetimeStart.setDate(this.summary.summaryDatetime.getDate() - 1);
+        this.summary.summaryType = new SummaryType()
+        this.summary.summaryType.id  = +this.summaryTypeId;
+
+        let summaryStatus = new Reference();
+        summaryStatus.id = 1;
+        summaryStatus.name = 'Draft';
+        this.summary.summaryStatus = summaryStatus;
+        console.info('RESULT IS READY ....')
+        console.info(this.summary.summaryVitalSigns);
+        this.generateListHeaders();
       }
     });
   }
@@ -239,16 +301,32 @@ export class SummaryDetails extends BaseComponent implements OnInit, OnDestroy {
 
 
 
+      this.genericService.getObject('/service/admission/systemReview/list/summaryType/' + this.summary.summaryType.id + '/')
+        .subscribe((data: any) => {
+          console.info(data)
+          this.summary.description = '';
+          this.systemReviewQuestionMap = data;
+          let keys = Object.keys(data);
+          this.systemReviewTypes = [];
+
+          for (let i = 0; i < keys.length; i++) {
+            this.systemReviewTypes.push({label: keys[i].split('|')[1], value: keys[i], icon: ''});
+          }
+        },
+        error => console.log(error),
+        () => console.log('Get template complete'));
+
+
       this.genericService.getObject('/service/admission/physicalExam/list/summaryType/' + this.summary.summaryType.id + '/')
         .subscribe((data: any) => {
           console.info(data)
           this.summary.description = '';
           this.physicalExamSystemMap = data;
           let keys = Object.keys(data);
-          this.types = [];
+          this.physicalExamTypes = [];
 
           for (let i = 0; i < keys.length; i++) {
-            this.types.push({label: keys[i].split('|')[1], value: keys[i], icon: ''});
+            this.physicalExamTypes.push({label: keys[i].split('|')[1], value: keys[i], icon: ''});
           }
         },
         error => console.log(error),
@@ -258,7 +336,41 @@ export class SummaryDetails extends BaseComponent implements OnInit, OnDestroy {
 
 
   setType() {
-    alert(this.selectedType);
+    
 		
-	}
+  }
+  
+
+  findPhysicalExamTypes() {
+    this.genericService.getObject('/service/summary/physicalExam/list/summaryType/' + 3 + '/')
+        .subscribe((data: any) => {
+          console.info(data)
+          this.physicalExamSystemMap = data;
+          let keys = Object.keys(data);
+          this.physicalExamTypes = [];
+
+          for (let i = 0; i < keys.length; i++) {
+            this.physicalExamTypes.push({label: keys[i].split('|')[1], value: keys[i], icon: ''});
+          }
+        },
+        error => console.log(error),
+        () => console.log('Get template complete'));
+  }
+
+  findSystemReviewTypes() {
+    this.genericService.getObject('/service/summary/systemReview/list/summaryType/' + 3 + '/')
+        .subscribe((data: any) => {
+          console.info(data)
+          this.systemReviewQuestionMap = data;
+          let keys = Object.keys(data);
+          this.systemReviewTypes = [];
+
+          for (let i = 0; i < keys.length; i++) {
+            this.systemReviewTypes.push({label: keys[i].split('|')[1], value: keys[i], icon: ''});
+          }
+        },
+        error => console.log(error),
+        () => console.log('Get template complete'));
+  }
+
 }

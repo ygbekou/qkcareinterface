@@ -5,11 +5,14 @@ export class VitalSign {
   admission: Admission;
   vitalSignDatetime: Date = new Date();
   temperature: number;
-  pulse: string;
-  respiration: string;
-  bloodPressure: string;
+  pulse: number;
+  respiratoryRate: number;
+  heartRate: number;
+  diastolicBloodPressure: number;
+  systolicBloodPressure: number;
+  meanBloodPressure: number;
   bloodSugar: number;
-  pain: string;
+  pain: number;
   weight: number;
   height: number;
   bmi: number;

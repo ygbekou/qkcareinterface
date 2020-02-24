@@ -26,6 +26,7 @@ export class SummaryList extends BaseComponent implements OnInit, OnDestroy {
   @Input() visit: Visit;
   @Input() admission: Admission;
   @Output() summaryIdEvent = new EventEmitter<string>();
+  @Input() summaryTypeId: number;
 
   constructor
     (
@@ -127,6 +128,10 @@ export class SummaryList extends BaseComponent implements OnInit, OnDestroy {
             }
             if (this.admission)  {
               parameters.push('e.admission.id = |admissionId|' + this.admission.id + '|Long');
+            }
+
+            if (this.summaryTypeId)  {
+              parameters.push('e.summaryType.id = |summaryTypeId|' + this.summaryTypeId + '|Long');
             }
 
             this.genericService.getAllByCriteria('Summary', parameters, ' ORDER BY e.summaryDatetime DESC ')
