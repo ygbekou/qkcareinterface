@@ -450,7 +450,8 @@
     "POWER_OF_ATTORNEY": "Power Of Attorney",
     "SUBJECTIVE": "Subjective",
     "OBJECTIVE": "Objective",
-    "DISPOSITION": "Disposition"
+    "DISPOSITION": "Disposition",
+    "COPY": "Copy"
   },
   "MESSAGE": {
     "TRANFER_DOCTOR_FAILED": "The transfer doctor should be different from the current doctor.",

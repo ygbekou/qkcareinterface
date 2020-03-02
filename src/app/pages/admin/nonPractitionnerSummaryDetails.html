@@ -1,0 +1,88 @@
+<form name="form" (ngSubmit)="f.form.valid && save(1)" #f="ngForm" validate>
+  <div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="summary">
+    <p-messages [(value)]="messages"></p-messages>
+
+         <div class="ui-grid-row">
+          <div class="ui-grid-col-3 ui-sm-12">
+            <div class="form-group">
+              <label for="summaryType">{{ 'COMMON.TYPE' | translate }}<font color="red">*</font></label>
+              <p-autoComplete [(ngModel)]="summary.summaryType" required
+                (ngModelChange)="findTemplate($event)"
+                (onDropdownClick)="summaryTypeDropdown.handleDropdownClick($event)"
+                [suggestions]="summaryTypeDropdown.filteredSummaryTypes" [dropdown]="true"
+                id="summaryType" (completeMethod)="summaryTypeDropdown.filter($event)"
+                name="summaryType" field="name" [size]="30" placeholder="" [minLength]="1"
+                #summaryType="ngModel" ></p-autoComplete>
+              <p-message *ngIf="f.submitted && summaryType.invalid" severity="error" text="Field is required">
+              </p-message>
+            </div>
+          </div>
+          <div class="ui-grid-col-3 ui-sm-12">
+            <div class="form-group">
+              <label for="summaryDatetime">{{ 'COMMON.DATE' | translate }}:</label>&nbsp;&nbsp;&nbsp;&nbsp;
+              <label for="author">{{summary.summaryDatetime | date: globalEventsManager.DATE_TIME_FORMAT}}</label>
+              <!-- <p-calendar [(ngModel)]="summary.summaryDatetime" [showTime]="true" disabled="true" required
+                name="summaryDatetime" #summaryDatetime="ngModel"></p-calendar>
+              <p-message *ngIf="f.submitted && summaryDatetime.invalid" severity="error" text="Field is required">
+              </p-message> -->
+            </div>
+          </div>
+          <div class="ui-grid-col-2 ui-sm-12">
+            <div class="form-group">
+              <label for="summaryStatus">{{ 'COMMON.STATUS' | translate }}:</label>&nbsp;&nbsp;&nbsp;&nbsp;
+              <label for="summaryStatus">{{summary.summaryStatus.name}}</label>
+              <!-- <p-autoComplete [(ngModel)]="summary.summaryStatus" required
+                (onDropdownClick)="summaryStatusDropdown.handleDropdownClick($event)"
+                [suggestions]="summaryStatusDropdown.filteredSummaryStatuses" [dropdown]="true"
+                id="summaryStatus" (completeMethod)="summaryStatusDropdown.filter($event)"
+                name="summaryStatus" field="name" [size]="30" placeholder="" [minLength]="1"
+                #summaryStatus="ngModel" readonly="true"></p-autoComplete>
+              <p-message *ngIf="f.submitted && summaryStatus.invalid" severity="error" text="Field is required">
+              </p-message> -->
+            </div>
+          </div>
+          <div class="ui-grid-col-5 ui-sm-12">
+            <div class="form-group">
+              <label for="author">{{ 'COMMON.AUTHOR' | translate }}:</label>&nbsp;&nbsp;&nbsp;&nbsp;
+              <label for="author">{{summary.author.name}}</label>
+              <!-- <p-autoComplete [(ngModel)]="summary.author" required disabled
+                (onDropdownClick)="medicalTeamDropdown.handleDropdownClick($event)"
+                [suggestions]="medicalTeamDropdown.filteredItems" [dropdown]="true"
+                id="author" (completeMethod)="medicalTeamDropdown.filter($event)"
+                name="author" field="name" [size]="30" placeholder="" [minLength]="1"
+                #author="ngModel"></p-autoComplete>
+              <p-message *ngIf="f.submitted && author.invalid" severity="error" text="Field is required">
+              </p-message> -->
+            </div>
+          </div>
+        
+          <div class="ui-grid-col-6 ui-sm-12">
+              <div class="form-group">
+                  <label for="subject">{{ 'COMMON.SUBJECT' | translate }}</label>
+                  <input pInputText id="subject" [(ngModel)]="summary.subject" name="subject" #subject="ngModel" required />
+                  <p-message *ngIf="f.submitted && subject.invalid" severity="error" text="Field is required">
+                  </p-message>
+              </div>
+          </div>
+        </div>
+      <div class="ui-grid-row">
+        <div class="ui-grid-col-12 ui-sm-12">
+          <div class="form-group">
+            <label for="description">{{ 'COMMON.DESCRIPTION' | translate }}</label>
+            <p-editor [(ngModel)]="summary.description" [style]="{'height':'600px'}" name="description" #description="ngModel"></p-editor>
+          </div>
+        </div>
+      </div>
+  </div>
+  <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+    <button type="button" pButton icon="fa fa-refresh" (click)="getInitialSummary()"
+      label="{{ 'COMMON.CLEAR' | translate }}"></button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <button type="button" pButton icon="fa fa-refresh" (click)="copy()" [disabled]="summary.summaryStatus.id < 2"
+      label="{{ 'COMMON.COPY' | translate }}"></button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <button pButton icon="fa fa-save" label="{{ 'COMMON.SAVE' | translate }}"
+      [disabled]="!f.form.valid || summary.summaryStatus.id > 1" ></button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <button type="button" pButton icon="fa fa-save" label="{{ 'COMMON.SIGNE' | translate }}" (click)="save(2)"
+      [disabled]="!f.form.valid || summary.summaryStatus.id >= 2" ></button>&nbsp;&nbsp;
+  </div>
+</form>
+

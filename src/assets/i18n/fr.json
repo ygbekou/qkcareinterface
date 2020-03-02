@@ -450,7 +450,8 @@
     "POWER_OF_ATTORNEY": "Procuration",
     "SUBJECTIVE": "Subjective",
     "OBJECTIVE": "Objective",
-    "DISPOSITION": "Disposition"
+    "DISPOSITION": "Disposition",
+    "COPY": "Copier"
   },
   "MESSAGE": {
     "TRANFER_DOCTOR_FAILED": "Le nouveau docteur assigné doit être différent de l'ancien.",

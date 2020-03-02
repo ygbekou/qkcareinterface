@@ -148,4 +148,17 @@ export class AdminSummary extends BaseComponent implements OnInit, OnDestroy {
 		}
 	}
 
+	edit(admissionId: number) {
+    try {
+      const navigationExtras: NavigationExtras = {
+        queryParams: {
+          'admissionId': admissionId,
+        }
+      };
+      this.router.navigate(['/admin/admissionDetails'], navigationExtras);
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
 }

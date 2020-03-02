@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, Input, Output, EventEmitter, ViewEncapsulation } from '@angular/core';
-import {trigger,state,style,transition,animate,AnimationEvent} from '@angular/animations';
+import { trigger, state, style, transition, animate, AnimationEvent} from '@angular/animations';
 import { Admission, User, Visit, Summary, Employee, SummaryTypeTemplate, Reference, SummaryType } from '../../models';
 import { SummaryStatusDropdown, SummaryTypeDropdown, EmployeeDropdown, MedicalTeamDropdown, CodeStatusDropdown} from '../dropdowns';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
@@ -49,6 +49,10 @@ import { stringify } from 'querystring';
 
         .nested-grid .p-col-4 {
             padding-bottom: 1em;
+        }
+
+        .ui-fluid .ui-button {
+          width: auto;
         }
     `],
   animations: [
@@ -207,8 +211,6 @@ export class SummaryDetails extends BaseComponent implements OnInit, OnDestroy {
   }
 
 
-    
-
     addColumn() {
         this.columns.push(this.columns.length);
     }
@@ -281,6 +283,14 @@ export class SummaryDetails extends BaseComponent implements OnInit, OnDestroy {
     this.summary = new Summary();
     this.summary.author = this.author;
   }
+
+  copy() {
+    this.messages = [];
+    this.summary.id = null;
+    this.summary.summaryStatus.id = 1;
+    this.summary.author = this.author;
+  }
+
 
   findTemplate() {
     this.summary.description = '';
@@ -370,6 +380,15 @@ export class SummaryDetails extends BaseComponent implements OnInit, OnDestroy {
         },
         error => console.log(error),
         () => console.log('Get template complete'));
+  }
+
+  isProvider() {
+    return this.tokenStorage.getRole() === '2';
+  }
+
+  isNonProvider() {
+    
+    return this.tokenStorage.getRole() === '3' || this.tokenStorage.getRole() === '4';
   }
 
 }

@@ -2,20 +2,20 @@
     <p-tabPanel header="{{'COMMON.PHYSICAL_EXAM' | translate }}" *ngIf="admission && admission.id > 0">
       <div class="ui-grid-row" *ngIf="activeTab === 0">
         <div class="ui-grid-col-2 ui-sm-12" >
-          <app-physicalExam-list [admission]="admission" (physicalExamIdEvent)="onPhysicalExamSelected($event)"></app-physicalExam-list>
+          <app-physical-exam-list [admission]="admission" (physicalExamIdEvent)="onPhysicalExamSelected($event)"></app-physical-exam-list>
         </div>
         <div class="ui-grid-col-10 ui-sm-12">
-          <app-physicalExam-details (physicalExamSaveEvent)="onPhysicalExamSaved($event)" [admission]="admission"></app-physicalExam-details><br />
+          <app-physical-exam-details (physicalExamSaveEvent)="onPhysicalExamSaved($event)" [admission]="admission"></app-physical-exam-details><br /> 
         </div>
       </div>
     </p-tabPanel>
     <p-tabPanel header="{{'COMMON.SYSTEM_REVIEW' | translate }}" *ngIf="admission && admission.id > 0">
       <div class="ui-grid-row" *ngIf="activeTab === 1">
         <div class="ui-grid-col-2 ui-sm-12" >
-          <app-systemReview-list [admission]="admission" (systemReviewIdEvent)="onSystemReviewSelected($event)"></app-systemReview-list>
+          <app-system-review-list [admission]="admission" (systemReviewIdEvent)="onSystemReviewSelected($event)"></app-system-review-list>
         </div>
         <div class="ui-grid-col-10 ui-sm-12">
-          <app-systemReview-details (systemReviewSaveEvent)="onSystemReviewSaved($event)" [admission]="admission"></app-systemReview-details><br />
+          <app-system-review-details (systemReviewSaveEvent)="onSystemReviewSaved($event)" [admission]="admission"></app-system-review-details><br />
         </div>
       </div>
     </p-tabPanel>

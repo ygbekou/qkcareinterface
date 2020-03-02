@@ -64,7 +64,7 @@ export class PatientAdmissionList extends BaseComponent implements OnInit, OnDes
 			this.steps[i] = {
 				//label: 'Ann�e ' + index + '(' + data[index].length + ')',
 				label: index,
-				year: index,
+				year: index, 
 				itemIndex: i,
 				command: (event: any) => {
 					this.setCurrentIndex(event.item.itemIndex);
@@ -82,16 +82,6 @@ export class PatientAdmissionList extends BaseComponent implements OnInit, OnDes
 		}
 	}
 
-	cancel(apt: Admission) {
-		this.admissionService.cancel(apt.id)
-			.subscribe(result => {
-				if (result) {
-					apt.status = 3;
-				} else {
-					this.messages.push({ severity: Constants.ERROR, summary: Constants.SAVE_LABEL, detail: Constants.SAVE_UNSUCCESSFUL });
-				}
-			});
-	}
 
 	getAdmissions() {
 		this.admissionService.getByYear(this.userId)

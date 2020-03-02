@@ -10,10 +10,8 @@
           text="{{ 'COMMON.PATIENT_ID' | translate }} {{ 'VALIDATION.IS_REQUIRED' | translate }}">
         </p-message>
 
-        <div class="ui-grid-row">
-            <button type="button" pButton label="{{ 'COMMON.HISTORY_AND_PHYSICAL' | translate }}" (click)="gotoHistoryAndPhysical()"></button>
-            &nbsp;&nbsp;&nbsp;&nbsp;
-            <button type="button" pButton label="{{ 'COMMON.PROGRESS_NOTE' | translate }}" (click)="gotoHistoryAndPhysical()"></button>
+        <div class="ui-grid-row" *ngIf="admission && admission.id > 0 && permitView('SUMMARY_REPORT_PROVIDER') ">
+            <button type="button" pButton label="{{ 'COMMON.SUMMARY_AND_REPORT' | translate }}" (click)="gotoHistoryAndPhysical()"></button>
         </div>
       </div>
       <div class="ui-grid-col-2 ui-sm-12">
@@ -120,7 +118,7 @@
               <p-autoComplete [(ngModel)]="admission.doctorAssignment.doctor"
                 (onDropdownClick)="doctorDropdown.handleDropdownClick($event)"
                 [suggestions]="doctorDropdown.filteredDoctors" [dropdown]="true"
-                (completeMethod)="doctorDropdown.filter($event)" name="name" field="name" [size]="30" placeholder=""
+                (completeMethod)="doctorDropdown.filter($event)" field="name" [size]="30" placeholder=""
                 [minLength]="1" name="doctor" #doctor="ngModel" required>
               </p-autoComplete>
               <p-message *ngIf="f.submitted && doctor.invalid" severity="error" text="Field is required">
@@ -169,35 +167,16 @@
     <p-tabPanel header="{{'COMMON.DISCHARGE' | translate }}" *ngIf="admission && admission.id > 0 && permitView('ADMISSION_DISCHARGE')">
       <app-discharge-details [admission]="admission"></app-discharge-details>
     </p-tabPanel>
-    <p-tabPanel header="{{'COMMON.SUMMARY_AND_REPORT' | translate }}" *ngIf="admission && admission.id > 0">
+    <p-tabPanel header="{{'COMMON.SUMMARY_AND_REPORT' | translate }}" *ngIf="admission && admission.id > 0 && permitView('SUMMARY_REPORT_NON_PROVIDER') ">
       <div class="ui-grid-row">
         <div class="ui-grid-col-2 ui-sm-12" >
-          <app-summary-list [admission]="admission" (summaryIdEvent)="onSummarySelected($event)"></app-summary-list>
+          <app-summary-list [admission]="admission" (summaryIdEvent)="onSummarySelected($event)" [summaryTypeId]="'1,2'"></app-summary-list>
         </div>
         <div class="ui-grid-col-10 ui-sm-12">
           <app-summary-details (summarySaveEvent)="onSummarySaved($event)" [admission]="admission"></app-summary-details><br />
         </div>
       </div>
     </p-tabPanel>
-    <p-tabPanel header="{{'COMMON.PHYSICAL_EXAM' | translate }}" *ngIf="admission && admission.id > 0">
-      <div class="ui-grid-row">
-        <div class="ui-grid-col-2 ui-sm-12" >
-          <app-physical-exam-list [admission]="admission" (physicalExamIdEvent)="onPhysicalExamSelected($event)"></app-physical-exam-list>
-        </div>
-        <div class="ui-grid-col-10 ui-sm-12">
-          <app-physical-exam-details (physicalExamSaveEvent)="onPhysicalExamSaved($event)" [admission]="admission"></app-physical-exam-details><br />
-        </div>
-      </div>
-    </p-tabPanel>
-    <p-tabPanel header="{{'COMMON.SYSTEM_REVIEW' | translate }}" *ngIf="admission && admission.id > 0">
-      <div class="ui-grid-row">
-        <div class="ui-grid-col-2 ui-sm-12" >
-          <app-system-review-list [admission]="admission" (systemReviewIdEvent)="onSystemReviewSelected($event)"></app-system-review-list>
-        </div>
-        <div class="ui-grid-col-10 ui-sm-12">
-          <app-system-review-details (systemReviewSaveEvent)="onSystemReviewSaved($event)" [admission]="admission"></app-system-review-details><br />
-        </div>
-      </div>
-    </p-tabPanel>
+    
   </p-tabView>
 </form>

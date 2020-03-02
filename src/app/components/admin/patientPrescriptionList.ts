@@ -62,7 +62,7 @@ export class PatientPrescriptionList extends BaseComponent implements OnInit, On
 			this.steps[i] = {
 				//label: 'Ann�e ' + index + '(' + data[index].length + ')',
 				label: index, 
-				year: index,
+				year: index, 
 				itemIndex: i,
 				command: (event: any) => {
 					this.setCurrentIndex(event.item.itemIndex);

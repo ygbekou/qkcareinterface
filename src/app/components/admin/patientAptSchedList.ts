@@ -9,11 +9,11 @@ import { Message, ConfirmationService, MenuItem } from 'primeng';
 import { BaseComponent } from './baseComponent';
 
 @Component({
-	selector: 'app-appointment-scheduler',
+	selector: 'app-appointment-scheduler', 
 	templateUrl: '../../pages/admin/patientAptSchedList.html',
 	providers: [GenericService, AppointmentService, HospitalLocationDropdown,
 		DepartmentDropdown, DoctorDropdown]
-})
+}) 
 
 export class PatientAptSchedList extends BaseComponent implements OnInit, OnDestroy {
 
@@ -60,11 +60,11 @@ export class PatientAptSchedList extends BaseComponent implements OnInit, OnDest
 		let i = 0;
 		this.steps = [];
 		// tslint:disable-next-line: forin
-		for (const index in data) {
+		for (const index in data) { 
 			this.steps[i] = {
 				//label: 'Ann�e ' + index + '(' + data[index].length + ')',
 				label: index,
-				year: index,
+				year: index, 
 				itemIndex: i,
 				command: (event: any) => {
 					this.setCurrentIndex(event.item.itemIndex);
